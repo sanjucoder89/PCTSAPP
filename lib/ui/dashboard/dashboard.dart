@@ -949,7 +949,7 @@ class _DashboardScreen extends State<DashboardScreen> {
                                         )),
                                     Container(
                                       child: Flexible(
-                                       child: Text(_anmName == "null" ? "-" :_anmName,
+                                       child: Text(_anmName == "null" ? "-" : " "+_anmName,
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
                                             softWrap: false,
@@ -1032,30 +1032,37 @@ class _DashboardScreen extends State<DashboardScreen> {
                       height: 10.0,
                     )
                         :
-                    Container(
-                      color: ColorConstants.asha_white,
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Card(
-                          elevation: 5,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(20)),
-                              color: ColorConstants.appNewlightyello,
+                    GestureDetector(
+                      onTap: (){
+                        if(preferences.getString("AppRoleID").toString() == '33'){
+                          _isANMSESSION=false;
+                          _isASHASESSION=true;
+                        }else{
+                          getAnmRankAPI();
+                          _isANMSESSION=true;
+                          _isASHASESSION=false;
+                        }
+                      },
+                      child: Container(
+                        color: ColorConstants.asha_white,
+                        child: Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Card(
+                            elevation: 5,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
                             ),
-                            height: 50,
-                            child: Row(
-                              children: [
-                                Expanded(
-                                    child: Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            _scaffoldKey.currentState!.openDrawer();
-                                          },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(Radius.circular(20)),
+                                color: ColorConstants.appNewlightyello,
+                              ),
+                              height: 50,
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                      child: Align(
+                                          alignment: Alignment.centerLeft,
                                           child: Container(
                                             child: Align(
                                               alignment: Alignment.centerLeft,
@@ -1083,47 +1090,47 @@ class _DashboardScreen extends State<DashboardScreen> {
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                        ))),
-                                Center(
-                                    child: Align(
-                                      alignment: Alignment.centerRight,
-                                      child: Container(
-                                        child: VerticalDivider(
-                                          width: 0,
-                                          color: Colors.black,
-                                          thickness: 1.5,
-                                        ),
-                                      ),
-                                    )),
-                                Expanded(
-                                    child: Container(
+                                          ))),
+                                  Center(
                                       child: Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(5.0),
-                                            child: Row(
-                                              children: [
-                                                Expanded(child: Text(
-                                                  "${_blockName == "null" ? "" : _blockName} ब्लॉक में रैंक",
-                                                  style: TextStyle(color: ColorConstants.AppColorDark,fontWeight: FontWeight.normal,fontSize: 13),
-                                                )),
-                                                Expanded(child: Align(
-                                                  alignment: Alignment.centerLeft,
-                                                  child: Center(
-                                                    child: Text(
-                                                      '$block_value-$block_value2',
-                                                      textAlign: TextAlign.left,
-                                                      style:
-                                                      TextStyle(color: ColorConstants.black,fontWeight: FontWeight.normal,fontSize: 13),
+                                        alignment: Alignment.centerRight,
+                                        child: Container(
+                                          child: VerticalDivider(
+                                            width: 0,
+                                            color: Colors.black,
+                                            thickness: 1.5,
+                                          ),
+                                        ),
+                                      )),
+                                  Expanded(
+                                      child: Container(
+                                        child: Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(5.0),
+                                              child: Row(
+                                                children: [
+                                                  Expanded(child: Text(
+                                                    "${_blockName == "null" ? "" : _blockName} ब्लॉक में रैंक",
+                                                    style: TextStyle(color: ColorConstants.AppColorDark,fontWeight: FontWeight.normal,fontSize: 13),
+                                                  )),
+                                                  Expanded(child: Align(
+                                                    alignment: Alignment.centerLeft,
+                                                    child: Center(
+                                                      child: Text(
+                                                        '$block_value / $block_value2',
+                                                        textAlign: TextAlign.left,
+                                                        style:
+                                                        TextStyle(color: ColorConstants.black,fontWeight: FontWeight.normal,fontSize: 13),
+                                                      ),
                                                     ),
-                                                  ),
-                                                )),
-                                              ],
-                                            ),
-                                          )),
-                                    )),
-                              ],
+                                                  )),
+                                                ],
+                                              ),
+                                            )),
+                                      )),
+                                ],
+                              ),
                             ),
                           ),
                         ),

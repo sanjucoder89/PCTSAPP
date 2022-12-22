@@ -104,7 +104,7 @@ class _HBYCExpandDetails extends State<HBYCExpandDetails> {
       if (apiResponse.status == true) {
         custom_anc_list.clear();
         response_listing = resBody['ResposeData'];
-        print('anc-resp-.len ${response_listing.length}');
+       // print('anc-resp-.len ${response_listing.length}');
         _showHideExpandableListView=false;
         if(response_listing[0]['HBYCFlag'].toString() != "0"){
           _showHideExpandableListView=true;

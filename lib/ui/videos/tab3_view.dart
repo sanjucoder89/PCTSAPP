@@ -40,7 +40,7 @@ class _TabThreeScreen extends State<TabThreeScreen> {
       if (apiResponse.status == true) {
         response_list = resBody['ResposeData'];
         //districtId=resBody['ResponseData'][0]['Code'].toString();
-        print('response_list.len ${response_list.length}');
+        //print('response_list.len ${response_list.length}');
       } else {
         //reLoginDialog();
       }
@@ -48,7 +48,7 @@ class _TabThreeScreen extends State<TabThreeScreen> {
     });
     //dismiss loader
     //await EasyLoading.dismiss();
-    print('response:${apiResponse.message}');
+   // print('response:${apiResponse.message}');
     return "Success";
   }
 

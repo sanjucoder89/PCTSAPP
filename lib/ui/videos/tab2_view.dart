@@ -40,7 +40,7 @@ class _TabTwoScreen extends State<TabTwoScreen> {
       if (apiResponse.status == true) {
         response_list = resBody['ResposeData'];
         //districtId=resBody['ResponseData'][0]['Code'].toString();
-        print('response_list.len ${response_list.length}');
+       // print('response_list.len ${response_list.length}');
       } else {
         //reLoginDialog();
       }

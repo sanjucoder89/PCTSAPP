@@ -265,7 +265,7 @@ class _AncExpandDetails extends State<AncExpandDetails> {
   }
 
   Future<String> deleteANCAPI(String _flagtype,String _ancregid) async {
-    var response = await post(Uri.parse(_delete_record_url), body: {
+    var response = await delete(Uri.parse(_delete_record_url), body: {
       "ANCRegID": _ancregid,
       "ANCFlag": _flagtype,
       "AppVersion": "5.5.5.22",

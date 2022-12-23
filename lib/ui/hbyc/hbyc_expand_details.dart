@@ -295,7 +295,7 @@ class _HBYCExpandDetails extends State<HBYCExpandDetails> {
   }
 
   Future<String> deleteHBYCAPI(String _flagtype,String _ancregid) async {
-    var response = await post(Uri.parse(_delete_record_url), body: {
+    var response = await delete(Uri.parse(_delete_record_url), body: {
       "InfantId": _ancregid,
       "HbycFlag": _flagtype,
       "AppVersion": "5.5.5.22",

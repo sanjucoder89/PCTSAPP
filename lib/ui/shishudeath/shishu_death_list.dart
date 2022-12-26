@@ -465,7 +465,7 @@ class _ShishuDeathList extends State<ShishuDeathList> {
                           alignment: Alignment.centerLeft,
                           child: Padding(
                             padding: const EdgeInsets.only(left: 5),
-                            child: Text(Strings.tikakaran_due_cases,style: TextStyle(color: ColorConstants.white,fontSize: 14),),
+                            child: Text(Strings.child_death_due_cases,style: TextStyle(color: ColorConstants.white,fontSize: 14),),
                           ),
                         ),
                       ),

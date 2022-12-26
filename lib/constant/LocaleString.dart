@@ -590,6 +590,7 @@ class Strings {
   static const String pnc = "एचबीएनसी";
   static const String imm = "टीकाकरण";
   static const String mother_death_due_cases = "मातृ मृत्यु के डयू केस";
+  static const String child_death_due_cases = "शिशु मृत्यु के डयू केस";
   static const String mother_death = "मातृ मृत्यु";
   static const String infant_death = "शिशु मृत्यु";
 

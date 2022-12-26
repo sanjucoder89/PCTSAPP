@@ -199,12 +199,16 @@ class _ShishuDeathDetailsNewState extends State<ShishuDeathDetailsNew> {
         response_list = resBody['ResposeData'];
         print('res.len  ${response_list.length}');
 
-        if(preferences.getString("AppRoleID").toString() == '33'){
+        if(preferences.getString("AppRoleID").toString() == '33' ){
           aashaId = preferences.getString('ANMAutoID').toString();
-          _isItAsha=true;
+            if(response_list[0]['ashaautoid'].toString() == aashaId){
+              _isItAsha=true;
+            }else{
+              _isItAsha=false;
+            }
         }else{
           aashaId=response_list[0]['ashaautoid'].toString();
-          _isItAsha=false;
+          _isItAsha=true;
         }
         AnmVerify=response_list[0]['ANMVerify'].toString() == "null" ? "0" : response_list[0]['ANMVerify'].toString();
         getAashaListAPI(response_list[0]['RegUnitid'].toString(),response_list[0]['VillageAutoID'].toString());
@@ -224,7 +228,7 @@ class _ShishuDeathDetailsNewState extends State<ShishuDeathDetailsNew> {
   }
   List<CustomAashaList> custom_aasha_list = [];
   List aasha_response_list = [];
-  bool _isItAsha=false;
+  bool _isItAsha=true;
   Future<String> getAashaListAPI(String _RegUnitid,String _villageautoid) async {
     preferences = await SharedPreferences.getInstance();
     var response = await post(Uri.parse(_aasha_list_url), body: {
@@ -1266,7 +1270,7 @@ class _ShishuDeathDetailsNewState extends State<ShishuDeathDetailsNew> {
                                   .toString() //Id that has to be passed that the dropdown has.....
                           );
                         }).toList(),
-                        onChanged:_isItAsha == true ? null : (String? newVal) {
+                        onChanged:_isItAsha == false ? null : (String? newVal) {
                           setState(() {
                             aashaId = newVal!;
                             print('aashaId:$aashaId');

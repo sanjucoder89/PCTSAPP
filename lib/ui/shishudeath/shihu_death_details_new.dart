@@ -805,18 +805,18 @@ class _ShishuDeathDetailsNewState extends State<ShishuDeathDetailsNew> {
       }
 
       if(preferences.getString("AppRoleID") == "31" || preferences.getString("AppRoleID") == "32"){
-          finalButtonView=true;
-          /*if(response_list[0]['ANMVerify'].toString() == "1"){
-              submit_title="सत्यापित किये केस को अपडेट करें";
+          if(response_list[0]['DeathDate'].toString() == "null"){
+            finalButtonView=true;
+            submit_title=Strings.vivran_save_krai;
           }else{
-              submit_title="सत्यापित / विवरण अपडेट करें";
-          }*/
-          if(AnmVerify == "1"){
+            finalButtonView=true;
+            if(AnmVerify == "1"){
               submit_title="एएनएम द्वारा सत्यापित ";
               isClickableEnableDisable=false;
-          }else{
+            }else{
               submit_title="सत्यापित / विवरण अपडेट करें";
               isClickableEnableDisable=true;
+            }
           }
       }else if(preferences.getString("AppRoleID") == "33"){
         if(response_list[0]['ANMVerify'].toString() == "1"){

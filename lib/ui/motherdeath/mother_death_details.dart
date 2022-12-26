@@ -892,7 +892,7 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorConstants.white,
-      resizeToAvoidBottomInset: false,
+     // resizeToAvoidBottomInset: false,
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
@@ -1398,7 +1398,8 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
                             child:TextField(
 
                               keyboardType: TextInputType.text,
-                              maxLength: 5,
+                              maxLength: 20,
+                              maxLines: 1,
                               controller: _mukhiyaNameController,
                               decoration: InputDecoration(
                                 border: InputBorder.none,
@@ -1586,6 +1587,12 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
                                     contentPadding: EdgeInsets.zero,
                                     hintText: ' dd',
                                     counterText: ''),
+                                onChanged: (value){
+                                  print('value $value');
+                                  if(_tikaDDdateController.text.toString().length == 2 && _tikaMMdateController.text.toString().length == 2 && _tikaYYYYdateController.text.toString().length == 4){
+                                    _selectANCDatePopupCustom(_tikaYYYYdateController.text.toString()+"-"+_tikaMMdateController.text.toString()+"-"+_tikaDDdateController.text.toString()+" 00:00:00.000");
+                                  }
+                                }
                               ),
                             )),
                         Text("/"),
@@ -1611,6 +1618,12 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
                                     contentPadding: EdgeInsets.zero,
                                     hintText: ' mm',
                                     counterText: ''),
+                                onChanged: (value){
+                                  print('value $value');
+                                  if(_tikaDDdateController.text.toString().length == 2 && _tikaMMdateController.text.toString().length == 2 && _tikaYYYYdateController.text.toString().length == 4){
+                                    _selectANCDatePopupCustom(_tikaYYYYdateController.text.toString()+"-"+_tikaMMdateController.text.toString()+"-"+_tikaDDdateController.text.toString()+" 00:00:00.000");
+                                  }
+                                }
                               ),
                             )),
                         Text("/"),
@@ -1635,6 +1648,12 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
                                     contentPadding: EdgeInsets.zero,
                                     hintText: ' yyyy',
                                     counterText: ''),
+                                onChanged: (value){
+                                  print('value $value');
+                                  if(_tikaDDdateController.text.toString().length == 2 && _tikaMMdateController.text.toString().length == 2 && _tikaYYYYdateController.text.toString().length == 4){
+                                    _selectANCDatePopupCustom(_tikaYYYYdateController.text.toString()+"-"+_tikaMMdateController.text.toString()+"-"+_tikaDDdateController.text.toString()+" 00:00:00.000");
+                                  }
+                                }
                               ),
                             ))
                       ],
@@ -1869,6 +1888,12 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
                                     contentPadding: EdgeInsets.zero,
                                     hintText: ' dd',
                                     counterText: ''),
+                                onChanged: (value){
+                                  print('value $value');
+                                  if(_reportDDdateController.text.toString().length == 2 && _reportMMdateController.text.toString().length == 2 && _reportYYYYdateController.text.toString().length == 4){
+                                    _selectReportDatePopupCustom(_reportYYYYdateController.text.toString()+"-"+_reportMMdateController.text.toString()+"-"+_reportDDdateController.text.toString()+" 00:00:00.000");
+                                  }
+                                }
                               ),
                             )),
                         Text("/"),
@@ -1894,6 +1919,12 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
                                     contentPadding: EdgeInsets.zero,
                                     hintText: ' mm',
                                     counterText: ''),
+                                onChanged: (value){
+                                  print('value $value');
+                                  if(_reportDDdateController.text.toString().length == 2 && _reportMMdateController.text.toString().length == 2 && _reportYYYYdateController.text.toString().length == 4){
+                                    _selectReportDatePopupCustom(_reportYYYYdateController.text.toString()+"-"+_reportMMdateController.text.toString()+"-"+_reportDDdateController.text.toString()+" 00:00:00.000");
+                                  }
+                                }
                               ),
                             )),
                         Text("/"),
@@ -1918,6 +1949,12 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
                                     contentPadding: EdgeInsets.zero,
                                     hintText: ' yyyy',
                                     counterText: ''),
+                                onChanged: (value){
+                                  print('value $value');
+                                  if(_reportDDdateController.text.toString().length == 2 && _reportMMdateController.text.toString().length == 2 && _reportYYYYdateController.text.toString().length == 4){
+                                    _selectReportDatePopupCustom(_reportYYYYdateController.text.toString()+"-"+_reportMMdateController.text.toString()+"-"+_reportDDdateController.text.toString()+" 00:00:00.000");
+                                  }
+                                }
                               ),
                             ))
                       ],
@@ -3174,6 +3211,65 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
   var initalMonth = 0;
   var initalYear = 0;
   var final_diff_dates=0;
+  void _selectANCDatePopupCustom(String _customHBYCDate) {
+
+      setState(() {
+        var parseCustomANCDate = DateTime.parse(getConvertRegDateFormat(_customHBYCDate));
+        print('parseCustomANCDate ${parseCustomANCDate}');
+
+
+        _selectedDate = parseCustomANCDate;
+        print('_selectedDate $_selectedDate');//2022-12-22 00:00:00.000
+        String formattedDate4 = DateFormat('yyyy-MM-dd').format(_selectedDate);
+        String formattedDate2 = DateFormat('yyyy/MM/dd').format(_selectedDate);
+
+        if (formattedDate2.compareTo(getCurrentDate()) > 0) {
+          //print('equal to current date#########');
+          _showErrorPopup(Strings.aaj_ki_tareek_sai_phale,ColorConstants.AppColorPrimary);
+        } else {
+          var selectedParsedDate = DateTime.parse(formattedDate4.toString());
+
+          if(_prasavDate == "null"){
+            _tikaDDdateController.text = getDate(formattedDate4);
+            _tikaMMdateController.text = getMonth(formattedDate4);
+            _tikaYYYYdateController.text = getYear(formattedDate4);
+            IMMDate_post=_tikaYYYYdateController.text.toString()+ "/"+_tikaMMdateController.text.toString()+"/"+_tikaDDdateController.text.toString();
+            print('IMMDate_post $IMMDate_post');
+            var _parseDeathDate = DateTime.parse(getConvertRegDateFormat(_selectedDate.toString()));
+            _selectedDeathDate=_parseDeathDate.toString();
+            print('converted_death_date $_parseDeathDate');
+            print('converted_death_date2 $_selectedDeathDate');
+          }else{
+            var prasavDate = DateTime.parse(getConvertRegDateFormat(_prasavDate));
+            print('prasavDate ${prasavDate}');//2021-03-12 00:00:00.000
+
+            var registerDate = DateTime.parse(getConvertRegDateFormat(_registerDate));
+            print('registerDate ${registerDate}');//2021-03-12 00:00:00.000
+
+            if(selectedParsedDate.compareTo(registerDate) >= 0){
+              if (selectedParsedDate.compareTo(prasavDate) >= 0)
+              {
+                _tikaDDdateController.text = getDate(formattedDate4);
+                _tikaMMdateController.text = getMonth(formattedDate4);
+                _tikaYYYYdateController.text = getYear(formattedDate4);
+                IMMDate_post=_tikaYYYYdateController.text.toString()+ "/"+_tikaMMdateController.text.toString()+"/"+_tikaDDdateController.text.toString();
+                print('IMMDate_post $IMMDate_post');
+                var _parseDeathDate = DateTime.parse(getConvertRegDateFormat(_selectedDate.toString()));
+                _selectedDeathDate=_parseDeathDate.toString();
+                print('converted_death_date $_parseDeathDate');
+                print('converted_death_date2 $_selectedDeathDate');
+              }else{
+                _showErrorPopup(Strings.death_date_after_prasav, ColorConstants.AppColorPrimary);
+              }
+            }else{
+              _showErrorPopup(Strings.death_after_reg, ColorConstants.AppColorPrimary);
+            }
+
+          }
+        }
+      });
+  }
+
   void _selectANCDatePopup() {
     showDatePicker(
         context: context,
@@ -3190,6 +3286,7 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
       }
       setState(() {
         _selectedDate = pickedDate;
+        print('_selectedDate $_selectedDate');//2022-12-22 00:00:00.000
         String formattedDate4 = DateFormat('yyyy-MM-dd').format(_selectedDate);
         String formattedDate2 = DateFormat('yyyy/MM/dd').format(_selectedDate);
 
@@ -3241,6 +3338,39 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
     });
   }
 
+
+  void _selectReportDatePopupCustom(String _customReportDate) {
+
+      setState(() {
+        var parseCustomANCDate = DateTime.parse(getConvertRegDateFormat(_customReportDate));
+        print('parseCustomANCDate ${parseCustomANCDate}');
+
+        _selectedDate2 = parseCustomANCDate;
+        String formattedDate4 = DateFormat('yyyy-MM-dd').format(_selectedDate2);
+        String formattedDate2 = DateFormat('yyyy/MM/dd').format(_selectedDate2);
+
+        if (formattedDate2.compareTo(getCurrentDate()) > 0) {
+          //print('equal to current date#########');
+          _showErrorPopup(Strings.aaj_ki_tareek_sai_phale,ColorConstants.AppColorPrimary);
+        } else {
+          var lastDeathDate = DateTime.parse(getConvertRegDateFormat(_selectedDeathDate));
+          print('lastDeathDate ${lastDeathDate}');//2021-03-12 00:00:00.000
+
+          var selectedParsedDate = DateTime.parse(formattedDate4.toString());
+
+          if (selectedParsedDate.compareTo(lastDeathDate) >= 0) //2021-04-22 00:00:00.000
+          {
+              _reportDDdateController.text = getDate(formattedDate4);
+              _reportMMdateController.text = getMonth(formattedDate4);
+              _reportYYYYdateController.text = getYear(formattedDate4);
+              _reportdeathPostDate=_reportYYYYdateController.text.toString()+ "/"+_reportMMdateController.text.toString()+"/"+_reportDDdateController.text.toString();
+              print('reportDeath $_reportdeathPostDate');
+          }else{
+            _showErrorPopup('Death Report date can not less than Death date.', ColorConstants.AppColorPrimary);
+          }
+        }
+      });
+  }
 
   void _selectReportDatePopup() {
     showDatePicker(

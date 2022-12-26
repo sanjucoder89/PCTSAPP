@@ -1473,6 +1473,12 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                               contentPadding: EdgeInsets.zero,
                                               hintText: ' dd',
                                               counterText: ''),
+                                          onChanged: (value){
+                                            print('value $value');
+                                            if(_pncDDdateController.text.toString().length == 2 && _pncMMdateController.text.toString().length == 2 && _pncYYYYdateController.text.toString().length == 4){
+                                              _selectANCDatePopupCustom(_pncYYYYdateController.text.toString()+"-"+_pncMMdateController.text.toString()+"-"+_pncDDdateController.text.toString()+" 00:00:00.000");
+                                            }
+                                          }
                                         ),
                                       )),
                                   Text("/"),
@@ -1498,6 +1504,12 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                               contentPadding: EdgeInsets.zero,
                                               hintText: ' mm',
                                               counterText: ''),
+                                          onChanged: (value){
+                                            print('value $value');
+                                            if(_pncDDdateController.text.toString().length == 2 && _pncMMdateController.text.toString().length == 2 && _pncYYYYdateController.text.toString().length == 4){
+                                              _selectANCDatePopupCustom(_pncYYYYdateController.text.toString()+"-"+_pncMMdateController.text.toString()+"-"+_pncDDdateController.text.toString()+" 00:00:00.000");
+                                            }
+                                          }
                                         ),
                                       )),
                                   Text("/"),
@@ -1522,6 +1534,12 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                               contentPadding: EdgeInsets.zero,
                                               hintText: ' yyyy',
                                               counterText: ''),
+                                          onChanged: (value){
+                                            print('value $value');
+                                            if(_pncDDdateController.text.toString().length == 2 && _pncMMdateController.text.toString().length == 2 && _pncYYYYdateController.text.toString().length == 4){
+                                              _selectANCDatePopupCustom(_pncYYYYdateController.text.toString()+"-"+_pncMMdateController.text.toString()+"-"+_pncDDdateController.text.toString()+" 00:00:00.000");
+                                            }
+                                          }
                                         ),
                                       ))
                                 ],
@@ -3608,6 +3626,129 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
   * */
   late DateTime _selectedDate;
   var _selectedANCDate = "";
+
+  void _selectANCDatePopupCustom(String _customHBNCDate) {
+    setState(() {
+
+      var parseCustomANCDate = DateTime.parse(getAPIResponseFormattedDate2(_customHBNCDate));
+      print('parseCustomANCDate ${parseCustomANCDate}');
+
+      String formattedDate4 = DateFormat('yyyy-MM-dd').format(parseCustomANCDate);
+      String formattedDate2 = DateFormat('yyyy/MM/dd').format(parseCustomANCDate);
+
+      _selectedANCDate = formattedDate2.toString();
+      _selectedDate = parseCustomANCDate;
+      //var parsedCurrentDate = DateTime.parse(getCurrentDate());
+      var parsedDate1 = DateTime.parse(formattedDate4.toString());
+      //var parsedDate2 = DateTime.parse(getConvertRegDateFormat(getCurrentDate()));
+
+      //  print('DateCondition ${formattedDate2.toString()}');
+      //print('DateCondition currDt : ${getCurrentDate()}');
+      //   print('DateCondition currDt : ${parsedDate2}');
+      //print('DateCondition _selectedDate : ${_selectedDate}');
+
+      //DateTime dt1 = DateTime.parse("2021-12-23 11:47:00");
+      DateTime dt2 = DateTime.parse(getCurrentDate());
+
+      if (formattedDate2.toString() == getCurrentDate2()) {
+        // print('equal to current date#########');
+        _showErrorPopup(Strings.PncDate_sahi_kare_msg,ColorConstants.AppColorPrimary);
+      } else {
+        // print('not equal to current date#########');
+        //print('DateCondition dt1 : ${_selectedDate}');
+        //print('DateCondition dt2 : ${dt2}');
+        if(_selectedDate.compareTo(dt2) > 0){
+          //   print("DT2 is after DT1");
+          _showErrorPopup(Strings.aaj_ki_tareek_sai_phale,ColorConstants.AppColorPrimary);
+        }else{
+          var deliveryAbortionDate = DateTime.parse(getConvertRegDateFormat(widget.DeliveryAbortionDate));
+          print("deliveryAbortionDate ${deliveryAbortionDate}");
+          if (_selectedDate.compareTo(deliveryAbortionDate) > 0) {
+            print('after pnc date');
+
+
+            var parseCalenderSelectedAncDate = DateTime.parse(formattedDate4.toString());
+            var intentAncDate = DateTime.parse(getConvertRegDateFormat(widget.DeliveryAbortionDate));
+            print('AncDate calendr ${parseCalenderSelectedAncDate}');
+            print('AncDate intentt ${intentAncDate}');
+            final diff_lmp_ancdate = parseCalenderSelectedAncDate.difference(intentAncDate).inDays+1;
+            print('AncDate diff ${diff_lmp_ancdate}');
+            if(diff_lmp_ancdate == 0 || diff_lmp_ancdate == 1){
+              if(widget.DelplaceCode == "-1" || widget.DelplaceCode == "-2" ){
+                _PncFlag_post="1";
+
+                _pncDDdateController.text = getDate(formattedDate4);
+                _pncMMdateController.text = getMonth(formattedDate4);
+                _pncYYYYdateController.text = getYear(formattedDate4);
+                _PncDatePost=_pncYYYYdateController.text.toString()+ "/"+_pncMMdateController.text.toString()+"/"+_pncDDdateController.text.toString();
+                print('_PncDatePost $_PncDatePost');
+
+              }else{
+                _showErrorPopup(Strings.difference_btw_png_deli,ColorConstants.AppColorPrimary);
+              }
+            }else if(diff_lmp_ancdate >= 2 && diff_lmp_ancdate <= 4){
+              _PncFlag_post="2";
+
+              _pncDDdateController.text = getDate(formattedDate4);
+              _pncMMdateController.text = getMonth(formattedDate4);
+              _pncYYYYdateController.text = getYear(formattedDate4);
+              _PncDatePost=_pncYYYYdateController.text.toString()+ "/"+_pncMMdateController.text.toString()+"/"+_pncDDdateController.text.toString();
+              print('_PncDatePost $_PncDatePost');
+
+            }else if(diff_lmp_ancdate >= 6 && diff_lmp_ancdate <= 8){
+              _PncFlag_post="3";
+
+              _pncDDdateController.text = getDate(formattedDate4);
+              _pncMMdateController.text = getMonth(formattedDate4);
+              _pncYYYYdateController.text = getYear(formattedDate4);
+              _PncDatePost=_pncYYYYdateController.text.toString()+ "/"+_pncMMdateController.text.toString()+"/"+_pncDDdateController.text.toString();
+              print('_PncDatePost $_PncDatePost');
+
+            }else if(diff_lmp_ancdate >= 13 && diff_lmp_ancdate <= 15){
+              _PncFlag_post="4";
+
+              _pncDDdateController.text = getDate(formattedDate4);
+              _pncMMdateController.text = getMonth(formattedDate4);
+              _pncYYYYdateController.text = getYear(formattedDate4);
+              _PncDatePost=_pncYYYYdateController.text.toString()+ "/"+_pncMMdateController.text.toString()+"/"+_pncDDdateController.text.toString();
+              print('_PncDatePost $_PncDatePost');
+
+            }else if(diff_lmp_ancdate >= 19 && diff_lmp_ancdate <= 23){
+              _PncFlag_post="5";
+
+              _pncDDdateController.text = getDate(formattedDate4);
+              _pncMMdateController.text = getMonth(formattedDate4);
+              _pncYYYYdateController.text = getYear(formattedDate4);
+              _PncDatePost=_pncYYYYdateController.text.toString()+ "/"+_pncMMdateController.text.toString()+"/"+_pncDDdateController.text.toString();
+              print('_PncDatePost $_PncDatePost');
+            }else if(diff_lmp_ancdate >= 26 && diff_lmp_ancdate <= 30){
+              _PncFlag_post="6";
+
+              _pncDDdateController.text = getDate(formattedDate4);
+              _pncMMdateController.text = getMonth(formattedDate4);
+              _pncYYYYdateController.text = getYear(formattedDate4);
+              _PncDatePost=_pncYYYYdateController.text.toString()+ "/"+_pncMMdateController.text.toString()+"/"+_pncDDdateController.text.toString();
+              print('_PncDatePost $_PncDatePost');
+            }else if(diff_lmp_ancdate >= 40 && diff_lmp_ancdate <= 44){
+              _PncFlag_post="7";
+
+              _pncDDdateController.text = getDate(formattedDate4);
+              _pncMMdateController.text = getMonth(formattedDate4);
+              _pncYYYYdateController.text = getYear(formattedDate4);
+              _PncDatePost=_pncYYYYdateController.text.toString()+ "/"+_pncMMdateController.text.toString()+"/"+_pncDDdateController.text.toString();
+              print('_PncDatePost $_PncDatePost');
+            }else {
+              _showErrorPopup(Strings.please_correct_pnc_date,ColorConstants.AppColorPrimary);
+            }
+          }else{
+            print('before pnc date');
+            _showErrorPopup(Strings.check_png_date,ColorConstants.AppColorPrimary);
+          }
+        }
+      }
+    });
+  }
+
   void _selectANCDatePopup(int yyyy,int mm ,int dd) {
     showDatePicker(
         context: context,

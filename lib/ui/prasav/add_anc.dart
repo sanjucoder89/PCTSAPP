@@ -454,7 +454,7 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
           custom_high_pragnancy_cvslist.add(CustomHighRiskPragnancyList(rishId: 2,rishValue: "8"));
         }else{
           custom_high_pragnancy_cvslist.removeWhere((item) => item.rishId == 2);
-          _highRiskChecked=false;
+          _highRiskChecked=true;
           _highRiskEnDisableCB=true;//enable or disable highrisk checkbox
         }
       }else{
@@ -566,7 +566,7 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
       edtBP_D=int.parse(_bloodpreshourDController.text.toString());
     }
 
-    if(aashaId == "0"){
+    if(aashaId == "0" && preferences.getString("AppRoleID").toString() == '32'){
       _showErrorPopup(Strings.aasha_chunai,ColorConstants.AppColorPrimary);
     }/*else if(aanganBadiId == "0"){
       _showErrorPopup(Strings.aanganbadi_chunai,ColorConstants.AppColorPrimary);
@@ -1866,7 +1866,9 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
                                             //_hbCount=text.trim();
                                             print('mahilaheight $text');
                                             print('_hbCount $text');
-                                            getHBHeightCheck(_animyaHBCountController.text.toString().trim(),text);
+                                            if(widget.HighRisk == "0") { //0=no HR 1=HR
+                                              getHBHeightCheck(_animyaHBCountController.text.toString().trim(),text);
+                                            }
                                           },
                                         ))))
                           ],
@@ -1937,7 +1939,9 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
                                         }else{
 
                                         }
-                                        getHBHeightCheck(text,_mahilaHeightController.text.toString().trim());
+                                        if(widget.HighRisk == "0"){//0=no HR 1=HR
+                                          getHBHeightCheck(text,_mahilaHeightController.text.toString().trim());
+                                        }
                                       }
                                     },
                                   ))))

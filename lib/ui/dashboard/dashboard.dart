@@ -3401,7 +3401,7 @@ class _DashboardScreen extends State<DashboardScreen> {
                       Container(
                         width: 100,
                         child: Text(
-                          '$block_value-$block_value2',
+                          '$block_value/$block_value2',
                           style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,

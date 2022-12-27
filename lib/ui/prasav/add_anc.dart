@@ -454,7 +454,7 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
           custom_high_pragnancy_cvslist.add(CustomHighRiskPragnancyList(rishId: 2,rishValue: "8"));
         }else{
           custom_high_pragnancy_cvslist.removeWhere((item) => item.rishId == 2);
-          _highRiskChecked=true;
+          _highRiskChecked=false;
           _highRiskEnDisableCB=true;//enable or disable highrisk checkbox
         }
       }else{
@@ -4324,8 +4324,7 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
                                       iconSize: 15,
                                       elevation: 11,
                                       //style: TextStyle(color: Colors.black),
-                                      style:
-                                      Theme.of(context).textTheme.bodyText1,
+                                     // style: Theme.of(context).textTheme.bodyText1,
                                       isExpanded: true,
                                       // hint: new Text("Select State"),
                                       items: urine_range_list.map((item) {
@@ -4340,7 +4339,7 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
                                                         item.range.toString(),
                                                         //Names that the api dropdown contains
                                                         style: TextStyle(
-                                                          fontSize: 10.0,
+                                                          fontSize: 14.0,
                                                         ),
                                                       ),
                                                     )),
@@ -4406,8 +4405,7 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
                                       iconSize: 15,
                                       elevation: 11,
                                       //style: TextStyle(color: Colors.black),
-                                      style:
-                                          Theme.of(context).textTheme.bodyText1,
+                                      //style: Theme.of(context).textTheme.bodyText1,
                                       isExpanded: true,
                                       // hint: new Text("Select State"),
                                       items: urine_range_list.map((item) {
@@ -4422,7 +4420,7 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
                                                     item.range.toString(),
                                                     //Names that the api dropdown contains
                                                     style: TextStyle(
-                                                      fontSize: 10.0,
+                                                      fontSize: 14.0,
                                                     ),
                                                   ),
                                                 )),
@@ -4512,8 +4510,7 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
                                       iconSize: 15,
                                       elevation: 11,
                                       //style: TextStyle(color: Colors.black),
-                                      style:
-                                          Theme.of(context).textTheme.bodyText1,
+                                      //style:Theme.of(context).textTheme.bodyText1,
                                       isExpanded: true,
                                       // hint: new Text("Select State"),
                                       items: custom_treatment_list.map((item) {
@@ -4528,7 +4525,7 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
                                                     item.code.toString(),
                                                     //Names that the api dropdown contains
                                                     style: TextStyle(
-                                                      fontSize: 10.0,
+                                                      fontSize: 14.0,
                                                     ),
                                                   ),
                                                 )),

@@ -146,7 +146,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
   var  change_title_block=Strings.block;
 
   bool isClickableEnableDisable=true;
-  bool finalButtonView=false;
+  bool finalButtonView=true;
 
 
 
@@ -824,6 +824,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
           isClickableEnableDisable=false;//clickable false if logged in via Asha or ANMVerify == 1
         }else{
           if(response_list[0]['DeathDate'].toString() == "null"){
+            print('chikuu');
             finalButtonView=true;
           }else{
             if(int.parse(response_list[0]['ashaautoid'].toString()) > 0 && response_list[0]['ashaautoid'].toString() == preferences.getString("ANMAutoID")){
@@ -837,6 +838,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
           }
         }
       }else{
+
         finalButtonView=false;
       }
 
@@ -2970,10 +2972,8 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
             ),
 
 
-            _isItAsha == true
-                ?
             Visibility(
-                visible: finalButtonView,
+                visible: true,
                 child: GestureDetector(
                   onTap: (){
                     if(isClickableEnableDisable == true){
@@ -3007,8 +3007,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
                     ),
                   ),
                 ))
-                :
-            Container(),
+
           ],
         ),
       ),

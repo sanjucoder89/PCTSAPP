@@ -401,7 +401,7 @@ class _ChildInfantListState extends State<ChildInfantList> {
             color: ColorConstants.lifebgColor,
             child: GestureDetector(
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ShishuDeathDetails(//ShishuDeathDetails , ShishuDeathDetailsScreen
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ShishuDeathDetails(
                     pctsID: response_listing[index]['pctsid'].toString(),
                     infantId:  response_listing[index]['InfantID'].toString(),
                     birthdate:response_listing[index]['Birth_date'].toString(),

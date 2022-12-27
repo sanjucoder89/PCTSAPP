@@ -1996,16 +1996,18 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
                                     ),
                                     onChanged: (text) {
                                       if(text.toString().length > 1){
-                                        if(double.parse(widget.weight) > double.parse(_weightKiloGramController.text.toString().isEmpty ? "0.0" : _weightKiloGramController.text.toString())){
-                                          finall_weight=double.parse(widget.weight) -double.parse(_weightKiloGramController.text.toString().isEmpty ? "0.0" : _weightKiloGramController.text.toString());
+                                        /*if(double.parse(widget.weight) > double.parse(_weightKiloGramController.text.toString().isEmpty ? "0.0" : _weightKiloGramController.text.toString())){
+                                          finall_weight=double.parse(widget.weight) - double.parse(_weightKiloGramController.text.toString().isEmpty ? "0.0" : _weightKiloGramController.text.toString());
                                           print('last weight : ${widget.weight}');//45
                                           print('finall_weight ${finall_weight}');//60-45=15
                                         }else{
                                           finall_weight=double.parse(_weightKiloGramController.text.toString().isEmpty ? "0.0" : _weightKiloGramController.text.toString()) - double.parse(widget.weight);
                                           print('last weight : ${widget.weight}');//45
                                           print('finall_weight ${finall_weight}');//60-45=15
-                                        }
-
+                                        }*/
+                                        finall_weight=double.parse(_weightKiloGramController.text.toString().isEmpty ? "0.0" : _weightKiloGramController.text.toString()) - double.parse(widget.weight);
+                                        print('last weight : ${widget.weight}');//45
+                                        print('finall_weight ${finall_weight}');//60-45=15
                                         if(double.parse(widget.weight).toString() != "0.0"){
                                           print('final_diff_dates ${final_diff_dates}');//60-45=15
                                           if(final_diff_dates <= 14){

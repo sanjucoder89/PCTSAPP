@@ -432,7 +432,7 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
       });
       if(int.parse(widget.Height.toString()) <= 140 ){
         custom_high_pragnancy_cvslist.add(CustomHighRiskPragnancyList(rishId: 3,rishValue: "9"));
-
+        getTreatmentListAPI();
         _showHideHighRiskView=true;
         _highRiskChecked=true;//checked highrisk chkbox
         _chotakadCheckb=true;//checked chota kad  chkbox
@@ -447,6 +447,7 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
 
       if(widget.Age != "null"){
         if (int.parse(widget.Age) < 18 || int.parse(widget.Age) > 35) {
+          getTreatmentListAPI();
           _highRiskChecked=true;//checked highrisk chkbox
           _highRiskEnDisableCB=false;//enable or disable highrisk checkbox
           _ageCheckb=true;//checked chota kad  chkbox
@@ -465,6 +466,7 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
       if(widget.DeliveryComplication == "1"){
         _showHideHighRiskView=true;
         custom_high_pragnancy_cvslist.add(CustomHighRiskPragnancyList(rishId: 4,rishValue: "10"));
+        getTreatmentListAPI();
         _highRiskChecked=true;//checked highrisk chkbox
         _highRiskEnDisableCB=false;//enable or disable highrisk checkbox
         _purvJatilPrastutiCheckb=true;
@@ -1198,10 +1200,10 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
   }
 
   Future<TreatmentListData> getTreatmentListAPI() async {
-    await EasyLoading.show(
+    /*await EasyLoading.show(
       status: 'loading...',
       maskType: EasyLoadingMaskType.black,
-    );
+    );*/
     preferences = await SharedPreferences.getInstance();
     var response = await get(Uri.parse(_treatmentcode_list_url));
     var resBody = json.decode(response.body);
@@ -1226,7 +1228,7 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
         print('treat.len ${custom_treatment_list.length}');
         _showHideHighRiskView = false;
       }
-      EasyLoading.dismiss();
+     // EasyLoading.dismiss();
     });
     print('response:${apiResponse.message}');
     return TreatmentListData.fromJson(resBody);

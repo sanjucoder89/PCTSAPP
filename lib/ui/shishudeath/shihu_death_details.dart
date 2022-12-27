@@ -1025,6 +1025,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorConstants.white,
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
@@ -3045,7 +3046,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
 
           var selectedParsedDate = DateTime.parse(formattedDate4.toString());
 
-          if (selectedParsedDate.compareTo(birthDate) > 0) //2021-04-22 00:00:00.000
+          if (selectedParsedDate.compareTo(birthDate) >= 0) //2021-04-22 00:00:00.000
             {
               final diff_in_days = selectedParsedDate.difference(birthDate).inDays;
               //print('diff_in_days ${diff_in_days}');
@@ -3149,7 +3150,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
 
           var selectedParsedDate = DateTime.parse(formattedDate4.toString());
 
-          if (selectedParsedDate.compareTo(birthDate) > 0) //2021-04-22 00:00:00.000
+          if (selectedParsedDate.compareTo(birthDate) >= 0) //2021-04-22 00:00:00.000
             {
               final diff_in_days = selectedParsedDate.difference(birthDate).inDays;
               //print('diff_in_days ${diff_in_days}');

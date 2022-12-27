@@ -422,7 +422,7 @@ class _ChildInfantListState extends State<ChildInfantList> {
                               child: Padding(
                                 padding: const EdgeInsets.all(5.0),
                                 child: Text(
-                                  Strings.death_date,
+                                  Strings.shishu_ki_janam_tithi,
                                   style: TextStyle(
                                       fontSize: 13,
                                       color: ColorConstants.AppColorPrimary,

@@ -6,7 +6,6 @@ import 'package:flutter_ripple/flutter_ripple.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:pcts/ui/shishudeath/shihu_death_details.dart';
-import 'package:pcts/ui/shishudeath/shihu_death_details_new.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart'; //for date format
 import '../../constant/AboutAppDialoge.dart';
@@ -402,7 +401,7 @@ class _ChildInfantListState extends State<ChildInfantList> {
             color: ColorConstants.lifebgColor,
             child: GestureDetector(
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ShishuDeathDetailsNew(//ShishuDeathDetails , ShishuDeathDetailsScreen
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ShishuDeathDetails(//ShishuDeathDetails , ShishuDeathDetailsScreen
                     pctsID: response_listing[index]['pctsid'].toString(),
                     infantId:  response_listing[index]['InfantID'].toString(),
                     birthdate:response_listing[index]['Birth_date'].toString(),

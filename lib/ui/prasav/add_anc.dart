@@ -566,7 +566,7 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
       edtBP_D=int.parse(_bloodpreshourDController.text.toString());
     }
 
-    if(aashaId == "0" && preferences.getString("AppRoleID").toString() == '32'){
+    if(aashaId == "0" && preferences.getString("AppRoleID").toString() != '32'){
       _showErrorPopup(Strings.aasha_chunai,ColorConstants.AppColorPrimary);
     }/*else if(aanganBadiId == "0"){
       _showErrorPopup(Strings.aanganbadi_chunai,ColorConstants.AppColorPrimary);

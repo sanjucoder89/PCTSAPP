@@ -7,7 +7,6 @@ import 'package:flutter_ripple/flutter_ripple.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:pcts/ui/shishudeath/shihu_death_details.dart';
-import 'package:pcts/ui/shishudeath/shihu_death_details_new.dart';
 import 'package:pcts/ui/shishutikakan/tikakaran_details.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart'; //for date format
@@ -620,7 +619,7 @@ class _ShishuDeathList extends State<ShishuDeathList> {
                         itemBuilder: (context, childindex) {
                           return GestureDetector(
                             onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => ShishuDeathDetailsNew(//ShishuDeathDetails , ShishuDeathDetailsNew
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => ShishuDeathDetails(//ShishuDeathDetails , ShishuDeathDetailsNew
                                 pctsID: response_listing[index]['pctsid'].toString(),
                                 infantId:  response_listing[index]['InfantID'].toString(),
                                 birthdate:response_listing[index]['Birth_date'].toString(),

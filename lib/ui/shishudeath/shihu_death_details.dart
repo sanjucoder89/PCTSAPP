@@ -143,9 +143,13 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
   var _BloodGroup="";
   var  submit_title="";
   var  change_title=Strings.sa_pra_dispensary;
+  var  change_title_block=Strings.block;
 
   bool isClickableEnableDisable=true;
   bool finalButtonView=false;
+
+
+
   bool referSansthaView=false;
   bool referJilaView=false;
   bool referBlockView=false;
@@ -174,6 +178,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
 
   List response_list = [];
   late String aashaId = "";
+  late String AnmVerify = "";
 
   Future<String> getDeathDetailsAPI() async {
     await EasyLoading.show(
@@ -193,7 +198,19 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
       if (apiResponse.status == true) {
         response_list = resBody['ResposeData'];
         print('res.len  ${response_list.length}');
-        aashaId=response_list[0]['ashaautoid'].toString();
+
+        if(preferences.getString("AppRoleID").toString() == '33' ){
+          aashaId = preferences.getString('ANMAutoID').toString();
+            if(response_list[0]['ashaautoid'].toString() == aashaId){
+              _isItAsha=true;
+            }else{
+              _isItAsha=false;
+            }
+        }else{
+          aashaId=response_list[0]['ashaautoid'].toString();
+          _isItAsha=true;
+        }
+        AnmVerify=response_list[0]['ANMVerify'].toString() == "null" ? "0" : response_list[0]['ANMVerify'].toString();
         getAashaListAPI(response_list[0]['RegUnitid'].toString(),response_list[0]['VillageAutoID'].toString());
         getDistrictListAPI("3");
       } else {
@@ -211,6 +228,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
   }
   List<CustomAashaList> custom_aasha_list = [];
   List aasha_response_list = [];
+  bool _isItAsha=true;
   Future<String> getAashaListAPI(String _RegUnitid,String _villageautoid) async {
     preferences = await SharedPreferences.getInstance();
     var response = await post(Uri.parse(_aasha_list_url), body: {
@@ -278,9 +296,41 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
     print('response:${apiResponse.message}');
     return GetDistrictListData.fromJson(resBody);
   }
+  Future<GetDistrictListData> getDistrictListAPIReset(String refUnitType) async {
+    /*await EasyLoading.show(
+      status: 'loading...',
+      maskType: EasyLoadingMaskType.black,
+    );*/
+    preferences = await SharedPreferences.getInstance();
+    var response = await post(Uri.parse(_get_district_list_url), body: {
+      //RefUnittype:3
+      // TokenNo:730c8ec9-d70b-44a1-b68e-0f5cfe7e3957
+      // UserID:0101010020201
+      "RefUnittype": refUnitType,
+      "TokenNo": preferences.getString('Token'),
+      "UserID": preferences.getString('UserId')
+    });
+    var resBody = json.decode(response.body);
+    final apiResponse = TreatmentListData.fromJson(resBody);
+    setState(() {
+      if (apiResponse.status == true) {
+        response_district_list = resBody['ResposeData'];
+        custom_district_list.clear();
+        custom_district_list.add(CustomDistrictCodeList(unitcode: "0000", unitNameHindi:Strings.choose));
+        for (int i = 0; i < response_district_list.length; i++) {
+          custom_district_list.add(CustomDistrictCodeList(unitcode: resBody['ResposeData'][i]['unitcode'],unitNameHindi: resBody['ResposeData'][i]['unitNameHindi']));
+        }
+        _selectedDistrictUnitCode = custom_district_list[0].unitcode.toString();
+      } else {
+        custom_district_list.clear();
+      }
+    });
+    print('Didresponse:${apiResponse.message}');
+    return GetDistrictListData.fromJson(resBody);
+  }
 
-  var _selectedBlockUnitCode = "0";
-  var _selectedCHPhcCode = "0";
+  var _selectedBlockUnitCode = "000000";
+  var _selectedCHPhcCode = "000000000";
   var _selectedUpSwasthyaCode = "0";
   List<CustomBlockCodeList> custom_block_list = [];
   var _Action="";
@@ -289,72 +339,77 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
       status: 'loading...',
       maskType: EasyLoadingMaskType.black,
     );
-    //print('refUnitType $refUnitType');
-    // print('referUnitCode $refUnitCode');
+    print('DeathUnittype $refUnitType');
+    print('DeathUnitCode $refUnitCode');
     preferences = await SharedPreferences.getInstance();
     var response = await post(Uri.parse(_get_block_list_url), body: {
-      //TokenNo:8fee200c-21ff-4f9f-8828-c02a7a56c63a
-      // UserID:0101010020201
-      // DeathUnittype:4
-      // DeathUnitCode:0101
       "DeathUnittype": refUnitType,
       "DeathUnitCode": refUnitCode,
       "TokenNo": preferences.getString('Token'),
       "UserID": preferences.getString('UserId')
     });
-    //print('res.body ${response.body.toString()}');
+    print('res.body ${response.body.toString()}');
     List<dynamic> x2 = jsonDecode(response.body.toString());
     // print(x2[0]);
     setState(() {
-      //  custom_block_list.clear();
-      custom_block_list.add(CustomBlockCodeList( UnitID:"0", UnitName:Strings.choose,UnitCode: "000000"));
+      custom_block_list.clear();
+      custom_block_list.add(CustomBlockCodeList(UnitID:"0", UnitName:Strings.choose,UnitCode: "000000"));
       for (int i = 0; i < x2.length; i++) {
         custom_block_list.add(CustomBlockCodeList(UnitID:x2[i]['UnitID'].toString(),//{UnitID: 216, UnitName: अरॉई, UnitCode: 01010600000}
             UnitName:x2[i]['UnitName'].toString(),
             UnitCode:x2[i]['UnitCode'].toString()));
       }
+      print('testblockcode len ${custom_block_list.length}');
+      //print('testblockcode old ${custom_block_list[0].UnitCode.toString()}');
+    //  print('testblockcode _selectedBlockUnitCode ${_selectedBlockUnitCode}');
       _selectedBlockUnitCode = custom_block_list[0].UnitCode.toString();
 
-      if(response_list[0]['deathPlaceUnitcode'].toString() != "null"){
-        for (int i = 0; i < custom_block_list.length; i++) {
-          if(custom_block_list[i].UnitCode.toString().substring(0,6) == response_list[0]['deathPlaceUnitcode'].toString().substring(0, 6)){
-            _selectedBlockUnitCode=custom_block_list[i].UnitCode.toString();
-            postDeathUnitID=response_list[0]['deathPlaceUnitcode'].toString() == "null" ? "" : response_list[0]['deathPlaceUnitcode'].toString() == null ? "" : response_list[0]['deathPlaceUnitcode'].toString();
-            print('selected postDeathUnitID ${postDeathUnitID}');
+      if(_selectedReferSanstha == "16"){
+        getCHPHCListAPI(refUnitCode+"00", _selectedReferSanstha, "1");
+        postDeathUnitID=response_list[0]['deathPlaceUnitcode'].toString() == "null" ? "" : response_list[0]['deathPlaceUnitcode'].toString() == null ? "" : response_list[0]['deathPlaceUnitcode'].toString();
+        print('selected postDeathUnitID ${postDeathUnitID}');
+      }else{
+        if(response_list[0]['deathPlaceUnitcode'].toString() != "null"){
+          for (int i = 0; i < custom_block_list.length; i++) {
+            if(custom_block_list[i].UnitCode.toString().substring(0,6) == response_list[0]['deathPlaceUnitcode'].toString().substring(0, 6)){
+              _selectedBlockUnitCode=custom_block_list[i].UnitCode.toString();
+              postDeathUnitID=response_list[0]['deathPlaceUnitcode'].toString() == "null" ? "" : response_list[0]['deathPlaceUnitcode'].toString() == null ? "" : response_list[0]['deathPlaceUnitcode'].toString();
+              print('selected postDeathUnitID ${postDeathUnitID}');
+            }
           }
-        }
-        var blockValue=0;
-        for (int pos = 0; pos < custom_block_list.length; pos++) {
-          if(_selectedBlockUnitCode == custom_block_list[pos].UnitCode){
-            print('selected position ${pos}');
-            blockValue=pos;
-            break;
+          var blockValue=0;
+          for (int pos = 0; pos < custom_block_list.length; pos++) {
+            if(_selectedBlockUnitCode == custom_block_list[pos].UnitCode){
+              print('selected position ${pos}');
+              blockValue=pos;
+              break;
+            }
           }
-        }
-        print('prev_refer_sanstha $_selectedReferSanstha');
-        if(blockValue == 0){
-          _Action="2";
-          getCHPHCListAPI(response_list[0]['deathPlaceUnitcode'].toString() == "null" ? "" : response_list[0]['deathPlaceUnitcode'].toString() == null ? "" : response_list[0]['deathPlaceUnitcode'].toString(),
-              response_list[0]['deathPlaceUnittype'].toString(), _Action);
-        }else if(_selectedReferSanstha == "8" || _selectedReferSanstha == "9" || _selectedReferSanstha == "10" ||_selectedReferSanstha == "16"){
-          _Action="1";
-          getCHPHCListAPI(response_list[0]['deathPlaceUnitcode'].toString() == "null" ? "" : response_list[0]['deathPlaceUnitcode'].toString() == null ? "" : response_list[0]['deathPlaceUnitcode'].toString(),
-              response_list[0]['deathPlaceUnittype'].toString(), _Action);
-        }else if(_selectedReferSanstha == "11"){
+          print('prev_refer_sanstha $_selectedReferSanstha');
           if(blockValue == 0){
             _Action="2";
             getCHPHCListAPI(response_list[0]['deathPlaceUnitcode'].toString() == "null" ? "" : response_list[0]['deathPlaceUnitcode'].toString() == null ? "" : response_list[0]['deathPlaceUnitcode'].toString(),
                 response_list[0]['deathPlaceUnittype'].toString(), _Action);
+          }else if(_selectedReferSanstha == "8" || _selectedReferSanstha == "9" || _selectedReferSanstha == "10" ||_selectedReferSanstha == "16"){
+            _Action="1";
+            getCHPHCListAPI(response_list[0]['deathPlaceUnitcode'].toString() == "null" ? "" : response_list[0]['deathPlaceUnitcode'].toString() == null ? "" : response_list[0]['deathPlaceUnitcode'].toString(),
+                response_list[0]['deathPlaceUnittype'].toString(), _Action);
+          }else if(_selectedReferSanstha == "11"){
+            if(blockValue == 0){
+              _Action="2";
+              getCHPHCListAPI(response_list[0]['deathPlaceUnitcode'].toString() == "null" ? "" : response_list[0]['deathPlaceUnitcode'].toString() == null ? "" : response_list[0]['deathPlaceUnitcode'].toString(),
+                  response_list[0]['deathPlaceUnittype'].toString(), _Action);
 
+            }else{
+              _Action="3";
+              getCHPHCListAPI(response_list[0]['deathPlaceUnitcode'].toString() == "null" ? "" : response_list[0]['deathPlaceUnitcode'].toString() == null ? "" : response_list[0]['deathPlaceUnitcode'].toString(),
+                  response_list[0]['deathPlaceUnittype'].toString(), _Action);
+            }
           }else{
-            _Action="3";
+            _Action="1";
             getCHPHCListAPI(response_list[0]['deathPlaceUnitcode'].toString() == "null" ? "" : response_list[0]['deathPlaceUnitcode'].toString() == null ? "" : response_list[0]['deathPlaceUnitcode'].toString(),
                 response_list[0]['deathPlaceUnittype'].toString(), _Action);
           }
-        }else{
-          _Action="1";
-          getCHPHCListAPI(response_list[0]['deathPlaceUnitcode'].toString() == "null" ? "" : response_list[0]['deathPlaceUnitcode'].toString() == null ? "" : response_list[0]['deathPlaceUnitcode'].toString(),
-              response_list[0]['deathPlaceUnittype'].toString(), _Action);
         }
       }
       EasyLoading.dismiss();
@@ -404,9 +459,18 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
         * Set Last CHPCH Value
         * */
         for (int i = 0; i < custom_chcph_list.length; i++) {
-          print('unitcode ${custom_chcph_list[i].UnitCode.toString()}');
-          if(custom_chcph_list[i].UnitCode.toString().substring(0,9) == _DeathUnitCode.substring(0, 9)){
-            _selectedCHPhcCode=custom_chcph_list[i].UnitCode.toString();
+          //print('unitcode ${custom_chcph_list[i].UnitCode.toString()}');
+          //print('unitcode du ${_DeathUnitCode}');
+          if(_DeathUnitCode.length > 6) {
+            if (custom_chcph_list[i].UnitCode.toString().substring(0, 9) == _DeathUnitCode.substring(0, 9)) {
+              _selectedCHPhcCode = custom_chcph_list[i].UnitCode.toString();
+            }
+          }else{
+            if(postDeathUnitID == custom_chcph_list[i].UnitCode.toString()){
+              _selectedCHPhcCode = custom_chcph_list[i].UnitCode.toString();
+              print('postDeathUnitID_last. ${postDeathUnitID}');
+              print('private_acre_hosp. ${_selectedCHPhcCode}');
+            }
           }
         }
 
@@ -414,7 +478,10 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
         custom_chcph_list.clear();
         print('chphc.len ${custom_chcph_list.length}');
       }
-      getUpSwasthyaListAPI(_DeathUnitCode,_DeathUnittype);
+      if(_selectedReferSanstha != "16"){
+        getUpSwasthyaListAPI(_DeathUnitCode,_DeathUnittype);
+      }
+
       //  EasyLoading.dismiss();
     });
     return "Success";
@@ -607,7 +674,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
 
 
       dreasonId=response_list[0]['ReasonID'].toString();
-      ANMVerify=response_list[0]['ANMVerify'].toString() == "null" ? "" : response_list[0]['ANMVerify'].toString();
+      ANMVerify=response_list[0]['ANMVerify'].toString() == "null" ? "0" : response_list[0]['ANMVerify'].toString();
 
       if(response_list[0]['AgeType'].toString() != "0"){
         print('inside dfdfdfd');
@@ -633,7 +700,8 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
             if(response_list[0]['deathPlace'].toString() == "17"){
               _selectedDeathPlace="2";
               _selectedReferSanstha="17";
-              referSansthaView=true;
+              referSansthaView=false;
+              referBlockView=false;
             }else{
               _selectedDeathPlace=response_list[0]['deathPlace'].toString();
               referSansthaView=false;
@@ -641,7 +709,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
           }
         }
       }
-
+      print('_selectedDeathPlace ${_selectedDeathPlace}');
 
 
 
@@ -657,7 +725,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
         print('refer_santha ${_selectedReferSanstha}');
 
 
-
+      //before
       setState(() {
         if(_selectedReferSanstha == "0" || _selectedReferSanstha == "17"){
           referSansthaView=false;
@@ -707,11 +775,17 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
         getBlockListAPI(_selectedReferSanstha,_selectedDistrictUnitCode.substring(0, 4));
       }
 
-
+      //before
       if(_selectedDeathPlace =="2"){
-        referSansthaView=true;
-        referJilaView=true;
-        referBlockView=true;
+        if(_selectedReferSanstha == "17"){
+          referSansthaView=true;
+          referJilaView=false;
+          referBlockView=false;
+        }else{
+          referSansthaView=true;
+          referJilaView=true;
+          referBlockView=true;
+        }
       }else if(_selectedDeathPlace == "1"){
         referSansthaView=false;
         referJilaView=false;
@@ -731,12 +805,18 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
       }
 
       if(preferences.getString("AppRoleID") == "31" || preferences.getString("AppRoleID") == "32"){
-          finalButtonView=true;
-          if(response_list[0]['ANMVerify'].toString() == "1"){
-              submit_title="सत्यापित किये केस को अपडेट करें";
+          if(response_list[0]['DeathDate'].toString() == "null"){
+            finalButtonView=true;
+            submit_title=Strings.vivran_save_krai;
           }else{
+            finalButtonView=true;
+            if(AnmVerify == "1"){
+              submit_title="एएनएम द्वारा सत्यापित ";
+              isClickableEnableDisable=false;
+            }else{
               submit_title="सत्यापित / विवरण अपडेट करें";
-
+              isClickableEnableDisable=true;
+            }
           }
       }else if(preferences.getString("AppRoleID") == "33"){
         if(response_list[0]['ANMVerify'].toString() == "1"){
@@ -1190,7 +1270,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
                                   .toString() //Id that has to be passed that the dropdown has.....
                           );
                         }).toList(),
-                        onChanged: (String? newVal) {
+                        onChanged:_isItAsha == false ? null : (String? newVal) {
                           setState(() {
                             aashaId = newVal!;
                             print('aashaId:$aashaId');
@@ -1249,7 +1329,8 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
                         decoration: InputDecoration(
                             hintText: Strings.name_of_child,
                             contentPadding: EdgeInsets.zero,
-                            counterText: "",
+                          counterText: "",
+
                         ),
                         textAlign: TextAlign.start,
                         validator: (text) {
@@ -1265,138 +1346,152 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
                   SizedBox(
                     height: 10,
                   ),
-                  Container(
-                    height: 40,
+
+                  Padding(
+                    padding: const EdgeInsets.all(5.0),
                     child: Row(
-                      children:<Widget> [
+                      children: [
                         Expanded(
-                          child: Container(
-                            height: double.infinity,
-                            child: Row(
-                              children: [
-                                Expanded(child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(left: 5.0),
-                                    child: Text(
-                                      Strings.age,
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 13),
-                                    ),
-                                  ),
-                                )),
-                                Container(
-                                  width: 80,
-                                  margin: EdgeInsets.only(right: 10,left: 5),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      border: Border.all(color: Colors.black)),
-                                  padding: EdgeInsets.all(1),
-                                  child: Form(
-                                    key: _formKey2,
-                                    child: TextFormField(
+                            child: RichText(
+                              text: TextSpan(
+                                  text: Strings.death_date,
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 13),
+                                  children: [
+                                    TextSpan(
+                                        text: ' *',
+                                        style: TextStyle(
+                                            color: Colors.red,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14))
+                                  ]),
+                              //textScaleFactor: labelTextScale,
+                              //maxLines: labelMaxLines,
+                              // overflow: overflow,
+                              textAlign: TextAlign.left,
+                            )),
+                        Container(
+                          width: 150,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(color: Colors.black)),
+                          padding: EdgeInsets.all(1),
+                          margin: EdgeInsets.all(3),
+                          height: 30,
+                          child: Row(
+                            children: <Widget>[
+                              Expanded(
+                                  child: Container(
+                                    height: 36,
+                                    child: TextField(
+                                      textAlign: TextAlign.center,
+                                      maxLength: 2,
                                       keyboardType: TextInputType.number,
-                                      maxLength: 3,
-                                      controller: ageController,
+                                      controller: _deathDDdateController,
+                                      maxLines: 1,
+                                      style: TextStyle(fontSize: 13),
+                                      textAlignVertical: TextAlignVertical.center,
                                       decoration: InputDecoration(
-                                          hintText: Strings.age,
+                                          filled: true,
+                                          border: OutlineInputBorder(
+                                              borderSide: BorderSide.none,
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(0))),
+                                          fillColor:Colors.transparent,
                                           contentPadding: EdgeInsets.zero,
-                                          counterText: ''
-                                      ),
-                                      textAlign: TextAlign.start,
-                                      validator: (text) {
-                                        if (text == null || text.isEmpty) {
-                                          return 'Value Can\'t Be Empty';
+                                          hintText: ' dd',
+                                          counterText: ''),
+                                      onChanged: (value){
+                                        print('value $value');
+                                        if(_deathDDdateController.text.toString().length == 2 && _deathMMdateController.text.toString().length == 2 && _deathYYYYdateController.text.toString().length == 4){
+                                          _selectANCDatePopupCustom(_deathYYYYdateController.text.toString()+"-"+_deathMMdateController.text.toString()+"-"+_deathDDdateController.text.toString()+" 00:00:00.000");
                                         }
-                                        return null;
-                                      },
+                                      }
                                     ),
-                                  ),
-                                )
-                              ],
-                            ),
+                                  )),
+                              Text("/"),
+                              Expanded(
+                                  child: Container(
+                                    height: 36,
+                                    padding: EdgeInsets.only(left: 5),
+                                    child: TextField(
+                                      textAlign: TextAlign.center,
+                                      maxLength: 2,
+                                      keyboardType: TextInputType.number,
+                                      controller: _deathMMdateController,
+                                      maxLines: 1,
+                                      style: TextStyle(fontSize: 13),
+                                      textAlignVertical: TextAlignVertical.center,
+                                      decoration: InputDecoration(
+                                          filled: true,
+                                          border: OutlineInputBorder(
+                                              borderSide: BorderSide.none,
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(0))),
+                                          fillColor: Colors.transparent,
+                                          contentPadding: EdgeInsets.zero,
+                                          hintText: ' mm',
+                                          counterText: ''),
+                                      onChanged: (value){
+                                        print('value $value');
+                                        if(_deathDDdateController.text.toString().length == 2 && _deathMMdateController.text.toString().length == 2 && _deathYYYYdateController.text.toString().length == 4){
+                                          _selectANCDatePopupCustom(_deathYYYYdateController.text.toString()+"-"+_deathMMdateController.text.toString()+"-"+_deathDDdateController.text.toString()+" 00:00:00.000");
+                                        }
+                                      }
+                                    ),
+                                  )),
+                              Text("/"),
+                              Expanded(
+                                  child: Container(
+                                    height: 36,
+                                    child: TextField(
+                                      textAlign: TextAlign.center,
+                                      maxLength: 4,
+                                      keyboardType: TextInputType.number,
+                                      controller: _deathYYYYdateController,
+                                      maxLines: 1,
+                                      style: TextStyle(fontSize: 13),
+                                      textAlignVertical: TextAlignVertical.center,
+                                      decoration: InputDecoration(
+                                          filled: true,
+                                          border: OutlineInputBorder(
+                                              borderSide: BorderSide.none,
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(0))),
+                                          fillColor: Colors.transparent,
+                                          contentPadding: EdgeInsets.zero,
+                                          hintText: ' yyyy',
+                                          counterText: ''),
+                                      onChanged: (value){
+                                        print('value $value');
+                                        if(_deathDDdateController.text.toString().length == 2 && _deathMMdateController.text.toString().length == 2 && _deathYYYYdateController.text.toString().length == 4){
+                                          _selectANCDatePopupCustom(_deathYYYYdateController.text.toString()+"-"+_deathMMdateController.text.toString()+"-"+_deathDDdateController.text.toString()+" 00:00:00.000");
+                                        }
+                                      }
+                                    ),
+                                  ))
+                            ],
                           ),
                         ),
-                        Expanded(
+                        GestureDetector(
+                          onTap: () {
+                            if(response_list[0]['DeathDate'].toString() != "null"){
+                              _selectANCDatePopup(int.parse(_deathYYYYdateController.text.toString()),int.parse(_deathMMdateController.text.toString()) ,int.parse(_deathDDdateController.text.toString()));
+                            }else{
+                              _selectANCDatePopup(0,0,0);
+                            }
+                          },
                           child: Container(
-                            color: Colors.white,
-                            child: Container(
-                              height: 30,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  border: Border.all(color: Colors.black)),
-                              padding: EdgeInsets.all(1),
-                              margin: EdgeInsets.all(3),
-                              child: DropdownButtonHideUnderline(
-                                child: DropdownButton(
-                                  icon: Padding(
-                                    padding:
-                                    const EdgeInsets.only(right: 10),
-                                    child: Image.asset(
-                                      'Images/ic_dropdown.png',
-                                      height: 12,
-                                      alignment: Alignment.centerRight,
-                                    ),
-                                  ),
-                                  iconSize: 15,
-                                  elevation: 11,
-                                  //style: TextStyle(color: Colors.black),
-                                  style:
-                                  Theme.of(context).textTheme.bodyText1,
-                                  isExpanded: true,
-                                  // hint: new Text("Select State"),
-                                  items: age_categories_list.map((item) {
-                                    return DropdownMenuItem(
-                                        child: Row(
-                                          children: [
-                                            new Flexible(
-                                                child: Padding(
-                                                  padding:
-                                                  const EdgeInsets.all(2.0),
-                                                  child: Text(
-                                                    item.title.toString(),
-                                                    //Names that the api dropdown contains
-                                                    style: TextStyle(
-                                                      fontSize: 10.0,
-                                                    ),
-                                                  ),
-                                                )),
-                                          ],
-                                        ),
-                                        value: item.title.toString() //Id that has to be passed that the dropdown has.....
-                                    );
-                                  }).toList(),
-                                  onChanged: (String? newVal) {
-                                    setState(() {
-                                      _selectedAgeCategory = newVal!;
-                                      if(_selectedAgeCategory == "वर्ष"){
-                                        _AgeType="1";
-                                      }else if(_selectedAgeCategory == "माह"){
-                                        _AgeType="2";
-                                      }else if(_selectedAgeCategory == "सप्ताह"){
-                                        _AgeType="3";
-                                      }else if(_selectedAgeCategory == "दिन"){
-                                        _AgeType="4";
-                                      }else if(_selectedAgeCategory == "घंटे"){
-                                        _AgeType="5";
-                                      }else if(_selectedAgeCategory == "चुनें"){
-                                        _AgeType="0";
-                                      }
-
-                                      if(_AgeType != "0"){
-                                        getDeathReasonListAPI(_AgeType);
-                                      }
-                                    });
-                                  },
-                                  value: _selectedAgeCategory, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
-                                ),
-                              ),
-                            ),
-                          ),
+                              margin: EdgeInsets.only(right: 20, left: 10),
+                              child: Image.asset(
+                                "Images/calendar_icon.png",
+                                width: 20,
+                                height: 20,
+                              )),
                         )
                       ],
                     ),
-                  )
+                  ),
 
                 ],
               ),
@@ -1440,8 +1535,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
                           iconSize: 15,
                           elevation: 11,
                           //style: TextStyle(color: Colors.black),
-                          style:
-                          Theme.of(context).textTheme.bodyText1,
+                          //style: Theme.of(context).textTheme.bodyText1,
                           isExpanded: true,
                           // hint: new Text("Select State"),
                           items: blood_group_list.map((item) {
@@ -1456,7 +1550,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
                                             item.title.toString(),
                                             //Names that the api dropdown contains
                                             style: TextStyle(
-                                              fontSize: 10.0,
+                                              fontSize: 14.0,
                                             ),
                                           ),
                                         )),
@@ -1825,6 +1919,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
                         child: Container(
                             height: 36,
                             child:TextField(
+                              maxLength: 10,
                               keyboardType: TextInputType.number,
                               controller: _mukhiyaMobNoController,
                               decoration: InputDecoration(
@@ -1846,129 +1941,6 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
               ),
             ),
 
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Row(
-                children: [
-                  Expanded(
-                      child: RichText(
-                        text: TextSpan(
-                            text: Strings.death_date,
-                            style: TextStyle(
-                                color: Colors.black, fontSize: 13),
-                            children: [
-                              TextSpan(
-                                  text: ' *',
-                                  style: TextStyle(
-                                      color: Colors.red,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14))
-                            ]),
-                        //textScaleFactor: labelTextScale,
-                        //maxLines: labelMaxLines,
-                        // overflow: overflow,
-                        textAlign: TextAlign.left,
-                      )),
-                  Container(
-                    width: 150,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(color: Colors.black)),
-                    padding: EdgeInsets.all(1),
-                    margin: EdgeInsets.all(3),
-                    height: 30,
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                            child: Container(
-                              height: 36,
-                              child: TextField(
-                                textAlign: TextAlign.center,
-                                maxLength: 2,
-                                keyboardType: TextInputType.number,
-                                controller: _deathDDdateController,
-                                maxLines: 1,
-                                style: TextStyle(fontSize: 13),
-                                textAlignVertical: TextAlignVertical.center,
-                                decoration: InputDecoration(
-                                    filled: true,
-                                    border: OutlineInputBorder(
-                                        borderSide: BorderSide.none,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(0))),
-                                    fillColor:Colors.transparent,
-                                    contentPadding: EdgeInsets.zero,
-                                    hintText: ' dd',
-                                    counterText: ''),
-                              ),
-                            )),
-                        Text("/"),
-                        Expanded(
-                            child: Container(
-                              height: 36,
-                              padding: EdgeInsets.only(left: 5),
-                              child: TextField(
-                                textAlign: TextAlign.center,
-                                maxLength: 2,
-                                keyboardType: TextInputType.number,
-                                controller: _deathMMdateController,
-                                maxLines: 1,
-                                style: TextStyle(fontSize: 13),
-                                textAlignVertical: TextAlignVertical.center,
-                                decoration: InputDecoration(
-                                    filled: true,
-                                    border: OutlineInputBorder(
-                                        borderSide: BorderSide.none,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(0))),
-                                    fillColor: Colors.transparent,
-                                    contentPadding: EdgeInsets.zero,
-                                    hintText: ' mm',
-                                    counterText: ''),
-                              ),
-                            )),
-                        Text("/"),
-                        Expanded(
-                            child: Container(
-                              height: 36,
-                              child: TextField(
-                                textAlign: TextAlign.center,
-                                maxLength: 4,
-                                keyboardType: TextInputType.number,
-                                controller: _deathYYYYdateController,
-                                maxLines: 1,
-                                style: TextStyle(fontSize: 13),
-                                textAlignVertical: TextAlignVertical.center,
-                                decoration: InputDecoration(
-                                    filled: true,
-                                    border: OutlineInputBorder(
-                                        borderSide: BorderSide.none,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(0))),
-                                    fillColor: Colors.transparent,
-                                    contentPadding: EdgeInsets.zero,
-                                    hintText: ' yyyy',
-                                    counterText: ''),
-                              ),
-                            ))
-                      ],
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      _selectANCDatePopup();
-                    },
-                    child: Container(
-                        margin: EdgeInsets.only(right: 20, left: 10),
-                        child: Image.asset(
-                          "Images/calendar_icon.png",
-                          width: 20,
-                          height: 20,
-                        )),
-                  )
-                ],
-              ),
-            ),
             Container(
               child: Align(
                 alignment: Alignment.centerLeft,
@@ -2172,7 +2144,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      _selectReportDatePopup();
+                      _selectReportDatePopup(int.parse(_reportYYYYdateController.text.toString()),int.parse(_reportMMdateController.text.toString()) ,int.parse(_reportDDdateController.text.toString()));
                     },
                     child: Container(
                         margin: EdgeInsets.only(right: 20, left: 10),
@@ -2181,6 +2153,142 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
                           width: 20,
                           height: 20,
                         )),
+                  )
+                ],
+              ),
+            ),
+
+            Container(
+              height: 40,
+              child: Row(
+                children:<Widget> [
+                  Expanded(
+                    child: Container(
+                      height: double.infinity,
+                      child: Row(
+                        children: [
+                          Expanded(child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 5.0),
+                              child: Text(
+                                Strings.age,
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 13),
+                              ),
+                            ),
+                          )),
+                          Container(
+                            width: 80,
+                            margin: EdgeInsets.only(right: 10,left: 5),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                border: Border.all(color: Colors.black)),
+                            padding: EdgeInsets.all(1),
+                            child: Form(
+                              key: _formKey2,
+                              child: TextFormField(
+                                enabled: false,
+                                keyboardType: TextInputType.number,
+                                maxLength: 3,
+                                controller: ageController,
+                               // textAlignVertical:TextAlignVertical.center,
+                                decoration: InputDecoration(
+
+                                    hintText: Strings.age,
+                                    contentPadding: EdgeInsets.zero,
+                                    counterText: ''
+                                ),
+                                textAlign: TextAlign.start,
+                                validator: (text) {
+                                  if (text == null || text.isEmpty) {
+                                    return 'Value Can\'t Be Empty';
+                                  }
+                                  return null;
+                                },
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      color: Colors.white,
+                      child: Container(
+                        height: 30,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(color: Colors.black)),
+                        padding: EdgeInsets.all(1),
+                        margin: EdgeInsets.all(3),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton(
+                            icon: Padding(
+                              padding:
+                              const EdgeInsets.only(right: 10),
+                              child: Image.asset(
+                                'Images/ic_dropdown.png',
+                                height: 12,
+                                alignment: Alignment.centerRight,
+                              ),
+                            ),
+                            iconSize: 15,
+                            elevation: 11,
+                            //style: TextStyle(color: Colors.black),
+                            //style: Theme.of(context).textTheme.bodyText1,
+                            isExpanded: true,
+                            // hint: new Text("Select State"),
+                            items: age_categories_list.map((item) {
+                              return DropdownMenuItem(
+                                  child: Row(
+                                    children: [
+                                      new Flexible(
+                                          child: Padding(
+                                            padding:
+                                            const EdgeInsets.all(2.0),
+                                            child: Text(
+                                              item.title.toString(),
+                                              //Names that the api dropdown contains
+                                              style: TextStyle(
+                                                fontSize: 14.0,
+                                              ),
+                                            ),
+                                          )),
+                                    ],
+                                  ),
+                                  value: item.title.toString() //Id that has to be passed that the dropdown has.....
+                              );
+                            }).toList(),
+                            /*onChanged: (String? newVal) {
+                                    setState(() {
+                                      _selectedAgeCategory = newVal!;
+                                      if(_selectedAgeCategory == "वर्ष"){
+                                        _AgeType="1";
+                                      }else if(_selectedAgeCategory == "माह"){
+                                        _AgeType="2";
+                                      }else if(_selectedAgeCategory == "सप्ताह"){
+                                        _AgeType="3";
+                                      }else if(_selectedAgeCategory == "दिन"){
+                                        _AgeType="4";
+                                      }else if(_selectedAgeCategory == "घंटे"){
+                                        _AgeType="5";
+                                      }else if(_selectedAgeCategory == "चुनें"){
+                                        _AgeType="0";
+                                      }
+
+                                      if(_AgeType != "0"){
+                                        getDeathReasonListAPI(_AgeType);
+                                      }
+                                    });
+                                  },*/
+                            onChanged: null,
+                            value: _selectedAgeCategory, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
+                          ),
+                        ),
+                      ),
+                    ),
                   )
                 ],
               ),
@@ -2241,7 +2349,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
                         iconSize: 15,
                         elevation: 11,
                         //style: TextStyle(color: Colors.black),
-                        style: Theme.of(context).textTheme.bodyText1,
+                        //style: Theme.of(context).textTheme.bodyText1,
                         isExpanded: true,
                         // hint: new Text("Select State"),
                         items: death_place_list.map((item) {
@@ -2255,7 +2363,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
                                           item.title.toString(),
                                           //Names that the api dropdown contains
                                           style: TextStyle(
-                                            fontSize: 10.0,
+                                            fontSize: 14.0,
                                           ),
                                         ),
                                       )),
@@ -2272,6 +2380,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
                               referSansthaView=false;
                               referJilaView=false;
                               referBlockView=false;
+                              _selectedReferSanstha="0";
                             }else if(_selectedDeathPlace == "1"){
                               referSansthaView=false;
                               referJilaView=false;
@@ -2279,6 +2388,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
                               sapraView=false;
                               upSwasthyaKendraView=false;
                               postDeathUnitID=preferences.getString('UnitCode').toString();
+                              _selectedReferSanstha="0";
                             }else if(_selectedDeathPlace == "2"){
                               referSansthaView=true;
                               referJilaView=true;
@@ -2288,13 +2398,14 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
                               referJilaView=false;
                               referBlockView=false;
                               postDeathUnitID=preferences.getString('UnitCode').toString();
+                              _selectedReferSanstha="0";
                             }else if(_selectedDeathPlace == "4"){
                               referSansthaView=false;
                               referJilaView=false;
                               referBlockView=false;
                               postDeathUnitID=preferences.getString('UnitCode').toString();
+                              _selectedReferSanstha="0";
                             }
-
                           });
                         },
                         value: _selectedDeathPlace,
@@ -2363,7 +2474,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
                                   iconSize: 15,
                                   elevation: 11,
                                   //style: TextStyle(color: Colors.black),
-                                  style: Theme.of(context).textTheme.bodyText1,
+                                  //style: Theme.of(context).textTheme.bodyText1,
                                   isExpanded: true,
                                   // hint: new Text("Select State"),
                                   items: refer_sanstha_list.map((item) {
@@ -2378,7 +2489,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
                                                     item.title.toString(),
                                                     //Names that the api dropdown contains
                                                     style: TextStyle(
-                                                      fontSize: 10.0,
+                                                      fontSize: 14.0,
                                                     ),
                                                   ),
                                                 )),
@@ -2394,7 +2505,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
                                       print('_selectedReferSanstha:$_selectedReferSanstha');
                                       //_selectedBlockUnitCode="0";
                                       if(_selectedReferSanstha == "0" || _selectedReferSanstha == "17"){
-                                        referSansthaView=false;
+                                      //  referSansthaView=false;
                                         referJilaView=false;
                                         referBlockView=false;
                                         sapraView=false;
@@ -2405,18 +2516,47 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
                                         referBlockView=true;
                                         upSwasthyaKendraView=true;
                                         sapraView=true;
+                                        getDistrictListAPIReset("3");
+                                        _selectedBlockUnitCode = "000000";
+                                        _selectedCHPhcCode="000000000";
+                                        change_title=Strings.sa_pra_dispensary;
                                       }else if(_selectedReferSanstha == "8" || _selectedReferSanstha == "9" || _selectedReferSanstha == "10" || _selectedReferSanstha == "16"){
                                         referSansthaView=true;
                                         referJilaView=true;
                                         referBlockView=true;
                                         sapraView=true;
                                         upSwasthyaKendraView=false;
-                                      }else {
-                                        referSansthaView=false;
+                                        getDistrictListAPIReset("3");
+                                        _selectedBlockUnitCode = "000000";
+                                        for(int i=0 ;i<refer_sanstha_list.length; i++) {
+                                          if(_selectedReferSanstha == refer_sanstha_list[i].code.toString()){
+                                            change_title=refer_sanstha_list[i].title.toString();
+                                          }
+                                        }
+                                       change_title_block=Strings.block;
+
+                                      }else if(_selectedReferSanstha == "6" ||_selectedReferSanstha == "7" ||_selectedReferSanstha == "5" ||_selectedReferSanstha == "13" ||_selectedReferSanstha == "15"){
+                                        referSansthaView=true;
                                         referJilaView=true;
                                         referBlockView=true;
                                         upSwasthyaKendraView=false;
                                         sapraView=false;
+                                        getDistrictListAPIReset("3");
+                                        _selectedBlockUnitCode = "000000";
+                                        _selectedCHPhcCode="000000000";
+                                        for(int i=0 ;i<refer_sanstha_list.length; i++) {
+                                          if(_selectedReferSanstha == refer_sanstha_list[i].code.toString()){
+                                            change_title_block=refer_sanstha_list[i].title.toString();
+                                          }
+                                        }
+                                      }else {
+                                        //referSansthaView=false;
+                                        referJilaView=true;
+                                        referBlockView=true;
+                                        upSwasthyaKendraView=false;
+                                        sapraView=false;
+                                        getDistrictListAPIReset("3");
+                                        _selectedBlockUnitCode = "000000";
                                       }
                                     });
                                   },
@@ -2476,8 +2616,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
                                   iconSize: 15,
                                   elevation: 11,
                                   //style: TextStyle(color: Colors.black),
-                                  style:
-                                  Theme.of(context).textTheme.bodyText1,
+                                  //style: Theme.of(context).textTheme.bodyText1,
                                   isExpanded: true,
                                   // hint: new Text("Select State"),
                                   items: custom_district_list.map((item) {
@@ -2491,7 +2630,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
                                                   child: Text(item.unitNameHindi.toString(),
                                                     //Names that the api dropdown contains
                                                     style: TextStyle(
-                                                      fontSize: 10.0,
+                                                      fontSize: 14.0,
                                                     ),
                                                   ),
                                                 )),
@@ -2536,7 +2675,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
                         child: Padding(
                           padding: const EdgeInsets.all(5.0),
                           child: Text(
-                            Strings.block,
+                            "$change_title_block",
                             style: TextStyle(color: Colors.black, fontSize: 13),
                           ),
                         ),
@@ -2571,8 +2710,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
                                 iconSize: 15,
                                 elevation: 11,
                                 //style: TextStyle(color: Colors.black),
-                                style:
-                                Theme.of(context).textTheme.bodyText1,
+                                //style: Theme.of(context).textTheme.bodyText1,
                                 isExpanded: true,
                                 // hint: new Text("Select State"),
                                 items: custom_block_list.map((item) {
@@ -2587,7 +2725,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
                                                   item.UnitName.toString(),
                                                   //Names that the api dropdown contains
                                                   style: TextStyle(
-                                                    fontSize: 10.0,
+                                                    fontSize: 14.0,
                                                   ),
                                                 ),
                                               )),
@@ -2603,6 +2741,8 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
                                     print('blockcode:$_selectedBlockUnitCode');
                                     //postDeathUnitID=_selectedBlockUnitCode;
                                     // _ReferUnitCode=_selectedBlockUnitCode;
+
+                                    //before
                                     var blockValue=0;
                                     for (int pos = 0; pos < custom_block_list.length; pos++) {
                                       if(_selectedBlockUnitCode == custom_block_list[pos].UnitCode){
@@ -2611,11 +2751,24 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
                                         break;
                                       }
                                     }
-                                    if(blockValue > 0){
-                                      getCHPHCListAPI(response_list[0]['deathPlaceUnitcode'].toString() == "null" ? "" : response_list[0]['deathPlaceUnitcode'].toString() == null ? "" : response_list[0]['deathPlaceUnitcode'].toString(),
-                                          response_list[0]['deathPlaceUnittype'].toString(),
-                                          blockValue.toString());
-                                    }
+                                      if(blockValue == 0){
+                                        _Action="2";
+                                        getCHPHCListAPI(_selectedBlockUnitCode,_selectedReferSanstha, _Action);
+                                      }else if(_selectedReferSanstha == "8" || _selectedReferSanstha == "9" || _selectedReferSanstha == "10" ||_selectedReferSanstha == "16"){
+                                        _Action="1";
+                                        getCHPHCListAPI(_selectedBlockUnitCode,_selectedReferSanstha, _Action);
+                                      }else if(_selectedReferSanstha == "11"){
+                                        if(blockValue == 0){
+                                          _Action="2";
+                                          getCHPHCListAPI(_selectedBlockUnitCode,_selectedReferSanstha, _Action);
+                                        }else{
+                                          _Action="3";
+                                          getCHPHCListAPI(_selectedBlockUnitCode,_selectedReferSanstha, _Action);
+                                        }
+                                      }else{
+                                        _Action="1";
+                                        getCHPHCListAPI(_selectedBlockUnitCode,_selectedReferSanstha, _Action);
+                                      }
                                   });
                                 },
                                 value: _selectedBlockUnitCode, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
@@ -2676,8 +2829,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
                                 iconSize: 15,
                                 elevation: 11,
                                 //style: TextStyle(color: Colors.black),
-                                style:
-                                Theme.of(context).textTheme.bodyText1,
+                               // style: Theme.of(context).textTheme.bodyText1,
                                 isExpanded: true,
                                 // hint: new Text("Select State"),
                                 items: custom_chcph_list.map((item) {
@@ -2692,7 +2844,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
                                                   item.UnitName.toString(),
                                                   //Names that the api dropdown contains
                                                   style: TextStyle(
-                                                    fontSize: 10.0,
+                                                    fontSize: 14.0,
                                                   ),
                                                 ),
                                               )),
@@ -2706,7 +2858,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
                                   setState(() {
                                     _selectedCHPhcCode = newVal!;
                                     print('_selectedCHPhcCode:$_selectedCHPhcCode');
-
+                                    getUpSwasthyaListAPI(_selectedCHPhcCode, _selectedReferSanstha);
                                   });
                                 },
                                 value: _selectedCHPhcCode, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
@@ -2720,6 +2872,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
                 ),
               ),
             ),
+
             Visibility(
               visible:upSwasthyaKendraView,
               child: Container(
@@ -2766,8 +2919,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
                                 iconSize: 15,
                                 elevation: 11,
                                 //style: TextStyle(color: Colors.black),
-                                style:
-                                Theme.of(context).textTheme.bodyText1,
+                                //style: Theme.of(context).textTheme.bodyText1,
                                 isExpanded: true,
                                 // hint: new Text("Select State"),
                                 items: custom_upswasthya_list.map((item) {
@@ -2782,7 +2934,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
                                                   item.UnitName.toString(),
                                                   //Names that the api dropdown contains
                                                   style: TextStyle(
-                                                    fontSize: 10.0,
+                                                    fontSize: 14.0,
                                                   ),
                                                 ),
                                               )),
@@ -2796,7 +2948,8 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
                                   setState(() {
                                     _selectedUpSwasthyaCode = newVal!;
                                     print('_selectedUpSwasthyaCode:$_selectedUpSwasthyaCode');
-
+                                    postDeathUnitID=_selectedUpSwasthyaCode;
+                                    print('postDeathUnitID:$postDeathUnitID');
                                   });
                                 },
                                 value: _selectedUpSwasthyaCode, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
@@ -2810,11 +2963,15 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
                 ),
               ),
             ),
+
+
             SizedBox(
               height: 30,
             ),
 
 
+            _isItAsha == true
+                ?
             Visibility(
                 visible: finalButtonView,
                 child: GestureDetector(
@@ -2849,7 +3006,9 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
                       ),
                     ),
                   ),
-                )),
+                ))
+                :
+            Container(),
           ],
         ),
       ),
@@ -2867,10 +3026,106 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
   var initalMonth = 0;
   var initalYear = 0;
   var final_diff_dates=0;
-  void _selectANCDatePopup() {
+
+  void _selectANCDatePopupCustom(String _customDate) {
+      setState(() {
+        var parseCustomANCDate = DateTime.parse(getConvertRegDateFormat(_customDate));
+        print('parseCustomANCDate ${parseCustomANCDate}');
+
+
+        _selectedDate = parseCustomANCDate;
+        String formattedDate4 = DateFormat('yyyy-MM-dd').format(_selectedDate);
+        String formattedDate2 = DateFormat('yyyy/MM/dd').format(_selectedDate);
+
+        if (formattedDate2.compareTo(getCurrentDate()) > 0) {
+          //print('equal to current date#########');
+          _showErrorPopup(Strings.aaj_ki_tareek_sai_phale,ColorConstants.AppColorPrimary);
+        } else {
+          var birthDate = DateTime.parse(getConvertRegDateFormat(widget.birthdate));
+          print('birthDate ${birthDate}');//2021-01-23 00:00:00.000
+
+          var selectedParsedDate = DateTime.parse(formattedDate4.toString());
+
+          if (selectedParsedDate.compareTo(birthDate) > 0) //2021-04-22 00:00:00.000
+            {
+              final diff_in_days = selectedParsedDate.difference(birthDate).inDays;
+              //print('diff_in_days ${diff_in_days}');
+              var _calculatedAge = 0.0;
+              if(diff_in_days >= 365){
+                _calculatedAge=diff_in_days/365;
+                //print('calcualted Age_A : ${_calculatedAge}');
+                ageController.text=_calculatedAge.floor().toString();
+
+                setState(() {
+                  _selectedAgeCategory="वर्ष";
+                  _AgeType="1";
+                });
+
+              }else if(diff_in_days > 27){
+                _calculatedAge=diff_in_days/30;
+                //print('calcualted Age_B : ${_calculatedAge}');
+                if(_calculatedAge == 0 || _calculatedAge == 0.0){
+                    setState(() {
+                      _selectedAgeCategory="माह";
+                      _AgeType="2";
+                    });
+                    ageController.text="1";
+                }
+
+                if(_calculatedAge == 12 || _calculatedAge == 12.0){
+                    setState(() {
+                      _selectedAgeCategory="वर्ष";
+                    });
+                    ageController.text="1";
+                }else{
+                  ageController.text=_calculatedAge.floor().toString();
+                }
+
+              }else if(diff_in_days > 6){
+                _calculatedAge=diff_in_days/7;
+               // print('calcualted Age_C : ${_calculatedAge}');
+                setState(() {
+                  _selectedAgeCategory="सप्ताह";
+                  _AgeType="3";
+                });
+                ageController.text=_calculatedAge.floor().toString();
+              }else if(diff_in_days > 0){
+                //print('calcualted Age_D : ${diff_in_days}');
+                setState(() {
+                  _selectedAgeCategory="दिन";
+                  _AgeType="4";
+                });
+                ageController.text=_calculatedAge.floor().toString();
+              }else{
+                //print('calcualted Age_E : ${diff_in_days}');
+                setState(() {
+                  _selectedAgeCategory="घंटे";
+                  _AgeType="5";
+                });
+                ageController.text=_calculatedAge.floor().toString();
+              }
+
+              if(_AgeType != "0"){
+                getDeathReasonListAPI(_AgeType);
+              }
+
+              _deathDDdateController.text = getDate(formattedDate4);
+              _deathMMdateController.text = getMonth(formattedDate4);
+              _deathYYYYdateController.text = getYear(formattedDate4);
+              _DeathDeath=_deathYYYYdateController.text.toString()+ "/"+_deathMMdateController.text.toString()+"/"+_deathDDdateController.text.toString();
+              print('_DeathDeath $_DeathDeath');//2022/12/11
+
+          }else{
+            _showErrorPopup(Strings.choose_after_birth_date, ColorConstants.AppColorPrimary);
+          }
+        }
+      });
+  }
+
+  void _selectANCDatePopup(int yyyy,int mm ,int dd) {
     showDatePicker(
         context: context,
-        initialDate: DateTime.now(),
+        initialDate: (yyyy == 0 && mm == 0 && dd == 0) ? DateTime.now() : DateTime(yyyy, mm , dd ),
         //initialDate: DateTime(initalYear, initalMonth, initalDay),
         firstDate: DateTime(2015),
         lastDate: DateTime(2050))
@@ -2891,17 +3146,79 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
           _showErrorPopup(Strings.aaj_ki_tareek_sai_phale,ColorConstants.AppColorPrimary);
         } else {
           var birthDate = DateTime.parse(getConvertRegDateFormat(widget.birthdate));
-          print('birthDate ${birthDate}');//2021-03-12 00:00:00.000
+          print('birthDate ${birthDate}');//2021-01-23 00:00:00.000
 
           var selectedParsedDate = DateTime.parse(formattedDate4.toString());
 
           if (selectedParsedDate.compareTo(birthDate) > 0) //2021-04-22 00:00:00.000
-              {
-            _deathDDdateController.text = getDate(formattedDate4);
-            _deathMMdateController.text = getMonth(formattedDate4);
-            _deathYYYYdateController.text = getYear(formattedDate4);
-            _DeathDeath=_deathYYYYdateController.text.toString()+ "/"+_deathMMdateController.text.toString()+"/"+_deathDDdateController.text.toString();
-            print('_DeathDeath $_DeathDeath');
+            {
+              final diff_in_days = selectedParsedDate.difference(birthDate).inDays;
+              //print('diff_in_days ${diff_in_days}');
+              var _calculatedAge = 0.0;
+              if(diff_in_days >= 365){
+                _calculatedAge=diff_in_days/365;
+                //print('calcualted Age_A : ${_calculatedAge}');
+                ageController.text=_calculatedAge.floor().toString();
+
+                setState(() {
+                  _selectedAgeCategory="वर्ष";
+                  _AgeType="1";
+                });
+
+              }else if(diff_in_days > 27){
+                _calculatedAge=diff_in_days/30;
+                //print('calcualted Age_B : ${_calculatedAge}');
+                if(_calculatedAge == 0 || _calculatedAge == 0.0){
+                    setState(() {
+                      _selectedAgeCategory="माह";
+                      _AgeType="2";
+                    });
+                    ageController.text="1";
+                }
+
+                if(_calculatedAge == 12 || _calculatedAge == 12.0){
+                    setState(() {
+                      _selectedAgeCategory="वर्ष";
+                    });
+                    ageController.text="1";
+                }else{
+                  ageController.text=_calculatedAge.floor().toString();
+                }
+
+              }else if(diff_in_days > 6){
+                _calculatedAge=diff_in_days/7;
+               // print('calcualted Age_C : ${_calculatedAge}');
+                setState(() {
+                  _selectedAgeCategory="सप्ताह";
+                  _AgeType="3";
+                });
+                ageController.text=_calculatedAge.floor().toString();
+              }else if(diff_in_days > 0){
+                //print('calcualted Age_D : ${diff_in_days}');
+                setState(() {
+                  _selectedAgeCategory="दिन";
+                  _AgeType="4";
+                });
+                ageController.text=_calculatedAge.floor().toString();
+              }else{
+                //print('calcualted Age_E : ${diff_in_days}');
+                setState(() {
+                  _selectedAgeCategory="घंटे";
+                  _AgeType="5";
+                });
+                ageController.text=_calculatedAge.floor().toString();
+              }
+
+              if(_AgeType != "0"){
+                getDeathReasonListAPI(_AgeType);
+              }
+
+              _deathDDdateController.text = getDate(formattedDate4);
+              _deathMMdateController.text = getMonth(formattedDate4);
+              _deathYYYYdateController.text = getYear(formattedDate4);
+              _DeathDeath=_deathYYYYdateController.text.toString()+ "/"+_deathMMdateController.text.toString()+"/"+_deathDDdateController.text.toString();
+              print('_DeathDeath $_DeathDeath');//2022/12/11
+
           }else{
             _showErrorPopup(Strings.choose_after_birth_date, ColorConstants.AppColorPrimary);
           }
@@ -2910,10 +3227,12 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
     });
   }
 
-  void _selectReportDatePopup() {
+
+
+  void _selectReportDatePopup(int yyyy,int mm ,int dd) {
     showDatePicker(
         context: context,
-        initialDate: DateTime.now(),
+        initialDate: DateTime(yyyy, mm , dd ),
         //initialDate: DateTime(initalYear, initalMonth, initalDay),
         firstDate: DateTime(2015),
         lastDate: DateTime(2050))
@@ -3316,7 +3635,6 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
         postDataAPI();
       }
     }
-
   }
   var _UpdateUserNo="";// set value for api request
   var Media="";
@@ -3348,45 +3666,40 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
       _reportdeathPostDate=_reportYYYYdateController.text.toString()+"/"+_reportMMdateController.text.toString()+"/"+_reportDDdateController.text.toString();
     }
 
-    if(_selectedReferSanstha == "17"){
+    //don't uncomment this condition i have set condition at api request as conditional oprator
+    /*if(_selectedReferSanstha == "17"){
       _selectedDeathPlace="17";
-    }
-    print('ChildUpdateRequest=>${
-        "Motherid:"+response_list[0]['Motherid'].toString()+
-        "infantid:"+response_list[0]['InfantID'].toString()+
-        "Name:"+_enterChildNameController.text.toString().trim()+
-        "ReasonID:"+dreasonId+
-        "Age:"+ageController.text.toString().trim()+
-        "DeathDate:"+_DeathDeath+
-        "deathPlace:"+_selectedDeathPlace+
-        "VillageAutoID:"+response_list[0]['VillageAutoID'].toString()+
-        "AgeType:"+_AgeType+
-        "Weight:"+_enterChildWeight.text.toString().trim()+
-        "Bfeed:"+BFeed+
-        "BloodType:"+_BloodGroup+
-        "IsImmun:"+BCGIMMU+
-        "DeathReportDate:"+_reportdeathPostDate+
-        "MasterMobile:"+_mukhiyaMobNoController.text.trim().trim()+
-        "Relative_Name:"+_mukhiyaNameController.text.trim().trim()+
-        "DeathUnitCode:"+postDeathUnitID+
-        "DeathUnitID:"+"0"+
-        "IPAddress:"+_IPAddress+
-        "ashaautoid:"+aashaId+
-        "BirthDate:"+response_list[0]['Birth_date'].toString()+
-        "EntryUnitID:"+preferences.getString('UnitID').toString()+
-        "LoginUserID:"+preferences.getString('UserId').toString()+
-        "AppVersion:"+"5.5.5.22"+//5.5.5.22 for testing
-        "UpdateUserNo:"+_UpdateUserNo+
-        "Media:"+Media+
-        "EntryUserNo:"+_UpdateUserNo+
-        "TokenNo:"+preferences.getString('Token').toString()+
-        "UserID:"+preferences.getString('UserId').toString()
-    }');
-
-
+    }*/
+    print('UpdateChildDeath request');
+    print("Motherid:${response_list[0]['Motherid'].toString()}");
+    print("infantid:${response_list[0]['InfantID'].toString()}");
+    print("Name:${_enterChildNameController.text.toString().trim()}");
+    print("ReasonID:${dreasonId}");
+    print("Age:${ageController.text.toString().trim()}");
+    print("DeathDate:${_DeathDeath}");
+    print("deathPlace:${_selectedReferSanstha == "17" ? "17" : _selectedDeathPlace}");
+    print("VillageAutoID:${response_list[0]['VillageAutoID'].toString()}");
+    print("AgeType:${_AgeType}");
+    print("Weight:${_enterChildWeight.text.toString().trim()}");
+    print("Bfeed:${BFeed}");
+    print("BloodType:${_BloodGroup}");
+    print("IsImmun:${BCGIMMU}");
+    print("DeathReportDate:${_reportdeathPostDate}");
+    print("MasterMobile:${_mukhiyaMobNoController.text.trim().trim()}");
+    print("Relative_Name:${_mukhiyaNameController.text.trim().trim()}");
+    print("DeathUnitCode:${_selectedReferSanstha == "2" ? postDeathUnitID : "0"}");
+    print("IPAddress:IPAddress");
+    print("AppVersion:5.5.5.22");
+    print("ashaautoid:${aashaId}");
+    print("BirthDate:${response_list[0]['Birth_date'].toString()}");
+    print("EntryUnitID:${preferences.getString('UnitID').toString()}");
+    print("LoginUserID:${preferences.getString('UserId').toString()}");
+    print("UpdateUserNo:${_UpdateUserNo}");
+    print("Media:${Media}");
+    print("EntryUserNo:${_UpdateUserNo}");
+    print("TokenNo:${preferences.getString('Token').toString()}");
+    print("UserID:${preferences.getString('UserId').toString()}");
     updatePostDataAPI();
-
-
   }
 
   void postDataAPI() {
@@ -3413,7 +3726,6 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
       _UpdateUserNo=preferences.getString("UserNo").toString();
     }
 
-    printIps();
     if (_deathDDdateController.text.isNotEmpty) {
       _DeathDeath=_deathYYYYdateController.text.toString()+"/"+_deathMMdateController.text.toString()+"/"+_deathDDdateController.text.toString();
     }
@@ -3422,40 +3734,38 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
       _reportdeathPostDate=_reportYYYYdateController.text.toString()+"/"+_reportMMdateController.text.toString()+"/"+_reportDDdateController.text.toString();
     }
 
-    if(_selectedReferSanstha == "17"){
+    /*if(_selectedReferSanstha == "17"){
       _selectedDeathPlace="17";
-    }
-    print('ChildSubmitRequest=>${
-        "Motherid:"+response_list[0]['Motherid'].toString()+
-        "infantid:"+response_list[0]['InfantID'].toString()+
-        "Name:"+_enterChildNameController.text.toString().trim()+
-        "ReasonID:"+dreasonId+
-        "Age:"+ageController.text.toString().trim()+
-        "DeathDate:"+_DeathDeath+
-        "deathPlace:"+_selectedDeathPlace+
-        "VillageAutoID:"+response_list[0]['VillageAutoID'].toString()+
-        "AgeType:"+_AgeType+
-        "Weight:"+_enterChildWeight.text.toString().trim()+
-        "Bfeed:"+BFeed+
-        "BloodType:"+_BloodGroup+
-        "IsImmun:"+BCGIMMU+
-        "DeathReportDate:"+_reportdeathPostDate+
-        "MasterMobile:"+_mukhiyaMobNoController.text.trim().trim()+
-        "Relative_Name:"+_mukhiyaNameController.text.trim().trim()+
-        "DeathUnitCode:"+_selectedUpSwasthyaCode != "0" ? _selectedUpSwasthyaCode : postDeathUnitID+
-        "DeathUnitID:"+"0"+
-        "IPAddress:"+_IPAddress+
-        "ashaautoid:"+aashaId+
-        "BirthDate:"+response_list[0]['Birth_date'].toString()+
-        "EntryUnitID:"+preferences.getString('UnitID').toString()+
-        "LoginUserID:"+preferences.getString('UserId').toString()+
-        "AppVersion:"+"5.5.5.22"+//5.5.5.22 for testing
-        "UpdateUserNo:"+_UpdateUserNo+
-        "Media:"+Media+
-        "EntryUserNo:"+_UpdateUserNo+
-        "TokenNo:"+preferences.getString('Token').toString()+
-        "UserID:"+preferences.getString('UserId').toString()
-    }');
+    }*/
+
+    print("Motherid:${response_list[0]['Motherid'].toString()}");
+    print("infantid:${response_list[0]['InfantID'].toString()}");
+    print("Name:${_enterChildNameController.text.toString().trim()}");
+    print("ReasonID:${dreasonId}");
+    print("Age:${ageController.text.toString().trim()}");
+    print("DeathDate:${_DeathDeath}");
+    print("deathPlace:${_selectedReferSanstha == "17" ? "17" : _selectedDeathPlace}");
+    print("VillageAutoID:${response_list[0]['VillageAutoID'].toString()}");
+    print("AgeType:${_AgeType}");
+    print("Weight:${_enterChildWeight.text.toString().trim()}");
+    print("Bfeed:${BFeed}");
+    print("BloodType:${_BloodGroup}");
+    print("IsImmun:${BCGIMMU}");
+    print("DeathReportDate:${_reportdeathPostDate}");
+    print("MasterMobile:${_mukhiyaMobNoController.text.trim().trim()}");
+    print("Relative_Name:${_mukhiyaNameController.text.trim().trim()}");
+    print("DeathUnitCode:${_selectedReferSanstha == "2" ? postDeathUnitID : "0"}");
+    print("IPAddress:IPAddress");
+    print("AppVersion:5.5.5.22");
+    print("ashaautoid:${aashaId}");
+    print("BirthDate:${response_list[0]['Birth_date'].toString()}");
+    print("EntryUnitID:${preferences.getString('UnitID').toString()}");
+    print("LoginUserID:${preferences.getString('UserId').toString()}");
+    print("UpdateUserNo:${_UpdateUserNo}");
+    print("Media:${Media}");
+    print("EntryUserNo:${_UpdateUserNo}");
+    print("TokenNo:${preferences.getString('Token').toString()}");
+    print("UserID:${preferences.getString('UserId').toString()}");
 
     submitPostDataAPI();
   }
@@ -3484,7 +3794,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
       "ReasonID":dreasonId,
       "Age": ageController.text.toString().trim(),
       "DeathDate": _DeathDeath,
-      "deathPlace": _selectedDeathPlace,
+      "deathPlace": _selectedReferSanstha == "17" ? "17" : _selectedDeathPlace,
       "VillageAutoID":response_list[0]['VillageAutoID'].toString(),
       "AgeType": _AgeType,
       "Weight": _enterChildWeight.text.toString().trim(),
@@ -3494,7 +3804,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
       "DeathReportDate": _reportdeathPostDate,
       "MasterMobile":_mukhiyaMobNoController.text.trim().trim(),
       "Relative_Name": _mukhiyaNameController.text.trim().trim(),
-      "DeathUnitCode": postDeathUnitID,
+      "DeathUnitCode": _selectedDeathPlace == "2" ? postDeathUnitID : "0",
       "DeathUnitID": "0",
       "IPAddress": _IPAddress,
       "ashaautoid": aashaId,
@@ -3541,7 +3851,6 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
         print('my-ip-address ${addr.address} ${addr.host} ${addr.isLoopback} ${addr.rawAddress} ${addr.type.name}');
       }
     }
-
     var response = await post(Uri.parse(_add_child_details_url), body: {
       "Motherid":response_list[0]['Motherid'].toString(),
       "infantid":response_list[0]['InfantID'].toString(),
@@ -3549,7 +3858,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
       "ReasonID":dreasonId,
       "Age": ageController.text.toString().trim(),
       "DeathDate": _DeathDeath,
-      "deathPlace": _selectedDeathPlace,
+      "deathPlace": _selectedReferSanstha == "17" ? "17" : _selectedDeathPlace,
       "VillageAutoID":response_list[0]['VillageAutoID'].toString(),
       "AgeType": _AgeType,
       "Weight": _enterChildWeight.text.toString().trim(),
@@ -3559,7 +3868,8 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
       "DeathReportDate": _reportdeathPostDate,
       "MasterMobile":_mukhiyaMobNoController.text.trim().trim(),
       "Relative_Name": _mukhiyaNameController.text.trim().trim(),
-      "DeathUnitCode": _selectedUpSwasthyaCode != "0" ? _selectedUpSwasthyaCode : postDeathUnitID,
+      //"DeathUnitCode": _selectedUpSwasthyaCode != "0" ? _selectedUpSwasthyaCode : postDeathUnitID,
+      "DeathUnitCode":_selectedDeathPlace == "2" ? postDeathUnitID : "0",
       "DeathUnitID": "0",
       "IPAddress": _IPAddress,
       "ashaautoid": aashaId,
@@ -3596,6 +3906,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
       builder: (BuildContext context) => UpdateAppDialoge(),
     );
   }
+
   Future printIps() async {
     for (var interface in await NetworkInterface.list()) {
       print('== Interface: ${interface.name} ==');

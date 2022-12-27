@@ -20,7 +20,6 @@ import '../prasav/after/after_prasav_expand_details.dart';
 import '../prasav/before/anc_expand_details.dart';
 import '../samparksutra/samparksutra.dart';
 import '../shishudeath/shihu_death_details.dart';
-import '../shishudeath/shihu_death_details_new.dart';
 import '../shishutikakan/tikakaran_details.dart';
 import '../videos/tab_view.dart';
 import 'model/TotalCasesListData.dart';
@@ -436,7 +435,7 @@ class _PendingCasesListState extends State<PendingCasesList> {
                             CheckWhere:"post"
                         ),));
                       }else if(widget.type == "5"){//FOR Shishu Death
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => ShishuDeathDetailsNew(
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => ShishuDeathDetails(
                             pctsID: response_list[index]['PCTSID'].toString(),
                             infantId:  response_list[index]['InfantID'].toString(),
                             birthdate:response_list[index]['BirthDate'].toString(),

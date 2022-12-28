@@ -180,8 +180,13 @@ class _UpdateShishuTikakarnScreenState extends State<UpdateShishuTikakarnScreen>
           _isItAsha=true;
           aashaId = preferences.getString('ANMAutoID').toString();
         }else{
-          _isItAsha=false;
-          aashaId=widget.aashaautoid;
+          if(preferences.getString("AppRoleID").toString() == '32'){//anm
+            _isItAsha=true;
+            aashaId = widget.aashaautoid;
+          }else{
+            _isItAsha=false;
+            aashaId = widget.aashaautoid;
+          }
         }
         _enterChildWeight.text=widget.weight.toString().trim();
         //print('aashaId ${aashaId}');

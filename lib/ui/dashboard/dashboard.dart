@@ -1038,6 +1038,7 @@ class _DashboardScreen extends State<DashboardScreen> {
                           _isANMSESSION=false;
                           _isASHASESSION=true;
                         }else{
+                          stopTimer();
                           getAnmRankAPI();
                           _isANMSESSION=true;
                           _isASHASESSION=false;

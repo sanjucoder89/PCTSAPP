@@ -554,7 +554,7 @@ class _EditANCScreen extends State<EditANCScreen> {
           _isItAsha=true;
           aashaId = preferences.getString('ANMAutoID').toString();
         }else{
-          if(preferences.getString("AppRoleID").toString() == '32'){
+          if(preferences.getString("AppRoleID").toString() == '32'){//anm
             _isItAsha=true;
             aashaId = widget.AshaAutoID;
           }else{

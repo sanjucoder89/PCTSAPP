@@ -878,8 +878,13 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
           _isItAsha=true;
           aashaId = preferences.getString('ANMAutoID').toString();
         }else{
-          _isItAsha=false;
-          aashaId = widget.Ashaautoid;
+          if(preferences.getString("AppRoleID").toString() == '32'){//anm
+            _isItAsha=true;
+            aashaId = widget.Ashaautoid;
+          }else{
+            _isItAsha=false;
+            aashaId = widget.Ashaautoid;
+          }
         }
         print('aashaId ${aashaId}');
       }

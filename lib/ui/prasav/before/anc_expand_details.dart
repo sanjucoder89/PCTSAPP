@@ -1130,17 +1130,17 @@ class _AncExpandDetails extends State<AncExpandDetails> {
                                         custom_anc_list[list_index].ancregid.toString(),
                                         ColorConstants.black);
                                   }else if(custom_anc_list[list_index].ANCFlag.toString() == "2"){
-                                    _deleteANCDetails("क्या आप"+" "+Strings.pratham_anc+" "+"को डिलीट करना चाहते है |",
+                                    _deleteANCDetails("क्या आप"+" "+Strings.second_anc+" "+"को डिलीट करना चाहते है |",
                                         custom_anc_list[list_index].ANCFlag.toString(),
                                         custom_anc_list[list_index].ancregid.toString(),
                                         ColorConstants.black);
                                   }else if(custom_anc_list[list_index].ANCFlag.toString() == "3"){
-                                    _deleteANCDetails("क्या आप"+" "+Strings.pratham_anc+" "+"को डिलीट करना चाहते है |",
+                                    _deleteANCDetails("क्या आप"+" "+Strings.third_anc+" "+"को डिलीट करना चाहते है |",
                                         custom_anc_list[list_index].ANCFlag.toString(),
                                         custom_anc_list[list_index].ancregid.toString(),
                                         ColorConstants.black);
                                   }else if(custom_anc_list[list_index].ANCFlag.toString() == "4"){
-                                    _deleteANCDetails("क्या आप"+" "+Strings.pratham_anc+" "+"को डिलीट करना चाहते है |",
+                                    _deleteANCDetails("क्या आप"+" "+Strings.fourth_anc+" "+"को डिलीट करना चाहते है |",
                                         custom_anc_list[list_index].ANCFlag.toString(),
                                         custom_anc_list[list_index].ancregid.toString(),
                                         ColorConstants.black);

@@ -231,7 +231,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
             aashaId = response_list[0]['ashaautoid'].toString();
           }
         }
-        AnmVerify=response_list[0]['ANMVerify'].toString() == "null" ? "0" : response_list[0]['ANMVerify'].toString();
+        AnmVerify=response_list[0]['ANMVerify'].toString() == "null" ? "" : response_list[0]['ANMVerify'].toString();
         getAashaListAPI(response_list[0]['RegUnitid'].toString(),response_list[0]['VillageAutoID'].toString());
         getDistrictListAPI("3");
       } else {
@@ -550,6 +550,8 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
       }else{
         custom_upswasthya_list.clear();
         print('swasthya.len ${custom_upswasthya_list.length}');
+        postDeathUnitID=_DeathUnitCode;
+        print('postDeathUnitID:$postDeathUnitID');
       }
       //  EasyLoading.dismiss();
     });
@@ -696,7 +698,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
 
 
       dreasonId=response_list[0]['ReasonID'].toString();
-      ANMVerify=response_list[0]['ANMVerify'].toString() == "null" ? "0" : response_list[0]['ANMVerify'].toString();
+      ANMVerify=response_list[0]['ANMVerify'].toString() == "null" ? "" : response_list[0]['ANMVerify'].toString();
 
       if(response_list[0]['AgeType'].toString() != "0"){
         print('inside dfdfdfd');
@@ -1889,7 +1891,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
                             child:TextField(
 
                               keyboardType: TextInputType.text,
-                              maxLength: 5,
+                              maxLength: 20,
                               controller: _mukhiyaNameController,
                               decoration: InputDecoration(
                                   border: InputBorder.none,
@@ -3081,7 +3083,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
               var _calculatedAge = 0.0;
               if(diff_in_days >= 365){
                 _calculatedAge=diff_in_days/365;
-                //print('calcualted Age_A : ${_calculatedAge}');
+                print('calcualted Age_A : ${_calculatedAge}');
                 ageController.text=_calculatedAge.floor().toString();
 
                 setState(() {
@@ -3098,6 +3100,10 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
                       _AgeType="2";
                     });
                     ageController.text="1";
+                }else{
+                  _AgeType="2";
+                  _selectedAgeCategory="माह";
+
                 }
 
                 if(_calculatedAge == 12 || _calculatedAge == 12.0){
@@ -3118,12 +3124,13 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
                 });
                 ageController.text=_calculatedAge.floor().toString();
               }else if(diff_in_days > 0){
-                //print('calcualted Age_D : ${diff_in_days}');
+                print('calcualted Age_D : ${diff_in_days}');
                 setState(() {
                   _selectedAgeCategory="दिन";
                   _AgeType="4";
+                  ageController.text=diff_in_days.floor().toString();
                 });
-                ageController.text=_calculatedAge.floor().toString();
+
               }else{
                 //print('calcualted Age_E : ${diff_in_days}');
                 setState(() {
@@ -3141,7 +3148,8 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
               _deathMMdateController.text = getMonth(formattedDate4);
               _deathYYYYdateController.text = getYear(formattedDate4);
               _DeathDeath=_deathYYYYdateController.text.toString()+ "/"+_deathMMdateController.text.toString()+"/"+_deathDDdateController.text.toString();
-              print('_DeathDeath $_DeathDeath');//2022/12/11
+              print('_AgeType $_AgeType');//2022/12/11
+              print('_DeathDeaths $_DeathDeath');//2022/12/11
 
           }else{
             _showErrorPopup(Strings.choose_after_birth_date, ColorConstants.AppColorPrimary);
@@ -3181,7 +3189,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
           if (selectedParsedDate.compareTo(birthDate) >= 0) //2021-04-22 00:00:00.000
             {
               final diff_in_days = selectedParsedDate.difference(birthDate).inDays;
-              //print('diff_in_days ${diff_in_days}');
+              print('diff_in_days ${diff_in_days}');
               var _calculatedAge = 0.0;
               if(diff_in_days >= 365){
                 _calculatedAge=diff_in_days/365;
@@ -3195,13 +3203,17 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
 
               }else if(diff_in_days > 27){
                 _calculatedAge=diff_in_days/30;
-                //print('calcualted Age_B : ${_calculatedAge}');
+                print('calcualted Age_B : ${_calculatedAge}');
                 if(_calculatedAge == 0 || _calculatedAge == 0.0){
                     setState(() {
                       _selectedAgeCategory="माह";
                       _AgeType="2";
                     });
                     ageController.text="1";
+                }else{
+                  _AgeType="2";
+                  _selectedAgeCategory="माह";
+
                 }
 
                 if(_calculatedAge == 12 || _calculatedAge == 12.0){
@@ -3211,6 +3223,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
                     ageController.text="1";
                 }else{
                   ageController.text=_calculatedAge.floor().toString();
+
                 }
 
               }else if(diff_in_days > 6){
@@ -3222,12 +3235,13 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
                 });
                 ageController.text=_calculatedAge.floor().toString();
               }else if(diff_in_days > 0){
-                //print('calcualted Age_D : ${diff_in_days}');
+                print('calcualted Age_D : ${diff_in_days}');
                 setState(() {
                   _selectedAgeCategory="दिन";
                   _AgeType="4";
+                  ageController.text=diff_in_days.floor().toString();
                 });
-                ageController.text=_calculatedAge.floor().toString();
+
               }else{
                 //print('calcualted Age_E : ${diff_in_days}');
                 setState(() {
@@ -3245,8 +3259,8 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
               _deathMMdateController.text = getMonth(formattedDate4);
               _deathYYYYdateController.text = getYear(formattedDate4);
               _DeathDeath=_deathYYYYdateController.text.toString()+ "/"+_deathMMdateController.text.toString()+"/"+_deathDDdateController.text.toString();
-              print('_DeathDeath $_DeathDeath');//2022/12/11
-
+              print('_DeathDeaths $_DeathDeath');//2022/12/11
+              print('_AgeType $_AgeType');//2022/12/11
           }else{
             _showErrorPopup(Strings.choose_after_birth_date, ColorConstants.AppColorPrimary);
           }
@@ -3674,11 +3688,11 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
       Media="2";
       _UpdateUserNo=preferences.getString("UserNo").toString();
     }else if(ANMVerify.isNotEmpty){
-      if(ANMVerify == "0"){
+      if(ANMVerify == "0" && Media == "2"){
         Media ="3";
         _UpdateUserNo=preferences.getString("UserNo").toString();
       }else{
-        Media ="3";
+        Media ="1";
         _UpdateUserNo=preferences.getString("UserNo").toString();
       }
     }else{
@@ -3715,7 +3729,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
     print("DeathReportDate:${_reportdeathPostDate}");
     print("MasterMobile:${_mukhiyaMobNoController.text.trim().trim()}");
     print("Relative_Name:${_mukhiyaNameController.text.trim().trim()}");
-    print("DeathUnitCode:${_selectedReferSanstha == "2" ? postDeathUnitID : "0"}");
+    print("DeathUnitCode:${_selectedDeathPlace == "2" ? postDeathUnitID : "0"}");
     print("IPAddress:IPAddress");
     print("AppVersion:5.5.5.22");
     print("ashaautoid:${aashaId}");
@@ -3731,25 +3745,33 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
   }
 
   void postDataAPI() {
-
+    print('ANMVerify $ANMVerify');
     if(preferences.getString("AppRoleID") == "33"){
       Media="2";
       _UpdateUserNo=preferences.getString("UserNo").toString();
     }else if(ANMVerify.isNotEmpty){
-      if(ANMVerify == "0"){
+      if(ANMVerify == "0" && Media == "2"){
         Media ="3";
-       // _UpdateUserNo=preferences.getString("UserNo").toString();
       }else if(ANMVerify == "1" && Media == "3"){
         Media ="3";
         _UpdateUserNo=preferences.getString("UserNo").toString();
-      }else if(ANMVerify == "1" && Media == "2"){
+      }else if(ANMVerify == "0" && Media == "1"){
+        Media ="1";
+        _UpdateUserNo=preferences.getString("UserNo").toString();
+      }else if(ANMVerify == "0" && Media == "0"){
+        Media ="1";
+        _UpdateUserNo=preferences.getString("UserNo").toString();
+      }/*else if(ANMVerify == "1" && Media == "2"){
         Media ="3";
         _UpdateUserNo=preferences.getString("UserNo").toString();
-      }else if(ANMVerify == "1" && Media == "1"){
+      }*/else if(ANMVerify == "1" && Media == "1"){
+        Media ="1";
+        _UpdateUserNo=preferences.getString("UserNo").toString();
+      }else if(ANMVerify == "" && Media == ""){
         Media ="1";
         _UpdateUserNo=preferences.getString("UserNo").toString();
       }
-    }else{
+    }else if(ANMVerify.isEmpty && Media.isEmpty && preferences.getString("AppRoleID") == "32"){
       Media="1";
       _UpdateUserNo=preferences.getString("UserNo").toString();
     }
@@ -3765,7 +3787,6 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
     /*if(_selectedReferSanstha == "17"){
       _selectedDeathPlace="17";
     }*/
-
     print("Motherid:${response_list[0]['Motherid'].toString()}");
     print("infantid:${response_list[0]['InfantID'].toString()}");
     print("Name:${_enterChildNameController.text.toString().trim()}");
@@ -3782,7 +3803,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
     print("DeathReportDate:${_reportdeathPostDate}");
     print("MasterMobile:${_mukhiyaMobNoController.text.trim().trim()}");
     print("Relative_Name:${_mukhiyaNameController.text.trim().trim()}");
-    print("DeathUnitCode:${_selectedReferSanstha == "2" ? postDeathUnitID : "0"}");
+    print("DeathUnitCode:${_selectedDeathPlace == "2" ? postDeathUnitID : "0"}");
     print("IPAddress:IPAddress");
     print("AppVersion:5.5.5.22");
     print("ashaautoid:${aashaId}");

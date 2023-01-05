@@ -79,9 +79,9 @@ class _ChildInfantListState extends State<ChildInfantList> {
     setState(() {
       if (apiResponse.status == true) {
         response_listing = resBody['ResposeData'];
-        _mahilaName=response_listing[0]['Name'].toString();
-        _fatherName=response_listing[0]['Husbname'].toString();
-        _mobileNo=response_listing[0]['Mobileno'].toString();
+        _mahilaName=response_listing[0]['Name'].toString() == "null" ? "" : response_listing[0]['Name'].toString();
+        _fatherName=response_listing[0]['Husbname'].toString() == "null" ? "" : response_listing[0]['Husbname'].toString();
+        _mobileNo=response_listing[0]['Mobileno'].toString() == "null" ? "" : response_listing[0]['Mobileno'].toString();
       }else {
         response_listing.clear();
         Fluttertoast.showToast(

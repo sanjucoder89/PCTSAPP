@@ -238,8 +238,25 @@ class _EditHBYCFormState extends State<EditHBYCForm> {
           _isItAsha=true;
           aashaId = preferences.getString('ANMAutoID').toString();
         }else{
-          _isItAsha=false;
-          aashaId = widget.ashaAutoID;
+         // _isItAsha=false;
+          //aashaId = widget.ashaAutoID;
+          if(preferences.getString("AppRoleID").toString() == '32') {
+            if(widget.Media == "1"){
+              _isAshaEntryORANMEntry=false;
+              _isItAsha=false;
+              aashaId = widget.ashaAutoID;
+            }else{
+              if(preferences.getString('ANMAutoID').toString() == widget.ashaAutoID){
+                _isAshaEntryORANMEntry=false;//update btn will show
+              }else{
+                if(preferences.getString("AppRoleID").toString() == '32') {//if last is anm btn will show for all asha
+                  _isAshaEntryORANMEntry=false;//update btn will show
+                }
+              }
+              _isItAsha=true;//not editable
+              aashaId = widget.ashaAutoID;//set to last asha
+            }
+          }
         }
         print('aashaId ${aashaId}');
 
@@ -780,6 +797,7 @@ class _EditHBYCFormState extends State<EditHBYCForm> {
   bool _referView = false;
   bool _isChildGrowthDiseaseFound = true;
   bool _isItAsha=false;
+  bool _isAshaEntryORANMEntry=false;//false= anm , true =asha
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -2474,7 +2492,7 @@ class _EditHBYCFormState extends State<EditHBYCForm> {
               ),
             ),)),
             _ShowHideEditableView == true ?
-            _isItAsha  == true
+            _isAshaEntryORANMEntry  == false
                 ?
             GestureDetector(
               onTap: (){

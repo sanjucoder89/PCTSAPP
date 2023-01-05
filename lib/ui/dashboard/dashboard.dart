@@ -695,7 +695,7 @@ class _DashboardScreen extends State<DashboardScreen> {
                         logoutSession();
                       },
                       style: ElevatedButton.styleFrom(
-                          primary: ColorConstants.AppColorPrimary,
+                          backgroundColor: ColorConstants.AppColorPrimary,
                           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                           textStyle: TextStyle(
                               fontSize: 14,

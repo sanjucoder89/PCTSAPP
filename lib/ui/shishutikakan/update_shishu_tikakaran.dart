@@ -40,6 +40,7 @@ class UpdateShishuTikakarnScreen extends StatefulWidget {
     required this.childid,
     required this.weight,
     required this.unitcode,
+    required this.Media,
   }) : super(key: key);
   final String pctsID;
   final String infantId;
@@ -53,6 +54,7 @@ class UpdateShishuTikakarnScreen extends StatefulWidget {
   final String childid;
   final String weight;
   final String unitcode;
+  final String Media;
 
   @override
   State<UpdateShishuTikakarnScreen> createState() => _UpdateShishuTikakarnScreenState();
@@ -139,6 +141,7 @@ class _UpdateShishuTikakarnScreenState extends State<UpdateShishuTikakarnScreen>
 
   TextEditingController _enterChildWeight = TextEditingController();
   bool _isItAsha=false;
+  bool _isAshaEntryORANMEntry=false;//false= anm , true =asha
   Future<String> getAashaListAPI() async {
     await EasyLoading.show(
       status: 'loading...',
@@ -179,12 +182,28 @@ class _UpdateShishuTikakarnScreenState extends State<UpdateShishuTikakarnScreen>
         if(preferences.getString("AppRoleID").toString() == '33'){
           _isItAsha=true;
           aashaId = preferences.getString('ANMAutoID').toString();
+          _isAshaEntryORANMEntry=false;
         }else{
-          if(preferences.getString("AppRoleID").toString() == '32'){//anm
-            _isItAsha=true;
-            aashaId = widget.aashaautoid;
+          if(preferences.getString("AppRoleID").toString() == '32') {
+            if(widget.Media == "1" || widget.Media == "0"){
+              _isAshaEntryORANMEntry=false;
+              _isItAsha=false;
+              aashaId = widget.aashaautoid;
+            }else{
+              if(preferences.getString('ANMAutoID').toString() == widget.aashaautoid){
+                _isAshaEntryORANMEntry=false;//update btn will show
+              }else{
+                if(preferences.getString("AppRoleID").toString() == '32') {//if last is anm btn will show for all asha
+                  _isAshaEntryORANMEntry=false;//update btn will show
+                }
+
+              }
+              _isItAsha=true;//not editable
+              aashaId = widget.aashaautoid;//set to last asha
+            }
           }else{
-            _isItAsha=false;
+            _isAshaEntryORANMEntry=true;
+            _isItAsha=true;
             aashaId = widget.aashaautoid;
           }
         }
@@ -924,7 +943,7 @@ class _UpdateShishuTikakarnScreenState extends State<UpdateShishuTikakarnScreen>
               ],
             ),
           ),
-          _isItAsha == true
+          _isAshaEntryORANMEntry == false
               ?
           Visibility(
               visible: _checkLoginType,

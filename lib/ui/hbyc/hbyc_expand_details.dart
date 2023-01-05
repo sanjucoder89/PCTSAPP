@@ -92,7 +92,7 @@ class _HBYCExpandDetails extends State<HBYCExpandDetails> {
     _anmAshaTitle=preferences.getString("AppRoleID").toString() == '33' ? Strings.aasha_title : Strings.anm_title;
     _anmName=preferences.getString('ANMName').toString();
     _topHeaderName=preferences.getString('topName').toString();
-    print('ancregid ${InfantID}');
+    print('InfantID ${InfantID}');
     var response = await post(Uri.parse(_anc_details_url), body: {
       "InfantID":InfantID,
       "TokenNo": preferences.getString('Token'),
@@ -1189,8 +1189,8 @@ class _HBYCExpandDetails extends State<HBYCExpandDetails> {
                       Visibility(
                           visible: _checkLoginType,
                           child: Visibility(
-                            visible: preferences.getString("AppRoleID").toString() == "33" ? custom_anc_list[list_index].ANMVerify.toString() == "0" ?  custom_anc_list[list_index].ashaAutoID.toString() == "0" || custom_anc_list[list_index].ashaAutoID.toString() == preferences.getString('ANMAutoID') ? true: false : false :
-                            custom_anc_list[list_index].Freeze.toString() == "0" ? true : true ,
+                            visible: preferences.getString("AppRoleID") == "33" && custom_anc_list[list_index].ANMVerify.toString() == "1" ? false :preferences.getString("AppRoleID") == "33" && custom_anc_list[list_index].ANMVerify.toString() == "0" && custom_anc_list[list_index].Media.toString() == "2" ? true : custom_anc_list[list_index].Freeze.toString() != "0" && preferences.getString("AppRoleID") == "33" ? false : preferences.getString("AppRoleID") == "32" && custom_anc_list[list_index].ANMVerify.toString() == "0" ? true :false,
+                           //  visible: preferences.getString("AppRoleID").toString() == "33" ? custom_anc_list[list_index].ANMVerify.toString() == "0" ?  custom_anc_list[list_index].ashaAutoID.toString() == "0" || custom_anc_list[list_index].ashaAutoID.toString() == preferences.getString('ANMAutoID') ? true: false : false : custom_anc_list[list_index].Freeze.toString() == "0" ? true : true ,
                             child: GestureDetector(
                             onTap: (){
                               // print('on edit click last_pos>>>>>>>>>> ${last_pos}');
@@ -1233,17 +1233,21 @@ class _HBYCExpandDetails extends State<HBYCExpandDetails> {
                                 hbycDetailsAPI(widget.infantId);
                               });});
                             },
-                            child: Align(
-                              alignment: Alignment.centerRight,
-                              child: Container(
-                                margin: EdgeInsets.all(3),
-                                width: 30,
-                                height: 30,
-                                color: Colors.transparent,
-                                child: Center(child: Image.asset(
-                                  'Images/writing.png',
-                                  height: 30.0,
-                                )),
+                            child: Visibility(
+                              //visible:  true,
+                              visible: preferences.getString("AppRoleID") == "33" && preferences.getString("ANMAutoID") == custom_anc_list[list_index].ashaAutoID.toString() ? true : preferences.getString("AppRoleID") == "32" && custom_anc_list[list_index].ANMVerify.toString() == "0" ? true :false,
+                              child: Align(
+                                alignment: Alignment.centerRight,
+                                child: Container(
+                                  margin: EdgeInsets.all(3),
+                                  width: 30,
+                                  height: 30,
+                                  color: Colors.transparent,
+                                  child: Center(child: Image.asset(
+                                    'Images/writing.png',
+                                    height: 30.0,
+                                  )),
+                                ),
                               ),
                             ),
                           ),))

@@ -220,6 +220,7 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
   var change_title=Strings.block;
   var change_title2=Strings.sa_pra_dispensary;
   bool _isItAsha=false;
+  bool _isAshaEntryORANMEntry=false;//false= anm , true =asha
   Future<String> getDeathDetailsAPI() async {
     await EasyLoading.show(
       status: 'loading...',
@@ -238,13 +239,43 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
       if (apiResponse.status == true) {
         response_list = resBody['ResposeData'];
         print('res.len  ${response_list.length}');
+
+
+
         if(preferences.getString("AppRoleID").toString() == '33'){
           aashaId = preferences.getString('ANMAutoID').toString();
           _isItAsha=true;
         }else{
-          aashaId=response_list[0]['ashaautoid'].toString();
-          _isItAsha=false;
+          if(preferences.getString("AppRoleID").toString() == '32') {
+            if(response_list[0]['Media'].toString() == "1" || response_list[0]['Media'].toString() == "0"){
+              _isAshaEntryORANMEntry=false;
+              _isItAsha=false;
+              aashaId = response_list[0]['ashaautoid'].toString();;
+            }else{
+              if(preferences.getString('ANMAutoID').toString() == response_list[0]['ashaautoid'].toString()){
+                _isAshaEntryORANMEntry=false;//update btn will show
+              }else{
+                if(preferences.getString("AppRoleID").toString() == '32') {//if last is anm btn will show for all asha
+                  _isAshaEntryORANMEntry=false;//update btn will show
+                }
+
+              }
+              _isItAsha=true;//not editable
+              aashaId = response_list[0]['ashaautoid'].toString();//set to last asha
+            }
+          }else{
+            _isAshaEntryORANMEntry=true;
+            _isItAsha=true;
+            aashaId = response_list[0]['ashaautoid'].toString();
+          }
+
+
+
+          //aashaId=response_list[0]['ashaautoid'].toString();
+          //_isItAsha=false;
         }
+
+
         Prasav_date=response_list[0]['Prasav_date'].toString() == "null" ? "" :response_list[0]['Prasav_date'].toString();
         _VillageAutoID=response_list[0]['VillageAutoID'].toString();
         ANMVerify=response_list[0]['ANMVerify'].toString() == "null" ? "" :response_list[0]['ANMVerify'].toString();
@@ -2537,7 +2568,7 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
             SizedBox(
               height: 20,
             ),
-            _isItAsha == true
+            _isAshaEntryORANMEntry == false
                 ? Visibility(
                 visible: finalButtonView,
                 child: GestureDetector(

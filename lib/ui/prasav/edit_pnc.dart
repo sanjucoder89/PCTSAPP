@@ -80,7 +80,8 @@ class EditPNCScreen extends StatefulWidget {
         required this.Child5_InfantID,
         required this.ReferDistrictCode,
         required this.ReferUniName,
-        required this.ReferUnitType
+        required this.ReferUnitType,
+        required this.Media
       })
       : super(key: key);
 
@@ -127,6 +128,7 @@ class EditPNCScreen extends StatefulWidget {
   final String ReferDistrictCode;
   final String ReferUniName;
   final String ReferUnitType;
+  final String Media;
 
   @override
   State<EditPNCScreen> createState() => _EditPNCScreenState();
@@ -885,6 +887,26 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
           _isItAsha=true;
           aashaId = preferences.getString('ANMAutoID').toString();
         }else{
+          /*if(preferences.getString("AppRoleID").toString() == '32') {
+            if(widget.Media == "1"){
+              _isAshaEntryORANMEntry=false;
+              _isItAsha=false;
+              aashaId = widget.AshaAutoID;
+            }else{
+              //print('insideeeeee >> ${preferences.getString('ANMAutoID').toString()}');
+              //print('insideeeeee >>>> ${widget.AshaAutoID}');
+              if(preferences.getString('ANMAutoID').toString() == widget.AshaAutoID){
+                _isAshaEntryORANMEntry=false;//update btn will show
+              }else{
+                if(preferences.getString("AppRoleID").toString() == '32') {//if last is anm btn will show for all asha
+                  _isAshaEntryORANMEntry=false;//update btn will show
+                }
+
+              }
+              _isItAsha=true;//not editable
+              aashaId = widget.AshaAutoID;//set to last asha
+            }
+          }*/
           if(preferences.getString("AppRoleID").toString() == '32'){//anm
             _isItAsha=true;
             aashaId = widget.Ashaautoid;
@@ -893,6 +915,19 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
             aashaId = widget.Ashaautoid;
           }
         }
+        /*if(preferences.getString("AppRoleID").toString() == '33'){
+          _isItAsha=true;
+          aashaId = preferences.getString('ANMAutoID').toString();
+        }else{
+
+          if(preferences.getString("AppRoleID").toString() == '32'){
+            _isItAsha=true;
+            aashaId = widget.Ashaautoid;
+          }else{
+            _isItAsha=false;
+            aashaId = widget.Ashaautoid;
+          }
+        }*/
         print('aashaId ${aashaId}');
       }
       EasyLoading.dismiss();
@@ -937,7 +972,7 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
     print('response:${apiResponse.message}');
     return "Success";
   }
-
+  var _idChanged=false;
   Future<String> getANMListAPI(String ashaAutoId) async {
     preferences = await SharedPreferences.getInstance();
     var response = await post(Uri.parse(_get_anm_list), body: {
@@ -959,7 +994,13 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
               AshaName: response_list6[i]['AshaName'].toString(),
               ashaAutoID: response_list6[i]['ashaAutoID'].toString()));
         }
-        anmId = widget.ANMautoid;
+        print('testttttt ${widget.Ashaautoid}');
+        if(_idChanged){
+          aanganBadiId = custom_anm_list[0].ashaAutoID.toString();
+        }else{
+          anmId = widget.ANMautoid;
+        }
+
         print('anmId ${anmId}');
         print('res6.len  ${response_list6.length}');
         print('custom_anm_list.len ${custom_anm_list.length}');
@@ -1392,6 +1433,7 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                       aashaId = newVal!;
                                       print('aashaId:$aashaId');
                                       getANMListAPI(aashaId);
+                                      _idChanged=true;
                                     });
                                   },
                                   value:

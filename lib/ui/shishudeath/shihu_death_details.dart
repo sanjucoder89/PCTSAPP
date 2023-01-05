@@ -207,8 +207,29 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
               _isItAsha=false;
             }
         }else{
-          aashaId=response_list[0]['ashaautoid'].toString();
-          _isItAsha=true;
+
+          if(preferences.getString("AppRoleID").toString() == '32') {
+            if(response_list[0]['Media'].toString() == "1" || response_list[0]['Media'].toString() == "0"){
+              _isAshaEntryORANMEntry=false;
+              _isItAsha=false;
+              aashaId = response_list[0]['ashaautoid'].toString();;
+            }else{
+              if(preferences.getString('ANMAutoID').toString() == response_list[0]['ashaautoid'].toString()){
+                _isAshaEntryORANMEntry=false;//update btn will show
+              }else{
+                if(preferences.getString("AppRoleID").toString() == '32') {//if last is anm btn will show for all asha
+                  _isAshaEntryORANMEntry=false;//update btn will show
+                }
+
+              }
+              _isItAsha=true;//not editable
+              aashaId = response_list[0]['ashaautoid'].toString();//set to last asha
+            }
+          }else{
+            _isAshaEntryORANMEntry=true;
+            _isItAsha=true;
+            aashaId = response_list[0]['ashaautoid'].toString();
+          }
         }
         AnmVerify=response_list[0]['ANMVerify'].toString() == "null" ? "0" : response_list[0]['ANMVerify'].toString();
         getAashaListAPI(response_list[0]['RegUnitid'].toString(),response_list[0]['VillageAutoID'].toString());
@@ -229,6 +250,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
   List<CustomAashaList> custom_aasha_list = [];
   List aasha_response_list = [];
   bool _isItAsha=true;
+  bool _isAshaEntryORANMEntry=false;//false= anm , true =asha
   Future<String> getAashaListAPI(String _RegUnitid,String _villageautoid) async {
     preferences = await SharedPreferences.getInstance();
     var response = await post(Uri.parse(_aasha_list_url), body: {
@@ -2147,7 +2169,11 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      _selectReportDatePopup(int.parse(_reportYYYYdateController.text.toString()),int.parse(_reportMMdateController.text.toString()) ,int.parse(_reportDDdateController.text.toString()));
+                      if(response_list[0]['DeathDate'].toString() != "null"){
+                        _selectReportDatePopup(int.parse(_reportYYYYdateController.text.toString()),int.parse(_reportMMdateController.text.toString()) ,int.parse(_reportDDdateController.text.toString()));
+                      }else{
+                        _selectReportDatePopup(0,0,0);
+                      }
                     },
                     child: Container(
                         margin: EdgeInsets.only(right: 20, left: 10),
@@ -2973,41 +2999,43 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
             ),
 
 
-            Visibility(
-                visible: true,
-                child: GestureDetector(
-                  onTap: (){
-                    if(isClickableEnableDisable == true){
-                      postValidateData();
-                    }
-                  },
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      height: 40,
-                      color: isClickableEnableDisable == false ? ColorConstants.hbyc_bg_green  : ColorConstants.AppColorPrimary,
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Center(
-                          child: RichText(
-                            text: TextSpan(
-                                text: submit_title,
-                                style: TextStyle(color: Colors.white, fontSize: 14),
-                                children: [
-                                  TextSpan(
-                                      text: '',
-                                      style: TextStyle(
-                                          color: Colors.red,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 10))
-                                ]),
-                            textAlign: TextAlign.left,
-                          ),
-                        ),
+            _isAshaEntryORANMEntry == false
+                ?
+            GestureDetector(
+              onTap: (){
+                if(isClickableEnableDisable == true){
+                  postValidateData();
+                }
+              },
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  height: 40,
+                  color: isClickableEnableDisable == false ? ColorConstants.hbyc_bg_green  : ColorConstants.AppColorPrimary,
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Center(
+                      child: RichText(
+                        text: TextSpan(
+                            text: submit_title,
+                            style: TextStyle(color: Colors.white, fontSize: 14),
+                            children: [
+                              TextSpan(
+                                  text: '',
+                                  style: TextStyle(
+                                      color: Colors.red,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 10))
+                            ]),
+                        textAlign: TextAlign.left,
                       ),
                     ),
                   ),
-                ))
+                ),
+              ),
+            )
+                :
+            Container()
 
           ],
         ),
@@ -3232,7 +3260,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
   void _selectReportDatePopup(int yyyy,int mm ,int dd) {
     showDatePicker(
         context: context,
-        initialDate: DateTime(yyyy, mm , dd ),
+        initialDate: (yyyy == 0 && mm == 0 && dd == 0) ? DateTime.now() : DateTime(yyyy, mm , dd ),
         //initialDate: DateTime(initalYear, initalMonth, initalDay),
         firstDate: DateTime(2015),
         lastDate: DateTime(2050))

@@ -116,6 +116,7 @@ class _AncExpandDetails extends State<AncExpandDetails> {
     print('ancRegId ${ancRegId}');
     print('TokenNo ${preferences.getString('Token')}');
     print('UserID ${preferences.getString('UserId')}');
+    print('ANMAutoID ${preferences.getString('ANMAutoID')}');
 
     _anmAshaTitle=preferences.getString("AppRoleID").toString() == '33' ? Strings.aasha_title : Strings.anm_title;
     _anmName=preferences.getString('ANMName').toString();
@@ -164,7 +165,9 @@ class _AncExpandDetails extends State<AncExpandDetails> {
                     expand_flag:"false",
                     RegUnitID:response_listing[i]['RegUnitID'].toString(),
                     RegUnittype:response_listing[i]['RegUnittype'].toString(),
+                    ashaAutoID:response_listing[i]['ashaAutoID'].toString(),
                     ANMVerify:response_listing[i]['ANMVerify'].toString(),
+                    Media:response_listing[i]['Media'].toString(),
                     Freeze_ANC3Checkup: response_listing[i]['Freeze_ANC3Checkup'].toString(),
                     MinANCFlagUnVerify: response_listing[i]['MinANCFlagUnVerify'].toString()
                 ),
@@ -943,7 +946,6 @@ class _AncExpandDetails extends State<AncExpandDetails> {
                           color: Colors.white,
                         ),
                         Row(
-
                           children: <Widget>[
                             Expanded(child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -1163,8 +1165,8 @@ class _AncExpandDetails extends State<AncExpandDetails> {
                           ),
                           Visibility(
                              // visible: custom_anc_list[list_index].ANMVerify.toString() != "null" ? custom_anc_list[list_index].ANMVerify.toString() == "1" ? false : true : true,
-                            visible: preferences.getString("AppRoleID") == "33" && custom_anc_list[list_index].ANMVerify.toString() == "1" ? false :preferences.getString("AppRoleID") == "33" && custom_anc_list[list_index].ANMVerify.toString() == "0" ? true : custom_anc_list[list_index].Freeze_ANC3Checkup.toString() != "0" ? false : preferences.getString("AppRoleID") == "32" && custom_anc_list[list_index].ANMVerify.toString() == "0" ? true :false,
-                              child: GestureDetector(
+                            visible: preferences.getString("AppRoleID") == "33" && custom_anc_list[list_index].ANMVerify.toString() == "1" ? false :preferences.getString("AppRoleID") == "33" && custom_anc_list[list_index].ANMVerify.toString() == "0" && custom_anc_list[list_index].Media.toString() == "2" ? true : custom_anc_list[list_index].Freeze_ANC3Checkup.toString() != "0" ? false : preferences.getString("AppRoleID") == "32" && custom_anc_list[list_index].ANMVerify.toString() == "0" ? true :false,
+                            child: GestureDetector(
                             onTap: (){
                               /*if(last_pos > 0){
                                 print('anc LastDate-if  ${response_listing[last_pos - 1]['ANCDate'].toString()}');
@@ -1257,7 +1259,7 @@ class _AncExpandDetails extends State<AncExpandDetails> {
                             },
                             child: Visibility(
                                 //visible: last_pos == list_index ? true : false,
-                                visible: true,
+                                visible: preferences.getString("AppRoleID") == "33" && preferences.getString("ANMAutoID") == custom_anc_list[list_index].ashaAutoID.toString() ? true : preferences.getString("AppRoleID") == "32" && custom_anc_list[list_index].ANMVerify.toString() == "0" ? true :false,
                                 child: Align(
                                   alignment: Alignment.centerRight,
                                   child: Container(
@@ -1996,7 +1998,9 @@ class CustomManageANCList {
   String? expand_flag;
   String? RegUnitID;
   String? RegUnittype;
+  String? ashaAutoID;
   String? ANMVerify;
+  String? Media;
   String? Freeze_ANC3Checkup;
   String? MinANCFlagUnVerify;
 
@@ -2023,7 +2027,9 @@ class CustomManageANCList {
     this.expand_flag,
     this.RegUnitID,
     this.RegUnittype,
+    this.ashaAutoID,
     this.ANMVerify,
+    this.Media,
     this.Freeze_ANC3Checkup,
     this.MinANCFlagUnVerify
   });

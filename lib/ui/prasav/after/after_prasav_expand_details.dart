@@ -145,7 +145,8 @@ class _AfterPrasavExpandDetails extends State<AfterPrasavExpandDetails> {
                   DeliveryAbortionDate:response_listing[i]['DeliveryAbortionDate'].toString(),
                   ANMVerify:response_listing[i]['ANMVerify'].toString(),
                   Freeze:response_listing[i]['ANMVerify'].toString(),
-                  Ashaautoid:response_listing[i]['Ashaautoid'].toString()
+                  Ashaautoid:response_listing[i]['Ashaautoid'].toString(),
+                  Media:response_listing[i]['Media'].toString()
               ),
             );
             last_pos=custom_anc_list.length-1;
@@ -1401,7 +1402,7 @@ class _AfterPrasavExpandDetails extends State<AfterPrasavExpandDetails> {
                                 children: [
                                   //if(custom_anc_list[list_index].Freeze.toString() == "0")
                                     Visibility(
-                                      visible: preferences.getString("AppRoleID") == "32" ? true : custom_anc_list[list_index].Freeze.toString() == "0" ?  custom_anc_list[list_index].Ashaautoid.toString() == "0" || custom_anc_list[list_index].Ashaautoid.toString() == preferences.getString('ANMAutoID') ? custom_anc_list[list_index].ANMVerify.toString() == "0" ? true : false  :false:false,
+                                      visible: preferences.getString("AppRoleID") == "32" ? true : custom_anc_list[list_index].Freeze.toString() == "0" ?  custom_anc_list[list_index].Ashaautoid.toString() == "0" || custom_anc_list[list_index].Ashaautoid.toString() == preferences.getString('ANMAutoID') ? custom_anc_list[list_index].ANMVerify.toString() == "0" && custom_anc_list[list_index].Media.toString() == "2" ? true : false :false:false,
                                       //visible:custom_anc_list[list_index].Freeze.toString() == "0" ? true :preferences.getString("AppRoleID") == "33" ? custom_anc_list[list_index].Ashaautoid.toString() == "0" || custom_anc_list[list_index].Ashaautoid.toString() == preferences.getString('ANMAutoID') ,
                                       //visible: preferences.getString("AppRoleID").toString() == "33" ? custom_anc_list[list_index].Freeze.toString() == "0" ? custom_anc_list[list_index].Ashaautoid.toString() == "0" || custom_anc_list[list_index].Ashaautoid.toString() == preferences.getString('ANMAutoID') ? true :false:false : custom_anc_list[list_index].Freeze.toString() == "0" ? true :false,
                                       // visible: custom_anc_list[list_index].Freeze.toString() == "0" ? preferences.getString("AppRoleID").toString() == "32" ? true : custom_anc_list[list_index].Freeze.toString() == "0" ?  custom_anc_list[list_index].Ashaautoid.toString() == "0" || custom_anc_list[list_index].Ashaautoid.toString() == preferences.getString('ANMAutoID') ? true : false :false: false,
@@ -1467,24 +1468,29 @@ class _AfterPrasavExpandDetails extends State<AfterPrasavExpandDetails> {
                                                     Child5_InfantID:response_listing[list_index]['Child5_InfantID'].toString() == "null" ? "0" :response_listing[list_index]['Child5_InfantID'].toString(),
                                                     ReferDistrictCode:response_listing[list_index]['ReferDistrictCode'].toString() == "null" ? "" :response_listing[list_index]['ReferDistrictCode'].toString(),
                                                     ReferUniName:response_listing[list_index]['ReferUniName'].toString() == "null" ? "" :response_listing[list_index]['ReferUniName'].toString(),
-                                                    ReferUnitType:response_listing[list_index]['ReferUnitType'].toString() == "null" ? "" :response_listing[list_index]['ReferUnitType'].toString()
+                                                    ReferUnitType:response_listing[list_index]['ReferUnitType'].toString() == "null" ? "" :response_listing[list_index]['ReferUnitType'].toString(),
+                                                    Media:response_listing[list_index]['Media'].toString()
                                                 )
                                             ),
                                           ).then((value){setState(() {
                                             pcnDetailsAPI(widget.ancregid);
                                           });});
                                         },
-                                        child: Align(
-                                          alignment: Alignment.centerRight,
-                                          child: Container(
-                                            margin: EdgeInsets.all(3),
-                                            width: 30,
-                                            height: 30,
-                                            color: Colors.transparent,
-                                            child: Center(child: Image.asset(
-                                              'Images/writing.png',
-                                              height: 30.0,
-                                            )),
+                                        child: Visibility(
+                                          visible: true,
+                                         // visible: preferences.getString("AppRoleID") == "33" && preferences.getString("ANMAutoID") == custom_anc_list[list_index].Ashaautoid.toString() && custom_anc_list[list_index].Media.toString() == "2" ? true : preferences.getString("AppRoleID") == "32" && custom_anc_list[list_index].ANMVerify.toString() == "0" ? true :false,
+                                          child: Align(
+                                            alignment: Alignment.centerRight,
+                                            child: Container(
+                                              margin: EdgeInsets.all(3),
+                                              width: 30,
+                                              height: 30,
+                                              color: Colors.transparent,
+                                              child: Center(child: Image.asset(
+                                                'Images/writing.png',
+                                                height: 30.0,
+                                              )),
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -2166,6 +2172,7 @@ class CustomManageANCList {
   String? ANMVerify;
   String? Freeze;
   String? Ashaautoid;
+  String? Media;
 
   CustomManageANCList({
     this.ancregid,
@@ -2190,6 +2197,7 @@ class CustomManageANCList {
     this.DeliveryAbortionDate,
     this.ANMVerify,
     this.Freeze,
-    this.Ashaautoid
+    this.Ashaautoid,
+    this.Media
   });
 }

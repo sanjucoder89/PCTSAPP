@@ -560,6 +560,8 @@ class _TikaKaranDetailsState extends State<TikaKaranDetails> {
                                                            ? ""
                                                            : response_listing[index]['unitcode']
                                                            .toString(),
+                                                       Media:response_listing[index]['Media']
+                                                           .toString()
                                                      )
                                                  )
                                              ).then((value) {
@@ -652,6 +654,8 @@ class _TikaKaranDetailsState extends State<TikaKaranDetails> {
                                                           ? ""
                                                           : response_listing[index]['unitcode']
                                                           .toString(),
+                                                      Media:response_listing[index]['Media']
+                                                        .toString()
                                                     )
                                                 )
                                             ).then((value) {

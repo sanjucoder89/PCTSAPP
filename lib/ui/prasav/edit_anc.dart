@@ -401,6 +401,7 @@ class _EditANCScreen extends State<EditANCScreen> {
   bool? _covidYYYYEnabledDisabled;//for enable disable covid date
 
   bool _isItAsha=false;
+  bool _isAshaEntryORANMEntry=false;//false= anm , true =asha
   Future<String> getAashaListAPI() async {
     preferences = await SharedPreferences.getInstance();
 
@@ -536,6 +537,12 @@ class _EditANCScreen extends State<EditANCScreen> {
       }
 
     }
+    print('LoginUnitid ${preferences.getString('UnitID')}');
+    print('DelplaceUnitid ${"0"}');
+    print('RegUnitid ${widget.RegUnitID}');
+    print('VillageAutoid ${widget.VillageAutoID}');
+    print('TokenNo ${preferences.getString('Token')}');
+    print('UserID ${preferences.getString('UserId')}');
     var response = await post(Uri.parse(_aasha_list_url), body: {
       "LoginUnitid": preferences.getString('UnitID'),
       "DelplaceUnitid": "0",
@@ -556,17 +563,38 @@ class _EditANCScreen extends State<EditANCScreen> {
               ASHAName: response_list[i]['ASHAName'].toString(),
               ASHAAutoid: response_list[i]['ASHAAutoid'].toString()));
         }
+
         if(preferences.getString("AppRoleID").toString() == '33'){
           _isItAsha=true;
           aashaId = preferences.getString('ANMAutoID').toString();
         }else{
-          if(preferences.getString("AppRoleID").toString() == '32'){//anm
+          if(preferences.getString("AppRoleID").toString() == '32') {
+            if(widget.Media == "1" || widget.Media == "0"){
+              _isAshaEntryORANMEntry=false;
+              _isItAsha=false;
+              aashaId = widget.AshaAutoID;
+            }else{
+              //print('insideeeeee >> ${preferences.getString('ANMAutoID').toString()}');
+              //print('insideeeeee >>>> ${widget.AshaAutoID}');
+              if(preferences.getString('ANMAutoID').toString() == widget.AshaAutoID){
+                _isAshaEntryORANMEntry=false;//update btn will show
+              }else{
+                if(preferences.getString("AppRoleID").toString() == '32') {//if last is anm btn will show for all asha
+                  _isAshaEntryORANMEntry=false;//update btn will show
+                }
+
+              }
+              _isItAsha=true;//not editable
+              aashaId = widget.AshaAutoID;//set to last asha
+            }
+          }
+          /*if(preferences.getString("AppRoleID").toString() == '32'){//anm
             _isItAsha=true;
             aashaId = widget.AshaAutoID;
           }else{
             _isItAsha=false;
             aashaId = widget.AshaAutoID;
-          }
+          }*/
         }
         print('aashaId ${aashaId}');
       }
@@ -577,9 +605,10 @@ class _EditANCScreen extends State<EditANCScreen> {
     print('response:${apiResponse.message}');
     return "Success";
   }
-
+  var _idChanged=false;
   Future<String> getAanganBadiListAPI(String ashaAutoId) async {
     preferences = await SharedPreferences.getInstance();
+    print('ashaIDANMlist $ashaAutoId');
     var response = await post(Uri.parse(_aanganbadi_list_url), body: {
       //ASHAAutoid:105121
       // TokenNo:fc9b1a5a-2593-4bbe-ab40-b70b7785a041
@@ -606,8 +635,13 @@ class _EditANCScreen extends State<EditANCScreen> {
               AnganwariNo: response_list2[i]['AnganwariNo'].toString(),
               LastUpdated: response_list2[i]['LastUpdated'].toString()));
         }
+        print('agan.len ${custom_aanganbadi_list.length}');
+        if(_idChanged){
+          aanganBadiId = custom_aanganbadi_list[0].AnganwariNo.toString();
+        }else{
+          aanganBadiId = widget.AnganBadiNo;
+        }
 
-        aanganBadiId = widget.AnganBadiNo;
       }
       EasyLoading.dismiss();
     });
@@ -1804,6 +1838,7 @@ class _EditANCScreen extends State<EditANCScreen> {
                                     aashaId = newVal!;
                                     print('aashaId:$aashaId');
                                     if (aashaId != "0"){
+                                      _idChanged=true;
                                       getAanganBadiListAPI(aashaId);
                                     }
                                   });
@@ -1869,8 +1904,7 @@ class _EditANCScreen extends State<EditANCScreen> {
                                           )),
                                         ],
                                       ),
-                                      value: item.AnganwariNo
-                                          .toString() //Id that has to be passed that the dropdown has.....
+                                      value: item.AnganwariNo.toString() //Id that has to be passed that the dropdown has.....
                                       //value: "चुनें"     //Id that has to be passed that the dropdown has.....
                                       );
                                 }).toList(),
@@ -1880,8 +1914,7 @@ class _EditANCScreen extends State<EditANCScreen> {
                                     print('aanganBadiId:$aanganBadiId');
                                   });
                                 },
-                                value:
-                                    aanganBadiId, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
+                                value:aanganBadiId, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
                               ),
                             ),
                           )
@@ -7264,7 +7297,7 @@ class _EditANCScreen extends State<EditANCScreen> {
             ),
 
             _ShowHideEditVivranView == true
-                ? _isItAsha == true ?
+                ? _isAshaEntryORANMEntry == false ?
             Positioned(
               bottom: 0,
               left: 0,

@@ -109,6 +109,12 @@ class _SaMobileRegister extends State<SaMobileRegister> {
       maskType: EasyLoadingMaskType.black,
     );
     preferences = await SharedPreferences.getInstance();
+    print('mobileno ${_mobilenumber.text.toString().trim()}');
+
+    print('SmsFlag 4');
+   // print('OTP ${textEditingController.text.toString().trim()}');
+    print('TokenNo ${preferences.getString("Token")}');
+    print('UserID ${preferences.getString("UserId")}');
     var response = await post(Uri.parse(_mobile_register_url), body: {
       //MobileNo:8619592540
       // SmsFlag:4

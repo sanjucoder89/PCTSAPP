@@ -678,9 +678,12 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
         if(response_list[0]['immucode'].toString() == "1"){
           _chooseimmu=colorsimmu.yes;
           BCGIMMU="1";
-        }else{
+        }else if(response_list[0]['immucode'].toString() == "0"){
           _chooseimmu=colorsimmu.no;
           BCGIMMU="0";
+        }else{
+          _chooseimmu=colorsimmu.nill;
+          BCGIMMU="";
         }
       }
       print('BCGIMMU $BCGIMMU');

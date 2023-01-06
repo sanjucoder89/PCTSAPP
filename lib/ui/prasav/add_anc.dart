@@ -1925,8 +1925,8 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
                                       print('value $value');
                                      if(_ancDDdateController.text.toString().length == 2 && _ancMMdateController.text.toString().length == 2 && _ancYYYYdateController.text.toString().length == 4){
                                        //2022-12-06 00:00:00.000
-                                       //_customANCDate=_ancYYYYdateController.text.toString()+"-"+_ancMMdateController.text.toString()+"-"+_ancDDdateController.text.toString()+" 00:00:00.000";
-                                       //print('customANCDate $_customANCDate');
+                                       _customANCDate=_ancYYYYdateController.text.toString()+"-"+_ancMMdateController.text.toString()+"-"+_ancDDdateController.text.toString()+" 00:00:00.000";
+                                       print('customANCDate $_customANCDate');
                                        //_selectCustomANCDatePopup(_customANCDate);
                                        if(checkCovidCase("2020-03-01")){
                                          _showCovid19View(true);
@@ -7879,7 +7879,7 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
       setState(() {
         _selectedDate = pickedDate;
         _yourSelectedANCDate=_selectedDate.toString();
-        print('_yourSelectedANCDate=>: ${_yourSelectedANCDate}');
+        print('_yourSelectedANCDate=>: ${_yourSelectedANCDate}');//2022-05-18 00:00:00.000
 
 
         String formattedDate4 = DateFormat('yyyy-MM-dd').format(_selectedDate);
@@ -8615,6 +8615,11 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
         _showErrorPopup(Strings.please_select_Anc_date, Colors.black);
       }else {
         print('done');
+
+
+        var parseCustomANCDate = DateTime.parse(getAPIResponseFormattedDate2(_customANCDate));
+        print('parseCustomANCDate ${parseCustomANCDate}');
+        _yourSelectedANCDate=parseCustomANCDate.toString();
 
         var selectedParsedDate = DateTime.parse(formattedDate4.toString());
         var intentAncDate = DateTime.parse(getConvertRegDateFormat(_yourSelectedANCDate));
@@ -9448,9 +9453,11 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
         if (int.parse(widget.Age) < 18 ||int.parse(widget.Age)> 35) {
           _highRiskChecked=true;//checked highrisk chkbox
           _highRiskEnDisableCB=false;//enable or disable highrisk checkbox
+          _showHideHighRiskView = true;
         } else {
           _highRiskChecked=false;
           _highRiskEnDisableCB=true;//enable or disable highrisk checkbox
+          _showHideHighRiskView = false;
         }
       }
 

@@ -1524,7 +1524,10 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                                                   setState(() {
                                                                     _shishuislive = value ?? _shishuislive;
                                                                     rdChildIsLive1="1";
+                                                                    _shishuEnDisable=true;
                                                                     _shishuWgtEnDisable=true;
+                                                                    _ShowHideReferPlacesView=true;
+                                                                    _ShowHideErrorView=true;
                                                                   });
                                                                 },
                                                               ),
@@ -1554,9 +1557,23 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                                                   setState(() {
                                                                     _shishuislive = value ?? _shishuislive;
                                                                     rdChildIsLive1="0";
+
+                                                                    _shishuEnDisable=false;
+                                                                    FocusScopeNode currentFocus = FocusScope.of(context);
+                                                                    if (!currentFocus.hasPrimaryFocus) {
+                                                                      currentFocus.focusedChild!.unfocus();
+                                                                    }
+                                                                    _shishuNameController.text="";
+
+
                                                                     _shishuWgtEnDisable=false;
                                                                     _shishuWeightController.text="";
                                                                     childComplId_1="0";
+                                                                    _ShowHideReferPlacesView=false;
+                                                                    _ShowHideErrorView=false;
+
+                                                                    _ReferUnitCode="0";//set default value on child death
+                                                                    print('final ReferUnitCode $_ReferUnitCode');
                                                                   });
                                                                 },
                                                               ),
@@ -1858,6 +1875,9 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                                                     _shishuislive2 = value ?? _shishuislive2;
                                                                     rdChildIsLive2="1";
                                                                     _shishuWgt2EnDisable=true;
+                                                                    _ShowHideReferPlacesView=true;
+                                                                    _ShowHideErrorView=true;
+                                                                    _shishu2EnDisable=true;
                                                                   });
                                                                 },
                                                               ),
@@ -1890,6 +1910,18 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                                                     _shishuWgt2EnDisable=false;
                                                                     _shishuWeight2Controller.text="";
                                                                     childComplId_2="0";
+                                                                    _ShowHideReferPlacesView=false;
+                                                                    _ShowHideErrorView=false;
+
+                                                                    _shishu2NameController.text="";
+                                                                    _shishu2EnDisable=false;
+                                                                    FocusScopeNode currentFocus = FocusScope.of(context);
+                                                                    if (!currentFocus.hasPrimaryFocus) {
+                                                                      currentFocus.focusedChild!.unfocus();
+                                                                    }
+
+                                                                    _ReferUnitCode="0";//set default value on child death
+                                                                    print('final ReferUnitCode $_ReferUnitCode');
                                                                   });
                                                                 },
                                                               ),
@@ -2191,6 +2223,10 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                                                     _shishuislive3 = value ?? _shishuislive3;
                                                                     rdChildIsLive3="1";
                                                                     _shishuWgt3EnDisable=true;
+                                                                    _ShowHideReferPlacesView=true;
+                                                                    _ShowHideErrorView=true;
+
+                                                                    _shishu3EnDisable=true;
                                                                   });
                                                                 },
                                                               ),
@@ -2223,6 +2259,20 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                                                     _shishuWgt3EnDisable=false;
                                                                     _shishuWeight3Controller.text="";
                                                                     childComplId_3="0";
+                                                                    _ShowHideReferPlacesView=false;
+                                                                    _ShowHideErrorView=false;
+
+
+                                                                    _shishu3NameController.text="";
+                                                                    _shishu3EnDisable=false;
+                                                                    FocusScopeNode currentFocus = FocusScope.of(context);
+                                                                    if (!currentFocus.hasPrimaryFocus) {
+                                                                      currentFocus.focusedChild!.unfocus();
+                                                                    }
+
+
+                                                                    _ReferUnitCode="0";//set default value on child death
+                                                                    print('final ReferUnitCode $_ReferUnitCode');
                                                                   });
                                                                 },
                                                               ),
@@ -2522,8 +2572,12 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                                                 onChanged: (ShihuIsLive? value) {
                                                                   setState(() {
                                                                     _shishuislive4 = value ?? _shishuislive4;
-                                                                    rdChildIsLive4="0";
+                                                                    rdChildIsLive4="1";
                                                                     _shishuWgt4EnDisable=true;
+                                                                    _ShowHideReferPlacesView=true;
+                                                                    _ShowHideErrorView=true;
+
+                                                                    _shishu4EnDisable=true;
                                                                   });
                                                                 },
                                                               ),
@@ -2552,10 +2606,23 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                                                 onChanged:(ShihuIsLive? value) {
                                                                   setState(() {
                                                                     _shishuislive4 = value ?? _shishuislive4;
-                                                                    rdChildIsLive4="1";
+                                                                    rdChildIsLive4="0";
                                                                     _shishuWgt4EnDisable=false;
                                                                     _shishuWeight4Controller.text="";
                                                                     childComplId_4="0";
+                                                                    _ShowHideReferPlacesView=false;
+                                                                    _ShowHideErrorView=false;
+
+
+                                                                    _shishu4NameController.text="";
+                                                                    _shishu4EnDisable=false;
+                                                                    FocusScopeNode currentFocus = FocusScope.of(context);
+                                                                    if (!currentFocus.hasPrimaryFocus) {
+                                                                      currentFocus.focusedChild!.unfocus();
+                                                                    }
+
+                                                                    _ReferUnitCode="0";//set default value on child death
+                                                                    print('final ReferUnitCode $_ReferUnitCode');
                                                                   });
                                                                 },
                                                               ),
@@ -2857,6 +2924,10 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                                                     _shishuislive5 = value ?? _shishuislive5;
                                                                     rdChildIsLive5="1";
                                                                     _shishuWgt5EnDisable=true;
+                                                                    _ShowHideReferPlacesView=true;
+                                                                    _ShowHideErrorView=true;
+
+                                                                    _shishu5EnDisable=true;
                                                                   });
                                                                 },
                                                               ),
@@ -2889,6 +2960,18 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                                                     _shishuWgt5EnDisable=false;
                                                                     _shishuWeight5Controller.text="";
                                                                     childComplId_5="0";
+                                                                    _ShowHideReferPlacesView=false;
+                                                                    _ShowHideErrorView=false;
+
+                                                                    _ReferUnitCode="0";//set default value on child death
+                                                                    print('final ReferUnitCode $_ReferUnitCode');
+
+                                                                    _shishu5NameController.text="";
+                                                                    _shishu5EnDisable=false;
+                                                                    FocusScopeNode currentFocus = FocusScope.of(context);
+                                                                    if (!currentFocus.hasPrimaryFocus) {
+                                                                      currentFocus.focusedChild!.unfocus();
+                                                                    }
                                                                   });
                                                                 },
                                                               ),

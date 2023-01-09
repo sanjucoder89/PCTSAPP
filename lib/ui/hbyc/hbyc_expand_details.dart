@@ -1101,27 +1101,27 @@ class _HBYCExpandDetails extends State<HBYCExpandDetails> {
                               if(custom_anc_list[list_index].HBYCFlag.toString() == "3"){
                                 _verifyHBYCDetails("क्या आप"+" "+Strings.first_hbyc+" "+"को सत्यापित करना चाहते है |",
                                     custom_anc_list[list_index].HBYCFlag.toString(),
-                                    custom_anc_list[list_index].ancregid.toString(),
+                                    custom_anc_list[list_index].infantid.toString(),
                                     ColorConstants.black);
                               }else if(custom_anc_list[list_index].HBYCFlag.toString() == "6"){
                                 _verifyHBYCDetails("क्या आप"+" "+Strings.second_hbyc+" "+"को सत्यापित करना चाहते है |",
                                     custom_anc_list[list_index].HBYCFlag.toString(),
-                                    custom_anc_list[list_index].ancregid.toString(),
+                                    custom_anc_list[list_index].infantid.toString(),
                                     ColorConstants.black);
                               }else if(custom_anc_list[list_index].HBYCFlag.toString() == "9"){
                                 _verifyHBYCDetails("क्या आप"+" "+Strings.third_hbyc+" "+"को सत्यापित करना चाहते है |",
                                     custom_anc_list[list_index].HBYCFlag.toString(),
-                                    custom_anc_list[list_index].ancregid.toString(),
+                                    custom_anc_list[list_index].infantid.toString(),
                                     ColorConstants.black);
                               }else if(custom_anc_list[list_index].HBYCFlag.toString() == "12"){
                                 _verifyHBYCDetails("क्या आप"+" "+Strings.fourth_hbyc+" "+"को सत्यापित करना चाहते है |",
                                     custom_anc_list[list_index].HBYCFlag.toString(),
-                                    custom_anc_list[list_index].ancregid.toString(),
+                                    custom_anc_list[list_index].infantid.toString(),
                                     ColorConstants.black);
                               }else if(custom_anc_list[list_index].HBYCFlag.toString() == "15"){
                                 _verifyHBYCDetails("क्या आप"+" "+Strings.fifth_hbyc+" "+"को सत्यापित करना चाहते है |",
                                     custom_anc_list[list_index].HBYCFlag.toString(),
-                                    custom_anc_list[list_index].ancregid.toString(),
+                                    custom_anc_list[list_index].infantid.toString(),
                                     ColorConstants.black);
                               }
                             },

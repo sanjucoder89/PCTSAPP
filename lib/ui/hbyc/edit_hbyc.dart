@@ -690,6 +690,9 @@ class _EditHBYCFormState extends State<EditHBYCForm> {
         }else if(widget.ANMVerify == "1" && widget.Media == "2"){
           _Media = "3";
           _UpdateUserNo =preferences.getString("UserNo").toString();
+        }else if(widget.ANMVerify == "0" && widget.Media == "1"){
+          _Media = "1";
+          _UpdateUserNo =preferences.getString("UserNo").toString();
         }
       }else{
         _Media="1";
@@ -702,6 +705,9 @@ class _EditHBYCFormState extends State<EditHBYCForm> {
       }else{
         _tempReferCode="0";
       }
+      print('_Media_req $_Media');
+      print('__UpdateUserNo_req $_UpdateUserNo');
+
 
       print('Motherid:${widget.motherid+
           "ANCRegID:"+widget.ancregid+

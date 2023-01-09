@@ -270,6 +270,7 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
       maskType: EasyLoadingMaskType.black,
     );
     preferences = await SharedPreferences.getInstance();
+    print('MotherID${widget.MotherID}');
     var response = await post(Uri.parse(_get_death_details_url), body: {
       "MotherID": widget.MotherID,
       "TokenNo": preferences.getString('Token'),
@@ -515,6 +516,43 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
     print('response:${apiResponse.message}');
     return GetDistrictListData.fromJson(resBody);
   }
+
+  Future<GetDistrictListData> getDistrictListAPIChanged(String refUnitType) async {
+    /*await EasyLoading.show(
+      status: 'loading...',
+      maskType: EasyLoadingMaskType.black,
+    );*/
+    preferences = await SharedPreferences.getInstance();
+    var response = await post(Uri.parse(_get_district_list_url), body: {
+      //RefUnittype:3
+      // TokenNo:730c8ec9-d70b-44a1-b68e-0f5cfe7e3957
+      // UserID:0101010020201
+      "RefUnittype": refUnitType,
+      "TokenNo": preferences.getString('Token'),
+      "UserID": preferences.getString('UserId')
+    });
+    var resBody = json.decode(response.body);
+    final apiResponse = TreatmentListData.fromJson(resBody);
+    setState(() {
+      if (apiResponse.status == true) {
+        response_district_list = resBody['ResposeData'];
+        custom_district_list.clear();
+        custom_district_list.add(CustomDistrictCodeList(unitcode: "0000", unitNameHindi:Strings.choose));
+        for (int i = 0; i < response_district_list.length; i++) {
+          custom_district_list.add(CustomDistrictCodeList(unitcode: resBody['ResposeData'][i]['unitcode'],unitNameHindi: resBody['ResposeData'][i]['unitNameHindi']));
+        }
+        _selectedDistrictUnitCode = custom_district_list[0].unitcode.toString();
+        print('API _selectedDistrictUnitCode ${_selectedDistrictUnitCode}');
+        print('disctict.len ${custom_district_list.length}');
+      } else {
+        custom_district_list.clear();
+        print('disctict.len ${custom_district_list.length}');
+      }
+    //  EasyLoading.dismiss();
+    });
+    print('response:${apiResponse.message}');
+    return GetDistrictListData.fromJson(resBody);
+  }
   var _Action="";
   var blockValue=0;
   Future<String> getBlockListAPI(String refUnitType,String refUnitCode) async {
@@ -522,8 +560,8 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
       status: 'loading...',
       maskType: EasyLoadingMaskType.black,
     );
-    print('refUnitType $refUnitType');
-    print('referUnitCode $refUnitCode');
+    print('DeathUnittype $refUnitType');
+    print('DeathUnitCode $refUnitCode');
     preferences = await SharedPreferences.getInstance();
     var response = await post(Uri.parse(_get_block_list_url), body: {
       //TokenNo:8fee200c-21ff-4f9f-8828-c02a7a56c63a
@@ -567,22 +605,27 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
         }
         if(blockValue == 0){
           _Action="2";
-          getCHPHCListAPI(_DeathUnitCode,_DeathUnittype, _Action);
+          //getCHPHCListAPI(_DeathUnitCode,_DeathUnittype, _Action);//before 6 jan 2023
+          getCHPHCListAPI(_DeathUnittype,_DeathUnitCode,_Action);
         }else if(_selectedReferSanstha == "8" || _selectedReferSanstha == "9" || _selectedReferSanstha == "10" ||_selectedReferSanstha == "16"){
           _Action="1";
-          getCHPHCListAPI(_DeathUnitCode,_DeathUnittype, _Action);
+         // getCHPHCListAPI(_DeathUnitCode,_DeathUnittype, _Action);//before 6 jan 2023
+          getCHPHCListAPI(_DeathUnittype,_DeathUnitCode,_Action);
         }else if(_selectedReferSanstha == "11"){
           if(blockValue == 0){
             _Action="2";
-            getCHPHCListAPI(_DeathUnitCode,_DeathUnittype, _Action);
+            //getCHPHCListAPI(_DeathUnitCode,_DeathUnittype, _Action);//before 6 jan 2023
+            getCHPHCListAPI(_DeathUnittype,_DeathUnitCode,_Action);
 
           }else{
             _Action="3";
-            getCHPHCListAPI(_DeathUnitCode,_DeathUnittype, _Action);
+            //getCHPHCListAPI(_DeathUnitCode,_DeathUnittype, _Action); //before 6 jan 2023
+            getCHPHCListAPI(_DeathUnittype,_DeathUnitCode,_Action);
           }
         }else{
           _Action="1";
-          getCHPHCListAPI(_DeathUnitCode,_DeathUnittype, _Action);
+          //getCHPHCListAPI(_DeathUnitCode,_DeathUnittype, _Action); //before 6 jan 2023
+          getCHPHCListAPI(_DeathUnittype,_DeathUnitCode,_Action);
         }
       }
       //print('CheckValue blist.len ${custom_block_list.length}');
@@ -622,14 +665,14 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
 
     return "Success";
   }
-
+  var _isBlockChanged=false;
   Future<String> getCHPHCListAPI(String _id,String _code,String _Action) async {
     /*await EasyLoading.show(
       status: 'loading...',
       maskType: EasyLoadingMaskType.black,
     );*/
-    print('requestVal -dunicode ${_DeathUnitCode}');
-    print('requestVal -dunittype ${_DeathUnittype}');
+    print('requestVal -dunicode ${_code}');
+    print('requestVal -_id ${_id}');
     print('requestVal -act ${_Action}');
     preferences = await SharedPreferences.getInstance();
     var response = await post(Uri.parse(_get_chchc_list), body: {
@@ -638,7 +681,7 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
       // action:1
       // TokenNo:8fee200c-21ff-4f9f-8828-c02a7a56c63a
       // UserID:0101010020201
-      "DeathUnitCode": _code,
+      "DeathUnitCode": _id == "11" ? _code.substring(0,4) : _code,
       "DeathUnittype": _id,
       "action": _Action,
       "TokenNo": preferences.getString('Token'),
@@ -659,11 +702,36 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
         print('chphc.len ${custom_chcph_list.length}');
 
 
-
-
+        /*
+        * Set Last CHPCH Value
+        * */
+        if(_isBlockChanged == false){
+          for (int i = 0; i < custom_chcph_list.length; i++) {
+            print('_DeathUnitCode.len ${_DeathUnitCode}');
+            if(_DeathUnitCode.length > 6) {
+              if (custom_chcph_list[i].UnitCode.toString().substring(0, 9) == _DeathUnitCode.substring(0, 9)) {
+                _selectedCHPhcCode = custom_chcph_list[i].UnitCode.toString();
+                print('_selectedCHPhcCode_last ${_selectedCHPhcCode}');
+                _postDeathUnitID=_selectedCHPhcCode;
+              }
+            }else{
+              if(_postDeathUnitID == custom_chcph_list[i].UnitCode.toString()){
+                _selectedCHPhcCode = custom_chcph_list[i].UnitCode.toString();
+                _postDeathUnitID=_selectedCHPhcCode;
+                print('postDeathUnitID_last. ${_postDeathUnitID}');
+                print('private_acre_hosp. ${_selectedCHPhcCode}');
+              }
+            }
+          }
+        }else{
+          _selectedCHPhcCode="000000000";
+        }
       }else{
         custom_chcph_list.clear();
-        //print('chphc.len ${custom_chcph_list.length}');
+        print('chphc.len ${custom_chcph_list.length}');
+      }
+      if(_selectedReferSanstha != "16"){
+        getUpSwasthyaListAPI(_DeathUnittype,_DeathUnitCode);
       }
     //  EasyLoading.dismiss();
     });
@@ -677,6 +745,8 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
     );*/
     print('requestVal -dunicode ${_DeathUnitCode}');
     print('requestVal -dunittype ${_DeathUnittype}');
+    print('requestVal -_id ${_id}');
+    print('requestVal -_code ${_code}');
     preferences = await SharedPreferences.getInstance();
     var response = await post(Uri.parse(_get_upswasthya_list), body: {
       "DeathUnitCode": _code,
@@ -695,8 +765,8 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
           custom_upswasthya_list.add(CustomUPSwasthyaList(UnitCode: x2[i]['UnitCode'].toString(),UnitName: x2[i]['UnitName'].toString(),UnitID:x2[i]['UnitID'].toString()));
         }
         _selectedUpSwasthyaCode = custom_upswasthya_list[0].UnitCode.toString();
-        //print('_selectedUpSwasthyaCode ${_selectedUpSwasthyaCode}');
-        //print('upswasthya.len ${custom_upswasthya_list.length}');
+        print('_selectedUpSwasthyaCode ${_selectedUpSwasthyaCode}');
+        print('upswasthya.len ${custom_upswasthya_list.length}');
         /*
         * Set Last UP Swasthaya Value
         * */
@@ -706,9 +776,22 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
           }
         }*/
 
+        /*
+        * Set Last UP Swasthaya Value
+        * */
+        print('_DeathUnitCode_upswasth $_DeathUnitCode');
+
+        for (int i = 0; i < custom_upswasthya_list.length; i++) {
+          if(custom_upswasthya_list[i].UnitCode.toString() == _DeathUnitCode){
+            _selectedUpSwasthyaCode=custom_upswasthya_list[i].UnitCode.toString();
+            print('_selectedUpSwasthyaCode_upswasth $_selectedUpSwasthyaCode');
+            _postDeathUnitID=_selectedUpSwasthyaCode;
+          }
+        }
+
       }else{
         custom_upswasthya_list.clear();
-        //print('swasthya.len ${custom_upswasthya_list.length}');
+        print('swasthya.len ${custom_upswasthya_list.length}');
       }
     //  EasyLoading.dismiss();
     });
@@ -2157,7 +2240,7 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
                                         setState(() {
                                           _selectedReferSanstha = newVal!;
                                           print('_selectedReferSanstha:$_selectedReferSanstha');
-
+                                          getDistrictListAPIChanged("3");
                                           if(_selectedReferSanstha == "0" || _selectedReferSanstha == "17"){
                                           referJilaView=false;
                                           referBlockView=false;
@@ -2374,7 +2457,7 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
                                   _selectedBlockUnitCode = newVal!;
                                   print('blockcode:$_selectedBlockUnitCode');
                                   _postDeathUnitID=_selectedBlockUnitCode;
-
+                                  //_selectedCHPhcCode="000000000";
                                   if(_selectedBlockUnitCode == "000000"){
 
                                   }else{
@@ -2397,10 +2480,12 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
                                     }
                                   }
                                   print('prev_refer_sanstha $_selectedReferSanstha');
+                                  print('blockValue $blockValue');
                                   if(blockValue == 0){
                                     _Action="2";
                                     getCHPHCListAPI(_selectedReferSanstha,_selectedBlockUnitCode.substring(0,4),_Action);
                                   }else if(_selectedReferSanstha == "8" || _selectedReferSanstha == "9" || _selectedReferSanstha == "10" ||_selectedReferSanstha == "16"){
+                                    _isBlockChanged=true;
                                     _Action="1";
                                     getCHPHCListAPI(_selectedReferSanstha,_selectedBlockUnitCode.substring(0,4),_Action);
                                   }else if(_selectedReferSanstha == "11"){
@@ -2413,11 +2498,10 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
                                       getCHPHCListAPI(_selectedReferSanstha,_selectedBlockUnitCode.substring(0,4),_Action);
                                     }
                                   }else{
+                                    _isBlockChanged=true;
                                     _Action="1";
                                     getCHPHCListAPI(_selectedReferSanstha,_selectedBlockUnitCode.substring(0,4),_Action);
                                   }
-
-
                                 });
                               },
                               value: _selectedBlockUnitCode, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
@@ -2845,7 +2929,7 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
     if(_selectedReferSanstha == "17"){
       _selectedDeathPlace="17";
     }
-    print('UpdateRequest=>'
+    print('PostRequest=>'
         'LoginUserID:${preferences.getString('UserId').toString()+
         "DeathUnitCode:"+_selectedDeathPlace == "2" ? _postDeathUnitID : "0"+
         "motherid:"+widget.MotherID+
@@ -2968,24 +3052,10 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
     if(_selectedReferSanstha == "17"){
       _selectedDeathPlace="17";
     }
-    callUpdateAPI();
-  }
-  Future<SavedHBYCDetailsData> callUpdateAPI() async {
-    await EasyLoading.show(
-      status: 'loading...',
-      maskType: EasyLoadingMaskType.black,
-    );
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
-    for (var interface in await NetworkInterface.list()) {
-      print('== Interface: ${interface.name} ==');
-      for (var addr in interface.addresses) {
-        _IPAddress=addr.address;
-        print(
-            'my-ip-address ${addr.address} ${addr.host} ${addr.isLoopback} ${addr.rawAddress} ${addr.type.name}');
-      }
-    }
-
+    print('_selectedDeathPlace_req ${_selectedDeathPlace}');
+    print('_postDeathUnitID_req ${_postDeathUnitID}');
+    print('DeathUnitCode_ ${_selectedDeathPlace == "2" ? _postDeathUnitID : "0"}');
     print('UpdateRequest=>'
         'LoginUserID:${preferences.getString('UserId').toString()+
         "DeathUnitCode:"+_selectedDeathPlace == "2" ? _postDeathUnitID : "0"+
@@ -3011,6 +3081,23 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
         "TokenNo:"+preferences.getString('Token').toString()+
         "UserID:"+preferences.getString('UserId').toString()
     }');
+    callUpdateAPI();
+  }
+  Future<SavedHBYCDetailsData> callUpdateAPI() async {
+    await EasyLoading.show(
+      status: 'loading...',
+      maskType: EasyLoadingMaskType.black,
+    );
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+    for (var interface in await NetworkInterface.list()) {
+      print('== Interface: ${interface.name} ==');
+      for (var addr in interface.addresses) {
+        _IPAddress=addr.address;
+        print(
+            'my-ip-address ${addr.address} ${addr.host} ${addr.isLoopback} ${addr.rawAddress} ${addr.type.name}');
+      }
+    }
 
     var response = await put(Uri.parse(_edit_mother_details_url), body: {
       "LoginUserID":preferences.getString('UserId').toString(),
@@ -3677,34 +3764,6 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
            sapraView=false;
            upSwasthyaKendraView=false;
          }
-
-         /*setState(() {
-             if(_selectedReferSanstha == "0" || _selectedReferSanstha == "17"){
-               referSansthaView=false;
-               referJilaView=false;
-               referBlockView=false;
-               sapraView=false;
-               upSwasthyaKendraView=false;
-             }else if(_selectedReferSanstha == "11"){
-               referSansthaView=true;
-               referJilaView=true;
-               referBlockView=true;
-               upSwasthyaKendraView=true;
-               sapraView=true;
-             }else if(_selectedReferSanstha == "8" || _selectedReferSanstha == "9" || _selectedReferSanstha == "10" || _selectedReferSanstha == "16"){
-               referSansthaView=true;
-               referJilaView=true;
-               referBlockView=true;
-               sapraView=true;
-               upSwasthyaKendraView=false;
-             }else {
-               referSansthaView=false;
-               referJilaView=true;
-               referBlockView=true;
-               upSwasthyaKendraView=false;
-               sapraView=false;
-             }
-           });*/
        }else if(_selectedDeathPlace == "3"){
          referSansthaView=false;
          referJilaView=false;

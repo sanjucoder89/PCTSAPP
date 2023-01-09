@@ -429,6 +429,7 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
         _tempReferCode="0";
       }
 
+
       print('Motherid:${widget.motherid+
           "ANCRegID:"+widget.ancregid+
           "InfantId:"+widget.infantid+
@@ -465,6 +466,10 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
       maskType: EasyLoadingMaskType.black,
     );
     preferences = await SharedPreferences.getInstance();
+
+
+
+
     var response = await post(Uri.parse(_add_hbyc_form_url), body: {
       "MotherId":widget.motherid,
       "ASHAAutoID":aashaId,
@@ -2335,6 +2340,7 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
         print('hbycDate intentt ${intentAncDate}');
         final diff_lmp_ancdate = parseCalenderSelectedAncDate.difference(intentAncDate).inDays;
         print('hbycDate diff ${diff_lmp_ancdate}');
+        print('HBYCFlag ${HBYCFlag}');
 
 
         if (formattedDate2.compareTo(getCurrentDate()) > 0) {

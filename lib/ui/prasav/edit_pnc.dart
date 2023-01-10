@@ -30,6 +30,7 @@ import 'model/GetAanganBadiListData.dart';
 import 'model/GetAashaListData.dart';
 import 'model/GetBlockListData.dart';
 import 'model/GetChildComplListData.dart';
+import 'model/GetChildDetailsData.dart';
 import 'model/GetDistrictListData.dart';
 import 'model/SavedANCDetailsData.dart';
 import 'model/SavedPNDDetailsData.dart';
@@ -429,6 +430,14 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
   var rdChildIsLive4="";
   var rdChildIsLive5="";
 
+
+  var rdChildIsLiveEntry1=true;
+  var rdChildIsLiveEntry2=true;
+  var rdChildIsLiveEntry3=true;
+  var rdChildIsLiveEntry4=true;
+  var rdChildIsLiveEntry5=true;
+
+
   /*var child_comp1="";
   var child_comp2="";
   var child_comp3="";
@@ -460,6 +469,12 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
   bool _shishuWgt3EnDisable = false;
   bool _shishuWgt4EnDisable = false;
   bool _shishuWgt5EnDisable = false;
+
+  bool _shishuCompEnDisable = true;
+  bool _shishuComp2EnDisable = true;
+  bool _shishuComp3EnDisable = true;
+  bool _shishuComp4EnDisable = true;
+  bool _shishuComp5EnDisable = true;
 
   TextEditingController _shishuNameController = TextEditingController();
   TextEditingController _shishu2NameController = TextEditingController();
@@ -493,7 +508,7 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
         }
     );
     var resBody = json.decode(response.body);
-    final apiResponse = GetAashaListData.fromJson(resBody);
+    final apiResponse = GetChildDetailsData.fromJson(resBody);
     setState(() {
       if (apiResponse.status == true) {
         custom_childname_list.clear();
@@ -503,7 +518,8 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
         for (int i = 0; i < response_list5.length; i++) {
           custom_childname_list.add(CustomChildNameList(
               ChildName:response_list5[i]['Name'].toString() == "null" ? "" : response_list5[i]['Name'].toString().trim(),
-              InfantID:response_list5[i]['InfantID'].toString()));
+              InfantID:response_list5[i]['InfantID'].toString(),
+              Status:response_list5[i]['Status'].toString()));
         }
 
         print('custom_childnam.len ${custom_childname_list.length}');
@@ -563,39 +579,305 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
               custom_childname_list[0].ChildName.toString() != "null") {
             _infantid1 = custom_childname_list[0].InfantID.toString();
           }
-        }
+          print('last_infantid1 ${_infantid1}');
+
+          //if child first is live or not
+          if(custom_childname_list[0].Status.toString() == "2"){
+            //Lock First Child View Lock , if status is == 2 , else 0= live
+            _shishuEnDisable=false;
+            _shishuWgtEnDisable=false;
+            _shishuCompEnDisable=false;
+          }
+        }//one child
         if(custom_childname_list.length == 2) {
+
+          if (custom_childname_list[0].InfantID
+              .toString()
+              .isNotEmpty == "" ||
+              custom_childname_list[0].ChildName.toString() != "null") {
+            _infantid1 = custom_childname_list[0].InfantID.toString();
+          }
+          print('last_infantid1 ${_infantid1}');
+
           if (custom_childname_list[1].InfantID
               .toString()
               .isNotEmpty == "" ||
               custom_childname_list[1].ChildName.toString() != "null") {
             _infantid2 = custom_childname_list[1].InfantID.toString();
           }
-        }
+          print('last_infantid2 ${_infantid2}');
 
+          //if child first is live or not
+          if(custom_childname_list[0].Status.toString() == "2"){
+            //Lock First Child View Lock , if status is == 2 , else 0= live
+            _shishuEnDisable=false;
+            _shishuWgtEnDisable=false;
+            _shishuislive = ShihuIsLive.no;
+            rdChildIsLive1="0";
+            rdChildIsLiveEntry1=false;
+            _shishuCompEnDisable=false;
+
+          }
+          //if child sec is live or not
+          if(custom_childname_list[1].Status.toString() == "2"){
+            //Lock First Child View Lock , if status is == 2 , else 0= live
+            _shishu2EnDisable=false;
+            _shishuWgt2EnDisable=false;
+            _shishuislive2 = ShihuIsLive2.no;
+            rdChildIsLive2="0";
+            rdChildIsLiveEntry2=false;
+            _shishuComp2EnDisable=false;
+          }
+        }//two child
         if(custom_childname_list.length == 3) {
+
+          if (custom_childname_list[0].InfantID
+              .toString()
+              .isNotEmpty == "" ||
+              custom_childname_list[0].ChildName.toString() != "null") {
+            _infantid1 = custom_childname_list[0].InfantID.toString();
+          }
+          print('last_infantid1 ${_infantid1}');
+
+          if (custom_childname_list[1].InfantID
+              .toString()
+              .isNotEmpty == "" ||
+              custom_childname_list[1].ChildName.toString() != "null") {
+            _infantid2 = custom_childname_list[1].InfantID.toString();
+          }
+          print('last_infantid2 ${_infantid2}');
+
           if (custom_childname_list[2].InfantID
               .toString()
               .isNotEmpty == "" ||
               custom_childname_list[2].ChildName.toString() != "null") {
             _infantid3 = custom_childname_list[2].InfantID.toString();
           }
-        }
+          print('last_infantid3 ${_infantid3}');
+
+          //if child first is live or not
+          if(custom_childname_list[0].Status.toString() == "2"){
+            //Lock First Child View Lock , if status is == 2 , else 0= live
+            _shishuEnDisable=false;
+            _shishuWgtEnDisable=false;
+            _shishuislive = ShihuIsLive.no;
+            rdChildIsLive1="0";
+            rdChildIsLiveEntry1=false;
+            _shishuCompEnDisable=false;
+          }
+          //if child sec is live or not
+          if(custom_childname_list[1].Status.toString() == "2"){
+            //Lock First Child View Lock , if status is == 2 , else 0= live
+            _shishu2EnDisable=false;
+            _shishuWgt2EnDisable=false;
+            _shishuislive2 = ShihuIsLive2.no;
+            rdChildIsLive2="0";
+            rdChildIsLiveEntry2=false;
+            _shishuComp2EnDisable=false;
+          }
+          //if child three is live or not
+          if(custom_childname_list[2].Status.toString() == "2"){
+            //Lock First Child View Lock , if status is == 2 , else 0= live
+            _shishu3EnDisable=false;
+            _shishuWgt3EnDisable=false;
+            _shishuislive3 = ShihuIsLive3.no;
+            rdChildIsLive3="0";
+            rdChildIsLiveEntry3=false;
+            _shishuComp3EnDisable=false;
+          }
+
+        }//three child
         if(custom_childname_list.length == 4) {
+
+          if (custom_childname_list[0].InfantID
+              .toString()
+              .isNotEmpty == "" ||
+              custom_childname_list[0].ChildName.toString() != "null") {
+            _infantid1 = custom_childname_list[0].InfantID.toString();
+          }
+          print('last_infantid1 ${_infantid1}');
+
+          if (custom_childname_list[1].InfantID
+              .toString()
+              .isNotEmpty == "" ||
+              custom_childname_list[1].ChildName.toString() != "null") {
+            _infantid2 = custom_childname_list[1].InfantID.toString();
+          }
+          print('last_infantid2 ${_infantid2}');
+
+          if (custom_childname_list[2].InfantID
+              .toString()
+              .isNotEmpty == "" ||
+              custom_childname_list[2].ChildName.toString() != "null") {
+            _infantid3 = custom_childname_list[2].InfantID.toString();
+          }
+          print('last_infantid3 ${_infantid3}');
+
           if (custom_childname_list[3].InfantID
               .toString()
               .isNotEmpty == "" ||
               custom_childname_list[3].ChildName.toString() != "null") {
             _infantid4 = custom_childname_list[3].InfantID.toString();
           }
-        }
+          print('last_infantid4 ${_infantid4}');
+
+          //if child first is live or not
+          if(custom_childname_list[0].Status.toString() == "2"){
+            //Lock First Child View Lock , if status is == 2 , else 0= live
+            _shishuEnDisable=false;
+            _shishuWgtEnDisable=false;
+            _shishuislive = ShihuIsLive.no;
+            rdChildIsLive1="0";
+            rdChildIsLiveEntry1=false;
+            _shishuCompEnDisable=false;
+          }
+          //if child sec is live or not
+          if(custom_childname_list[1].Status.toString() == "2"){
+            //Lock First Child View Lock , if status is == 2 , else 0= live
+            _shishu2EnDisable=false;
+            _shishuWgt2EnDisable=false;
+            _shishuislive2 = ShihuIsLive2.no;
+            rdChildIsLive2="0";
+            rdChildIsLiveEntry2=false;
+            _shishuComp2EnDisable=false;
+          }
+          //if child three is live or not
+          if(custom_childname_list[2].Status.toString() == "2"){
+            //Lock First Child View Lock , if status is == 2 , else 0= live
+            _shishu3EnDisable=false;
+            _shishuWgt3EnDisable=false;
+            _shishuislive3 = ShihuIsLive3.no;
+            rdChildIsLive3="0";
+            rdChildIsLiveEntry3=false;
+            _shishuComp3EnDisable=false;
+          }
+          //if child four is live or not
+          if(custom_childname_list[3].Status.toString() == "2"){
+            //Lock First Child View Lock , if status is == 2 , else 0= live
+            _shishu4EnDisable=false;
+            _shishuWgt4EnDisable=false;
+            _shishuislive4 = ShihuIsLive4.no;
+            rdChildIsLive4="0";
+            rdChildIsLiveEntry4=false;
+            _shishuComp4EnDisable=false;
+          }
+
+        }//four child
         if(custom_childname_list.length == 5) {
+
+          if (custom_childname_list[0].InfantID
+              .toString()
+              .isNotEmpty == "" ||
+              custom_childname_list[0].ChildName.toString() != "null") {
+            _infantid1 = custom_childname_list[0].InfantID.toString();
+          }
+          print('last_infantid1 ${_infantid1}');
+
+          if (custom_childname_list[1].InfantID
+              .toString()
+              .isNotEmpty == "" ||
+              custom_childname_list[1].ChildName.toString() != "null") {
+            _infantid2 = custom_childname_list[1].InfantID.toString();
+          }
+          print('last_infantid2 ${_infantid2}');
+
+          if (custom_childname_list[2].InfantID
+              .toString()
+              .isNotEmpty == "" ||
+              custom_childname_list[2].ChildName.toString() != "null") {
+            _infantid3 = custom_childname_list[2].InfantID.toString();
+          }
+          print('last_infantid3 ${_infantid3}');
+
+          if (custom_childname_list[3].InfantID
+              .toString()
+              .isNotEmpty == "" ||
+              custom_childname_list[3].ChildName.toString() != "null") {
+            _infantid4 = custom_childname_list[3].InfantID.toString();
+          }
+          print('last_infantid4 ${_infantid4}');
+
           if (custom_childname_list[4].InfantID
               .toString()
               .isNotEmpty == "" ||
               custom_childname_list[4].ChildName.toString() != "null") {
             _infantid5 = custom_childname_list[4].InfantID.toString();
           }
+          print('last_infantid5 ${_infantid5}');
+
+          //if child first is live or not
+          if(custom_childname_list[0].Status.toString() == "2"){
+            //Lock First Child View Lock , if status is == 2 , else 0= live
+            _shishuEnDisable=false;
+            _shishuWgtEnDisable=false;
+            _shishuislive = ShihuIsLive.no;
+            rdChildIsLive1="0";
+            rdChildIsLiveEntry1=false;
+            _shishuCompEnDisable=false;
+          }
+          //if child sec is live or not
+          if(custom_childname_list[1].Status.toString() == "2"){
+            //Lock First Child View Lock , if status is == 2 , else 0= live
+            _shishu2EnDisable=false;
+            _shishuWgt2EnDisable=false;
+            _shishuislive2 = ShihuIsLive2.no;
+            rdChildIsLive2="0";
+            rdChildIsLiveEntry2=false;
+            _shishuComp2EnDisable=false;
+          }
+          //if child three is live or not
+          if(custom_childname_list[2].Status.toString() == "2"){
+            //Lock First Child View Lock , if status is == 2 , else 0= live
+            _shishu3EnDisable=false;
+            _shishuWgt3EnDisable=false;
+            _shishuislive3 = ShihuIsLive3.no;
+            rdChildIsLive3="0";
+            rdChildIsLiveEntry3=false;
+            _shishuComp3EnDisable=false;
+          }
+          //if child four is live or not
+          if(custom_childname_list[3].Status.toString() == "2"){
+            //Lock First Child View Lock , if status is == 2 , else 0= live
+            _shishu4EnDisable=false;
+            _shishuWgt4EnDisable=false;
+            _shishuislive4 = ShihuIsLive4.no;
+            rdChildIsLive4="0";
+            rdChildIsLiveEntry4=false;
+            _shishuComp4EnDisable=false;
+          }
+          //if child fifth is live or not
+          if(custom_childname_list[4].Status.toString() == "2"){
+            //Lock First Child View Lock , if status is == 2 , else 0= live
+            _shishu5EnDisable=false;
+            _shishuWgt5EnDisable=false;
+            _shishuislive5 = ShihuIsLive5.no;
+            rdChildIsLive5="0";
+            rdChildIsLiveEntry5=false;
+            _shishuComp5EnDisable=false;
+          }
+        }//five child
+
+
+        if(custom_childname_list.length == 1) {
+          _ShowHideShishuEntryView1=true;
+        }else if(custom_childname_list.length == 2){
+          _ShowHideShishuEntryView1=true;
+          _ShowHideShishuEntryView2=true;
+        }else if(custom_childname_list.length == 3){
+          _ShowHideShishuEntryView1=true;
+          _ShowHideShishuEntryView2=true;
+          _ShowHideShishuEntryView3=true;
+        }else if(custom_childname_list.length == 4){
+          _ShowHideShishuEntryView1=true;
+          _ShowHideShishuEntryView2=true;
+          _ShowHideShishuEntryView3=true;
+          _ShowHideShishuEntryView4=true;
+        }else if(custom_childname_list.length == 5){
+          _ShowHideShishuEntryView1=true;
+          _ShowHideShishuEntryView2=true;
+          _ShowHideShishuEntryView3=true;
+          _ShowHideShishuEntryView4=true;
+          _ShowHideShishuEntryView5=true;
         }
       }
     });
@@ -702,8 +984,7 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
     }
 
     setState(() {
-     // if(widget.Child1_IsLive.isNotEmpty){
-      print("widget.Child1_IsLive ${widget.Child1_IsLive}");
+      if(widget.Child1_IsLive.isNotEmpty){
         if(widget.Child1_IsLive == "0"){
           rdChildIsLive1="0";
           _shishuislive=ShihuIsLive.no;
@@ -711,7 +992,11 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
           rdChildIsLive1="1";
           _shishuislive=ShihuIsLive.yes;
         }
-    ///  }
+      }else{
+        rdChildIsLive1="";
+        _shishuislive=ShihuIsLive.none;
+      }
+
       if(widget.Child2_IsLive.isNotEmpty){
         if(widget.Child2_IsLive == "0"){
           rdChildIsLive2="0";
@@ -720,7 +1005,11 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
           rdChildIsLive2="1";
           _shishuislive2=ShihuIsLive2.yes;
         }
+      }else{
+        rdChildIsLive2="";
+        _shishuislive2=ShihuIsLive2.none;
       }
+
       if(widget.Child3_IsLive.isNotEmpty){
         if(widget.Child3_IsLive == "0"){
           rdChildIsLive3="0";
@@ -729,7 +1018,11 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
           rdChildIsLive3="1";
           _shishuislive3=ShihuIsLive3.yes;
         }
+      }else{
+        rdChildIsLive3="";
+        _shishuislive3=ShihuIsLive3.none;
       }
+
       if(widget.Child4_IsLive.isNotEmpty){
         if(widget.Child4_IsLive == "0"){
           rdChildIsLive4="0";
@@ -738,6 +1031,9 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
           rdChildIsLive4="1";
           _shishuislive4=ShihuIsLive4.yes;
         }
+      }else{
+        rdChildIsLive4="";
+        _shishuislive4=ShihuIsLive4.none;
       }
       if(widget.Child5_IsLive.isNotEmpty){
         if(widget.Child5_IsLive == "0"){
@@ -747,26 +1043,34 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
           rdChildIsLive5="1";
           _shishuislive5=ShihuIsLive5.yes;
         }
+      }else{
+        rdChildIsLive5="";
+        _shishuislive5=ShihuIsLive5.none;
       }
 
       if(widget.Child1_Weight.isNotEmpty){
-        _shishuWgtEnDisable=true;
+       // _shishuWgtEnDisable=true;
+        //_shishuCompEnDisable=true;
         _shishuWeightController.text=widget.Child1_Weight;
       }
       if(widget.Child2_Weight.isNotEmpty){
-        _shishuWgt2EnDisable=true;
+        //_shishuWgt2EnDisable=true;
+        //_shishuComp2EnDisable=true;
         _shishuWeight2Controller.text=widget.Child2_Weight;
       }
       if(widget.Child3_Weight.isNotEmpty){
-        _shishuWgt3EnDisable=true;
+       // _shishuWgt3EnDisable=true;
+        //_shishuComp3EnDisable=true;
         _shishuWeight3Controller.text=widget.Child3_Weight;
       }
       if(widget.Child4_Weight.isNotEmpty){
-        _shishuWgt4EnDisable=true;
+       // _shishuWgt4EnDisable=true;
+        //_shishuComp4EnDisable=true;
         _shishuWeight4Controller.text=widget.Child4_Weight;
       }
       if(widget.Child5_Weight.isNotEmpty){
-        _shishuWgt5EnDisable=true;
+        //_shishuWgt5EnDisable=true;
+        //_shishuComp5EnDisable=true;
         _shishuWeight5Controller.text=widget.Child5_Weight;
       }
       setState(() {
@@ -1128,7 +1432,7 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
     }
     print('custom_placesrefer_list.len ${custom_placesrefer_list.length}');
 
-    if(widget.ReferUnitType.isNotEmpty){
+    if(widget.ReferUnitType.isNotEmpty && widget.ReferUnitType != "0"){
       for (int i = 0; i < custom_placesrefer_list.length; i++) {
         if (widget.ReferUnitType == custom_placesrefer_list[i].code.toString()) {
           _selectedPlacesReferCode = custom_placesrefer_list[i].code.toString();
@@ -1137,6 +1441,8 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
           break;
         }
       }
+    }else if(widget.ReferUnitType == "0"){
+      _ShowHideReferPlacesView=false;
     }
   }
 
@@ -1801,7 +2107,7 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                                         child: TextField(
                                                           enabled: _shishuEnDisable,
                                                           style: TextStyle(color: Colors.black),
-                                                          maxLength: 4,
+                                                          maxLength: 10,
                                                           keyboardType: TextInputType.number,
                                                           controller: _shishuNameController,
                                                           decoration: InputDecoration(
@@ -1879,10 +2185,10 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                                           child: Row(
                                                             children: [
                                                               Radio<ShihuIsLive>(
-                                                                activeColor:Colors.black,
+                                                                activeColor:rdChildIsLiveEntry1 == false ? Colors.grey : Colors.black,
                                                                 value: ShihuIsLive.yes,
                                                                 groupValue: _shishuislive,
-                                                                onChanged: (ShihuIsLive? value) {
+                                                                onChanged:rdChildIsLiveEntry1 == false ? null : (ShihuIsLive? value) {
                                                                   setState(() {
                                                                     _shishuislive = value ?? _shishuislive;
                                                                     rdChildIsLive1="1";
@@ -1924,11 +2230,30 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                                                     _shishuWgtEnDisable=false;
                                                                     _shishuWeightController.text="";
                                                                     childComplId_1="0";
-                                                                    if(rdChildIsLive1 == "0"){
+                                                                    /*if(rdChildIsLive1 == "0"){
                                                                       _ShowHideReferPlacesView=false;
                                                                     }else{
                                                                       _ShowHideReferPlacesView=true;
+                                                                    }*/
+
+                                                                    FocusScopeNode currentFocus = FocusScope.of(context);
+                                                                    if (!currentFocus.hasPrimaryFocus) {
+                                                                      currentFocus.focusedChild!.unfocus();
                                                                     }
+                                                                    _shishuNameController.text="";
+
+                                                                    _ReferUnitCode="0";//set default value on child death
+                                                                    print('final ReferUnitCode $_ReferUnitCode');
+
+                                                                    /*
+                                                                    * Check if any child is live refer listing will be show
+                                                                    */
+                                                                    checkifAnyChildLive(
+                                                                        rdChildIsLive1,
+                                                                        rdChildIsLive2,
+                                                                        rdChildIsLive3,
+                                                                        rdChildIsLive4,
+                                                                        rdChildIsLive5);
                                                                   });
                                                                 },
                                                               ),
@@ -2074,7 +2399,7 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                                       .toString() //Id that has to be passed that the dropdown has.....
                                               );
                                             }).toList(),
-                                            onChanged:_shishuWgtEnDisable == true ? (String? newVal) {
+                                            onChanged:_shishuCompEnDisable == true ? (String? newVal) {
                                               setState(() {
                                                 childComplId_1 = newVal!;
                                                 print('childComplId_1:$childComplId_1');
@@ -2146,7 +2471,7 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                                         child: TextField(
                                                           enabled: _shishu2EnDisable,
                                                           style: TextStyle(color: Colors.black),
-                                                          maxLength: 4,
+                                                          maxLength: 10,
                                                           keyboardType: TextInputType.number,
                                                           controller: _shishu2NameController,
                                                           decoration: InputDecoration(
@@ -2223,13 +2548,13 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                                           //Make it equal to width of radio button
                                                           child: Row(
                                                             children: [
-                                                              Radio<ShihuIsLive3>(
-                                                                activeColor:Colors.black,
-                                                                value: ShihuIsLive3.yes,
-                                                                groupValue: _shishuislive3,
-                                                                onChanged: (ShihuIsLive3? value) {
+                                                              Radio<ShihuIsLive2>(
+                                                                activeColor:rdChildIsLiveEntry2 == false ? Colors.grey : Colors.black,
+                                                                value: ShihuIsLive2.yes,
+                                                                groupValue: _shishuislive2,
+                                                                onChanged: rdChildIsLiveEntry2 == false ? null : (ShihuIsLive2? value) {
                                                                   setState(() {
-                                                                    _shishuislive3 = value ?? _shishuislive3;
+                                                                    _shishuislive2 = value ?? _shishuislive2;
                                                                     rdChildIsLive2="1";
                                                                     _shishuWgt2EnDisable=true;
                                                                     if(rdChildIsLive2 == "0"){
@@ -2258,22 +2583,38 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                                           //Make it equal to width of radio button
                                                           child: Row(
                                                             children: [
-                                                              Radio<ShihuIsLive3>(
-                                                                activeColor:Colors.black,
-                                                                value: ShihuIsLive3.no,
-                                                                groupValue: _shishuislive3,
-                                                                onChanged:(ShihuIsLive3? value) {
+                                                              Radio<ShihuIsLive2>(
+                                                                activeColor:rdChildIsLiveEntry2 == false ? Colors.grey : Colors.black,
+                                                                value: ShihuIsLive2.no,
+                                                                groupValue: _shishuislive2,
+                                                                onChanged:(ShihuIsLive2? value) {
                                                                   setState(() {
-                                                                    _shishuislive3 = value ?? _shishuislive3;
+                                                                    _shishuislive2 = value ?? _shishuislive2;
                                                                     rdChildIsLive2="0";
                                                                     _shishuWgt2EnDisable=false;
                                                                     _shishuWeight2Controller.text="";
                                                                     childComplId_2="0";
-                                                                    if(rdChildIsLive2 == "0"){
-                                                                      _ShowHideReferPlacesView=false;
-                                                                    }else{
-                                                                      _ShowHideReferPlacesView=true;
+
+
+                                                                    _shishu2NameController.text="";
+                                                                    _shishu2EnDisable=false;
+                                                                    FocusScopeNode currentFocus = FocusScope.of(context);
+                                                                    if (!currentFocus.hasPrimaryFocus) {
+                                                                      currentFocus.focusedChild!.unfocus();
                                                                     }
+
+                                                                    _ReferUnitCode="0";//set default value on child death
+                                                                    print('final ReferUnitCode $_ReferUnitCode');
+
+                                                                    /*
+                                                                    * Check if any child is live refer listing will be show
+                                                                    */
+                                                                    checkifAnyChildLive(
+                                                                        rdChildIsLive1,
+                                                                        rdChildIsLive2,
+                                                                        rdChildIsLive3,
+                                                                        rdChildIsLive4,
+                                                                        rdChildIsLive5);
                                                                   });
                                                                 },
                                                               ),
@@ -2360,9 +2701,12 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.all(5.0),
-                                  child: Text(
-                                    Strings.child_comp,
-                                    style: TextStyle(color: Colors.black, fontSize: 13),
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      Strings.child_comp,
+                                      style: TextStyle(color: Colors.black, fontSize: 13),
+                                    ),
                                   ),
                                 ),
 
@@ -2417,7 +2761,7 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                                       .toString() //Id that has to be passed that the dropdown has.....
                                               );
                                             }).toList(),
-                                            onChanged:_shishuWgt2EnDisable == true ?  (String? newVal) {
+                                            onChanged:_shishuComp2EnDisable == true ?  (String? newVal) {
                                               setState(() {
                                                 childComplId_2 = newVal!;
                                                 print('childComplId_2:$childComplId_2');
@@ -2489,7 +2833,7 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                                         child: TextField(
                                                           enabled: _shishu3EnDisable,
                                                           style: TextStyle(color: Colors.black),
-                                                          maxLength: 4,
+                                                          maxLength: 10,
                                                           keyboardType: TextInputType.number,
                                                           controller: _shishu3NameController,
                                                           decoration: InputDecoration(
@@ -2566,13 +2910,13 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                                           //Make it equal to width of radio button
                                                           child: Row(
                                                             children: [
-                                                              Radio<ShihuIsLive4>(
-                                                                activeColor:Colors.black,
-                                                                value: ShihuIsLive4.yes,
-                                                                groupValue: _shishuislive4,
-                                                                onChanged: (ShihuIsLive4? value) {
+                                                              Radio<ShihuIsLive3>(
+                                                                activeColor:rdChildIsLiveEntry3 == false ? Colors.grey : Colors.black,
+                                                                value: ShihuIsLive3.yes,
+                                                                groupValue: _shishuislive3,
+                                                                onChanged: (ShihuIsLive3? value) {
                                                                   setState(() {
-                                                                    _shishuislive4 = value ?? _shishuislive4;
+                                                                    _shishuislive3 = value ?? _shishuislive3;
                                                                     rdChildIsLive3="1";
                                                                     _shishuWgt3EnDisable=true;
                                                                     if(rdChildIsLive3 == "0"){
@@ -2601,22 +2945,38 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                                           //Make it equal to width of radio button
                                                           child: Row(
                                                             children: [
-                                                              Radio<ShihuIsLive4>(
-                                                                activeColor:Colors.black,
-                                                                value: ShihuIsLive4.no,
-                                                                groupValue: _shishuislive4,
-                                                                onChanged:(ShihuIsLive4? value) {
+                                                              Radio<ShihuIsLive3>(
+                                                                activeColor:rdChildIsLiveEntry3 == false ? Colors.grey : Colors.black,
+                                                                value: ShihuIsLive3.no,
+                                                                groupValue: _shishuislive3,
+                                                                onChanged:(ShihuIsLive3? value) {
                                                                   setState(() {
-                                                                    _shishuislive4 = value ?? _shishuislive4;
+                                                                    _shishuislive3 = value ?? _shishuislive3;
                                                                     rdChildIsLive3="0";
                                                                     _shishuWgt3EnDisable=false;
                                                                     _shishuWeight3Controller.text="";
                                                                     childComplId_3="";
-                                                                    if(rdChildIsLive3 == "0"){
-                                                                      _ShowHideReferPlacesView=false;
-                                                                    }else{
-                                                                      _ShowHideReferPlacesView=true;
+
+                                                                    _shishu3NameController.text="";
+                                                                    _shishu3EnDisable=false;
+                                                                    FocusScopeNode currentFocus = FocusScope.of(context);
+                                                                    if (!currentFocus.hasPrimaryFocus) {
+                                                                      currentFocus.focusedChild!.unfocus();
                                                                     }
+
+
+                                                                    _ReferUnitCode="0";//set default value on child death
+                                                                    print('final ReferUnitCode $_ReferUnitCode');
+
+                                                                    /*
+                                                                    * Check if any child is live refer listing will be show
+                                                                    */
+                                                                    checkifAnyChildLive(
+                                                                        rdChildIsLive1,
+                                                                        rdChildIsLive2,
+                                                                        rdChildIsLive3,
+                                                                        rdChildIsLive4,
+                                                                        rdChildIsLive5);
                                                                   });
                                                                 },
                                                               ),
@@ -2703,9 +3063,12 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.all(5.0),
-                                  child: Text(
-                                    Strings.child_comp,
-                                    style: TextStyle(color: Colors.black, fontSize: 13),
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      Strings.child_comp,
+                                      style: TextStyle(color: Colors.black, fontSize: 13),
+                                    ),
                                   ),
                                 ),
 
@@ -2760,7 +3123,7 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                                       .toString() //Id that has to be passed that the dropdown has.....
                                               );
                                             }).toList(),
-                                            onChanged:_shishuWgt3EnDisable == true ? (String? newVal) {
+                                            onChanged:_shishuComp3EnDisable == true ? (String? newVal) {
                                               setState(() {
                                                 childComplId_3 = newVal!;
                                                 print('childComplId_3:$childComplId_3');
@@ -2832,7 +3195,7 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                                         child: TextField(
                                                           enabled: _shishu4EnDisable,
                                                           style: TextStyle(color: Colors.black),
-                                                          maxLength: 4,
+                                                          maxLength: 10,
                                                           keyboardType: TextInputType.number,
                                                           controller: _shishu4NameController,
                                                           decoration: InputDecoration(
@@ -2910,10 +3273,10 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                                           child: Row(
                                                             children: [
                                                               Radio<ShihuIsLive4>(
-                                                                activeColor:Colors.black,
+                                                                activeColor:rdChildIsLiveEntry4 == false ? Colors.grey : Colors.black,
                                                                 value: ShihuIsLive4.yes,
                                                                 groupValue: _shishuislive4,
-                                                                onChanged: (ShihuIsLive4? value) {
+                                                                onChanged:rdChildIsLiveEntry4 == false ? null : (ShihuIsLive4? value) {
                                                                   setState(() {
                                                                     _shishuislive4 = value ?? _shishuislive4;
                                                                     rdChildIsLive4="0";
@@ -2945,7 +3308,7 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                                           child: Row(
                                                             children: [
                                                               Radio<ShihuIsLive4>(
-                                                                activeColor:Colors.black,
+                                                                activeColor:rdChildIsLiveEntry4 == false ? Colors.grey : Colors.black,
                                                                 value: ShihuIsLive4.no,
                                                                 groupValue: _shishuislive4,
                                                                 onChanged:(ShihuIsLive4? value) {
@@ -2955,11 +3318,27 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                                                     _shishuWgt4EnDisable=false;
                                                                     _shishuWeight4Controller.text="";
                                                                     childComplId_4="0";
-                                                                    if(rdChildIsLive4 == "0"){
-                                                                      _ShowHideReferPlacesView=false;
-                                                                    }else{
-                                                                      _ShowHideReferPlacesView=true;
+
+                                                                    _shishu4NameController.text="";
+                                                                    _shishu4EnDisable=false;
+                                                                    FocusScopeNode currentFocus = FocusScope.of(context);
+                                                                    if (!currentFocus.hasPrimaryFocus) {
+                                                                      currentFocus.focusedChild!.unfocus();
                                                                     }
+
+                                                                    _ReferUnitCode="0";//set default value on child death
+                                                                    print('final ReferUnitCode $_ReferUnitCode');
+
+                                                                    /*
+                                                                    * Check if any child is live refer listing will be show
+                                                                    */
+                                                                    checkifAnyChildLive(
+                                                                        rdChildIsLive1,
+                                                                        rdChildIsLive2,
+                                                                        rdChildIsLive3,
+                                                                        rdChildIsLive4,
+                                                                        rdChildIsLive5);
+
                                                                   });
                                                                 },
                                                               ),
@@ -3046,9 +3425,12 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.all(5.0),
-                                  child: Text(
-                                    Strings.child_comp,
-                                    style: TextStyle(color: Colors.black, fontSize: 13),
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      Strings.child_comp,
+                                      style: TextStyle(color: Colors.black, fontSize: 13),
+                                    ),
                                   ),
                                 ),
 
@@ -3103,7 +3485,7 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                                       .toString() //Id that has to be passed that the dropdown has.....
                                               );
                                             }).toList(),
-                                            onChanged:_shishuWgt4EnDisable == true ? (String? newVal) {
+                                            onChanged:_shishuComp4EnDisable == true ? (String? newVal) {
                                               setState(() {
                                                 childComplId_4 = newVal!;
                                                 print('childComplId_4:$childComplId_4');
@@ -3175,7 +3557,7 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                                         child: TextField(
                                                           enabled: _shishu5EnDisable,
                                                           style: TextStyle(color: Colors.black),
-                                                          maxLength: 4,
+                                                          maxLength: 10,
                                                           keyboardType: TextInputType.number,
                                                           controller: _shishu5NameController,
                                                           decoration: InputDecoration(
@@ -3253,10 +3635,10 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                                           child: Row(
                                                             children: [
                                                               Radio<ShihuIsLive5>(
-                                                                activeColor:Colors.black,
+                                                                activeColor:rdChildIsLiveEntry5 == false ? Colors.grey : Colors.black,
                                                                 value: ShihuIsLive5.yes,
                                                                 groupValue: _shishuislive5,
-                                                                onChanged: (ShihuIsLive5? value) {
+                                                                onChanged:rdChildIsLiveEntry5 == false ? null :  (ShihuIsLive5? value) {
                                                                   setState(() {
                                                                     _shishuislive5 = value ?? _shishuislive5;
                                                                     rdChildIsLive5="1";
@@ -3288,7 +3670,7 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                                           child: Row(
                                                             children: [
                                                               Radio<ShihuIsLive5>(
-                                                                activeColor:Colors.black,
+                                                                activeColor:rdChildIsLiveEntry5 == false ? Colors.grey : Colors.black,
                                                                 value: ShihuIsLive5.no,
                                                                 groupValue: _shishuislive5,
                                                                 onChanged:(ShihuIsLive5? value) {
@@ -3298,11 +3680,26 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                                                     _shishuWgt5EnDisable=false;
                                                                     _shishuWeight5Controller.text="";
                                                                     childComplId_5="0";
-                                                                    if(rdChildIsLive5 == "0"){
-                                                                      _ShowHideReferPlacesView=false;
-                                                                    }else{
-                                                                      _ShowHideReferPlacesView=true;
+
+                                                                    _ReferUnitCode="0";//set default value on child death
+                                                                    print('final ReferUnitCode $_ReferUnitCode');
+
+
+                                                                    _shishu5NameController.text="";
+                                                                    _shishu5EnDisable=false;
+                                                                    FocusScopeNode currentFocus = FocusScope.of(context);
+                                                                    if (!currentFocus.hasPrimaryFocus) {
+                                                                      currentFocus.focusedChild!.unfocus();
                                                                     }
+                                                                    /*
+                                                                    * Check if any child is live refer listing will be show
+                                                                    */
+                                                                    checkifAnyChildLive(
+                                                                        rdChildIsLive1,
+                                                                        rdChildIsLive2,
+                                                                        rdChildIsLive3,
+                                                                        rdChildIsLive4,
+                                                                        rdChildIsLive5);
                                                                   });
                                                                 },
                                                               ),
@@ -3389,9 +3786,12 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.all(5.0),
-                                  child: Text(
-                                    Strings.child_comp,
-                                    style: TextStyle(color: Colors.black, fontSize: 13),
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      Strings.child_comp,
+                                      style: TextStyle(color: Colors.black, fontSize: 13),
+                                    ),
                                   ),
                                 ),
 
@@ -3446,7 +3846,7 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                                       .toString() //Id that has to be passed that the dropdown has.....
                                               );
                                             }).toList(),
-                                            onChanged:_shishuWgt5EnDisable == true ?  (String? newVal) {
+                                            onChanged:_shishuComp5EnDisable == true ?  (String? newVal) {
                                               setState(() {
                                                 childComplId_5 = newVal!;
                                                 print('childComplId_5:$childComplId_5');
@@ -4488,15 +4888,15 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
       _showErrorPopup(Strings.enter_shishu_weight,Colors.black);
     }else if(_shishuWeight5Controller.text.toString().isEmpty && _shishuWgt5EnDisable == true){
       _showErrorPopup(Strings.enter_shishu_weight,Colors.black);
-    }else if(_ShowHideShishuEntryView1 == true && rdChildIsLive1 == "0"){
+    }else if(_ShowHideShishuEntryView1 == true && rdChildIsLive1 == "0" && rdChildIsLiveEntry1 == true){
       _showErrorPopup(Strings.pncDetailUpdate,Colors.black);
-    }else if(_ShowHideShishuEntryView2 == true && rdChildIsLive2 == "0"){
+    }else if(_ShowHideShishuEntryView2 == true && rdChildIsLive2 == "0" && rdChildIsLiveEntry2 == true){
       _showErrorPopup(Strings.pncDetailUpdate,Colors.black);
-    }else if(_ShowHideShishuEntryView3 == true && childComplId_3 == "0"){
+    }else if(_ShowHideShishuEntryView3 == true && childComplId_3 == "0" && rdChildIsLiveEntry3 == true){
       _showErrorPopup(Strings.pncDetailUpdate,Colors.black);
-    }else if(_ShowHideShishuEntryView4 == true && childComplId_4 == "0"){
+    }else if(_ShowHideShishuEntryView4 == true && childComplId_4 == "0" && rdChildIsLiveEntry4 == true){
       _showErrorPopup(Strings.pncDetailUpdate,Colors.black);
-    }else if(_ShowHideShishuEntryView5 == true && childComplId_5 == "0"){
+    }else if(_ShowHideShishuEntryView5 == true && childComplId_5 == "0" && rdChildIsLiveEntry5 == true){
       _showErrorPopup(Strings.pncDetailUpdate,Colors.black);
     }/*else if(rdChildIsLive1 == "0" && _ShowHideShishuEntryView1 == true){
       _showErrorPopup(Strings.pncDetailUpdate,Colors.black);
@@ -4767,6 +5167,15 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
     );
   }
 
+
+  void checkifAnyChildLive(String rdChildIsLive1, String rdChildIsLive2, String rdChildIsLive3, String rdChildIsLive4, String rdChildIsLive5) {
+    if(rdChildIsLive1 == "1" || rdChildIsLive2 == "1" || rdChildIsLive3 == "1" ||rdChildIsLive4 == "1" ||rdChildIsLive5 == "1"){
+      _ShowHideReferPlacesView=true;
+    }else{
+      _ShowHideReferPlacesView=false;
+    }
+  }
+
 }
 
 enum ShihuIsLive { none,yes,no}
@@ -4784,8 +5193,9 @@ ShihuIsLive5 _shishuislive5 = ShihuIsLive5.none;
 class CustomChildNameList {
   String? ChildName;
   String? InfantID;
+  String? Status;
 
-  CustomChildNameList({this.ChildName,this.InfantID});
+  CustomChildNameList({this.ChildName,this.InfantID,this.Status});
 }
 class CustomAashaList {
   String? ASHAName;

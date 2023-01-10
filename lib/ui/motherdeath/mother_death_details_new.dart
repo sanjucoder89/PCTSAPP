@@ -37,8 +37,8 @@ import 'model/GetMotherDeathReasonListData.dart';
 
 
 
-class EditMotherDeathDetailsScreen extends StatefulWidget {
-  const EditMotherDeathDetailsScreen({Key? key,
+class MotherDeathDetailsScreenNew extends StatefulWidget {
+  const MotherDeathDetailsScreenNew({Key? key,
     required this.pctsID,
     required this.MotherID,
     required this.StatusMother,
@@ -50,7 +50,7 @@ class EditMotherDeathDetailsScreen extends StatefulWidget {
   final String CheckWhere;
 
   @override
-  State<EditMotherDeathDetailsScreen> createState() => _EditMotherDeathDetailsScreen();
+  State<MotherDeathDetailsScreenNew> createState() => _MotherDeathDetailsScreenNew();
 }
 
 String getFormattedDate(String date) {
@@ -132,7 +132,7 @@ String getYear(String date) {
 
 
 
-class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> {
+class _MotherDeathDetailsScreenNew extends State<MotherDeathDetailsScreenNew> {
   var _anmName="";
   var _topHeaderName="";
   late String dreasonId = "0";
@@ -205,6 +205,50 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
   TextEditingController _mukhiyaNameController = TextEditingController();
   TextEditingController _mukhiyaMobNoController = TextEditingController();
 
+ /* Future<String> getRemainingTikaiListAPI() async {
+
+    preferences = await SharedPreferences.getInstance();
+
+    print('LoginUnitID ${preferences.getString('UnitID')}');
+    print('login-unit-code ${preferences.getString('UnitCode')}');
+
+    var response = await post(Uri.parse(_get_remaining_tikai_list_api), body: {
+      "LoginUnitcode": preferences.getString('UnitCode'),
+      "SaveImmuCodeList": "[2],[3],[5],[1],[31],[32],[8],[11],[33],[13],[14],[15],[16],[17],[30],[29]",
+      "Birth_date": widget.birthdate,
+      "TokenNo": preferences.getString('Token'),
+      "UserID": preferences.getString('UserId')
+    });
+    var resBody = json.decode(response.body);
+    final apiResponse = GetAashaListData.fromJson(resBody);
+    setState(() {
+      if (apiResponse.status == true) {
+        custom_tikai_list.clear();
+        tikai_response_list = resBody['ResposeData'];
+        for (int i = 0; i < tikai_response_list.length; i++) {
+          custom_tikai_list.add(CustomTikaiList(
+              TikaName: tikai_response_list[i]['ImmuName'].toString(),
+              TikaImmucode: tikai_response_list[i]['Immucode'].toString(),
+              TikaDueDays:tikai_response_list[i]['DueDays'].toString() == "null" ? "" : tikai_response_list[i]['DueDays'].toString(),
+              TikaMaxDays: tikai_response_list[i]['MaxDays'].toString() == "null" ? "" : tikai_response_list[i]['MaxDays'].toString(),
+              isChecked:false)
+          );
+        }
+        //tikaCode = custom_tikai_list[0].TikaImmucode.toString();
+        //print('tikaCode ${tikaCode}');
+        print('tikaiList.len ${custom_tikai_list.length}');
+      } else {
+        Fluttertoast.showToast(
+            msg:apiResponse.message.toString(),
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            textColor: Colors.red);
+      }
+     // EasyLoading.dismiss();
+    });
+    print('response:${apiResponse.message}');
+    return "Success";
+  }*/
 
   bool isClickableEnableDisable=true;
   bool finalButtonView=true;
@@ -220,14 +264,13 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
   var change_title=Strings.block;
   var change_title2=Strings.sa_pra_dispensary;
   bool _isItAsha=false;
-  bool _isAshaEntryORANMEntry=false;//false= anm , true =asha
   Future<String> getDeathDetailsAPI() async {
     await EasyLoading.show(
       status: 'loading...',
       maskType: EasyLoadingMaskType.black,
     );
     preferences = await SharedPreferences.getInstance();
-    print('MotherID ${widget.MotherID}');
+    print('MotherID${widget.MotherID}');
     var response = await post(Uri.parse(_get_death_details_url), body: {
       "MotherID": widget.MotherID,
       "TokenNo": preferences.getString('Token'),
@@ -239,42 +282,8 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
       if (apiResponse.status == true) {
         response_list = resBody['ResposeData'];
         print('res.len  ${response_list.length}');
-
-
-
-        if(preferences.getString("AppRoleID").toString() == '33'){
-          aashaId = preferences.getString('ANMAutoID').toString();
-          _isItAsha=true;
-        }else{
-          if(preferences.getString("AppRoleID").toString() == '32') {
-            if(response_list[0]['Media'].toString() == "1" || response_list[0]['Media'].toString() == "0"){
-              _isAshaEntryORANMEntry=false;
-              _isItAsha=false;
-              aashaId = response_list[0]['ashaautoid'].toString();;
-            }else{
-              if(preferences.getString('ANMAutoID').toString() == response_list[0]['ashaautoid'].toString()){
-                _isAshaEntryORANMEntry=false;//update btn will show
-              }else{
-                if(preferences.getString("AppRoleID").toString() == '32') {//if last is anm btn will show for all asha
-                  _isAshaEntryORANMEntry=false;//update btn will show
-                }
-
-              }
-              _isItAsha=true;//not editable
-              aashaId = response_list[0]['ashaautoid'].toString();//set to last asha
-            }
-          }else{
-            _isAshaEntryORANMEntry=true;
-            _isItAsha=true;
-            aashaId = response_list[0]['ashaautoid'].toString();
-          }
-
-
-
-          //aashaId=response_list[0]['ashaautoid'].toString();
-          //_isItAsha=false;
-        }
-
+        print('res.ashaautoid  ${response_list[0]['ashaautoid'].toString()}');
+        aashaId=response_list[0]['ashaautoid'].toString();
 
         Prasav_date=response_list[0]['Prasav_date'].toString() == "null" ? "" :response_list[0]['Prasav_date'].toString();
         _VillageAutoID=response_list[0]['VillageAutoID'].toString();
@@ -284,6 +293,16 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
 
         _registerDate=response_list[0]['regdate'].toString();
         _prasavDate=response_list[0]['Prasav_date'].toString();
+        print('_prasavDate_value $_prasavDate');
+        print('_prasavDate_aashaId $aashaId');
+
+        if(preferences.getString("AppRoleID").toString() == '33'){
+          aashaId = preferences.getString('ANMAutoID').toString();
+          _isItAsha=true;
+        }else{
+          aashaId = response_list[0]['ashaautoid'].toString();
+          _isItAsha=false;
+        }
       } else {
         Fluttertoast.showToast(
             msg:apiResponse.message.toString(),
@@ -451,6 +470,7 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
   }
 
 
+
   int getHelpLength() {
     if(help_response_listing.isNotEmpty){
       return help_response_listing.length;
@@ -489,11 +509,44 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
         custom_district_list.clear();
         print('disctict.len ${custom_district_list.length}');
       }
-      if(isChanged == false){
-        setPreviousData();
-      }else{
 
+      setPreviousData();
+    //  EasyLoading.dismiss();
+    });
+    print('response:${apiResponse.message}');
+    return GetDistrictListData.fromJson(resBody);
+  }
+
+  Future<GetDistrictListData> getDistrictListAPIChanged(String refUnitType) async {
+    /*await EasyLoading.show(
+      status: 'loading...',
+      maskType: EasyLoadingMaskType.black,
+    );*/
+    preferences = await SharedPreferences.getInstance();
+    var response = await post(Uri.parse(_get_district_list_url), body: {
+      //RefUnittype:3
+      // TokenNo:730c8ec9-d70b-44a1-b68e-0f5cfe7e3957
+      // UserID:0101010020201
+      "RefUnittype": refUnitType,
+      "TokenNo": preferences.getString('Token'),
+      "UserID": preferences.getString('UserId')
+    });
+    var resBody = json.decode(response.body);
+    final apiResponse = TreatmentListData.fromJson(resBody);
+    setState(() {
+      if (apiResponse.status == true) {
+        response_district_list = resBody['ResposeData'];
+        custom_district_list.clear();
+        custom_district_list.add(CustomDistrictCodeList(unitcode: "0000", unitNameHindi:Strings.choose));
+        for (int i = 0; i < response_district_list.length; i++) {
+          custom_district_list.add(CustomDistrictCodeList(unitcode: resBody['ResposeData'][i]['unitcode'],unitNameHindi: resBody['ResposeData'][i]['unitNameHindi']));
+        }
         _selectedDistrictUnitCode = custom_district_list[0].unitcode.toString();
+        print('API _selectedDistrictUnitCode ${_selectedDistrictUnitCode}');
+        print('disctict.len ${custom_district_list.length}');
+      } else {
+        custom_district_list.clear();
+        print('disctict.len ${custom_district_list.length}');
       }
     //  EasyLoading.dismiss();
     });
@@ -502,14 +555,13 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
   }
   var _Action="";
   var blockValue=0;
-  var blockReferUnitId="";
   Future<String> getBlockListAPI(String refUnitType,String refUnitCode) async {
     await EasyLoading.show(
       status: 'loading...',
       maskType: EasyLoadingMaskType.black,
     );
-    print('refUnitType $refUnitType');
-    print('referUnitCode $refUnitCode');
+    print('DeathUnittype $refUnitType');
+    print('DeathUnitCode $refUnitCode');
     preferences = await SharedPreferences.getInstance();
     var response = await post(Uri.parse(_get_block_list_url), body: {
       //TokenNo:8fee200c-21ff-4f9f-8828-c02a7a56c63a
@@ -538,88 +590,106 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
 
       //Set Block Last Selected Item
       if(_DeathUnitCode != "0"){
-
         for (int i = 0; i < custom_block_list.length; i++) {
           if(custom_block_list[i].UnitCode.toString().substring(0,6) == _DeathUnitCode.substring(0, 6)){
             _selectedBlockUnitCode=custom_block_list[i].UnitCode.toString();
             _postDeathUnitID=_selectedBlockUnitCode;
           }
         }
-        print('_postDeathUnitID_######### ${_postDeathUnitID}');
-
-
-
         for (int pos = 0; pos < custom_block_list.length; pos++) {
           if(_selectedBlockUnitCode == custom_block_list[pos].UnitCode.toString()){
-            print('selected pos- ${pos}');
+            print('selected positions ${pos}');
             blockValue=pos;
             break;
           }
         }
-        blockReferUnitId=_selectedBlockUnitCode;
-        print('CheckValidateData unitcode ${_DeathUnitCode}');
-        print('CheckValidateData unittype ${_DeathUnittype}');
-        print('CheckValidateData act ${_Action}');
-        print('CheckValidateData blockReferUnitId ${blockReferUnitId}');
-        if(_selectedReferSanstha == "8" || _selectedReferSanstha == "9" || _selectedReferSanstha == "10" || _selectedReferSanstha == "16" || _selectedReferSanstha == "11" ){
-          if(blockValue == 0){
-            if(_selectedReferSanstha == "16"){
-              blockReferUnitId=_DeathUnitCode.substring(0,4)+"";
-            }else if(_selectedReferSanstha == "9" || _selectedReferSanstha == "10" || _selectedReferSanstha == "11"){
-              blockReferUnitId=_DeathUnitCode.substring(0,4)+"";
-            }else{
-              blockReferUnitId=_DeathUnitCode.substring(0,4);
-            }
-          }else{
-            blockReferUnitId=_DeathUnitCode.substring(0,4);
-          }
-        }
-
         if(blockValue == 0){
-          print('inside E');
           _Action="2";
-          getCHPHCListAPI(blockReferUnitId,_DeathUnittype, _Action);
+          //getCHPHCListAPI(_DeathUnitCode,_DeathUnittype, _Action);//before 6 jan 2023
+          getCHPHCListAPI(_DeathUnittype,_DeathUnitCode,_Action);
         }else if(_selectedReferSanstha == "8" || _selectedReferSanstha == "9" || _selectedReferSanstha == "10" ||_selectedReferSanstha == "16"){
-          print('inside D');
           _Action="1";
-          getCHPHCListAPI(blockReferUnitId,_DeathUnittype, _Action);
+         // getCHPHCListAPI(_DeathUnitCode,_DeathUnittype, _Action);//before 6 jan 2023
+          getCHPHCListAPI(_DeathUnittype,_DeathUnitCode,_Action);
         }else if(_selectedReferSanstha == "11"){
-          print('inside A');
           if(blockValue == 0){
-            print('inside B');
             _Action="2";
-            getCHPHCListAPI(blockReferUnitId,_DeathUnittype, _Action);
+            //getCHPHCListAPI(_DeathUnitCode,_DeathUnittype, _Action);//before 6 jan 2023
+            getCHPHCListAPI(_DeathUnittype,_DeathUnitCode,_Action);
 
           }else{
-            print('inside C');
             _Action="3";
-            getCHPHCListAPI(blockReferUnitId,_DeathUnittype, _Action);
+            //getCHPHCListAPI(_DeathUnitCode,_DeathUnittype, _Action); //before 6 jan 2023
+            getCHPHCListAPI(_DeathUnittype,_DeathUnitCode,_Action);
           }
         }else{
-          print('inside F');
           _Action="1";
-          getCHPHCListAPI(blockReferUnitId,_DeathUnittype, _Action);
+          //getCHPHCListAPI(_DeathUnitCode,_DeathUnittype, _Action); //before 6 jan 2023
+          getCHPHCListAPI(_DeathUnittype,_DeathUnitCode,_Action);
         }
       }
+      //print('CheckValue blist.len ${custom_block_list.length}');
+      /*print('CheckValue last ${_DeathUnitCode.substring(0, 6)}');
+
+
+      for (int pos = 0; pos < custom_block_list.length; pos++) {
+        if(_selectedBlockUnitCode == custom_block_list[pos].UnitCode){
+          //print('selected position ${pos}');
+          blockValue=pos;
+          break;
+        }
+      }
+      print('prev_refer_sanstha $_selectedReferSanstha');
+      if(blockValue == 0){
+        _Action="2";
+        getCHPHCListAPI(_DeathUnitCode,_DeathUnittype, _Action);
+      }else if(_selectedReferSanstha == "8" || _selectedReferSanstha == "9" || _selectedReferSanstha == "10" ||_selectedReferSanstha == "16"){
+        _Action="1";
+        getCHPHCListAPI(_DeathUnitCode,_DeathUnittype, _Action);
+      }else if(_selectedReferSanstha == "11"){
+        if(blockValue == 0){
+          _Action="2";
+          getCHPHCListAPI(_DeathUnitCode,_DeathUnittype, _Action);
+
+        }else{
+          _Action="3";
+          getCHPHCListAPI(_DeathUnitCode,_DeathUnittype, _Action);
+        }
+      }else{
+        _Action="1";
+        getCHPHCListAPI(_DeathUnitCode,_DeathUnittype, _Action);
+      }*/
+
       EasyLoading.dismiss();
     });
 
     return "Success";
   }
-
-  Future<String> getCHPHCListAPI(String _code,String _id,String _Action) async {
-    print('reqVal -DeathUnittype ${_id}');
-    print('reqVal -DeathUnitCode ${_code}');
-    print('requVal -act ${_Action}');
+  var _isBlockChanged=false;
+  Future<String> getCHPHCListAPI(String _id,String _code,String _Action) async {
+    /*await EasyLoading.show(
+      status: 'loading...',
+      maskType: EasyLoadingMaskType.black,
+    );*/
+    print('requestVal -dunicode ${_code}');
+    print('requestVal -_id ${_id}');
+    print('requestVal -act ${_Action}');
     preferences = await SharedPreferences.getInstance();
     var response = await post(Uri.parse(_get_chchc_list), body: {
-      "DeathUnitCode": _code,
+      //DeathUnitCode:01010100202
+      // DeathUnittype:11
+      // action:1
+      // TokenNo:8fee200c-21ff-4f9f-8828-c02a7a56c63a
+      // UserID:0101010020201
+      "DeathUnitCode": _id == "11" ? _code.substring(0,4) : _code,
       "DeathUnittype": _id,
       "action": _Action,
       "TokenNo": preferences.getString('Token'),
       "UserID": preferences.getString('UserId')
     });
+    //print('res.body ${response.body.toString()}');
     List<dynamic> x2 = jsonDecode(response.body.toString());
+    // print(x2[0]);
     setState(() {
       if(x2.length > 0){
         custom_chcph_list.clear();
@@ -628,28 +698,42 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
           custom_chcph_list.add(CustomCHCPHCList(UnitCode: x2[i]['UnitCode'].toString(),UnitName: x2[i]['UnitName'].toString(),UnitID:x2[i]['UnitID'].toString()));
         }
         _selectedCHPhcCode = custom_chcph_list[0].UnitCode.toString();
+        print('_selectedCHPhcCode ${_selectedCHPhcCode}');
+        print('chphc.len ${custom_chcph_list.length}');
+
+
+        /*
+        * Set Last CHPCH Value
+        * */
+        if(_isBlockChanged == false){
+          for (int i = 0; i < custom_chcph_list.length; i++) {
+            print('_DeathUnitCode.len ${_DeathUnitCode}');
+            if(_DeathUnitCode.length > 6) {
+              if (custom_chcph_list[i].UnitCode.toString().substring(0, 9) == _DeathUnitCode.substring(0, 9)) {
+                _selectedCHPhcCode = custom_chcph_list[i].UnitCode.toString();
+                print('_selectedCHPhcCode_last ${_selectedCHPhcCode}');
+                _postDeathUnitID=_selectedCHPhcCode;
+              }
+            }else{
+              if(_postDeathUnitID == custom_chcph_list[i].UnitCode.toString()){
+                _selectedCHPhcCode = custom_chcph_list[i].UnitCode.toString();
+                _postDeathUnitID=_selectedCHPhcCode;
+                print('postDeathUnitID_last. ${_postDeathUnitID}');
+                print('private_acre_hosp. ${_selectedCHPhcCode}');
+              }
+            }
+          }
+        }else{
+          _selectedCHPhcCode="000000000";
+        }
       }else{
         custom_chcph_list.clear();
+        print('chphc.len ${custom_chcph_list.length}');
       }
-      if(response_list[0]['deathPlaceUnitcode'].toString() != "null" && response_list[0]['deathPlaceUnittype'].toString() == "11"){
-        for (int i = 0; i < custom_chcph_list.length; i++) {
-          //print('unitcode ${custom_chcph_list[i].UnitCode.toString()}');
-          if(custom_chcph_list[i].UnitCode.toString().substring(0,9) == _DeathUnitCode.substring(0, 9)){
-            _selectedCHPhcCode=custom_chcph_list[i].UnitCode.toString();
-          }
-          print('_ssselectedCHPhcCode ${_selectedCHPhcCode}');
-        }
-       // getUpSwasthyaListAPI(_selectedReferSanstha,_code.substring(0,9));
-      }else if(response_list[0]['deathPlaceUnittype'].toString() == "8" || response_list[0]['deathPlaceUnittype'].toString() == "9" || response_list[0]['deathPlaceUnittype'].toString() == "10") {
-        for (int i = 0; i < custom_chcph_list.length; i++) {
-          //print('unitcode ${custom_chcph_list[i].UnitCode.toString()}');
-          if(custom_chcph_list[i].UnitCode.toString().substring(0,9) == _DeathUnitCode.substring(0, 9)){
-            _selectedCHPhcCode=custom_chcph_list[i].UnitCode.toString();
-          }
-          print('_ssselectedCHPhcCode ${_selectedCHPhcCode}');
-          _postDeathUnitID=_selectedCHPhcCode;
-        }
+      if(_selectedReferSanstha != "16"){
+        getUpSwasthyaListAPI(_DeathUnittype,_DeathUnitCode);
       }
+    //  EasyLoading.dismiss();
     });
     return "Success";
   }
@@ -659,8 +743,10 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
       status: 'loading...',
       maskType: EasyLoadingMaskType.black,
     );*/
-    print('requestVal -_code ${_code}');
+    print('requestVal -dunicode ${_DeathUnitCode}');
+    print('requestVal -dunittype ${_DeathUnittype}');
     print('requestVal -_id ${_id}');
+    print('requestVal -_code ${_code}');
     preferences = await SharedPreferences.getInstance();
     var response = await post(Uri.parse(_get_upswasthya_list), body: {
       "DeathUnitCode": _code,
@@ -679,8 +765,8 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
           custom_upswasthya_list.add(CustomUPSwasthyaList(UnitCode: x2[i]['UnitCode'].toString(),UnitName: x2[i]['UnitName'].toString(),UnitID:x2[i]['UnitID'].toString()));
         }
         _selectedUpSwasthyaCode = custom_upswasthya_list[0].UnitCode.toString();
-        //print('_selectedUpSwasthyaCode ${_selectedUpSwasthyaCode}');
-        //print('upswasthya.len ${custom_upswasthya_list.length}');
+        print('_selectedUpSwasthyaCode ${_selectedUpSwasthyaCode}');
+        print('upswasthya.len ${custom_upswasthya_list.length}');
         /*
         * Set Last UP Swasthaya Value
         * */
@@ -689,24 +775,28 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
             _selectedUpSwasthyaCode=custom_upswasthya_list[i].UnitCode.toString();
           }
         }*/
-        if(response_list[0]['deathPlaceUnitcode'].toString() != "null" && response_list[0]['deathPlaceUnittype'].toString() == "11"){
-          for (int i = 0; i < custom_upswasthya_list.length; i++) {
-            if(custom_upswasthya_list[i].UnitCode.toString() == _DeathUnitCode){
-              _selectedUpSwasthyaCode=custom_upswasthya_list[i].UnitCode.toString();
-            }
-          }
 
+        /*
+        * Set Last UP Swasthaya Value
+        * */
+        print('_DeathUnitCode_upswasth $_DeathUnitCode');
+
+        for (int i = 0; i < custom_upswasthya_list.length; i++) {
+          if(custom_upswasthya_list[i].UnitCode.toString() == _DeathUnitCode){
+            _selectedUpSwasthyaCode=custom_upswasthya_list[i].UnitCode.toString();
+            print('_selectedUpSwasthyaCode_upswasth $_selectedUpSwasthyaCode');
+            _postDeathUnitID=_selectedUpSwasthyaCode;
+          }
         }
+
       }else{
         custom_upswasthya_list.clear();
-        //print('swasthya.len ${custom_upswasthya_list.length}');
+        print('swasthya.len ${custom_upswasthya_list.length}');
       }
     //  EasyLoading.dismiss();
     });
     return "Success";
   }
-
-  var isChanged=false;
 
   reLoginDialog() {
     showDialog(
@@ -745,7 +835,6 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
     super.initState();
     ///_getLocation();
     getDeathDetailsAPI();
-    getHelpDesk();
   }
 
 
@@ -886,7 +975,7 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorConstants.white,
-      resizeToAvoidBottomInset: false,
+     // resizeToAvoidBottomInset: false,
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
@@ -1289,14 +1378,13 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
                                   .toString() //Id that has to be passed that the dropdown has.....
                           );
                         }).toList(),
-                        onChanged:_isItAsha == true ? null :  (String? newVal) {
+                        onChanged:_isItAsha == true ? null : (String? newVal) {
                           setState(() {
                             aashaId = newVal!;
                             print('aashaId:$aashaId');
                           });
                         },
-                        value:
-                        aashaId, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
+                        value: aashaId, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
                       ),
                     ),
                   )
@@ -1393,7 +1481,8 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
                             child:TextField(
 
                               keyboardType: TextInputType.text,
-                              maxLength: 5,
+                              maxLength: 20,
+                              maxLines: 1,
                               controller: _mukhiyaNameController,
                               decoration: InputDecoration(
                                 border: InputBorder.none,
@@ -1581,6 +1670,12 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
                                     contentPadding: EdgeInsets.zero,
                                     hintText: ' dd',
                                     counterText: ''),
+                                onChanged: (value){
+                                  print('value $value');
+                                  if(_tikaDDdateController.text.toString().length == 2 && _tikaMMdateController.text.toString().length == 2 && _tikaYYYYdateController.text.toString().length == 4){
+                                    _selectANCDatePopupCustom(_tikaYYYYdateController.text.toString()+"-"+_tikaMMdateController.text.toString()+"-"+_tikaDDdateController.text.toString()+" 00:00:00.000");
+                                  }
+                                }
                               ),
                             )),
                         Text("/"),
@@ -1606,6 +1701,12 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
                                     contentPadding: EdgeInsets.zero,
                                     hintText: ' mm',
                                     counterText: ''),
+                                onChanged: (value){
+                                  print('value $value');
+                                  if(_tikaDDdateController.text.toString().length == 2 && _tikaMMdateController.text.toString().length == 2 && _tikaYYYYdateController.text.toString().length == 4){
+                                    _selectANCDatePopupCustom(_tikaYYYYdateController.text.toString()+"-"+_tikaMMdateController.text.toString()+"-"+_tikaDDdateController.text.toString()+" 00:00:00.000");
+                                  }
+                                }
                               ),
                             )),
                         Text("/"),
@@ -1630,6 +1731,12 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
                                     contentPadding: EdgeInsets.zero,
                                     hintText: ' yyyy',
                                     counterText: ''),
+                                onChanged: (value){
+                                  print('value $value');
+                                  if(_tikaDDdateController.text.toString().length == 2 && _tikaMMdateController.text.toString().length == 2 && _tikaYYYYdateController.text.toString().length == 4){
+                                    _selectANCDatePopupCustom(_tikaYYYYdateController.text.toString()+"-"+_tikaMMdateController.text.toString()+"-"+_tikaDDdateController.text.toString()+" 00:00:00.000");
+                                  }
+                                }
                               ),
                             ))
                       ],
@@ -1864,6 +1971,12 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
                                     contentPadding: EdgeInsets.zero,
                                     hintText: ' dd',
                                     counterText: ''),
+                                onChanged: (value){
+                                  print('value $value');
+                                  if(_reportDDdateController.text.toString().length == 2 && _reportMMdateController.text.toString().length == 2 && _reportYYYYdateController.text.toString().length == 4){
+                                    _selectReportDatePopupCustom(_reportYYYYdateController.text.toString()+"-"+_reportMMdateController.text.toString()+"-"+_reportDDdateController.text.toString()+" 00:00:00.000");
+                                  }
+                                }
                               ),
                             )),
                         Text("/"),
@@ -1889,6 +2002,12 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
                                     contentPadding: EdgeInsets.zero,
                                     hintText: ' mm',
                                     counterText: ''),
+                                onChanged: (value){
+                                  print('value $value');
+                                  if(_reportDDdateController.text.toString().length == 2 && _reportMMdateController.text.toString().length == 2 && _reportYYYYdateController.text.toString().length == 4){
+                                    _selectReportDatePopupCustom(_reportYYYYdateController.text.toString()+"-"+_reportMMdateController.text.toString()+"-"+_reportDDdateController.text.toString()+" 00:00:00.000");
+                                  }
+                                }
                               ),
                             )),
                         Text("/"),
@@ -1913,6 +2032,12 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
                                     contentPadding: EdgeInsets.zero,
                                     hintText: ' yyyy',
                                     counterText: ''),
+                                onChanged: (value){
+                                  print('value $value');
+                                  if(_reportDDdateController.text.toString().length == 2 && _reportMMdateController.text.toString().length == 2 && _reportYYYYdateController.text.toString().length == 4){
+                                    _selectReportDatePopupCustom(_reportYYYYdateController.text.toString()+"-"+_reportMMdateController.text.toString()+"-"+_reportDDdateController.text.toString()+" 00:00:00.000");
+                                  }
+                                }
                               ),
                             ))
                       ],
@@ -2115,11 +2240,7 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
                                         setState(() {
                                           _selectedReferSanstha = newVal!;
                                           print('_selectedReferSanstha:$_selectedReferSanstha');
-                                          isChanged=true;
-                                          _selectedDistrictUnitCode = custom_district_list[0].unitcode.toString();
-                                          print('API _selectedDistrictUnitCode ${_selectedDistrictUnitCode}');
-
-
+                                          getDistrictListAPIChanged("3");
                                           if(_selectedReferSanstha == "0" || _selectedReferSanstha == "17"){
                                           referJilaView=false;
                                           referBlockView=false;
@@ -2154,7 +2275,6 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
                                             referBlockView=true;
                                             sapraView=false;
                                             upSwasthyaKendraView=false;
-
                                           }
                                         });
                                       },
@@ -2168,7 +2288,7 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
                         ],
                       ),
             )),
-            Visibility(
+            /*Visibility(
               visible: referJilaView,
               child: Container(
               child: Column(
@@ -2241,7 +2361,7 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
                                 setState(() {
                                   _selectedDistrictUnitCode = newVal!;
                                   print('distrcode:$_selectedDistrictUnitCode');
-                                  isChanged=true;
+
                                   if(_selectedReferSanstha == "8" || _selectedReferSanstha == "9" ||
                                       _selectedReferSanstha == "10" ||_selectedReferSanstha == "11" ||
                                       _selectedReferSanstha == "16"){
@@ -2337,58 +2457,50 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
                                   _selectedBlockUnitCode = newVal!;
                                   print('blockcode:$_selectedBlockUnitCode');
                                   _postDeathUnitID=_selectedBlockUnitCode;
+                                  //_selectedCHPhcCode="000000000";
+                                  if(_selectedBlockUnitCode == "000000"){
 
+                                  }else{
+
+                                  }
+                                  // _ReferUnitCode=_selectedBlockUnitCode;
 
                                   for (int pos = 0; pos < custom_block_list.length; pos++) {
-                                    if(_selectedBlockUnitCode == custom_block_list[pos].UnitCode.toString()){
-                                      print('selected pos- ${pos}');
+                                    if(_selectedBlockUnitCode == custom_block_list[pos].UnitCode){
+                                      print('selected position ${pos}');
                                       blockValue=pos;
                                       break;
                                     }
                                   }
-                                  blockReferUnitId=_selectedBlockUnitCode.substring(0,4);
-                                  print('CheckValidateData unitcode ${_DeathUnitCode}');
-                                  print('CheckValidateData unittype ${_DeathUnittype}');
-                                  print('CheckValidateData act ${_Action}');
-                                  print('CheckValidateData blockReferUnitId ${blockReferUnitId}');
-                                  print('CheckValidateData _selectedReferSanstha ${_selectedReferSanstha}');
-                                  /*if(_selectedReferSanstha == "8" || _selectedReferSanstha == "9" || _selectedReferSanstha == "10" || _selectedReferSanstha == "16" || _selectedReferSanstha == "11" ){
-                                    if(blockValue == 0){
-                                      if(_selectedReferSanstha == "16"){
-                                        blockReferUnitId=_DeathUnitCode.substring(0,4)+"";
-                                      }else if(_selectedReferSanstha == "9" || _selectedReferSanstha == "10" || _selectedReferSanstha == "11"){
-                                        blockReferUnitId=_DeathUnitCode.substring(0,4)+"";
-                                      }else{
-                                        blockReferUnitId=_DeathUnitCode.substring(0,4);
-                                      }
-                                    }else{
-                                      blockReferUnitId=_DeathUnitCode.substring(0,4);
+                                  for (int pos = 0; pos < custom_block_list.length; pos++) {
+                                    if(_selectedBlockUnitCode == custom_block_list[pos].UnitCode){
+                                      //print('selected position ${pos}');
+                                      blockValue=pos;
+                                      break;
                                     }
-                                  }*/
+                                  }
+                                  print('prev_refer_sanstha $_selectedReferSanstha');
+                                  print('blockValue $blockValue');
                                   if(blockValue == 0){
-                                    print('inside E');
                                     _Action="2";
-                                    getCHPHCListAPI(blockReferUnitId,_selectedReferSanstha, _Action);
+                                    getCHPHCListAPI(_selectedReferSanstha,_selectedBlockUnitCode.substring(0,4),_Action);
                                   }else if(_selectedReferSanstha == "8" || _selectedReferSanstha == "9" || _selectedReferSanstha == "10" ||_selectedReferSanstha == "16"){
-                                    print('inside D');
+                                    _isBlockChanged=true;
                                     _Action="1";
-                                    getCHPHCListAPI(blockReferUnitId,_selectedReferSanstha, _Action);
+                                    getCHPHCListAPI(_selectedReferSanstha,_selectedBlockUnitCode.substring(0,4),_Action);
                                   }else if(_selectedReferSanstha == "11"){
-                                    print('inside A');
                                     if(blockValue == 0){
-                                      print('inside B');
                                       _Action="2";
-                                      getCHPHCListAPI(blockReferUnitId,_selectedReferSanstha, _Action);
+                                      getCHPHCListAPI(_selectedReferSanstha,_selectedBlockUnitCode.substring(0,4), _Action);
 
                                     }else{
-                                      print('inside C');
                                       _Action="3";
-                                      getCHPHCListAPI(blockReferUnitId,_selectedReferSanstha, _Action);
+                                      getCHPHCListAPI(_selectedReferSanstha,_selectedBlockUnitCode.substring(0,4),_Action);
                                     }
                                   }else{
-                                    print('inside F');
+                                    _isBlockChanged=true;
                                     _Action="1";
-                                    getCHPHCListAPI(blockReferUnitId,_selectedReferSanstha, _Action);
+                                    getCHPHCListAPI(_selectedReferSanstha,_selectedBlockUnitCode.substring(0,4),_Action);
                                   }
                                 });
                               },
@@ -2575,12 +2687,11 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
                   ),
 
 
-            ]),)),
+            ]),)),*/
             SizedBox(
               height: 20,
             ),
-            _isAshaEntryORANMEntry == false
-                ? Visibility(
+            Visibility(
                 visible: finalButtonView,
                 child: GestureDetector(
               onTap: (){
@@ -2613,9 +2724,7 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
                   ),
                 ),
               ),
-            ))
-                :
-            Container(),
+            )),
           ],
         ),
       ),
@@ -2632,6 +2741,20 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
     }
   }
   ScrollController? _controller;
+
+  Widget _tikaiListView(){
+    return MediaQuery.removePadding(
+        context: context,
+        removeTop: true,
+        child: ListView.builder(
+            controller: _controller,
+            itemCount: getLength(),
+            itemBuilder: _itemBuilder,
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true
+        )
+    );
+  }
 
   Widget _itemBuilder(BuildContext context, int index) {
     return InkWell(
@@ -2751,7 +2874,11 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
     }else if((_selectedDeathPlace == "2") && (_selectedReferSanstha == "11") && _selectedUpSwasthyaCode == "0"){
       _showErrorPopup("कृप्या "+Strings.up_swasthya+" चुनें !",ColorConstants.AppColorPrimary);
     }else{
-      putDataAPI();
+      if(!_DeathDeath.isEmpty){
+        putDataAPI();
+      }else{
+        postDataAPI();
+      }
     }
 
   }
@@ -2765,6 +2892,129 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
   var _IPAddress="";
   var _VillageAutoID="";
 
+  void postDataAPI() {
+    if(preferences.getString("AppRoleID") == "33"){
+      Media="2";
+      _UpdateUserNo=preferences.getString("UserNo").toString();
+    }else if(ANMVerify.isEmpty){
+      Media ="1";
+      _UpdateUserNo=preferences.getString("UserNo").toString();
+    }else if(ANMVerify.isNotEmpty){
+        if(ANMVerify == "0"){
+          Media ="3";
+          _UpdateUserNo=preferences.getString("UserNo").toString();
+        }else{
+          Media ="1";
+          _UpdateUserNo=preferences.getString("UserNo").toString();
+        }
+    }else{
+      Media="1";
+      _UpdateUserNo=preferences.getString("UserNo").toString();
+    }
+
+    if(_SubReasonListEnableDisable == true){
+      _ReasonID=dsubreasonId;
+    }else{
+      _ReasonID=dreasonId;
+    }
+
+    if (_tikaDDdateController.text.isNotEmpty) {
+      _DeathDeath=_tikaYYYYdateController.text.toString()+"/"+_tikaMMdateController.text.toString()+"/"+_tikaDDdateController.text.toString();
+    }
+
+    if (_reportDDdateController.text.isNotEmpty) {
+      _DeathReportDate=_reportYYYYdateController.text.toString()+"/"+_reportMMdateController.text.toString()+"/"+_reportDDdateController.text.toString();
+    }
+
+    if(_selectedReferSanstha == "17"){
+      _selectedDeathPlace="17";
+    }
+    print('DeathUnitCode  ${_selectedDeathPlace == "2" ? _postDeathUnitID : "0"}');
+    print('PostRequest=>'
+        'LoginUserID:${preferences.getString('UserId').toString()+
+        "DeathUnitCode:"+_selectedDeathPlace == "2" ? _postDeathUnitID : "0"+
+        "motherid:"+widget.MotherID+
+        "Name:"+response_list[0]['Name'].toString()+
+        "ReasonID:"+_ReasonID+
+        "Age:"+ageController.text.toString().trim()+
+        "DeathDate:"+_DeathDeath+
+        "deathPlace:"+_selectedDeathPlace+
+        "VillageAutoID:"+_VillageAutoID+
+        "AgeType:"+"1"+
+        "DeathReportDate:"+_DeathReportDate+
+        "MasterMobile:"+_mukhiyaMobNoController.text.trim().trim()+
+        "Relative_Name:"+_mukhiyaNameController.text.trim().trim()+
+        "ashaautoid:"+aashaId+
+        "EntryUnitID:"+preferences.getString('UnitID').toString()+
+        "IPAddress:"+_IPAddress+
+        "AppVersion:"+"5.5.5.22"+//5.5.5.22 for testing
+        "UpdateUserNo:"+_UpdateUserNo+
+        "Media:"+Media+
+        "EntryUserNo:"+_UpdateUserNo+
+        "DeliveryDate:"+Prasav_date+
+        "TokenNo:"+preferences.getString('Token').toString()+
+        "UserID:"+preferences.getString('UserId').toString()
+    }');
+    callPostAPI();
+
+  }
+  Future<SavedHBYCDetailsData> callPostAPI() async {
+    await EasyLoading.show(
+      status: 'loading...',
+      maskType: EasyLoadingMaskType.black,
+    );
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+    for (var interface in await NetworkInterface.list()) {
+      print('== Interface: ${interface.name} ==');
+      for (var addr in interface.addresses) {
+        _IPAddress=addr.address;
+        print(
+            'my-ip-address ${addr.address} ${addr.host} ${addr.isLoopback} ${addr.rawAddress} ${addr.type.name}');
+      }
+    }
+
+    var response = await post(Uri.parse(_add_mother_details_url), body: {
+      "LoginUserID":preferences.getString('UserId').toString(),
+      "DeathUnitCode":_selectedDeathPlace == "2" ? _postDeathUnitID : "0",
+      "motherid":widget.MotherID,
+      "Name":response_list[0]['Name'].toString(),
+      "ReasonID":dsubreasonId != "0" ? dsubreasonId : dreasonId,
+      "Age": ageController.text.toString().trim(),
+      "DeathDate": _DeathDeath,
+      "deathPlace": _selectedDeathPlace,
+      "VillageAutoID":_VillageAutoID,
+      "AgeType": "1",
+      "DeathReportDate": _DeathReportDate,
+      "MasterMobile":_mukhiyaMobNoController.text.trim().trim(),
+      "Relative_Name": _mukhiyaNameController.text.trim().trim(),
+      "ashaautoid": aashaId,
+      "EntryUnitID": preferences.getString('UnitID').toString(),
+      "IPAddress": _IPAddress,
+      "AppVersion":"5.5.5.22",
+      "UpdateUserNo": _UpdateUserNo,
+      "Media":Media,
+      "EntryUserNo": _UpdateUserNo,
+      "DeliveryDate":Prasav_date,
+      "TokenNo": preferences.getString('Token'),
+      "UserID": preferences.getString('UserId')
+    });
+    var resBody = json.decode(response.body);
+    final apiResponse = SavedHBYCDetailsData.fromJson(resBody);
+    setState(() {
+      if (apiResponse.status == true) {
+        _showSuccessPopup(apiResponse.message.toString(),ColorConstants.AppColorPrimary);
+      }else if (apiResponse.appVersion == 1){
+        //Redirect to play store for update
+        reLoginDialog();
+      }else{
+        _showErrorPopup(apiResponse.message.toString(), Colors.black);
+      }
+      EasyLoading.dismiss();
+    });
+    print('response-message:${apiResponse.message}');
+    return SavedHBYCDetailsData.fromJson(resBody);
+  }
 
   void putDataAPI() {
     if(preferences.getString("AppRoleID") == "33"){
@@ -2804,9 +3054,12 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
       _selectedDeathPlace="17";
     }
 
+    print('_selectedDeathPlace_req ${_selectedDeathPlace}');
+    print('_postDeathUnitID_req ${_postDeathUnitID}');
+    print('DeathUnitCode_ ${_selectedDeathPlace == "2" ? _postDeathUnitID : "0"}');
     print('UpdateRequest=>'
         'LoginUserID:${preferences.getString('UserId').toString()+
-        "DeathUnitCode:"+_postDeathUnitID+
+        "DeathUnitCode:"+_selectedDeathPlace == "2" ? _postDeathUnitID : "0"+
         "motherid:"+widget.MotherID+
         "Name:"+response_list[0]['Name'].toString()+
         "ReasonID:"+_ReasonID+
@@ -2847,13 +3100,12 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
       }
     }
 
-
-
     var response = await put(Uri.parse(_edit_mother_details_url), body: {
       "LoginUserID":preferences.getString('UserId').toString(),
-      "DeathUnitCode":_postDeathUnitID,
+      "DeathUnitCode":_selectedDeathPlace == "2" ? _postDeathUnitID : "0",
       "motherid":widget.MotherID,
       "Name":response_list[0]['Name'].toString(),
+      //"ReasonID":dsubreasonId != "0" ? dsubreasonId : dreasonId,
       "ReasonID":_ReasonID,
       "Age": ageController.text.toString().trim(),
       "DeathDate": _DeathDeath,
@@ -3047,6 +3299,65 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
   var initalMonth = 0;
   var initalYear = 0;
   var final_diff_dates=0;
+  void _selectANCDatePopupCustom(String _customHBYCDate) {
+
+      setState(() {
+        var parseCustomANCDate = DateTime.parse(getConvertRegDateFormat(_customHBYCDate));
+        print('parseCustomANCDate ${parseCustomANCDate}');
+
+
+        _selectedDate = parseCustomANCDate;
+        print('_selectedDate $_selectedDate');//2022-12-22 00:00:00.000
+        String formattedDate4 = DateFormat('yyyy-MM-dd').format(_selectedDate);
+        String formattedDate2 = DateFormat('yyyy/MM/dd').format(_selectedDate);
+
+        if (formattedDate2.compareTo(getCurrentDate()) > 0) {
+          //print('equal to current date#########');
+          _showErrorPopup(Strings.aaj_ki_tareek_sai_phale,ColorConstants.AppColorPrimary);
+        } else {
+          var selectedParsedDate = DateTime.parse(formattedDate4.toString());
+
+          if(_prasavDate == "null"){
+            _tikaDDdateController.text = getDate(formattedDate4);
+            _tikaMMdateController.text = getMonth(formattedDate4);
+            _tikaYYYYdateController.text = getYear(formattedDate4);
+            IMMDate_post=_tikaYYYYdateController.text.toString()+ "/"+_tikaMMdateController.text.toString()+"/"+_tikaDDdateController.text.toString();
+            print('IMMDate_post $IMMDate_post');
+            var _parseDeathDate = DateTime.parse(getConvertRegDateFormat(_selectedDate.toString()));
+            _selectedDeathDate=_parseDeathDate.toString();
+            print('converted_death_date $_parseDeathDate');
+            print('converted_death_date2 $_selectedDeathDate');
+          }else{
+            var prasavDate = DateTime.parse(getConvertRegDateFormat(_prasavDate));
+            print('prasavDate ${prasavDate}');//2021-03-12 00:00:00.000
+
+            var registerDate = DateTime.parse(getConvertRegDateFormat(_registerDate));
+            print('registerDate ${registerDate}');//2021-03-12 00:00:00.000
+
+            if(selectedParsedDate.compareTo(registerDate) >= 0){
+              if (selectedParsedDate.compareTo(prasavDate) >= 0)
+              {
+                _tikaDDdateController.text = getDate(formattedDate4);
+                _tikaMMdateController.text = getMonth(formattedDate4);
+                _tikaYYYYdateController.text = getYear(formattedDate4);
+                IMMDate_post=_tikaYYYYdateController.text.toString()+ "/"+_tikaMMdateController.text.toString()+"/"+_tikaDDdateController.text.toString();
+                print('IMMDate_post $IMMDate_post');
+                var _parseDeathDate = DateTime.parse(getConvertRegDateFormat(_selectedDate.toString()));
+                _selectedDeathDate=_parseDeathDate.toString();
+                print('converted_death_date $_parseDeathDate');
+                print('converted_death_date2 $_selectedDeathDate');
+              }else{
+                _showErrorPopup(Strings.death_date_after_prasav, ColorConstants.AppColorPrimary);
+              }
+            }else{
+              _showErrorPopup(Strings.death_after_reg, ColorConstants.AppColorPrimary);
+            }
+
+          }
+        }
+      });
+  }
+
   void _selectANCDatePopup() {
     showDatePicker(
         context: context,
@@ -3063,6 +3374,7 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
       }
       setState(() {
         _selectedDate = pickedDate;
+        print('_selectedDate $_selectedDate');//2022-12-22 00:00:00.000
         String formattedDate4 = DateFormat('yyyy-MM-dd').format(_selectedDate);
         String formattedDate2 = DateFormat('yyyy/MM/dd').format(_selectedDate);
 
@@ -3072,35 +3384,81 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
         } else {
           var selectedParsedDate = DateTime.parse(formattedDate4.toString());
 
-          var prasavDate = DateTime.parse(getConvertRegDateFormat(_prasavDate));
-          print('prasavDate ${prasavDate}');//2021-03-12 00:00:00.000
-
-          var registerDate = DateTime.parse(getConvertRegDateFormat(_registerDate));
-          print('registerDate ${registerDate}');//2021-03-12 00:00:00.000
-
-          if(selectedParsedDate.compareTo(registerDate) >= 0){
-            if (selectedParsedDate.compareTo(prasavDate) >= 0)
-            {
-              _tikaDDdateController.text = getDate(formattedDate4);
-              _tikaMMdateController.text = getMonth(formattedDate4);
-              _tikaYYYYdateController.text = getYear(formattedDate4);
-              IMMDate_post=_tikaYYYYdateController.text.toString()+ "/"+_tikaMMdateController.text.toString()+"/"+_tikaDDdateController.text.toString();
-              print('IMMDate_post $IMMDate_post');
-              var _parseDeathDate = DateTime.parse(getConvertRegDateFormat(_selectedDate.toString()));
-              _selectedDeathDate=_parseDeathDate.toString();
-              print('converted_death_date $_parseDeathDate');
-              print('converted_death_date2 $_selectedDeathDate');
-            }else{
-              _showErrorPopup(Strings.death_date_after_prasav, ColorConstants.AppColorPrimary);
-            }
+          if(_prasavDate == "null"){
+            _tikaDDdateController.text = getDate(formattedDate4);
+            _tikaMMdateController.text = getMonth(formattedDate4);
+            _tikaYYYYdateController.text = getYear(formattedDate4);
+            IMMDate_post=_tikaYYYYdateController.text.toString()+ "/"+_tikaMMdateController.text.toString()+"/"+_tikaDDdateController.text.toString();
+            print('IMMDate_post $IMMDate_post');
+            var _parseDeathDate = DateTime.parse(getConvertRegDateFormat(_selectedDate.toString()));
+            _selectedDeathDate=_parseDeathDate.toString();
+            print('converted_death_date $_parseDeathDate');
+            print('converted_death_date2 $_selectedDeathDate');
           }else{
-            _showErrorPopup(Strings.death_after_reg, ColorConstants.AppColorPrimary);
+            var prasavDate = DateTime.parse(getConvertRegDateFormat(_prasavDate));
+            print('prasavDate ${prasavDate}');//2021-03-12 00:00:00.000
+
+            var registerDate = DateTime.parse(getConvertRegDateFormat(_registerDate));
+            print('registerDate ${registerDate}');//2021-03-12 00:00:00.000
+
+            if(selectedParsedDate.compareTo(registerDate) >= 0){
+              if (selectedParsedDate.compareTo(prasavDate) >= 0)
+              {
+                _tikaDDdateController.text = getDate(formattedDate4);
+                _tikaMMdateController.text = getMonth(formattedDate4);
+                _tikaYYYYdateController.text = getYear(formattedDate4);
+                IMMDate_post=_tikaYYYYdateController.text.toString()+ "/"+_tikaMMdateController.text.toString()+"/"+_tikaDDdateController.text.toString();
+                print('IMMDate_post $IMMDate_post');
+                var _parseDeathDate = DateTime.parse(getConvertRegDateFormat(_selectedDate.toString()));
+                _selectedDeathDate=_parseDeathDate.toString();
+                print('converted_death_date $_parseDeathDate');
+                print('converted_death_date2 $_selectedDeathDate');
+              }else{
+                _showErrorPopup(Strings.death_date_after_prasav, ColorConstants.AppColorPrimary);
+              }
+            }else{
+              _showErrorPopup(Strings.death_after_reg, ColorConstants.AppColorPrimary);
+            }
+
           }
         }
       });
     });
   }
 
+
+  void _selectReportDatePopupCustom(String _customReportDate) {
+
+      setState(() {
+        var parseCustomANCDate = DateTime.parse(getConvertRegDateFormat(_customReportDate));
+        print('parseCustomANCDate ${parseCustomANCDate}');
+
+        _selectedDate2 = parseCustomANCDate;
+        String formattedDate4 = DateFormat('yyyy-MM-dd').format(_selectedDate2);
+        String formattedDate2 = DateFormat('yyyy/MM/dd').format(_selectedDate2);
+
+        if (formattedDate2.compareTo(getCurrentDate()) > 0) {
+          //print('equal to current date#########');
+          _showErrorPopup(Strings.aaj_ki_tareek_sai_phale,ColorConstants.AppColorPrimary);
+        } else {
+          var lastDeathDate = DateTime.parse(getConvertRegDateFormat(_selectedDeathDate));
+          print('lastDeathDate ${lastDeathDate}');//2021-03-12 00:00:00.000
+
+          var selectedParsedDate = DateTime.parse(formattedDate4.toString());
+
+          if (selectedParsedDate.compareTo(lastDeathDate) >= 0) //2021-04-22 00:00:00.000
+          {
+              _reportDDdateController.text = getDate(formattedDate4);
+              _reportMMdateController.text = getMonth(formattedDate4);
+              _reportYYYYdateController.text = getYear(formattedDate4);
+              _reportdeathPostDate=_reportYYYYdateController.text.toString()+ "/"+_reportMMdateController.text.toString()+"/"+_reportDDdateController.text.toString();
+              print('reportDeath $_reportdeathPostDate');
+          }else{
+            _showErrorPopup('Death Report date can not less than Death date.', ColorConstants.AppColorPrimary);
+          }
+        }
+      });
+  }
 
   void _selectReportDatePopup() {
     showDatePicker(
@@ -3232,12 +3590,13 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
       //Set Refer Sanstha Last Selected Item
       for (int i = 0; i < refer_sanstha_list.length; i++) {
         if(refer_sanstha_list[i].code.toString() == deathUnittype){
-          _selectedReferSanstha=deathUnittype;
+        _selectedReferSanstha=deathUnittype;
         }
       }
 
 
       //Set District Last Selected Item
+      //print('CheckValue dis.len ${custom_district_list.length}');
       for (int i = 0; i < custom_district_list.length; i++) {
         if(custom_district_list[i].unitcode.toString().substring(0,4) == _DeathUnitCode.substring(0, 4)){
           _selectedDistrictUnitCode=custom_district_list[i].unitcode.toString();
@@ -3258,19 +3617,13 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
       /*
       * Set Last CHPCH Value
       * */
-      if(_selectedReferSanstha == "8" || _selectedReferSanstha == "9" || _selectedReferSanstha == "10"){
-
-
-      }
-
-      print('custom_chcph_list.llll ${custom_chcph_list.length}');
       for (int i = 0; i < custom_chcph_list.length; i++) {
-        //
-        if(custom_chcph_list[i].UnitCode.toString().substring(0,9) == _DeathUnitCode.substring(0, 9)){
-          _selectedCHPhcCode=custom_chcph_list[i].UnitCode.toString();
+          //print('unitcode ${custom_chcph_list[i].UnitCode.toString()}');
+          if(custom_chcph_list[i].UnitCode.toString().substring(0,9) == _DeathUnitCode.substring(0, 9)){
+            _selectedCHPhcCode=custom_chcph_list[i].UnitCode.toString();
+          }
+          print('_selectedCHPhcCode ${_selectedCHPhcCode}');
         }
-        print('_selectedCHPhcCode ${_selectedCHPhcCode}');
-      }
 
     });
 
@@ -3305,12 +3658,15 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
        _chooseimmu=colorsimmu.nill;
      }
 
-     if(response_list[0]['deathPlaceUnittype'].toString() != "null"){
-       _selectedReferSanstha=response_list[0]['deathPlaceUnittype'].toString();
-       _DeathUnittype=response_list[0]['deathPlaceUnittype'].toString();
+     if(response_list[0]['deathPlace'].toString() == "2"){
+       if(response_list[0]['deathPlaceUnittype'].toString() != "null"){
+         _selectedReferSanstha=response_list[0]['deathPlaceUnittype'].toString();
+         _DeathUnittype=response_list[0]['deathPlaceUnittype'].toString();
+       }
+
+       print('_selectedReferSanstha $_selectedReferSanstha');
      }
 
-     print('_selectedReferSanstha $_selectedReferSanstha');
 
 
      ParentReasonId=response_list[0]['ParentReasonId'].toString() == "null" ? "0" : response_list[0]['ParentReasonId'].toString();
@@ -3339,7 +3695,7 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
         var expectedParsedDate = DateTime.parse(parseTODateFormat(_EntryDeath));
         var parseCalenderSelectedAncDate = DateTime.parse(getCurrentDate2().toString());
         final diff_lmp_ancdate =parseCalenderSelectedAncDate.difference(expectedParsedDate).inDays;
-        if (diff_lmp_ancdate <= 450) {
+        if (diff_lmp_ancdate <= 30) {
           print('equal to current date');
           finalButtonView=true;
           finalButtonText=Strings.vivran_update_krai;
@@ -3370,6 +3726,7 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
          referSansthaView=true;
          referJilaView=true;
          referBlockView=true;
+         print('_selReferSanstha:$_selectedReferSanstha');
          _selectedReferSanstha=_DeathUnittype;
          print('_selRefSanstha:$_selectedReferSanstha');
          if(_selectedReferSanstha == "0" || _selectedReferSanstha == "17"){
@@ -3387,7 +3744,6 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
            upSwasthyaKendraView=true;
 
          }else if(_selectedReferSanstha == "8" || _selectedReferSanstha == "9" || _selectedReferSanstha == "10" || _selectedReferSanstha == "16"){
-
            for(int i=0 ;i<refer_sanstha_list.length; i++) {
              if(_selectedReferSanstha == refer_sanstha_list[i].code.toString()){
                change_title2=refer_sanstha_list[i].title.toString();
@@ -3572,6 +3928,7 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
 
      if(response_list[0]['deathPlaceUnitcode'].toString() != "null"){
        _DeathUnitCode=response_list[0]['deathPlaceUnitcode'].toString() == "null" ? "" : response_list[0]['deathPlaceUnitcode'].toString() == null ? "" : response_list[0]['deathPlaceUnitcode'].toString();
+
        setLastSelectedData(_DeathUnitCode,_DeathUnittype);
      }
    });

@@ -5548,8 +5548,7 @@ class _EditANCScreen extends State<EditANCScreen> {
                                       iconSize: 15,
                                       elevation: 11,
                                       //style: TextStyle(color: Colors.black),
-                                      style:
-                                          Theme.of(context).textTheme.bodyText1,
+                                     // style: Theme.of(context).textTheme.bodyText1,
                                       isExpanded: true,
                                       // hint: new Text("Select State"),
                                       items: custom_placesrefer_list.map((item) {
@@ -5564,7 +5563,7 @@ class _EditANCScreen extends State<EditANCScreen> {
                                                     item.title.toString(),
                                                     //Names that the api dropdown contains
                                                     style: TextStyle(
-                                                      fontSize: 10.0,
+                                                      fontSize: 14.0,
                                                     ),
                                                   ),
                                                 )),
@@ -5639,8 +5638,7 @@ class _EditANCScreen extends State<EditANCScreen> {
                                       iconSize: 15,
                                       elevation: 11,
                                       //style: TextStyle(color: Colors.black),
-                                      style:
-                                          Theme.of(context).textTheme.bodyText1,
+                                     // style: Theme.of(context).textTheme.bodyText1,
                                       isExpanded: true,
                                       // hint: new Text("Select State"),
                                       items: custom_district_list.map((item) {
@@ -5654,7 +5652,7 @@ class _EditANCScreen extends State<EditANCScreen> {
                                                   child: Text(item.unitNameHindi.toString(),
                                                     //Names that the api dropdown contains
                                                     style: TextStyle(
-                                                      fontSize: 10.0,
+                                                      fontSize: 14.0,
                                                     ),
                                                   ),
                                                 )),
@@ -5730,8 +5728,7 @@ class _EditANCScreen extends State<EditANCScreen> {
                                       iconSize: 15,
                                       elevation: 11,
                                       //style: TextStyle(color: Colors.black),
-                                      style:
-                                          Theme.of(context).textTheme.bodyText1,
+                                      //style: Theme.of(context).textTheme.bodyText1,
                                       isExpanded: true,
                                       // hint: new Text("Select State"),
                                       items: custom_block_list.map((item) {
@@ -5746,7 +5743,7 @@ class _EditANCScreen extends State<EditANCScreen> {
                                                     item.unitNameHindi.toString(),
                                                     //Names that the api dropdown contains
                                                     style: TextStyle(
-                                                      fontSize: 10.0,
+                                                      fontSize: 14.0,
                                                     ),
                                                   ),
                                                 )),

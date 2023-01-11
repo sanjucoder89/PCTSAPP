@@ -295,6 +295,7 @@ class _HBYCExpandDetails extends State<HBYCExpandDetails> {
   }
 
   Future<String> deleteHBYCAPI(String _flagtype,String _ancregid) async {
+
     var response = await delete(Uri.parse(_delete_record_url), body: {
       "InfantId": _ancregid,
       "HbycFlag": _flagtype,
@@ -1147,27 +1148,27 @@ class _HBYCExpandDetails extends State<HBYCExpandDetails> {
                               if(custom_anc_list[list_index].HBYCFlag.toString() == "3"){
                                 _deleteHBYCDetails("क्या आप"+" "+Strings.first_hbyc+" "+"को डिलीट करना चाहते है |",
                                     custom_anc_list[list_index].HBYCFlag.toString(),
-                                    custom_anc_list[list_index].ancregid.toString(),
+                                    custom_anc_list[list_index].infantid.toString(),
                                     ColorConstants.black);
                               }else if(custom_anc_list[list_index].HBYCFlag.toString() == "6"){
                                 _deleteHBYCDetails("क्या आप"+" "+Strings.second_hbyc+" "+"को डिलीट करना चाहते है |",
                                     custom_anc_list[list_index].HBYCFlag.toString(),
-                                    custom_anc_list[list_index].ancregid.toString(),
+                                    custom_anc_list[list_index].infantid.toString(),
                                     ColorConstants.black);
                               }else if(custom_anc_list[list_index].HBYCFlag.toString() == "9"){
                                 _deleteHBYCDetails("क्या आप"+" "+Strings.third_hbyc+" "+"को डिलीट करना चाहते है |",
                                     custom_anc_list[list_index].HBYCFlag.toString(),
-                                    custom_anc_list[list_index].ancregid.toString(),
+                                    custom_anc_list[list_index].infantid.toString(),
                                     ColorConstants.black);
                               }else if(custom_anc_list[list_index].HBYCFlag.toString() == "12"){
                                 _deleteHBYCDetails("क्या आप"+" "+Strings.fourth_hbyc+" "+"को डिलीट करना चाहते है |",
                                     custom_anc_list[list_index].HBYCFlag.toString(),
-                                    custom_anc_list[list_index].ancregid.toString(),
+                                    custom_anc_list[list_index].infantid.toString(),
                                     ColorConstants.black);
                               }else if(custom_anc_list[list_index].HBYCFlag.toString() == "15"){
                                 _deleteHBYCDetails("क्या आप"+" "+Strings.fifth_hbyc+" "+"को डिलीट करना चाहते है |",
                                     custom_anc_list[list_index].HBYCFlag.toString(),
-                                    custom_anc_list[list_index].ancregid.toString(),
+                                    custom_anc_list[list_index].infantid.toString(),
                                     ColorConstants.black);
                               }
                             },

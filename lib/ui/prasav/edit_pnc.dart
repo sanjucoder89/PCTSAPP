@@ -4941,7 +4941,7 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
 
     if(preferences.getString("AppRoleID") == "33"){
       _Media="2";
-      _UpdateUserNo=preferences.getString("ANMAutoID").toString();
+      _UpdateUserNo=preferences.getString("UserNo").toString();
     }else{
       _Media="1";
       _UpdateUserNo=preferences.getString("UserNo").toString();

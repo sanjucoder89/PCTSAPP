@@ -536,70 +536,76 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
       print('_selectedBlockUnitCode ${_selectedBlockUnitCode}');
       print('block.len ${custom_block_list.length}');
 
-      //Set Block Last Selected Item
-      if(_DeathUnitCode != "0"){
+      if(isChanged == false){
+        //Set Block Last Selected Item
+        if(_DeathUnitCode != "0"){
 
-        for (int i = 0; i < custom_block_list.length; i++) {
-          if(custom_block_list[i].UnitCode.toString().substring(0,6) == _DeathUnitCode.substring(0, 6)){
-            _selectedBlockUnitCode=custom_block_list[i].UnitCode.toString();
-            _postDeathUnitID=_selectedBlockUnitCode;
+          for (int i = 0; i < custom_block_list.length; i++) {
+            if(custom_block_list[i].UnitCode.toString().substring(0,6) == _DeathUnitCode.substring(0, 6)){
+              _selectedBlockUnitCode=custom_block_list[i].UnitCode.toString();
+              _postDeathUnitID=_selectedBlockUnitCode;
+            }
           }
-        }
-        print('_postDeathUnitID_######### ${_postDeathUnitID}');
+          print('_postDeathUnitID_######### ${_postDeathUnitID}');
 
 
 
-        for (int pos = 0; pos < custom_block_list.length; pos++) {
-          if(_selectedBlockUnitCode == custom_block_list[pos].UnitCode.toString()){
-            print('selected pos- ${pos}');
-            blockValue=pos;
-            break;
+          for (int pos = 0; pos < custom_block_list.length; pos++) {
+            if(_selectedBlockUnitCode == custom_block_list[pos].UnitCode.toString()){
+              print('selected pos- ${pos}');
+              blockValue=pos;
+              break;
+            }
           }
-        }
-        blockReferUnitId=_selectedBlockUnitCode;
-        print('CheckValidateData unitcode ${_DeathUnitCode}');
-        print('CheckValidateData unittype ${_DeathUnittype}');
-        print('CheckValidateData act ${_Action}');
-        print('CheckValidateData blockReferUnitId ${blockReferUnitId}');
-        if(_selectedReferSanstha == "8" || _selectedReferSanstha == "9" || _selectedReferSanstha == "10" || _selectedReferSanstha == "16" || _selectedReferSanstha == "11" ){
-          if(blockValue == 0){
-            if(_selectedReferSanstha == "16"){
-              blockReferUnitId=_DeathUnitCode.substring(0,4)+"";
-            }else if(_selectedReferSanstha == "9" || _selectedReferSanstha == "10" || _selectedReferSanstha == "11"){
-              blockReferUnitId=_DeathUnitCode.substring(0,4)+"";
+          blockReferUnitId=_selectedBlockUnitCode;
+          print('CheckValidateData unitcode ${_DeathUnitCode}');
+          print('CheckValidateData unittype ${_DeathUnittype}');
+          print('CheckValidateData act ${_Action}');
+          print('CheckValidateData blockReferUnitId ${blockReferUnitId}');
+          if(_selectedReferSanstha == "8" || _selectedReferSanstha == "9" || _selectedReferSanstha == "10" || _selectedReferSanstha == "16" || _selectedReferSanstha == "11" ){
+            if(blockValue == 0){
+              if(_selectedReferSanstha == "16"){
+                blockReferUnitId=_DeathUnitCode.substring(0,4)+"";
+              }else if(_selectedReferSanstha == "9" || _selectedReferSanstha == "10" || _selectedReferSanstha == "11"){
+                blockReferUnitId=_DeathUnitCode.substring(0,4)+"";
+              }else{
+                blockReferUnitId=_DeathUnitCode.substring(0,4);
+              }
             }else{
               blockReferUnitId=_DeathUnitCode.substring(0,4);
             }
-          }else{
-            blockReferUnitId=_DeathUnitCode.substring(0,4);
           }
-        }
 
-        if(blockValue == 0){
-          print('inside E');
-          _Action="2";
-          getCHPHCListAPI(blockReferUnitId,_DeathUnittype, _Action);
-        }else if(_selectedReferSanstha == "8" || _selectedReferSanstha == "9" || _selectedReferSanstha == "10" ||_selectedReferSanstha == "16"){
-          print('inside D');
-          _Action="1";
-          getCHPHCListAPI(blockReferUnitId,_DeathUnittype, _Action);
-        }else if(_selectedReferSanstha == "11"){
-          print('inside A');
           if(blockValue == 0){
-            print('inside B');
+            print('inside E');
             _Action="2";
             getCHPHCListAPI(blockReferUnitId,_DeathUnittype, _Action);
+          }else if(_selectedReferSanstha == "8" || _selectedReferSanstha == "9" || _selectedReferSanstha == "10" ||_selectedReferSanstha == "16"){
+            print('inside D');
+            _Action="1";
+            getCHPHCListAPI(blockReferUnitId,_DeathUnittype, _Action);
+          }else if(_selectedReferSanstha == "11"){
+            print('inside A');
+            if(blockValue == 0){
+              print('inside B');
+              _Action="2";
+              getCHPHCListAPI(blockReferUnitId,_DeathUnittype, _Action);
 
+            }else{
+              print('inside C');
+              _Action="3";
+              getCHPHCListAPI(blockReferUnitId,_DeathUnittype, _Action);
+            }
           }else{
-            print('inside C');
-            _Action="3";
+            print('inside F');
+            _Action="1";
             getCHPHCListAPI(blockReferUnitId,_DeathUnittype, _Action);
           }
-        }else{
-          print('inside F');
-          _Action="1";
-          getCHPHCListAPI(blockReferUnitId,_DeathUnittype, _Action);
         }
+      }else{
+
+        _selectedBlockUnitCode = custom_block_list[0].UnitCode.toString();
+        print('_selectedBlockUnitCode ${_selectedBlockUnitCode}');
       }
       EasyLoading.dismiss();
     });
@@ -631,23 +637,30 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
       }else{
         custom_chcph_list.clear();
       }
-      if(response_list[0]['deathPlaceUnitcode'].toString() != "null" && response_list[0]['deathPlaceUnittype'].toString() == "11"){
-        for (int i = 0; i < custom_chcph_list.length; i++) {
-          //print('unitcode ${custom_chcph_list[i].UnitCode.toString()}');
-          if(custom_chcph_list[i].UnitCode.toString().substring(0,9) == _DeathUnitCode.substring(0, 9)){
-            _selectedCHPhcCode=custom_chcph_list[i].UnitCode.toString();
+
+      if(isChanged == false){
+        if(response_list[0]['deathPlaceUnitcode'].toString() != "null" && response_list[0]['deathPlaceUnittype'].toString() == "11"){
+          for (int i = 0; i < custom_chcph_list.length; i++) {
+            //print('unitcode ${custom_chcph_list[i].UnitCode.toString()}');
+            if(custom_chcph_list[i].UnitCode.toString().substring(0,9) == _DeathUnitCode.substring(0, 9)){
+              _selectedCHPhcCode=custom_chcph_list[i].UnitCode.toString();
+            }
+            print('_ssselectedCHPhcCode ${_selectedCHPhcCode}');
           }
-          print('_ssselectedCHPhcCode ${_selectedCHPhcCode}');
+          // getUpSwasthyaListAPI(_selectedReferSanstha,_code.substring(0,9));
+        }else if(response_list[0]['deathPlaceUnittype'].toString() == "8" || response_list[0]['deathPlaceUnittype'].toString() == "9" || response_list[0]['deathPlaceUnittype'].toString() == "10") {
+          for (int i = 0; i < custom_chcph_list.length; i++) {
+            //print('unitcode ${custom_chcph_list[i].UnitCode.toString()}');
+            if(custom_chcph_list[i].UnitCode.toString().substring(0,9) == _DeathUnitCode.substring(0, 9)){
+              _selectedCHPhcCode=custom_chcph_list[i].UnitCode.toString();
+            }
+            print('_ssselectedCHPhcCode ${_selectedCHPhcCode}');
+            _postDeathUnitID=_selectedCHPhcCode;
+          }
         }
-       // getUpSwasthyaListAPI(_selectedReferSanstha,_code.substring(0,9));
-      }else if(response_list[0]['deathPlaceUnittype'].toString() == "8" || response_list[0]['deathPlaceUnittype'].toString() == "9" || response_list[0]['deathPlaceUnittype'].toString() == "10") {
-        for (int i = 0; i < custom_chcph_list.length; i++) {
-          //print('unitcode ${custom_chcph_list[i].UnitCode.toString()}');
-          if(custom_chcph_list[i].UnitCode.toString().substring(0,9) == _DeathUnitCode.substring(0, 9)){
-            _selectedCHPhcCode=custom_chcph_list[i].UnitCode.toString();
-          }
-          print('_ssselectedCHPhcCode ${_selectedCHPhcCode}');
-          _postDeathUnitID=_selectedCHPhcCode;
+      }else{
+        if(custom_chcph_list.length > 0){
+          _selectedCHPhcCode = custom_chcph_list[0].UnitCode.toString();
         }
       }
     });
@@ -2346,25 +2359,12 @@ class _EditMotherDeathDetailsScreen extends State<EditMotherDeathDetailsScreen> 
                                       break;
                                     }
                                   }
-                                  blockReferUnitId=_selectedBlockUnitCode.substring(0,4);
+                                  blockReferUnitId=_selectedBlockUnitCode.substring(0,6);
                                   print('CheckValidateData unitcode ${_DeathUnitCode}');
                                   print('CheckValidateData unittype ${_DeathUnittype}');
                                   print('CheckValidateData act ${_Action}');
                                   print('CheckValidateData blockReferUnitId ${blockReferUnitId}');
                                   print('CheckValidateData _selectedReferSanstha ${_selectedReferSanstha}');
-                                  /*if(_selectedReferSanstha == "8" || _selectedReferSanstha == "9" || _selectedReferSanstha == "10" || _selectedReferSanstha == "16" || _selectedReferSanstha == "11" ){
-                                    if(blockValue == 0){
-                                      if(_selectedReferSanstha == "16"){
-                                        blockReferUnitId=_DeathUnitCode.substring(0,4)+"";
-                                      }else if(_selectedReferSanstha == "9" || _selectedReferSanstha == "10" || _selectedReferSanstha == "11"){
-                                        blockReferUnitId=_DeathUnitCode.substring(0,4)+"";
-                                      }else{
-                                        blockReferUnitId=_DeathUnitCode.substring(0,4);
-                                      }
-                                    }else{
-                                      blockReferUnitId=_DeathUnitCode.substring(0,4);
-                                    }
-                                  }*/
                                   if(blockValue == 0){
                                     print('inside E');
                                     _Action="2";

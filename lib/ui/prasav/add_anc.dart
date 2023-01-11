@@ -621,8 +621,9 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
           _showErrorPopup(Strings.choose_refer_sanstha, Colors.black);
         }*/
         else{
-          print('inside with risk');
-          if(checkANCDatesWithHighRisk() == true && widget.HighRisk == "0"){
+          print('inside with risk ${widget.HighRisk }');
+         // if(checkANCDatesWithHighRisk() == true && widget.HighRisk == "0"){
+          if(checkANCDatesWithHighRisk() == true){
             postRequestWithRisk();
           }
         }
@@ -790,7 +791,7 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
 
     if(preferences.getString("AppRoleID") == "33"){
       _Media="2";
-      _UpdateUserNo=preferences.getString("ANMAutoID").toString();
+      _UpdateUserNo=preferences.getString("UserNo").toString();
     }else{
       _Media="1";
       _UpdateUserNo=preferences.getString("UserNo").toString();
@@ -1017,7 +1018,7 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
 
     if(preferences.getString("AppRoleID") == "33"){
       _Media="2";
-      _UpdateUserNo=preferences.getString("ANMAutoID").toString();
+      _UpdateUserNo=preferences.getString("UserNo").toString();
     }else{
       _Media="1";
       _UpdateUserNo=preferences.getString("UserNo").toString();

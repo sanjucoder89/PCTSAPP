@@ -24,6 +24,9 @@ class Strings {
   static const String pnc_no_due = "पीएनसी के लिए कोई केस डयू नहीं है";
   static const String tikai_no_due = "टीकाकरण के लिए कोई केस डयू नहीं है";
   static const String seril_no_due = "नसबंदी के लिए कोई केस डयू नहीं है";
+  static const String infant_no_due = "शिशु मृत्यु के लिए कोई केस डयू नहीं है";
+  static const String mothrdeath_no_due = "माता के लिए कोई केस डयू नहीं है";
+  static const String hbyc_no_due = "एचबीवाईसी के लिए कोई केस डयू नहीं है";
   static const String prasav_anumanit_date = "प्रसव होने की अनुमानित तिथि ";
   static const String dateOfRegistration = "पंजीकरण की तिथि";
   static const String ANC_dueDate = "एएनसी की डयू तिथि";

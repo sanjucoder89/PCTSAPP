@@ -845,7 +845,7 @@ class _AashaRecordsState extends State<AashaRecords> {
                                       ),
                                     ),
                                     isHbycFount == false ? Container(
-                                      child: Center(child: Text(Strings.seril_no_due,style: TextStyle(color: ColorConstants.appNewBrowne,fontSize: 18,fontWeight: FontWeight.bold),)),
+                                      child: Center(child: Text(Strings.hbyc_no_due,style: TextStyle(color: ColorConstants.appNewBrowne,fontSize: 18,fontWeight: FontWeight.bold),)),
                                     ) :SingleChildScrollView(
                                       physics: ScrollPhysics(),
                                       child: Container(
@@ -925,7 +925,7 @@ class _AashaRecordsState extends State<AashaRecords> {
                                       ),
                                     ),
                                     isMotherDeathFound == false ? Container(
-                                      child: Center(child: Text(Strings.seril_no_due,style: TextStyle(color: ColorConstants.appNewBrowne,fontSize: 18,fontWeight: FontWeight.bold),)),
+                                      child: Center(child: Text(Strings.mothrdeath_no_due,style: TextStyle(color: ColorConstants.appNewBrowne,fontSize: 18,fontWeight: FontWeight.bold),)),
                                     ) :SingleChildScrollView(
                                       physics: ScrollPhysics(),
                                       child: Container(
@@ -1004,7 +1004,7 @@ class _AashaRecordsState extends State<AashaRecords> {
                                       ),
                                     ),
                                     isInfantFound == false ? Container(
-                                      child: Center(child: Text(Strings.seril_no_due,style: TextStyle(color: ColorConstants.appNewBrowne,fontSize: 18,fontWeight: FontWeight.bold),)),
+                                      child: Center(child: Text(Strings.infant_no_due,style: TextStyle(color: ColorConstants.appNewBrowne,fontSize: 18,fontWeight: FontWeight.bold),)),
                                     ) :SingleChildScrollView(
                                       physics: ScrollPhysics(),
                                       child: Container(

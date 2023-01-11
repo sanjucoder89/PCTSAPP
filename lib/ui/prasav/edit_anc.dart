@@ -865,10 +865,9 @@ class _EditANCScreen extends State<EditANCScreen> {
     preferences = await SharedPreferences.getInstance();
 
     if(preferences.getString("AppRoleID") == "33"){
-      _Media="2";
-      _UpdateUserNo=preferences.getString("ANMAutoID").toString();
+      //_UpdateUserNo=preferences.getString("ANMAutoID").toString();
+      _UpdateUserNo=preferences.getString("UserNo").toString();
     }else{
-      _Media="1";
       _UpdateUserNo=preferences.getString("UserNo").toString();
     }
 
@@ -948,7 +947,9 @@ class _EditANCScreen extends State<EditANCScreen> {
       print('final csv val ${csv_value}');
     }
 
-
+    if(_ancYYYYdateController.text.isNotEmpty && _ancMMdateController.text.isNotEmpty && _ancDDdateController.text.isNotEmpty){
+      _AncDatePost=_ancYYYYdateController.text.toString()+"/"+_ancMMdateController.text.toString()+"/"+_ancDDdateController.text.toString();
+    }
 
     print('AddANCRequest=>'
         'ANCFlag:${widget.AncFlag+
@@ -1086,10 +1087,9 @@ class _EditANCScreen extends State<EditANCScreen> {
     preferences = await SharedPreferences.getInstance();
 
     if(preferences.getString("AppRoleID") == "33"){
-      _Media="2";
-      _UpdateUserNo=preferences.getString("ANMAutoID").toString();
+      //_UpdateUserNo=preferences.getString("ANMAutoID").toString();
+      _UpdateUserNo=preferences.getString("UserNo").toString();
     }else{
-      _Media="1";
       _UpdateUserNo=preferences.getString("UserNo").toString();
     }
 
@@ -9469,7 +9469,8 @@ class _EditANCScreen extends State<EditANCScreen> {
     });
   }
 
-  void setPreviousData() {
+  Future<void> setPreviousData() async {
+    preferences = await SharedPreferences.getInstance();
     // if (!TextUtils.isEmpty(hb)) {
     //             if (Float.parseFloat(hb) <= 7.0) {
     //                 edt_hbCount.setText(hb);
@@ -9700,7 +9701,15 @@ class _EditANCScreen extends State<EditANCScreen> {
     }
 
     if(widget.Media.isNotEmpty){
-      _Media=widget.Media;
+      if(widget.Media == "2"){
+        if(preferences.getString("AppRoleID") == "32"){
+          _Media="3";
+        }else{
+          _Media=widget.Media;
+        }
+      }else{
+        _Media="1";
+      }
     }
 
     /*

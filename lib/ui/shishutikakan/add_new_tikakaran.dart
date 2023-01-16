@@ -708,8 +708,10 @@ class _AddNewTikakarnScreenState extends State<AddNewTikakarnScreen> {
                         border: Border.all(color: Colors.black)),
                     padding: EdgeInsets.all(1),
                     height: 100,
-                    child:SingleChildScrollView(
-                      physics: ScrollPhysics(),
+                    child:Scrollbar(
+                      controller: _controller,
+                      isAlwaysShown: true,
+                      //physics: ScrollPhysics(),
                       child:  _tikaiListView(),
                     ),
                   )
@@ -2075,8 +2077,8 @@ class _AddNewTikakarnScreenState extends State<AddNewTikakarnScreen> {
             controller: _controller,
             itemCount: getLength(),
             itemBuilder: _itemBuilder,
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true
+           // physics: const NeverScrollableScrollPhysics(),
+            //shrinkWrap: true
         )
     );
   }
@@ -2138,7 +2140,7 @@ class _AddNewTikakarnScreenState extends State<AddNewTikakarnScreen> {
                 ],
               ),
               Divider(
-                  thickness: 2,
+                  thickness: 1,
                   color: Colors.black
 
               )

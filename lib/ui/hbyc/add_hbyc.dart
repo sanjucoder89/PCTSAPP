@@ -913,7 +913,11 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            _selectHBYCDatePopup();
+                            if(_hbycYYYYdateController.text.toString().isEmpty && _hbycMMdateController.text.toString().isEmpty && _hbycDDdateController.text.toString().isEmpty){
+                              _selectHBYCDatePopup(0,0,0);
+                            }else{
+                              _selectHBYCDatePopup(int.parse(_hbycYYYYdateController.text.toString()),int.parse(_hbycMMdateController.text.toString()) ,int.parse(_hbycDDdateController.text.toString()));
+                            }
                           },
                           child: Container(
                               margin: EdgeInsets.only(right: 20, left: 10),
@@ -2349,6 +2353,9 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
           if(HBYCFlag == "3"){
             if(!(diff_lmp_ancdate >= 90 && diff_lmp_ancdate <= 105)){
               _showErrorPopup(Strings.choose_correct_hbyc_date,ColorConstants.AppColorPrimary);
+              _hbycDDdateController.text = "";
+              _hbycMMdateController.text = "";
+              _hbycYYYYdateController.text = "";
             }else{
               _hbycDDdateController.text = getDate(formattedDate4);
               _hbycMMdateController.text = getMonth(formattedDate4);
@@ -2359,6 +2366,9 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
           }else if(HBYCFlag == "6"){
             if(!(diff_lmp_ancdate >= 180 && diff_lmp_ancdate <= 195)){
               _showErrorPopup(Strings.choose_correct_hbyc_date,ColorConstants.AppColorPrimary);
+              _hbycDDdateController.text = "";
+              _hbycMMdateController.text = "";
+              _hbycYYYYdateController.text = "";
             }else{
               _hbycDDdateController.text = getDate(formattedDate4);
               _hbycMMdateController.text = getMonth(formattedDate4);
@@ -2369,6 +2379,9 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
           }else if(HBYCFlag == "9"){
             if(!(diff_lmp_ancdate >= 270 && diff_lmp_ancdate <= 285)){
               _showErrorPopup(Strings.choose_correct_hbyc_date,ColorConstants.AppColorPrimary);
+              _hbycDDdateController.text = "";
+              _hbycMMdateController.text = "";
+              _hbycYYYYdateController.text = "";
             }else{
               _hbycDDdateController.text = getDate(formattedDate4);
               _hbycMMdateController.text = getMonth(formattedDate4);
@@ -2379,6 +2392,9 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
           }else if(HBYCFlag == "12"){
             if(!(diff_lmp_ancdate >= 360 && diff_lmp_ancdate <= 375)){
               _showErrorPopup(Strings.choose_correct_hbyc_date,ColorConstants.AppColorPrimary);
+              _hbycDDdateController.text = "";
+              _hbycMMdateController.text = "";
+              _hbycYYYYdateController.text = "";
             }else{
               _hbycDDdateController.text = getDate(formattedDate4);
               _hbycMMdateController.text = getMonth(formattedDate4);
@@ -2389,6 +2405,9 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
           }else if(HBYCFlag == "15"){
             if(!(diff_lmp_ancdate >= 450 && diff_lmp_ancdate <= 465)){
               _showErrorPopup(Strings.choose_correct_hbyc_date,ColorConstants.AppColorPrimary);
+              _hbycDDdateController.text = "";
+              _hbycMMdateController.text = "";
+              _hbycYYYYdateController.text = "";
             }else{
               _hbycDDdateController.text = getDate(formattedDate4);
               _hbycMMdateController.text = getMonth(formattedDate4);
@@ -2407,10 +2426,11 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
       });
   }
 
-  void _selectHBYCDatePopup() {
+  void _selectHBYCDatePopup(int yyyy,int mm ,int dd) {
     showDatePicker(
         context: context,
-        initialDate: DateTime.now(),
+       // initialDate: DateTime.now(),
+        initialDate: (yyyy == 0 && mm == 0 && dd == 0) ? DateTime.now() : DateTime(yyyy, mm , dd ),
         //initialDate: DateTime(initalYear, initalMonth, initalDay),
         firstDate: DateTime(2015),
         lastDate: DateTime(2050))

@@ -39,6 +39,7 @@ class _AashaRecordsState extends State<AashaRecords> {
 
   List Ancresponse_list = [];
   Future<String> getANCAshaRecordsAPI() async {
+
     preferences = await SharedPreferences.getInstance();
     //print('LoginUnitid ${preferences.getString('UnitID')}');
     var response = await post(Uri.parse(_get_asha_records_url), body: {
@@ -1219,7 +1220,9 @@ class _AashaRecordsState extends State<AashaRecords> {
                             MaterialPageRoute(
                               builder: (BuildContext context) =>
                                   PendingCasesList(ashaAutoID:Ancresponse_list[index]['ashaAutoID'].toString(),type: "1"), //TabViewScreen ,VideoScreen
-                            ));
+                            )).then((value){setState(() {
+                          getANCAshaRecordsAPI();
+                        });});
                       }
                     },
                     child: Container(width: 70,child: Text(

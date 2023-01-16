@@ -290,6 +290,7 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
         print('_selectedDistrictUnitCode ${_selectedBlockUnitCode}');
         print('block.len ${custom_block_list.length}');
       } else {
+        _selectedBlockUnitCode="0";
         custom_block_list.clear();
         print('block.len ${custom_block_list.length}');
 
@@ -1649,7 +1650,11 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                 _selectANCDatePopup();
+                                if(_pncYYYYdateController.text.toString().isEmpty && _pncMMdateController.text.toString().isEmpty && _pncDDdateController.text.toString().isEmpty){
+                                  _selectANCDatePopup(0,0,0);
+                                }else{
+                                  _selectANCDatePopup(int.parse(_pncYYYYdateController.text.toString()),int.parse(_pncMMdateController.text.toString()) ,int.parse(_pncDDdateController.text.toString()));
+                                }
                               },
                               child: Container(
                                   margin: EdgeInsets.only(right: 20, left: 10),
@@ -4731,8 +4736,10 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
         DateTime dt2 = DateTime.parse(getCurrentDate());
 
         if (formattedDate2.toString() == getCurrentDate2()) {
-         // print('equal to current date#########');
           _showErrorPopup(Strings.PncDate_sahi_kare_msg,ColorConstants.AppColorPrimary);
+          _pncDDdateController.text ="";
+          _pncMMdateController.text = "";
+          _pncYYYYdateController.text = "";
         } else {
          // print('not equal to current date#########');
           //print('DateCondition dt1 : ${_selectedDate}');
@@ -4823,17 +4830,20 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
             }else{
               print('before pnc date');
               _showErrorPopup(Strings.check_png_date,ColorConstants.AppColorPrimary);
+              _pncDDdateController.text ="";
+              _pncMMdateController.text = "";
+              _pncYYYYdateController.text = "";
             }
           }
         }
       });
   }
 
-  void _selectANCDatePopup() {
+  void _selectANCDatePopup(int yyyy,int mm ,int dd) {
     showDatePicker(
         context: context,
-        initialDate: DateTime.now(),
-        //initialDate: DateTime(initalYear, initalMonth, initalDay),
+        //initialDate: DateTime.now(),
+        initialDate: (yyyy == 0 && mm == 0 && dd == 0) ? DateTime.now() : DateTime(yyyy, mm , dd ),
         firstDate: DateTime(2015),
         lastDate: DateTime(2050))
         .then((pickedDate) {
@@ -5206,6 +5216,10 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
   /*
     *
   */
+
+  String sub_heading="";
+
+
   void postPNCRequest() async {
     preferences = await SharedPreferences.getInstance();
 

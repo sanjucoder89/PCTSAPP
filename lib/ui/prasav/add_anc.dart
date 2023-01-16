@@ -1943,7 +1943,11 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              _selectANCDatePopup();
+                              if(_ancYYYYdateController.text.toString().isEmpty && _ancMMdateController.text.toString().isEmpty && _ancDDdateController.text.toString().isEmpty){
+                                _selectANCDatePopup(0,0,0);
+                              }else{
+                                _selectANCDatePopup(int.parse(_ancYYYYdateController.text.toString()),int.parse(_ancMMdateController.text.toString()) ,int.parse(_ancDDdateController.text.toString()));
+                              }
                             },
                             child: Container(
                                 margin: EdgeInsets.only(right: 20, left: 10),
@@ -7863,10 +7867,11 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
       }
     });
   }
-  void _selectANCDatePopup() {
+  void _selectANCDatePopup(int yyyy,int mm ,int dd) {
     showDatePicker(
             context: context,
-            initialDate: DateTime.now(),
+           // initialDate: DateTime.now(),
+            initialDate: (yyyy == 0 && mm == 0 && dd == 0) ? DateTime.now() : DateTime(yyyy, mm , dd ),
             //initialDate: DateTime(initalYear, initalMonth, initalDay),
             firstDate: DateTime(2015),
             lastDate: DateTime(2050))

@@ -427,6 +427,7 @@ class Strings {
 
   static const String choose_mata_prasav_prob = "माता में प्रसव पश्चात जटिलता चुनें ";
   static const String PncDate_sahi_kare_msg = "पीएनसी तिथि की प्रविष्टि सही करें";
+  static const String not_eligible_anc_ = "सम्बंधित केस की अभी एएनसी डयू नहीं हैं";
   static const String aaj_ki_tareek_sai_phale = "आज की तारीख से पहले की तारीख चुने";
   static const String please_selectd_before_register = "Please select before date of Registerdate";
   static const String choose_correct_hbyc_date = "एचबीवाईसी की तिथि सही चुनें ";

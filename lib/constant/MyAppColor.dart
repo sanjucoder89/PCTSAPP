@@ -54,5 +54,6 @@ class ColorConstants {
   static const black = Color(0xff000000);
   static const grey = Color(0xffececec);
   static const text_green = Color(0xff03671C);
+  static const green_text = Color(0xff3e802f);
   static const hbyc_bg_green = Color(0xff597c67);
 }

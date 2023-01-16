@@ -2239,7 +2239,13 @@ class _FindPCTSDetails extends State<FindPCTSDetails> {
                                 '${getFormattedDate(_child_infantt_vivaran_response[index]['immudate'])}',
                                 style: TextStyle(
                                     fontSize: 11,
-                                    color: ColorConstants.redTextColor),
+                                    color: _child_infantt_vivaran_response[index]['tagname'].toString() == "R" ?
+                                    ColorConstants.redTextColor :
+                                    _child_infantt_vivaran_response[index]['tagname'].toString() == "G" ?
+                                    ColorConstants.green_text :
+                                    _child_infantt_vivaran_response[index]['tagname'].toString() == "B" ?
+                                    ColorConstants.AppColorPrimary :
+                                    ColorConstants.black),
                               ),
                             )),
                           ],

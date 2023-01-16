@@ -18,6 +18,8 @@ import 'package:intl/intl.dart';
 
 import '../dashboard/model/GetHelpDeskData.dart';
 import '../dashboard/model/LogoutData.dart';
+import '../prasav/before/anc_expand_details.dart';
+import '../prasav/before/model/GetPrasavListData.dart';
 import '../samparksutra/samparksutra.dart';
 import '../shishutikakan/tikakaran_details.dart';
 import '../splashnew.dart';
@@ -34,12 +36,24 @@ class AnmWorkPlanListScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _AnmWorkPlanListScreen();
 }
+String getConvertRegDateFormat(String date) {
+  /// Convert into local date format.
+  var localDate = DateTime.parse(date).toLocal();
+  var inputFormat = DateFormat('yyyy-MM-dd hh:mm:ss');
+  var inputDate = inputFormat.parse(localDate.toString());
 
+  /// outputFormat - convert into format you want to show.
+  // var outputFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+  var outputFormat = DateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+  // var outputFormat = DateFormat('yyy-MM-dd hh:mm:ss');
+  var outputDate = outputFormat.format(inputDate);
+  return outputDate.toString();
+}
 class _AnmWorkPlanListScreen extends State<AnmWorkPlanListScreen> with TickerProviderStateMixin{
   late String _selectedMonthID = "00";
   late String _finalMonthYear = "01";
   List yearlist = [];
-  var _uspANMWorkPlan = AppConstants.app_base_url + "uspANMWorkPlan";
+
   ScrollController? _controller;
   ScrollController? _pnccontroller;
   ScrollController? _immucontroller;
@@ -131,10 +145,58 @@ class _AnmWorkPlanListScreen extends State<AnmWorkPlanListScreen> with TickerPro
   var _year_api_url = AppConstants.app_base_url + "GetYearListForANMPlan";
   var _help_desk_url = AppConstants.app_base_url + "HelpDesk";
   var _logout_url = AppConstants.app_base_url + "LogoutToken";
-
+  var _find_prasav_id = AppConstants.app_base_url + "PostPCTSID";
+  var _uspANMWorkPlan = AppConstants.app_base_url + "uspANMWorkPlan";
   /*
   * API FOR DISTRICT LISTING
   * */
+
+  /*
+  * API FOR FIND PRASV DATA
+  * */
+  List find_response_listing = [];
+  Future<String> findPrasavDataByIDAPI(String id,String _tagId) async {
+    await EasyLoading.show(
+      status: 'loading...',
+      maskType: EasyLoadingMaskType.black,
+    );
+    preferences = await SharedPreferences.getInstance();
+    var response = await post(Uri.parse(_find_prasav_id), body: {
+      //PCTSID:01010900404991090
+      // TagName:3
+      // TokenNo:fc9b1a5a-2593-4bbe-ab40-b70b7785a041
+      // UserID:0101010020201
+      "PCTSID":id,
+      "TagName":_tagId,
+      "TokenNo": preferences.getString('Token'),
+      "UserID": preferences.getString('UserId')
+    });
+    var resBody = json.decode(response.body);
+    final apiResponse = GetPrasavListData.fromJson(resBody);
+    setState(() {
+      if (apiResponse.status == true) {
+        find_response_listing = resBody['ResposeData'];
+        print('find-resp-listing.len ${find_response_listing.length}');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => AncExpandDetails(ancregid:find_response_listing[0]['ancregid'].toString()),
+          ),
+        );
+      } else {
+        find_response_listing.clear();
+        Fluttertoast.showToast(
+            msg:apiResponse.message.toString(),
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: Colors.red,
+            textColor: Colors.white);
+      }
+    });
+    EasyLoading.dismiss();
+    print('response:${apiResponse.message}');
+    return "Success";
+  }
 
   Future<String> getYearListAPI() async {
     preferences = await SharedPreferences.getInstance();
@@ -156,14 +218,13 @@ class _AnmWorkPlanListScreen extends State<AnmWorkPlanListScreen> with TickerPro
   }
 
   Future<String> getAncWorkPlan(String _monthyear) async {
-    print('LoginUnitCode ${preferences.getString('UnitCode')}');
-    print('LoginUnitType ${preferences.getString('UnitType')}');
+    print('UnitCode ${preferences.getString('UnitCode')}');
+    print('_monthyear ${_monthyear}');
     preferences = await SharedPreferences.getInstance();
 
     var response = await post(Uri.parse(_uspANMWorkPlan), body: {
       "TagName": "A",
       "Mthyr": _monthyear,
-      //"Mthyr": "202105",
       "LoginUnitcode": preferences.getString('UnitCode'),
       "TokenNo": preferences.getString('Token'),
       "UserID": preferences.getString('UserId')
@@ -173,7 +234,7 @@ class _AnmWorkPlanListScreen extends State<AnmWorkPlanListScreen> with TickerPro
     setState(() {
       if (apiResponse.status == true) {
         Ancresponse_list = resBody['ResposeData'];
-        print('Ancresponse_list.len ${Ancresponse_list.length}');
+        print('ancres.len ${Ancresponse_list.length}');
         if(Ancresponse_list.length > 0){
           isANCFound=true;
         }else{
@@ -493,593 +554,579 @@ class _AnmWorkPlanListScreen extends State<AnmWorkPlanListScreen> with TickerPro
         ],
       ),
       body: Container(
-        child: Column(
-          children: <Widget>[
-            Container(
-              color: ColorConstants.redTextColor,
-              height: 50,
-              child: Column(
-                children: [
-                  Expanded(child: Row(
-                    children: [
-                      SizedBox(
-                        width: 150,
-                        child: Row(
-                          children: [
-                            Align(
-                                alignment: Alignment.centerLeft,
-                                child: GestureDetector(
-                                  child: Container(
-                                    margin: EdgeInsets.only(left: 3),
-                                    child: Text(
-                                      Strings.anm_title,
-                                      style: TextStyle(
-                                          color: ColorConstants.app_yellow_color,
-                                          fontSize: 13),
-                                    ),
-                                  ),
-                                )),
-                            Flexible(child: Container(
-                              child: Text(_anmName,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  softWrap: false,
-                                  style: TextStyle(
-                                    color: ColorConstants.white,
-                                    fontSize: 13,
-                                    overflow: TextOverflow.ellipsis,
-                                  )),
-                            ))
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Container(
+                color: ColorConstants.redTextColor,
+                height: 50,
+                child: Column(
+                  children: [
+                    Expanded(child: Row(
+                      children: [
+                        SizedBox(
+                          width: 150,
                           child: Row(
                             children: [
                               Align(
-                                alignment: Alignment.centerRight,
-                                child: Container(
-                                  margin: EdgeInsets.only(right: 3),
-                                  child: Text(Strings.sanstha_title,
-                                      style: TextStyle(
-                                          color: ColorConstants.app_yellow_color,
-                                          fontSize: 13)),
-                                ),
-                              ),
-                              Flexible(
-                                child: Container(
-                                  child: Text(_topHeaderName,
-                                      maxLines: 1,
+                                  alignment: Alignment.centerLeft,
+                                  child: GestureDetector(
+                                    child: Container(
+                                      margin: EdgeInsets.only(left: 3),
+                                      child: Text(
+                                        Strings.anm_title,
+                                        style: TextStyle(
+                                            color: ColorConstants.app_yellow_color,
+                                            fontSize: 13),
+                                      ),
+                                    ),
+                                  )),
+                              Flexible(child: Container(
+                                child: Text(_anmName,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    softWrap: false,
+                                    style: TextStyle(
+                                      color: ColorConstants.white,
+                                      fontSize: 13,
                                       overflow: TextOverflow.ellipsis,
-                                      softWrap: false,
-                                      style: TextStyle(
-                                        color: ColorConstants.white,
-                                        fontSize: 13,
-                                        overflow: TextOverflow.ellipsis,
-                                      )),
-                                ),
-                              )
+                                    )),
+                              ))
                             ],
-                          )),
-                    ],
-                  )),
-                  Container(
-                    color:  ColorConstants.brown_grey,
-                    child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: GestureDetector(
-                          child: Container(
-                            child: Text(
-                              Strings.hbyc_title,
-                              style: TextStyle(
-                                  color: ColorConstants.white,
-                                  fontSize: 15),
-                            ),
-                          ),
-                        )),
-                  ),
-
-                ],
-              ),
-            ),
-            Container(
-              decoration: BoxDecoration(
-                  color: Colors.white, border: Border.all(color: Colors.black)),
-              height: 30,
-              child: Row(
-                children: [
-                  Expanded(
-                      child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 5),
-                        child: Container(
-                          width: 100,
-                          child: Text(
-                            'माह',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.normal,
-                                fontSize: 12),
                           ),
                         ),
-                      ),
-                      Expanded(
-                          child: Container(
-                        height: 40,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: Border.all(color: Colors.black)),
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButton(
-                            icon: Padding(
-                              padding: const EdgeInsets.only(right: 10),
-                              child: Image.asset(
-                                'Images/ic_down.png',
-                                height: 12,
-                                alignment: Alignment.centerRight,
-                              ),
-                            ),
-                            iconSize: 15,
-                            elevation: 11,
-                            style: TextStyle(color: Colors.black),
-                            isExpanded: true,
-                            hint: new Text("माह"),
-                            items: month_list.map((item) {
-                              return DropdownMenuItem(
-                                  child: Row(
-                                    children: [
-                                      new Flexible(
-                                          child: Padding(
-                                        padding: const EdgeInsets.all(2.0),
-                                        child: Text(
-                                          item.name.toString(),
-                                          style: TextStyle(
-                                              fontSize: 12.0,
-                                              fontWeight: FontWeight.normal),
-                                        ),
-                                      )),
-                                    ],
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                            child: Row(
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Container(
+                                    margin: EdgeInsets.only(right: 3),
+                                    child: Text(Strings.sanstha_title,
+                                        style: TextStyle(
+                                            color: ColorConstants.app_yellow_color,
+                                            fontSize: 13)),
                                   ),
-                                  value: item.mid.toString()
-                                  );
-                            }).toList(),
-                            onChanged: (String? newVal) {
-                              setState(() {
-                                _selectedMonthID = newVal!;
-                                print('_selectedMonthID:$_selectedMonthID');
-                                setCustomMnthYr();
-                              });
-                            },
-                            value: _selectedMonthID,
-                          ),
-                        ),
-                      ))
-                    ],
-                  )),
-                  Expanded(
-                      child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 5),
-                        child: Container(
-                          width: 100,
-                          child: const Text(
-                            'वर्ष',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.normal,
-                                fontSize: 12),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                          child: Container(
-                        height: 40,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: Border.all(color: Colors.black)),
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButton(
-                            icon: Padding(
-                              padding: const EdgeInsets.only(right: 10),
-                              child: Image.asset(
-                                'Images/ic_down.png',
-                                height: 12,
-                                alignment: Alignment.centerRight,
-                              ),
-                            ),
-                            iconSize: 15,
-                            elevation: 11,
-                            style: TextStyle(color: Colors.black),
-                            isExpanded: true,
-                            hint: new Text("Select"),
-                            items: yearlist.map((item) {
-                              return DropdownMenuItem(
-                                  child: Row(
-                                    children: [
-                                       Flexible(
-                                          child: Padding(
-                                        padding: const EdgeInsets.all(2.0),
-                                        child: Text(
-                                          item['Year'],
-                                          //Names that the api dropdown contains
-                                          style: const TextStyle(
-                                              fontSize: 12.0,
-                                              fontWeight: FontWeight.normal),
-                                        ),
-                                      )),
-                                    ],
-                                  ),
-                                  value: item['Year']
-                                      .toString() //Id that has to be passed that the dropdown has.....
-                                  );
-                            }).toList(),
-                            onChanged: (String? newVal) {
-                              setState(() {
-                                yearselect = newVal!;
-                                _selectedYear=yearselect;
-                                print('_yearselect:$yearselect');
-                                setCustomMnthYr();
-                              });
-                            },
-                            value: yearselect, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
-                          ),
-                        ),
-                      ))
-                    ],
-                  ))
-                ],
-              ),
-            ),
-            DefaultTabController(
-                length: 4, // length of tabs
-                initialIndex: 0,
-                child: Builder(builder: (context){
-                  final tabController = DefaultTabController.of(context)!;
-                  tabController.addListener(() {
-                    print("New tab index: ${tabController.index}");
-                        if(tabController.index == 0){
-                          getAncWorkPlan("1");
-                        }else if(tabController.index == 1){
-                          getPncWorkPlan("2");
-                        }else if(tabController.index == 2){
-                          getImmWorkPlan("3");
-                        }else if(tabController.index == 3){
-                          getStalizationWorkPlan("4");
-                        }
-                  });
-                  return Container(
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: <Widget>[
-                          Container(
-                            child: TabBar(
-                              labelPadding: EdgeInsets.symmetric(horizontal: 5.0),
-                              labelColor: ColorConstants.AppColorPrimary,
-                              unselectedLabelColor: Colors.black,
-                              tabs: [
-                                Container(
-                                  child: new Tab(text: 'एएनसी'),
                                 ),
-                                Container(
-                                  child: new Tab(text: 'पीएनसी'),
-                                ),
-                                Container(
-                                  child: new Tab(text: 'टीकाकरण'),
-                                ),
-                                Container(
-                                  child: new Tab(
-                                    text: '   नसबन्दी /\nअंतराल साधन',
+                                Flexible(
+                                  child: Container(
+                                    child: Text(_topHeaderName,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        softWrap: false,
+                                        style: TextStyle(
+                                          color: ColorConstants.white,
+                                          fontSize: 13,
+                                          overflow: TextOverflow.ellipsis,
+                                        )),
                                   ),
                                 )
                               ],
-                              labelStyle: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 14),
-                              unselectedLabelStyle:
-                              TextStyle(fontStyle: FontStyle.normal),
+                            )),
+                      ],
+                    ))
+                  ],
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                    color: Colors.white, border: Border.all(color: Colors.black)),
+                height: 30,
+                child: Row(
+                  children: [
+                    Expanded(
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 5),
+                              child: Container(
+                                width: 100,
+                                child: Text(
+                                  'माह',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.normal,
+                                      fontSize: 12),
+                                ),
+                              ),
                             ),
-                          ),
-                          Container(
-                              height: 500.0, //height of TabBarView
-                              decoration: const BoxDecoration(
-                                  border: Border(
-                                      top: BorderSide(
-                                          color: Colors.grey, width: 0.5))),
-                              child: TabBarView(children: <Widget>[
-                                isANCFound == false ? Container(
-                                  child: Center(child: Text(Strings.anc_no_due,style: TextStyle(color: ColorConstants.appNewBrowne,fontSize: 18,fontWeight: FontWeight.bold),)),
-                                ) :SingleChildScrollView(
-                                  physics: ScrollPhysics(),
-                                  child: Container(
-                                      child: Column(
-                                        children: [
-                                          Align(
-                                              alignment: Alignment.centerLeft,
-                                              child: GestureDetector(
-                                                child: Container(
-                                                  height: 20,
-                                                  color: ColorConstants.redTextColor,
-                                                  margin:
-                                                  EdgeInsets.only(left: 0, top: 1),
-                                                  child: const Center(
-                                                    child: Text(
-                                                      "एएनसी दर्ज करने के लिए सम्बन्धित केस पर क्लिक करें ",
-                                                      style: TextStyle(
-                                                          color: ColorConstants
-                                                              .white,
-                                                          fontSize: 12),
+                            Expanded(
+                                child: Container(
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      border: Border.all(color: Colors.black)),
+                                  child: DropdownButtonHideUnderline(
+                                    child: DropdownButton(
+                                      icon: Padding(
+                                        padding: const EdgeInsets.only(right: 10),
+                                        child: Image.asset(
+                                          'Images/ic_down.png',
+                                          height: 12,
+                                          alignment: Alignment.centerRight,
+                                        ),
+                                      ),
+                                      iconSize: 15,
+                                      elevation: 11,
+                                      style: TextStyle(color: Colors.black),
+                                      isExpanded: true,
+                                      hint: new Text("माह"),
+                                      items: month_list.map((item) {
+                                        return DropdownMenuItem(
+                                            child: Row(
+                                              children: [
+                                                new Flexible(
+                                                    child: Padding(
+                                                      padding: const EdgeInsets.all(2.0),
+                                                      child: Text(
+                                                        item.name.toString(),
+                                                        style: TextStyle(
+                                                            fontSize: 12.0,
+                                                            fontWeight: FontWeight.normal),
+                                                      ),
+                                                    )),
+                                              ],
+                                            ),
+                                            value: item.mid.toString()
+                                        );
+                                      }).toList(),
+                                      onChanged: (String? newVal) {
+                                        setState(() {
+                                          _selectedMonthID = newVal!;
+                                          print('_selectedMonthID:$_selectedMonthID');
+                                          setCustomMnthYr();
+                                        });
+                                      },
+                                      value: _selectedMonthID,
+                                    ),
+                                  ),
+                                ))
+                          ],
+                        )),
+                    Expanded(
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 5),
+                              child: Container(
+                                width: 100,
+                                child: const Text(
+                                  'वर्ष',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.normal,
+                                      fontSize: 12),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                                child: Container(
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      border: Border.all(color: Colors.black)),
+                                  child: DropdownButtonHideUnderline(
+                                    child: DropdownButton(
+                                      icon: Padding(
+                                        padding: const EdgeInsets.only(right: 10),
+                                        child: Image.asset(
+                                          'Images/ic_down.png',
+                                          height: 12,
+                                          alignment: Alignment.centerRight,
+                                        ),
+                                      ),
+                                      iconSize: 15,
+                                      elevation: 11,
+                                      style: TextStyle(color: Colors.black),
+                                      isExpanded: true,
+                                      hint: new Text("Select"),
+                                      items: yearlist.map((item) {
+                                        return DropdownMenuItem(
+                                            child: Row(
+                                              children: [
+                                                Flexible(
+                                                    child: Padding(
+                                                      padding: const EdgeInsets.all(2.0),
+                                                      child: Text(
+                                                        item['Year'],
+                                                        //Names that the api dropdown contains
+                                                        style: const TextStyle(
+                                                            fontSize: 12.0,
+                                                            fontWeight: FontWeight.normal),
+                                                      ),
+                                                    )),
+                                              ],
+                                            ),
+                                            value: item['Year']
+                                                .toString() //Id that has to be passed that the dropdown has.....
+                                        );
+                                      }).toList(),
+                                      onChanged: (String? newVal) {
+                                        setState(() {
+                                          yearselect = newVal!;
+                                          _selectedYear=yearselect;
+                                          print('_yearselect:$yearselect');
+                                          setCustomMnthYr();
+                                        });
+                                      },
+                                      value: yearselect, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
+                                    ),
+                                  ),
+                                ))
+                          ],
+                        ))
+                  ],
+                ),
+              ),
+              DefaultTabController(
+                  length: 4, // length of tabs
+                  initialIndex: 0,
+                  child: Builder(builder: (context){
+                    final tabController = DefaultTabController.of(context)!;
+                    tabController.addListener(() {
+                      print("New tab index: ${tabController.index}");
+                      if(tabController.index == 0){
+                        getAncWorkPlan(_finalMonthYear);
+                      }else if(tabController.index == 1){
+                        getPncWorkPlan(_finalMonthYear);
+                      }else if(tabController.index == 2){
+                        getImmWorkPlan(_finalMonthYear);
+                      }else if(tabController.index == 3){
+                        getStalizationWorkPlan(_finalMonthYear);
+                      }
+                    });
+                    return Container(
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: <Widget>[
+                            Container(
+                              child: TabBar(
+                                labelPadding: EdgeInsets.symmetric(horizontal: 5.0),
+                                labelColor: ColorConstants.AppColorPrimary,
+                                unselectedLabelColor: Colors.black,
+                                tabs: [
+                                  Container(
+                                    child: new Tab(text: 'एएनसी'),
+                                  ),
+                                  Container(
+                                    child: new Tab(text: 'पीएनसी'),
+                                  ),
+                                  Container(
+                                    child: new Tab(text: 'टीकाकरण'),
+                                  ),
+                                  Container(
+                                    child: new Tab(
+                                      text: '   नसबन्दी /\nअंतराल साधन',
+                                    ),
+                                  )
+                                ],
+                                labelStyle: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 14),
+                                unselectedLabelStyle:
+                                TextStyle(fontStyle: FontStyle.normal),
+                              ),
+                            ),
+                            Container(
+                                height: 500.0, //height of TabBarView
+                                decoration: const BoxDecoration(
+                                    border: Border(
+                                        top: BorderSide(
+                                            color: Colors.grey, width: 0.5))),
+                                child: TabBarView(children: <Widget>[
+                                  isANCFound == false ? Container(
+                                    child: Center(child: Text(Strings.anc_no_due,style: TextStyle(color: ColorConstants.appNewBrowne,fontSize: 18,fontWeight: FontWeight.bold),)),
+                                  ) :SingleChildScrollView(
+                                    physics: ScrollPhysics(),
+                                    child: Container(
+                                        child: Column(
+                                          children: [
+                                            Align(
+                                                alignment: Alignment.centerLeft,
+                                                child: GestureDetector(
+                                                  child: Container(
+                                                    height: 20,
+                                                    color: ColorConstants.redTextColor,
+                                                    margin:
+                                                    EdgeInsets.only(left: 0, top: 1),
+                                                    child: const Center(
+                                                      child: Text(
+                                                        "एएनसी दर्ज करने के लिए सम्बन्धित केस पर क्लिक करें ",
+                                                        style: TextStyle(
+                                                            color: ColorConstants
+                                                                .white,
+                                                            fontSize: 12),
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                              )),
+                                                )),
 
-                                          Container(
-                                            height: 25,
-                                            child: Row(
-                                              children: [
-                                                Container(
-                                                  width: 25,
-                                                  child: Text(Strings.Kramnk,
+                                            Container(
+                                              height: 25,
+                                              child: Row(
+                                                children: [
+                                                  Container(
+                                                    width: 25,
+                                                    child: Text(Strings.Kramnk,
+                                                        textAlign: TextAlign.center,
+                                                        style: TextStyle(fontSize: 11,fontWeight: FontWeight. bold,color: ColorConstants.AppColorPrimary)),),
+                                                  const VerticalDivider(
+                                                    thickness: 1.5,
+                                                    color: ColorConstants.app_yellow_color,
+                                                  ),
+                                                  Expanded(child: Container(child: Text(Strings.mahila_patikaName,
                                                       textAlign: TextAlign.center,
-                                                      style: TextStyle(fontSize: 11,fontWeight: FontWeight. bold,color: ColorConstants.AppColorPrimary)),),
-                                                const VerticalDivider(
-                                                  thickness: 1.5,
-                                                  color: ColorConstants.app_yellow_color,
-                                                ),
-                                                Expanded(child: Container(child: Text(Strings.mahila_patikaName,
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(fontSize: 11,fontWeight: FontWeight. bold,color: ColorConstants.AppColorPrimary)),)),
-                                                const VerticalDivider(
-                                                  thickness: 1.5,
-                                                ),
-                                                Container(
-                                                  width: 80,
-                                                  child: Text(Strings.dateOfRegistration,
+                                                      style: TextStyle(fontSize: 11,fontWeight: FontWeight. bold,color: ColorConstants.AppColorPrimary)),)),
+                                                  const VerticalDivider(
+                                                    thickness: 1.5,
+                                                  ),
+                                                  Container(
+                                                    width: 80,
+                                                    child: Text(Strings.dateOfRegistration,
+                                                        textAlign: TextAlign.center,
+                                                        style: TextStyle(fontSize: 11,fontWeight: FontWeight. bold,color: ColorConstants.AppColorPrimary)),),
+                                                  const VerticalDivider(
+                                                    thickness: 1.5,
+                                                    color: ColorConstants.app_yellow_color,
+                                                  ),
+                                                  Expanded(child: Container(child: Text(Strings.ANC_dueDate,
                                                       textAlign: TextAlign.center,
-                                                      style: TextStyle(fontSize: 11,fontWeight: FontWeight. bold,color: ColorConstants.AppColorPrimary)),),
-                                                const VerticalDivider(
-                                                  thickness: 1.5,
-                                                  color: ColorConstants.app_yellow_color,
-                                                ),
-                                                Expanded(child: Container(child: Text(Strings.ANC_dueDate,
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(fontSize: 11,fontWeight: FontWeight. bold,color: ColorConstants.AppColorPrimary)),))
-                                              ],
+                                                      style: TextStyle(fontSize: 11,fontWeight: FontWeight. bold,color: ColorConstants.AppColorPrimary)),))
+                                                ],
+                                              ),
+
                                             ),
+                                            const Divider(
+                                              color: ColorConstants.app_yellow_color,
+                                              height: 2,
+                                            ),
+                                            Container(
 
-                                          ),
-                                          const Divider(
-                                            color: ColorConstants.app_yellow_color,
-                                            height: 2,
-                                          ),
-                                          Container(
-
-                                            child: _AncListView(),
-                                          )
-                                        ],
-                                      )),
-                                ),
-                                isPNCFound == false ? Container(
-                                  child: Center(child: Text(Strings.pnc_no_due,style: TextStyle(color: ColorConstants.appNewBrowne,fontSize: 18,fontWeight: FontWeight.bold),)),
-                                ) :SingleChildScrollView(
-                                  physics: ScrollPhysics(),
-                                  child: Container(
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                            child: Column(
-                                              children: [
-                                                Container(
-                                                  color: ColorConstants.redTextColor,
-                                                  height: 25,
-                                                  child: Align(
-                                                      alignment:
-                                                      Alignment.centerLeft,
-                                                      child: Container(
-                                                        margin: const EdgeInsets.only(
-                                                            left: 3, top: 3),
-                                                        child: const Center(
-                                                          child: Text(
-                                                            "पीएनसी दर्ज करने के लिए सम्बन्धित केस पर क्लिक करें ",
-                                                            style: TextStyle(
-                                                                color: ColorConstants
-                                                                    .white,
-                                                                fontSize: 12),
+                                              child: _AncListView(),
+                                            )
+                                          ],
+                                        )),
+                                  ),
+                                  isPNCFound == false ? Container(
+                                    child: Center(child: Text(Strings.pnc_no_due,style: TextStyle(color: ColorConstants.appNewBrowne,fontSize: 18,fontWeight: FontWeight.bold),)),
+                                  ) :SingleChildScrollView(
+                                    physics: ScrollPhysics(),
+                                    child: Container(
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              child: Column(
+                                                children: [
+                                                  Container(
+                                                    color: ColorConstants.redTextColor,
+                                                    height: 25,
+                                                    child: Align(
+                                                        alignment:
+                                                        Alignment.centerLeft,
+                                                        child: Container(
+                                                          margin: const EdgeInsets.only(
+                                                              left: 3, top: 3),
+                                                          child: const Center(
+                                                            child: Text(
+                                                              "पीएनसी दर्ज करने के लिए सम्बन्धित केस पर क्लिक करें ",
+                                                              style: TextStyle(
+                                                                  color: ColorConstants
+                                                                      .white,
+                                                                  fontSize: 12),
+                                                            ),
                                                           ),
+                                                        )),
+                                                  ),
+                                                  Container(
+                                                    height: 25,
+                                                    child: Row(
+                                                      children: [
+                                                        Container(
+                                                          width: 25,
+                                                          child: Text(Strings.Kramnk,
+                                                              textAlign: TextAlign.center,
+                                                              style: TextStyle(fontSize: 11,fontWeight: FontWeight. bold,color: ColorConstants.AppColorPrimary)),),
+                                                        const VerticalDivider(
+                                                          thickness: 1.5,
+                                                          color: ColorConstants.app_yellow_color,
                                                         ),
-                                                      )),
-                                                ),
-                                                Container(
-                                                  height: 25,
-                                                  child: Row(
+                                                        Expanded(child: Container(child: Text(Strings.mahila_patikaName,
+                                                            textAlign: TextAlign.center,
+                                                            style: TextStyle(fontSize: 11,fontWeight: FontWeight. bold,color: ColorConstants.AppColorPrimary)),)),
+                                                        const VerticalDivider(
+                                                          thickness: 1.5,
+                                                        ),
+                                                        Container(
+                                                          width: 80,
+                                                          child: Text(Strings.dateOfRegistration,
+                                                              textAlign: TextAlign.center,
+                                                              style: TextStyle(fontSize: 11,fontWeight: FontWeight. bold,color: ColorConstants.AppColorPrimary)),),
+                                                        const VerticalDivider(
+                                                          thickness: 1.5,
+                                                          color: ColorConstants.app_yellow_color,
+                                                        ),
+                                                        Expanded(child: Container(child: Text(Strings.ANC_dueDate,
+                                                            textAlign: TextAlign.center,
+                                                            style: TextStyle(fontSize: 11,fontWeight: FontWeight. bold,color: ColorConstants.AppColorPrimary)),))
+                                                      ],
+                                                    ),
+
+                                                  ),
+                                                  const Divider(
+                                                    color: ColorConstants.app_yellow_color,
+                                                    height: 2,
+                                                  ),
+                                                  Container(
+                                                    child: _PncListView(),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        )),
+                                  ),
+                                  isImmuFound == false ? Container(
+                                    child: Center(child: Text(Strings.tikai_no_due,style: TextStyle(color: ColorConstants.appNewBrowne,fontSize: 18,fontWeight: FontWeight.bold),)),
+                                  ) :SingleChildScrollView(
+                                    physics: ScrollPhysics(),
+                                    child: Container(
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              height: 20,
+                                              color: ColorConstants.redTextColor,
+                                              child: Column(
+                                                children: [
+                                                  Row(
                                                     children: [
-                                                      Container(
-                                                        width: 25,
-                                                        child: Text(Strings.Kramnk,
-                                                            textAlign: TextAlign.center,
-                                                            style: TextStyle(fontSize: 11,fontWeight: FontWeight. bold,color: ColorConstants.AppColorPrimary)),),
-                                                      const VerticalDivider(
-                                                        thickness: 1.5,
-                                                        color: ColorConstants.app_yellow_color,
-                                                      ),
-                                                      Expanded(child: Container(child: Text(Strings.mahila_patikaName,
-                                                          textAlign: TextAlign.center,
-                                                          style: TextStyle(fontSize: 11,fontWeight: FontWeight. bold,color: ColorConstants.AppColorPrimary)),)),
-                                                      const VerticalDivider(
-                                                        thickness: 1.5,
-                                                      ),
-                                                      Container(
-                                                        width: 80,
-                                                        child: Text(Strings.dateOfRegistration,
-                                                            textAlign: TextAlign.center,
-                                                            style: TextStyle(fontSize: 11,fontWeight: FontWeight. bold,color: ColorConstants.AppColorPrimary)),),
-                                                      const VerticalDivider(
-                                                        thickness: 1.5,
-                                                        color: ColorConstants.app_yellow_color,
-                                                      ),
-                                                      Expanded(child: Container(child: Text(Strings.ANC_dueDate,
-                                                          textAlign: TextAlign.center,
-                                                          style: TextStyle(fontSize: 11,fontWeight: FontWeight. bold,color: ColorConstants.AppColorPrimary)),))
+                                                      Expanded(
+                                                          child: Align(
+                                                              alignment:
+                                                              Alignment.centerLeft,
+                                                              child: Container(
+                                                                margin: const EdgeInsets.only(
+                                                                    left: 3, top: 3),
+                                                                child: const Center(
+                                                                  child: Text(
+                                                                    "टीकाकरण दर्ज करने के लिए सम्बन्धित केस पर क्लिक करें ",
+                                                                    style: TextStyle(
+                                                                        color: ColorConstants
+                                                                            .white,
+                                                                        fontSize: 12),
+                                                                  ),
+                                                                ),
+                                                              ))),
                                                     ],
                                                   ),
-
-                                                ),
-                                                const Divider(
-                                                  color: ColorConstants.app_yellow_color,
-                                                  height: 2,
-                                                ),
-                                                Container(
-                                                  child: _PncListView(),
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        ],
-                                      )),
-                                ),
-                                isImmuFound == false ? Container(
-                                  child: Center(child: Text(Strings.tikai_no_due,style: TextStyle(color: ColorConstants.appNewBrowne,fontSize: 18,fontWeight: FontWeight.bold),)),
-                                ) :SingleChildScrollView(
-                                  physics: ScrollPhysics(),
-                                  child: Container(
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                            height: 20,
-                                            color: ColorConstants.redTextColor,
-                                            child: Column(
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    Expanded(
-                                                        child: Align(
-                                                            alignment:
-                                                            Alignment.centerLeft,
-                                                            child: Container(
-                                                              margin: const EdgeInsets.only(
-                                                                  left: 3, top: 3),
-                                                              child: const Center(
-                                                                child: Text(
-                                                                  "टीकाकरण दर्ज करने के लिए सम्बन्धित केस पर क्लिक करें ",
-                                                                  style: TextStyle(
-                                                                      color: ColorConstants
-                                                                          .white,
-                                                                      fontSize: 12),
-                                                                ),
-                                                              ),
-                                                            ))),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Container(
-                                            height: 25,
-                                            child: Row(
-                                              children: [
-                                                Container(
-                                                  width: 25,
-                                                  child: Text(Strings.Kramnk,
+                                            Container(
+                                              height: 25,
+                                              child: Row(
+                                                children: [
+                                                  Container(
+                                                    width: 25,
+                                                    child: Text(Strings.Kramnk,
+                                                        textAlign: TextAlign.center,
+                                                        style: TextStyle(fontSize: 11,fontWeight: FontWeight. bold,color: ColorConstants.AppColorPrimary)),),
+                                                  const VerticalDivider(
+                                                    thickness: 1.5,
+                                                    color: ColorConstants.app_yellow_color,
+                                                  ),
+                                                  Expanded(child: Container(child: Text(Strings.mahila_patikaName,
                                                       textAlign: TextAlign.center,
-                                                      style: TextStyle(fontSize: 11,fontWeight: FontWeight. bold,color: ColorConstants.AppColorPrimary)),),
-                                                const VerticalDivider(
-                                                  thickness: 1.5,
-                                                  color: ColorConstants.app_yellow_color,
-                                                ),
-                                                Expanded(child: Container(child: Text(Strings.mahila_patikaName,
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(fontSize: 11,fontWeight: FontWeight. bold,color: ColorConstants.AppColorPrimary)),)),
-                                                const VerticalDivider(
-                                                  thickness: 1.5,
-                                                ),
-                                                Container(
-                                                  width: 80,
-                                                  child: Text(Strings.dateOfRegistration,
+                                                      style: TextStyle(fontSize: 11,fontWeight: FontWeight. bold,color: ColorConstants.AppColorPrimary)),)),
+                                                  const VerticalDivider(
+                                                    thickness: 1.5,
+                                                  ),
+                                                  Container(
+                                                    width: 80,
+                                                    child: Text(Strings.dateOfRegistration,
+                                                        textAlign: TextAlign.center,
+                                                        style: TextStyle(fontSize: 11,fontWeight: FontWeight. bold,color: ColorConstants.AppColorPrimary)),),
+                                                  const VerticalDivider(
+                                                    thickness: 1.5,
+                                                    color: ColorConstants.app_yellow_color,
+                                                  ),
+                                                  Expanded(child: Container(child: Text(Strings.ANC_dueDate,
                                                       textAlign: TextAlign.center,
-                                                      style: TextStyle(fontSize: 11,fontWeight: FontWeight. bold,color: ColorConstants.AppColorPrimary)),),
-                                                const VerticalDivider(
-                                                  thickness: 1.5,
-                                                  color: ColorConstants.app_yellow_color,
-                                                ),
-                                                Expanded(child: Container(child: Text(Strings.ANC_dueDate,
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(fontSize: 11,fontWeight: FontWeight. bold,color: ColorConstants.AppColorPrimary)),))
-                                              ],
-                                            ),
+                                                      style: TextStyle(fontSize: 11,fontWeight: FontWeight. bold,color: ColorConstants.AppColorPrimary)),))
+                                                ],
+                                              ),
 
-                                          ),
-                                          const Divider(
-                                            color: ColorConstants.app_yellow_color,
-                                            height: 2,
-                                          ),
-                                          Container(
-                                            child: _ImmListView(),
-                                          ),
-                                        ],
-                                      )),
-                                ),
-                                isSterilFound == false ? Container(
-                                  child: Center(child: Text(Strings.seril_no_due,style: TextStyle(color: ColorConstants.appNewBrowne,fontSize: 18,fontWeight: FontWeight.bold),)),
-                                ) :SingleChildScrollView(
-                                  physics: ScrollPhysics(),
-                                  child: Container(
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                            height: 25,
-                                            child: Row(
-                                              children: [
-                                                Container(
-                                                  width: 25,
-                                                  child: Text(Strings.Kramnk,
-                                                      textAlign: TextAlign.center,
-                                                      style: TextStyle(fontSize: 11,fontWeight: FontWeight. bold,color: ColorConstants.AppColorPrimary)),),
-                                                const VerticalDivider(
-                                                  thickness: 1.5,
-                                                  color: ColorConstants.app_yellow_color,
-                                                ),
-                                                Expanded(child: Container(child: Text(Strings.mahila_patikaName,
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(fontSize: 11,fontWeight: FontWeight. bold,color: ColorConstants.AppColorPrimary)),)),
-                                                const VerticalDivider(
-                                                  thickness: 1.5,
-                                                ),
-                                                Container(
-                                                  width: 80,
-                                                  child: Text(Strings.prasav_anumanit_date,
-                                                      textAlign: TextAlign.center,
-                                                      style: TextStyle(fontSize: 11,fontWeight: FontWeight. bold,color: ColorConstants.AppColorPrimary)),),
-                                                const VerticalDivider(
-                                                  thickness: 1.5,
-                                                  color: ColorConstants.app_yellow_color,
-                                                ),
-                                                Expanded(child: Container(child: Text(Strings.child_count,
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(fontSize: 11,fontWeight: FontWeight. bold,color: ColorConstants.AppColorPrimary)),))
-                                              ],
                                             ),
+                                            const Divider(
+                                              color: ColorConstants.app_yellow_color,
+                                              height: 2,
+                                            ),
+                                            Container(
+                                              child: _ImmListView(),
+                                            ),
+                                          ],
+                                        )),
+                                  ),
+                                  isSterilFound == false ? Container(
+                                    child: Center(child: Text(Strings.seril_no_due,style: TextStyle(color: ColorConstants.appNewBrowne,fontSize: 18,fontWeight: FontWeight.bold),)),
+                                  ) :SingleChildScrollView(
+                                    physics: ScrollPhysics(),
+                                    child: Container(
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              height: 25,
+                                              child: Row(
+                                                children: [
+                                                  Container(
+                                                    width: 25,
+                                                    child: Text(Strings.Kramnk,
+                                                        textAlign: TextAlign.center,
+                                                        style: TextStyle(fontSize: 11,fontWeight: FontWeight. bold,color: ColorConstants.AppColorPrimary)),),
+                                                  const VerticalDivider(
+                                                    thickness: 1.5,
+                                                    color: ColorConstants.app_yellow_color,
+                                                  ),
+                                                  Expanded(child: Container(child: Text(Strings.mahila_patikaName,
+                                                      textAlign: TextAlign.center,
+                                                      style: TextStyle(fontSize: 11,fontWeight: FontWeight. bold,color: ColorConstants.AppColorPrimary)),)),
+                                                  const VerticalDivider(
+                                                    thickness: 1.5,
+                                                  ),
+                                                  Container(
+                                                    width: 80,
+                                                    child: Text(Strings.prasav_anumanit_date,
+                                                        textAlign: TextAlign.center,
+                                                        style: TextStyle(fontSize: 11,fontWeight: FontWeight. bold,color: ColorConstants.AppColorPrimary)),),
+                                                  const VerticalDivider(
+                                                    thickness: 1.5,
+                                                    color: ColorConstants.app_yellow_color,
+                                                  ),
+                                                  Expanded(child: Container(child: Text(Strings.child_count,
+                                                      textAlign: TextAlign.center,
+                                                      style: TextStyle(fontSize: 11,fontWeight: FontWeight. bold,color: ColorConstants.AppColorPrimary)),))
+                                                ],
+                                              ),
 
-                                          ),
-                                          const Divider(
-                                            color: ColorConstants.app_yellow_color,
-                                            height: 2,
-                                          ),
-                                          Container(
-                                            child: _StalioListView(),
-                                          ),
-                                        ],
-                                      )),
-                                ),
+                                            ),
+                                            const Divider(
+                                              color: ColorConstants.app_yellow_color,
+                                              height: 2,
+                                            ),
+                                            Container(
+                                              child: _StalioListView(),
+                                            ),
+                                          ],
+                                        )),
+                                  ),
 
-                              ]))
-                        ]),
-                  );
-                })),
-          ],
+                                ]))
+                          ]),
+                    );
+                  })),
+            ],
+          ),
         ),
       ),
     );
@@ -1142,7 +1189,9 @@ class _AnmWorkPlanListScreen extends State<AnmWorkPlanListScreen> with TickerPro
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true));
   }
-
+  getCurrentDate() {
+    return DateFormat('yyyy-MM-dd').format(DateTime.now());
+  }
   var isANCFound=false;
   var isPNCFound=false;
   var isImmuFound=false;
@@ -1155,11 +1204,32 @@ class _AnmWorkPlanListScreen extends State<AnmWorkPlanListScreen> with TickerPro
           if (!currentFocus.hasPrimaryFocus) {
             currentFocus.focusedChild!.unfocus();
           }
-          Navigator.push(context, MaterialPageRoute(builder: (context) => TikaKaranDetails(
-              pctsID: Ancresponse_list[index]['pctsid'].toString(),
-              infantId:Ancresponse_list[index]['infantid'].toString()
-          ),));
-          print('Ancresponse_listname>> : ${Ancresponse_list[index]['name'].toString()}');
+
+          //API Response Date
+          var ancdueDate = Ancresponse_list[index]['ancdue'].toString().trim().substring(Ancresponse_list[index]['ancdue'].toString().trim().length - 10);
+          //print('ancdueDate $ancdueDate');
+          var inputFormat = DateFormat('dd/MM/yyyy');
+          var date1 = inputFormat.parse(ancdueDate);//15/01/2023
+          //var date1 = inputFormat.parse('15/01/2023');//15/01/2023
+
+          var outputFormat = DateFormat('yyyy-MM-dd');
+          var date2 = outputFormat.format(date1); // 2019-08-18
+          //print('date2 ${date2}');
+
+
+          var parseCalenderSelectedAncDate = DateTime.parse(date2);
+
+          var intentAncDate = DateTime.parse(getConvertRegDateFormat(getCurrentDate()));
+          //print('anc calendr ${parseCalenderSelectedAncDate}');
+          //print('anc intentt ${intentAncDate}');
+          final diff_lmp_ancdate = parseCalenderSelectedAncDate.difference(intentAncDate).inDays;
+          print('check_diff_date ${diff_lmp_ancdate}');
+          if (diff_lmp_ancdate > 0) {
+            _showErrorPopup(Strings.not_eligible_anc_,ColorConstants.AppColorPrimary);
+          }else{
+            print('done');
+            findPrasavDataByIDAPI(Ancresponse_list[index]['pctsid'].toString().trim(),"1");//Tag Id 1= ANC
+          }
         },
         child: Container(
           color: (index % 2 == 0) ? ColorConstants.white :ColorConstants.lifebgColor2,
@@ -1185,7 +1255,7 @@ class _AnmWorkPlanListScreen extends State<AnmWorkPlanListScreen> with TickerPro
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                           fontSize: 11,
-                          color: Colors.black,
+                          color: ColorConstants.AppColorPrimary,
                           fontWeight: FontWeight.normal),
                     ),
                   ),)),
@@ -1230,11 +1300,7 @@ class _AnmWorkPlanListScreen extends State<AnmWorkPlanListScreen> with TickerPro
           if (!currentFocus.hasPrimaryFocus) {
             currentFocus.focusedChild!.unfocus();
           }
-          Navigator.push(context, MaterialPageRoute(builder: (context) => TikaKaranDetails(
-              pctsID: Pncresponse_list[index]['pctsid'].toString(),
-              infantId:Pncresponse_list[index]['infantid'].toString()
-          ),));
-          print('Pncresponse_list>> : ${Pncresponse_list[index]['name'].toString()}');
+          findPrasavDataByIDAPI(Ancresponse_list[index]['pctsid'].toString().trim(),"2");//Tag Id 1= ANC
         },
         child: Container(
           color: (index % 2 == 0) ? ColorConstants.white :ColorConstants.lifebgColor2,
@@ -1380,11 +1446,6 @@ class _AnmWorkPlanListScreen extends State<AnmWorkPlanListScreen> with TickerPro
           if (!currentFocus.hasPrimaryFocus) {
             currentFocus.focusedChild!.unfocus();
           }
-          Navigator.push(context, MaterialPageRoute(builder: (context) => TikaKaranDetails(
-              pctsID: Staliresponse_list[index]['pctsid'].toString(),
-              infantId:Staliresponse_list[index]['infantid'].toString()
-          ),));
-          print('Staliresponse_list>> : ${Staliresponse_list[index]['name'].toString()}');
         },
         child: Container(
           color: (index % 2 == 0) ? ColorConstants.white :ColorConstants.lifebgColor2,
@@ -1752,6 +1813,78 @@ class _AnmWorkPlanListScreen extends State<AnmWorkPlanListScreen> with TickerPro
           ],
         ),
       ),
+    );
+  }
+
+
+  Future<void> _showErrorPopup(String msg,Color _color) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          contentPadding: EdgeInsets.zero,
+          // title: Text('Message',textAlign:TextAlign.center,style: TextStyle(color: Colors.red),),
+          content: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Container(
+                  width: double.infinity,
+                  color: ColorConstants.white,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      msg,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontWeight: FontWeight.normal,
+                          color: _color,
+                          fontSize: 13),
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.all(5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          elevation: 6,
+                          child: Container(
+                              width: 80,
+                              height: 30,
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                BorderRadius.all(Radius.circular(10)),
+                                color: ColorConstants.AppColorPrimary,
+                              ),
+                              child: Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(0.0),
+                                    child: Text('OK',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.normal,
+                                            color: Colors.white,
+                                            fontSize: 14)),
+                                  ))),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

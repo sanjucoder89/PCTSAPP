@@ -582,7 +582,7 @@ class _ShishuTikaKaranList extends State<ShishuTikaKaranList> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(3.0),
-                            child: Image.asset("Images/writing.png",width: 40,height: 40,),
+                            child: Image.asset("Images/pencil.png",width: 40,height: 40,),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(right: 10),

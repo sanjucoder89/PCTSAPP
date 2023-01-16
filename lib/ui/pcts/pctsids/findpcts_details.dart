@@ -2144,7 +2144,7 @@ class _FindPCTSDetails extends State<FindPCTSDetails> {
                     child: Padding(
                   padding: const EdgeInsets.all(2.0),
                   child: Text(
-                    '${Strings.tikai_ka_naam}',
+                    '${Strings.tikai_ki_tithi}',
                     style: TextStyle(
                         fontSize: 11,
                         color: ColorConstants.AppColorPrimary,
@@ -2182,7 +2182,7 @@ class _FindPCTSDetails extends State<FindPCTSDetails> {
                     child: Padding(
                   padding: const EdgeInsets.all(2.0),
                   child: Text(
-                    '${Strings.tikai_ka_naam}',
+                    '${Strings.tikai_ki_tithi}',
                     style: TextStyle(
                         fontSize: 11,
                         color: ColorConstants.AppColorPrimary,

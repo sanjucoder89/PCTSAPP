@@ -508,6 +508,7 @@ class Strings {
   static const String please_choose_upchar_code = "कृपया उपचार का कोड चुनें  !";
   static const String please_choose_referCode = "कृपया संस्था जहाँ रेफेर किया गया चुनें !";
   static const String update_pnc = "विवरण अपडेट करने के लिए क्लिक करें";
+  static const String tikai_ki_tithi = "टीके की तिथि";
   static const String tikai_ki_tithi_chunai = "टीके की तिथि चुनें";
   static const String exit_from_app = "क्या आप एप्लीकेशन से बाहर जाना चाहते है ?";
   static const String tikai_ka_naam = "टीके का नाम";

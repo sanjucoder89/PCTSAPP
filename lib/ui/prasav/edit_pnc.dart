@@ -2045,8 +2045,11 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                 _selectANCDatePopup(int.parse(_pncYYYYdateController.text.toString()),int.parse(_pncMMdateController.text.toString()) ,int.parse(_pncDDdateController.text.toString()));
-
+                                if(_pncYYYYdateController.text.toString().isEmpty && _pncMMdateController.text.toString().isEmpty && _pncDDdateController.text.toString().isEmpty){
+                                  _selectANCDatePopup(0,0,0);
+                                }else{
+                                  _selectANCDatePopup(int.parse(_pncYYYYdateController.text.toString()),int.parse(_pncMMdateController.text.toString()) ,int.parse(_pncDDdateController.text.toString()));
+                                }
                               },
                               child: Container(
                                   margin: EdgeInsets.only(right: 20, left: 10),
@@ -4570,7 +4573,8 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
   void _selectANCDatePopup(int yyyy,int mm ,int dd) {
     showDatePicker(
         context: context,
-        initialDate: DateTime(yyyy, mm , dd ),
+        //initialDate: DateTime(yyyy, mm , dd ),
+        initialDate: (yyyy == 0 && mm == 0 && dd == 0) ? DateTime.now() : DateTime(yyyy, mm , dd ),
         firstDate: DateTime(2015),
         lastDate: DateTime(2050))
         .then((pickedDate) {

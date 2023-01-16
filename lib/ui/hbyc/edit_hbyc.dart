@@ -667,7 +667,7 @@ class _EditHBYCFormState extends State<EditHBYCForm> {
       _showErrorPopup(Strings.choose_child_dieses,ColorConstants.AppColorPrimary);
     }else if(_referView == true && _ReferUnitCode == "0"){
       _showErrorPopup(Strings.choose_refer_type,ColorConstants.AppColorPrimary);
-    }else if((_selectedPlacesReferCode == "10" ||_selectedPlacesReferCode == "9" ||_selectedPlacesReferCode == "8") && _selectedSubUnitCode == "0"){
+    }else if((_selectedPlacesReferCode == "10" || _selectedPlacesReferCode == "9" || _selectedPlacesReferCode == "8") && (sub_heading == "" || sub_heading == "चुनें")){
       _showErrorPopup("कृपया "+sub_heading +" चुनें!",ColorConstants.AppColorPrimary);
     }else{
 
@@ -1125,7 +1125,11 @@ class _EditHBYCFormState extends State<EditHBYCForm> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            _selectHBYCDatePopup(int.parse(_hbycYYYYdateController.text.toString()),int.parse(_hbycMMdateController.text.toString()) ,int.parse(_hbycDDdateController.text.toString()));
+                            if(_hbycYYYYdateController.text.toString().isEmpty && _hbycMMdateController.text.toString().isEmpty && _hbycDDdateController.text.toString().isEmpty){
+                              _selectHBYCDatePopup(0,0,0);
+                            }else{
+                              _selectHBYCDatePopup(int.parse(_hbycYYYYdateController.text.toString()),int.parse(_hbycMMdateController.text.toString()) ,int.parse(_hbycDDdateController.text.toString()));
+                            }
                           },
                           child: Container(
                               margin: EdgeInsets.only(right: 20, left: 10),
@@ -2641,7 +2645,8 @@ class _EditHBYCFormState extends State<EditHBYCForm> {
     showDatePicker(
         context: context,
         // initialDate: DateTime.now(),
-        initialDate: DateTime(yyyy, mm , dd ),
+        //initialDate: DateTime(yyyy, mm , dd ),
+        initialDate: (yyyy == 0 && mm == 0 && dd == 0) ? DateTime.now() : DateTime(yyyy, mm , dd ),
         firstDate: DateTime(2015),
         lastDate: DateTime(2050))
         .then((pickedDate) {

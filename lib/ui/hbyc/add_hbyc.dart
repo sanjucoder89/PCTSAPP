@@ -403,7 +403,7 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
       _showErrorPopup(Strings.choose_child_dieses,ColorConstants.AppColorPrimary);
     }else if(_referView == true && _ReferUnitCode == "0"){
       _showErrorPopup(Strings.choose_refer_type,ColorConstants.AppColorPrimary);
-    }else if(_selectedPlacesReferCode == "10" ||_selectedPlacesReferCode == "9" ||_selectedPlacesReferCode == "8"){
+    }else if((_selectedPlacesReferCode == "10" || _selectedPlacesReferCode == "9" || _selectedPlacesReferCode == "8") && (sub_heading == "" || sub_heading =="चुनें")){
       _showErrorPopup("कृपया "+sub_heading +" चुनें!",ColorConstants.AppColorPrimary);
     }else{
       if(_shishuWeightController.text.toString().trim().isEmpty){

@@ -134,6 +134,7 @@ class _SplashState extends State<SplashNew> {
     preferences.setString("deviceId", deviceId);
     //Imei =await DeviceInformation.deviceIMEINumber;
     print('Imei:....> $Imei');
+    print('deviceId:....> $deviceId');
     Token = uuid.v4();
     var response = await post(Uri.parse(urlsaltdata), body: {
       "DeviceID": deviceId,

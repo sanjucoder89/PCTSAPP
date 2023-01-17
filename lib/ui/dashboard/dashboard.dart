@@ -911,8 +911,10 @@ class _DashboardScreen extends State<DashboardScreen> {
           backgroundColor: ColorConstants.asha_white,
           key: _scaffoldKey,
           drawer: Drawer(
+            width: 300,
             child:
-            Container(color: ColorConstants.AppColorDark, child: _myListView()),
+            Container(
+                color: ColorConstants.AppColorDark, child: _myListView()),
           ),
           body: GestureDetector(
             onTap: (){
@@ -3573,7 +3575,7 @@ class _DashboardScreen extends State<DashboardScreen> {
                   child: Row(
                     children: [
                       Expanded(child: Container(
-                        margin: EdgeInsets.only(left: 10),
+                        margin: EdgeInsets.only(left: 10,top: 10),
                         child: Text(
                           "स्वागत , ",
                           style: TextStyle(
@@ -3582,17 +3584,21 @@ class _DashboardScreen extends State<DashboardScreen> {
                               fontWeight: FontWeight.normal),
                         ),
                       )),
-                      Expanded(child:GestureDetector(
-                        onTap: (){
-                          // Then close the drawer
-                           Navigator.pop(context);
-                           stopTimer();
-                        },
-                        child:Padding(
-                          padding: const EdgeInsets.all(8.0),
+                      Expanded(child:Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          margin: EdgeInsets.only(top: 10),
+                          width: 15,
                           child: Align(
                             alignment: Alignment.centerRight,
-                            child: Image.asset("Images/ic_cross.png",width: 15,height: 15,color: ColorConstants.white,),
+                            child: GestureDetector(
+                              onTap: (){
+                                // Then close the drawer
+                                _scaffoldKey.currentState?.closeDrawer();
+                                stopTimer();
+                              },
+                              child: Image.asset("Images/ic_cross.png",width: 15,height: 15,color: ColorConstants.white,),
+                            ),
                           ),
                         ),
                       )),
@@ -3620,11 +3626,10 @@ class _DashboardScreen extends State<DashboardScreen> {
                     Expanded(child: Align(
                       alignment: Alignment.bottomRight,
                       child: Container(
+                        //margin: EdgeInsets.only(right: 23),
                         child: Text(
-                          "$_unitNme ${_unitCode}",
+                          "$_unitNme $_unitCode",
                           maxLines: 1,
-                        //  overflow: TextOverflow.ellipsis,
-                         // softWrap: false,
                           style: TextStyle(
                               color: ColorConstants.white,
                               fontSize: 15,

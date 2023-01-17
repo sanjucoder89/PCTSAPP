@@ -995,7 +995,7 @@ class _AnmWorkPlanListScreen extends State<AnmWorkPlanListScreen> with TickerPro
                                         child: Column(
                                           children: [
                                             Container(
-                                              height: 20,
+                                              height: 25,
                                               color: ColorConstants.redTextColor,
                                               child: Column(
                                                 children: [

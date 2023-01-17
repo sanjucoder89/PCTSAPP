@@ -816,7 +816,7 @@ class _ChildGrowthChartScreen extends State<ChildGrowthChartScreen> {
                                   style: TextStyle(
                                       fontSize: 13,
                                       color: Colors.black,
-                                      fontWeight: FontWeight.bold),
+                                      fontWeight: FontWeight.normal),
                                 ),
                               ),
                             )),
@@ -830,7 +830,7 @@ class _ChildGrowthChartScreen extends State<ChildGrowthChartScreen> {
                                   style: TextStyle(
                                       fontSize: 13,
                                       color: Colors.black,
-                                      fontWeight: FontWeight.bold),
+                                      fontWeight: FontWeight.normal),
                                 ),
                               ),
                             )),
@@ -844,7 +844,7 @@ class _ChildGrowthChartScreen extends State<ChildGrowthChartScreen> {
                                   style: TextStyle(
                                       fontSize: 13,
                                       color: Colors.black,
-                                      fontWeight: FontWeight.bold),
+                                      fontWeight: FontWeight.normal),
                                 ),
                               ),
                             )),
@@ -897,7 +897,7 @@ class _ChildGrowthChartScreen extends State<ChildGrowthChartScreen> {
                                               style: TextStyle(
                                                   fontSize: 13,
                                                   color: Colors.black,
-                                                  fontWeight: FontWeight.bold),
+                                                  fontWeight: FontWeight.normal),
                                             ),
                                           )),
                                       Expanded(
@@ -908,7 +908,7 @@ class _ChildGrowthChartScreen extends State<ChildGrowthChartScreen> {
                                               style: TextStyle(
                                                   fontSize: 13,
                                                   color: Colors.black,
-                                                  fontWeight: FontWeight.bold),
+                                                  fontWeight: FontWeight.normal),
                                             ),
                                           )),
                                     ],
@@ -924,7 +924,7 @@ class _ChildGrowthChartScreen extends State<ChildGrowthChartScreen> {
                                               style: TextStyle(
                                                   fontSize: 13,
                                                   color: Colors.black,
-                                                  fontWeight: FontWeight.bold),
+                                                  fontWeight: FontWeight.normal),
                                             ),
                                           )),
                                       Expanded(
@@ -935,7 +935,7 @@ class _ChildGrowthChartScreen extends State<ChildGrowthChartScreen> {
                                               style: TextStyle(
                                                   fontSize: 13,
                                                   color: Colors.black,
-                                                  fontWeight: FontWeight.bold),
+                                                  fontWeight: FontWeight.normal),
                                             ),
                                           )),
                                     ],
@@ -951,7 +951,7 @@ class _ChildGrowthChartScreen extends State<ChildGrowthChartScreen> {
                                               style: TextStyle(
                                                   fontSize: 13,
                                                   color: Colors.black,
-                                                  fontWeight: FontWeight.bold),
+                                                  fontWeight: FontWeight.normal),
                                             ),
                                           )),
                                       Expanded(
@@ -961,7 +961,7 @@ class _ChildGrowthChartScreen extends State<ChildGrowthChartScreen> {
                                             style: TextStyle(
                                                 fontSize: 13,
                                                 color: Colors.black,
-                                                fontWeight: FontWeight.bold),
+                                                fontWeight: FontWeight.normal),
                                             )),
                                       )
                                     ],
@@ -977,7 +977,7 @@ class _ChildGrowthChartScreen extends State<ChildGrowthChartScreen> {
                                               style: TextStyle(
                                                   fontSize: 13,
                                                   color: Colors.black,
-                                                  fontWeight: FontWeight.bold),
+                                                  fontWeight: FontWeight.normal),
                                             ),
                                           )),
                                       Expanded(
@@ -988,7 +988,7 @@ class _ChildGrowthChartScreen extends State<ChildGrowthChartScreen> {
                                               style: TextStyle(
                                                   fontSize: 13,
                                                   color: Colors.black,
-                                                  fontWeight: FontWeight.bold),
+                                                  fontWeight: FontWeight.normal),
                                             ),
                                           )),
                                     ],
@@ -1001,7 +1001,7 @@ class _ChildGrowthChartScreen extends State<ChildGrowthChartScreen> {
                                         style: TextStyle(
                                             fontSize: 13,
                                             color: ColorConstants.AppColorPrimary,
-                                            fontWeight: FontWeight.bold),),
+                                            fontWeight: FontWeight.normal),),
                                       Container(
                                         width: 80,
                                         alignment: Alignment.centerLeft,

@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:device_information/device_information.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart';
@@ -52,12 +54,11 @@ class _SplashState extends State<SplashNew> {
   @override
   void initState() {
     super.initState();
-    //chekConnectivity();
     _getLocation();
     _navigateToHome();
     getHelpDeskNo();
     getVersionName();
-    getSaltData();
+    checkPlatform();
   }
   var _latitude="0.0";
   var _longitude="0.0";
@@ -79,25 +80,6 @@ class _SplashState extends State<SplashNew> {
       prefs.setString("latitude", _latitude);
       prefs.setString("longitude", _longitude);
     });
-  }
-  void chekConnectivity() async{
-    var result = await Connectivity().checkConnectivity();
-    if(result == ConnectivityResult.mobile) {
-      print("Internet connection is from Mobile data");
-      _navigateToHome();
-      getHelpDeskNo();
-      getVersionName();
-      getSaltData();
-    }else if(result == ConnectivityResult.wifi) {
-      print("internet connection is from wifi");
-      _navigateToHome();
-      getHelpDeskNo();
-      getVersionName();
-      getSaltData();
-    }else if(result == ConnectivityResult.none){
-      print("No internet connection");
-      showInternetDialoge();
-    }
   }
 
   Future<String> getHelpDeskNo() async {
@@ -126,21 +108,20 @@ class _SplashState extends State<SplashNew> {
   }
 
   var _loader=false;
-
+  var _ios_version="";
+  var _andr_version="";
   Future<String> getSaltData() async {
     preferences = await SharedPreferences.getInstance();
     preferences.setString("Appversion", packageName);
     deviceId = await PlatformDeviceId.getDeviceId;
     preferences.setString("deviceId", deviceId);
-    //Imei =await DeviceInformation.deviceIMEINumber;
-    print('Imei:....> $Imei');
-    print('deviceId:....> $deviceId');
     Token = uuid.v4();
     var response = await post(Uri.parse(urlsaltdata), body: {
       "DeviceID": deviceId,
       "TokenNo": Token,
       //"AppVersion": preferences.getString("Appversion"),
       "AppVersion": '5.5.5.22',
+      "IOSAppVersion": '5.5.5.22',
       ///"AppVersion": '5.6.9.22',
     });
     var resBody = json.decode(response.body);
@@ -184,13 +165,6 @@ class _SplashState extends State<SplashNew> {
   void _openMyPage() async{
     var result = await Connectivity().checkConnectivity();
     if(result == ConnectivityResult.mobile) {
-      print("Internet connection is from Mobile data");
-      /*Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (BuildContext context) => DashboardScreen()
-      ),
-      );*/
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -202,13 +176,6 @@ class _SplashState extends State<SplashNew> {
         ),
       );
     }else if(result == ConnectivityResult.wifi) {
-      print("internet connection is from wifi");
-      /*Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (BuildContext context) => DashboardScreen()
-      ),
-      );*/
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -367,28 +334,34 @@ class _SplashState extends State<SplashNew> {
     );
   }
 
-  void callSplashAPI()async {
-    var result = await Connectivity().checkConnectivity();
-    if(result == ConnectivityResult.mobile) {
-      print("Internet connection is from Mobile data");
-      _navigateToHome();
-      getHelpDeskNo();
-      getVersionName();
-      getSaltData();
-      _openMyPage();
-    }else if(result == ConnectivityResult.wifi) {
-      print("internet connection is from wifi");
-      _navigateToHome();
-      getHelpDeskNo();
-      getVersionName();
-      getSaltData();
-      _openMyPage();
-    }else if(result == ConnectivityResult.none){
-      print("No internet connection");
-      showInternetDialoge();
+  Future<void> checkPlatform() async {
+    if(Platform.isAndroid == true){
+        print('platform=> _Android_');
+        if (Platform.isAndroid) {
+          var androidInfo = await DeviceInfoPlugin().androidInfo;
+          var release = androidInfo.version.release;
+          var sdkInt = androidInfo.version.sdkInt;
+          var manufacturer = androidInfo.manufacturer;
+          var model = androidInfo.id;
+          print('Android $release (SDK $sdkInt), $manufacturer $model ');
+          // Android 9 (SDK 28), Xiaomi Redmi Note 7
+
+          PackageInfo packageInfo = await PackageInfo.fromPlatform();
+          print('pkg_version: ${packageInfo.version}');
+
+        }
+    }else if(Platform.isIOS ==  true){
+      print('platform=> _IOS_');
+      if (Platform.isIOS) {
+        var iosInfo = await DeviceInfoPlugin().iosInfo;
+        var systemName = iosInfo.systemName;
+        var version = iosInfo.systemVersion;
+        var name = iosInfo.name;
+        var model = iosInfo.model;
+        print('$systemName $version, $name $model');
+        // iOS 13.1, iPhone 11 Pro Max iPhone
+      }
     }
-
+    getSaltData();
   }
-
-
 }

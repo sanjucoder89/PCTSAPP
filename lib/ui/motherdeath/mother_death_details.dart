@@ -130,8 +130,6 @@ String getYear(String date) {
   return outputDate.toString();
 }
 
-
-
 class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
   var _anmName="";
   var _topHeaderName="";
@@ -2899,7 +2897,8 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
     }else if(ANMVerify.isEmpty){
       Media ="1";
       _UpdateUserNo=preferences.getString("UserNo").toString();
-    }else if(ANMVerify.isNotEmpty){
+    }
+    else if(ANMVerify.isNotEmpty){
         if(ANMVerify == "0"){
           Media ="3";
           _UpdateUserNo=preferences.getString("UserNo").toString();
@@ -2907,14 +2906,16 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
           Media ="1";
           _UpdateUserNo=preferences.getString("UserNo").toString();
         }
-    }else{
+    }
+    else{
       Media="1";
       _UpdateUserNo=preferences.getString("UserNo").toString();
     }
 
     if(_SubReasonListEnableDisable == true){
       _ReasonID=dsubreasonId;
-    }else{
+    }
+    else{
       _ReasonID=dreasonId;
     }
 
@@ -4134,7 +4135,6 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
 
 }
 
-
 enum colors { nill, yes, no }
 enum colorsimmu { nill, yes, no }
 
@@ -4202,7 +4202,6 @@ class CustomReferSansthaList {
 class CustomDistrictCodeList {
   String? unitcode;
   String? unitNameHindi;
-
   CustomDistrictCodeList({this.unitcode,this.unitNameHindi});
 }
 class CustomBlockCodeList {

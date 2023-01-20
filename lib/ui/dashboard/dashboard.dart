@@ -14,6 +14,7 @@ import 'package:pcts/ui/aasharecords/aasha_records.dart';
 import 'package:pcts/ui/anmworkplan/anmworkplan_list.dart';
 import 'package:pcts/ui/dashboard/model/GetAnmRankData.dart';
 import 'package:pcts/ui/hbyc/hbyc_list.dart';
+import 'package:pcts/ui/hrp/hrp_duelist.dart';
 import 'package:pcts/ui/pcts/pctsids/findpcts.dart';
 import 'package:pcts/ui/pcts/pctsids/findpcts_details.dart';
 import 'package:pcts/ui/samparksutra/samparksutra.dart';
@@ -2052,6 +2053,77 @@ class _DashboardScreen extends State<DashboardScreen> {
                               ),
                             ),
                             Container(
+
+                              height: 70,
+                              width: 200,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    stopTimer();
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              HrpDueScreenList(),//TabViewScreen ,VideoScreen
+                                        )).then((value){setState(() {
+                                      //   startTimer();
+                                    });});
+                                  },
+                                  child: Card(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(5),
+                                          topRight: Radius.circular(5),
+                                          bottomLeft: Radius.circular(5),
+                                          bottomRight: Radius.circular(5)),
+                                    ),
+                                    color: ColorConstants.AppColorDark,
+                                    elevation: 5,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                          BorderRadius.all(Radius.circular(5)),
+                                          gradient: LinearGradient(
+                                            colors: [
+                                              ColorConstants.buttongraddark,
+                                              ColorConstants.buttongradlight
+                                            ],
+                                            begin: Alignment.bottomLeft,
+                                            end: Alignment.bottomRight,
+                                          )),
+                                      margin: EdgeInsets.only(
+                                          left: 1, right: 1, top: 1, bottom: 1),
+                                      height: 100.0,
+                                      width: double.infinity,
+                                      child: Row(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Image.asset(
+                                              "Images/youtube.png",
+                                              fit: BoxFit.fitHeight,
+                                              height: 30,
+                                              width: 30,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(5.0),
+                                            child: Center(
+                                                child: Text(
+                                                  'हाईरिस्क',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 14),
+                                                )),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                )
+                            ),
+                            Container(
                               height: 70.0,
                               child: Row(
                                 children: [
@@ -2188,6 +2260,7 @@ class _DashboardScreen extends State<DashboardScreen> {
                                 ],
                               ),
                             ),
+
                           ],
                         ),
                       ),

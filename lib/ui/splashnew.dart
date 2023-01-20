@@ -360,6 +360,9 @@ class _SplashState extends State<SplashNew> {
         var model = iosInfo.model;
         print('$systemName $version, $name $model');
         // iOS 13.1, iPhone 11 Pro Max iPhone
+
+        PackageInfo packageInfo = await PackageInfo.fromPlatform();
+        print('pkg_version: ${packageInfo.version}');
       }
     }
     getSaltData();

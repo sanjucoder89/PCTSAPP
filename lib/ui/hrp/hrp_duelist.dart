@@ -23,10 +23,6 @@ import '../samparksutra/samparksutra.dart';
 import '../splashnew.dart';
 import '../videos/tab_view.dart';
 
-void main(){
-    runApp(HrpDueScreenList());
-}
-
 String getFormattedDate(String date) {
   if(date != "null"){
     var localDate = DateTime.parse(date).toLocal();
@@ -482,7 +478,7 @@ class _HrpDueScreenList extends State<HrpDueScreenList> {
                           alignment: Alignment.centerLeft,
                           child: Padding(
                             padding: const EdgeInsets.only(left: 5),
-                            child: Text(Strings.anc_mahaveer_due_cases,style: TextStyle(color: ColorConstants.white,fontSize: 14),),
+                            child: Text(Strings.highrisk_due_cases,style: TextStyle(color: ColorConstants.white,fontSize: 14),),
                           ),
                         ),
                       ),
@@ -625,12 +621,12 @@ class _HrpDueScreenList extends State<HrpDueScreenList> {
     return InkWell(
       child: GestureDetector(
         onTap: (){
-          Navigator.push(
+          /*Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => AncExpandDetails(ancregid:response_listing[index]['ancregid'].toString()),
             ),
-          );
+          );*/
         },
         child: Container(
           decoration: BoxDecoration(
@@ -756,6 +752,31 @@ class _HrpDueScreenList extends State<HrpDueScreenList> {
                   ))
                 ],
               ),
+
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                      child: Container(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 5,top: 2,bottom: 2,right: 5),
+                          child: Text(
+                            Strings.anc_ki_tithi,
+                            style: TextStyle(
+                                fontSize: 13,
+                                color:ColorConstants.AppColorPrimary,
+                                fontWeight: FontWeight.normal),
+                          ),
+                        ),
+                      )),
+                  Expanded(child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Text('${response_listing == null ? "" : getFormattedDate(response_listing[index]['lmpdate'].toString())}',
+                      style: TextStyle(fontSize: 13,color:Colors.black,fontWeight: FontWeight.normal),),
+                  ))
+                ],
+              ),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.center, //Center Row contents horizontally,
                 crossAxisAlignment: CrossAxisAlignment.center, //Center Row contents vertically,
@@ -784,6 +805,7 @@ class _HrpDueScreenList extends State<HrpDueScreenList> {
                   )
                 ],
               ),
+
               Divider(
                 height: 0,
                 color: ColorConstants.app_yellow_color,

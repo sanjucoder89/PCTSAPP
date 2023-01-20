@@ -143,6 +143,7 @@ class Strings {
   static const String pcts_id_title = "पीसीटीएस आईडी";
   static const String panjikaran_ki_tithi = "पंजीकरण की तिथि ";
   static const String aakhri_mahaveer_ki_tithi = "आखिरी माहवारी की तिथि ";
+  static const String highrisk_due_cases = "हाईरिस्क के डयू केसेज";
   static const String anc_mahaveer_due_cases = "एएनसी के डयू केसेज";
   static const String pnc_k_due_cases = "एचबीएनसी के डयू केसेज";
   static const String tikakaran_due_cases = "टीकाकरण के डयू केसेज";

@@ -2099,7 +2099,7 @@ class _DashboardScreen extends State<DashboardScreen> {
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: Image.asset(
-                                              "Images/youtube.png",
+                                              "Images/highrisk.png",
                                               fit: BoxFit.fitHeight,
                                               height: 30,
                                               width: 30,

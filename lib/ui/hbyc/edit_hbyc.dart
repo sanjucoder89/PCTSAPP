@@ -594,7 +594,7 @@ class _EditHBYCFormState extends State<EditHBYCForm> {
 
 
       //set Last selected value
-      if(_selectedPlacesReferCode == "8" || _selectedPlacesReferCode == "8" || _selectedPlacesReferCode == "10"){
+      if(_selectedPlacesReferCode == "8" || _selectedPlacesReferCode == "9" || _selectedPlacesReferCode == "10"){
         for (int i = 0; i < custom_sub_list.length; i++) {
           if (widget.ReferUnitcode == custom_sub_list[i].UnitCode.toString()) {
             _selectedSubUnitCode = custom_sub_list[i].UnitCode.toString();
@@ -667,7 +667,7 @@ class _EditHBYCFormState extends State<EditHBYCForm> {
       _showErrorPopup(Strings.choose_child_dieses,ColorConstants.AppColorPrimary);
     }else if(_referView == true && _ReferUnitCode == "0"){
       _showErrorPopup(Strings.choose_refer_type,ColorConstants.AppColorPrimary);
-    }else if((_selectedPlacesReferCode == "10" || _selectedPlacesReferCode == "9" || _selectedPlacesReferCode == "8") && (sub_heading == "" || sub_heading == "चुनें")){
+    }else if((_selectedPlacesReferCode == "10" || _selectedPlacesReferCode == "9" || _selectedPlacesReferCode == "8") && (sub_heading == "" || sub_heading == "चुनें" || _selectedSubUnitCode == "0")){
       _showErrorPopup("कृपया "+sub_heading +" चुनें!",ColorConstants.AppColorPrimary);
     }else{
 
@@ -2506,6 +2506,7 @@ class _EditHBYCFormState extends State<EditHBYCForm> {
                 ?
             GestureDetector(
               onTap: (){
+                print('_selectedSubUnitCode $_selectedSubUnitCode');
                 postHbycRequest();
               },
               child: Align(

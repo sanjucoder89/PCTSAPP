@@ -2073,75 +2073,6 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                               children:<Widget> [
                                 Divider(height: 1,thickness: 2,color: Colors.black,),
                                 Container(
-                                  child: Column(
-                                    children:<Widget>[
-                                      Padding(
-                                        padding: const EdgeInsets.all(5.0),
-                                        child: Row(
-                                          children: [
-                                            Expanded(
-                                                child: RichText(
-                                                  text: TextSpan(
-                                                      text: Strings.shishu_ka_naam,
-                                                      style: TextStyle(
-                                                          color: Colors.black, fontSize: 13),
-                                                      children: [
-                                                        TextSpan(
-                                                            text: '',
-                                                            style: TextStyle(
-                                                                color: Colors.red,
-                                                                fontWeight: FontWeight.bold,
-                                                                fontSize: 14))
-                                                      ]),
-                                                  textAlign: TextAlign.left,
-                                                )),
-                                            Expanded(
-                                                child: Container(
-                                                    height: 36,
-                                                    child: Focus(
-                                                        onFocusChange: (hasFocus) {
-                                                          if(hasFocus) {
-                                                            // do stuff
-                                                          }else{
-                                                            //print('enter value: $text');
-
-                                                          }
-                                                        },
-                                                        child: TextField(
-                                                          enabled: _shishuEnDisable,
-                                                          style: TextStyle(color: Colors.black),
-                                                          maxLength: 10,
-                                                          keyboardType: TextInputType.number,
-                                                          controller: _shishuNameController,
-                                                          decoration: InputDecoration(
-                                                            filled: true,
-                                                            fillColor: ColorConstants.transparent,
-                                                            counterText: '',
-                                                            enabledBorder: UnderlineInputBorder(
-                                                              borderSide: BorderSide(color: Colors.black),
-                                                            ),
-                                                            disabledBorder: UnderlineInputBorder(
-                                                              borderSide: BorderSide(color: Colors.black),
-                                                            ),
-                                                            focusedBorder: UnderlineInputBorder(
-                                                              borderSide: BorderSide(color: Colors.black),
-                                                            ),
-                                                          ),
-                                                          onChanged: (text) {
-                                                            //_hbCount=text.trim();
-                                                            print('mahilaheight $text');
-                                                            print('_hbCount $text');
-                                                            //getHBHeightCheck(_animyaHBCountController.text.toString().trim(),text);
-                                                          },
-                                                        ))))
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-
-                                Container(
                                   color: ColorConstants.white,
                                   child: Padding(
                                     padding: const EdgeInsets.all(5.0),
@@ -2274,6 +2205,77 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                     ),
                                   ),
                                 ),
+
+                                Container(
+                                  child: Column(
+                                    children:<Widget>[
+                                      Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                                child: RichText(
+                                                  text: TextSpan(
+                                                      text: Strings.shishu_ka_naam,
+                                                      style: TextStyle(
+                                                          color: Colors.black, fontSize: 13),
+                                                      children: [
+                                                        TextSpan(
+                                                            text: '',
+                                                            style: TextStyle(
+                                                                color: Colors.red,
+                                                                fontWeight: FontWeight.bold,
+                                                                fontSize: 14))
+                                                      ]),
+                                                  textAlign: TextAlign.left,
+                                                )),
+                                            Expanded(
+                                                child: Container(
+                                                    height: 36,
+                                                    child: Focus(
+                                                        onFocusChange: (hasFocus) {
+                                                          if(hasFocus) {
+                                                            // do stuff
+                                                          }else{
+                                                            //print('enter value: $text');
+
+                                                          }
+                                                        },
+                                                        child: TextField(
+                                                          enabled: _shishuEnDisable,
+                                                          style: TextStyle(color: Colors.black),
+                                                          maxLength: 10,
+                                                          keyboardType: TextInputType.number,
+                                                          controller: _shishuNameController,
+                                                          decoration: InputDecoration(
+                                                            filled: true,
+                                                            fillColor: ColorConstants.transparent,
+                                                            counterText: '',
+                                                            enabledBorder: UnderlineInputBorder(
+                                                              borderSide: BorderSide(color: Colors.black),
+                                                            ),
+                                                            disabledBorder: UnderlineInputBorder(
+                                                              borderSide: BorderSide(color: Colors.black),
+                                                            ),
+                                                            focusedBorder: UnderlineInputBorder(
+                                                              borderSide: BorderSide(color: Colors.black),
+                                                            ),
+                                                          ),
+                                                          onChanged: (text) {
+                                                            //_hbCount=text.trim();
+                                                            print('mahilaheight $text');
+                                                            print('_hbCount $text');
+                                                            //getHBHeightCheck(_animyaHBCountController.text.toString().trim(),text);
+                                                          },
+                                                        ))))
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+
+
                                 Container(
                                   child: Column(
                                     children:<Widget>[
@@ -2437,75 +2439,6 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                 Divider(height: 1,thickness: 2,color: Colors.black,),
 
                                 Container(
-                                  child: Column(
-                                    children:<Widget>[
-                                      Padding(
-                                        padding: const EdgeInsets.all(5.0),
-                                        child: Row(
-                                          children: [
-                                            Expanded(
-                                                child: RichText(
-                                                  text: TextSpan(
-                                                      text: Strings.shishu_ka_naam,
-                                                      style: TextStyle(
-                                                          color: Colors.black, fontSize: 13),
-                                                      children: [
-                                                        TextSpan(
-                                                            text: '',
-                                                            style: TextStyle(
-                                                                color: Colors.red,
-                                                                fontWeight: FontWeight.bold,
-                                                                fontSize: 14))
-                                                      ]),
-                                                  textAlign: TextAlign.left,
-                                                )),
-                                            Expanded(
-                                                child: Container(
-                                                    height: 36,
-                                                    child: Focus(
-                                                        onFocusChange: (hasFocus) {
-                                                          if(hasFocus) {
-                                                            // do stuff
-                                                          }else{
-                                                            //print('enter value: $text');
-
-                                                          }
-                                                        },
-                                                        child: TextField(
-                                                          enabled: _shishu2EnDisable,
-                                                          style: TextStyle(color: Colors.black),
-                                                          maxLength: 10,
-                                                          keyboardType: TextInputType.number,
-                                                          controller: _shishu2NameController,
-                                                          decoration: InputDecoration(
-                                                            filled: true,
-                                                            fillColor: ColorConstants.transparent,
-                                                            counterText: '',
-                                                            enabledBorder: UnderlineInputBorder(
-                                                              borderSide: BorderSide(color: Colors.black),
-                                                            ),
-                                                            disabledBorder: UnderlineInputBorder(
-                                                              borderSide: BorderSide(color: Colors.black),
-                                                            ),
-                                                            focusedBorder: UnderlineInputBorder(
-                                                              borderSide: BorderSide(color: Colors.black),
-                                                            ),
-                                                          ),
-                                                          onChanged: (text) {
-                                                            //_hbCount=text.trim();
-                                                            print('mahilaheight $text');
-                                                            print('_hbCount $text');
-                                                            //getHBHeightCheck(_animyaHBCountController.text.toString().trim(),text);
-                                                          },
-                                                        ))))
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-
-                                Container(
                                   color: ColorConstants.white,
                                   child: Padding(
                                     padding: const EdgeInsets.all(5.0),
@@ -2635,6 +2568,77 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                     ),
                                   ),
                                 ),
+
+                                Container(
+                                  child: Column(
+                                    children:<Widget>[
+                                      Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                                child: RichText(
+                                                  text: TextSpan(
+                                                      text: Strings.shishu_ka_naam,
+                                                      style: TextStyle(
+                                                          color: Colors.black, fontSize: 13),
+                                                      children: [
+                                                        TextSpan(
+                                                            text: '',
+                                                            style: TextStyle(
+                                                                color: Colors.red,
+                                                                fontWeight: FontWeight.bold,
+                                                                fontSize: 14))
+                                                      ]),
+                                                  textAlign: TextAlign.left,
+                                                )),
+                                            Expanded(
+                                                child: Container(
+                                                    height: 36,
+                                                    child: Focus(
+                                                        onFocusChange: (hasFocus) {
+                                                          if(hasFocus) {
+                                                            // do stuff
+                                                          }else{
+                                                            //print('enter value: $text');
+
+                                                          }
+                                                        },
+                                                        child: TextField(
+                                                          enabled: _shishu2EnDisable,
+                                                          style: TextStyle(color: Colors.black),
+                                                          maxLength: 10,
+                                                          keyboardType: TextInputType.number,
+                                                          controller: _shishu2NameController,
+                                                          decoration: InputDecoration(
+                                                            filled: true,
+                                                            fillColor: ColorConstants.transparent,
+                                                            counterText: '',
+                                                            enabledBorder: UnderlineInputBorder(
+                                                              borderSide: BorderSide(color: Colors.black),
+                                                            ),
+                                                            disabledBorder: UnderlineInputBorder(
+                                                              borderSide: BorderSide(color: Colors.black),
+                                                            ),
+                                                            focusedBorder: UnderlineInputBorder(
+                                                              borderSide: BorderSide(color: Colors.black),
+                                                            ),
+                                                          ),
+                                                          onChanged: (text) {
+                                                            //_hbCount=text.trim();
+                                                            print('mahilaheight $text');
+                                                            print('_hbCount $text');
+                                                            //getHBHeightCheck(_animyaHBCountController.text.toString().trim(),text);
+                                                          },
+                                                        ))))
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+
+
                                 Container(
                                   child: Column(
                                     children:<Widget>[
@@ -2799,75 +2803,6 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                 Divider(height: 1,thickness: 2,color: Colors.black,),
 
                                 Container(
-                                  child: Column(
-                                    children:<Widget>[
-                                      Padding(
-                                        padding: const EdgeInsets.all(5.0),
-                                        child: Row(
-                                          children: [
-                                            Expanded(
-                                                child: RichText(
-                                                  text: TextSpan(
-                                                      text: Strings.shishu_ka_naam,
-                                                      style: TextStyle(
-                                                          color: Colors.black, fontSize: 13),
-                                                      children: [
-                                                        TextSpan(
-                                                            text: '',
-                                                            style: TextStyle(
-                                                                color: Colors.red,
-                                                                fontWeight: FontWeight.bold,
-                                                                fontSize: 14))
-                                                      ]),
-                                                  textAlign: TextAlign.left,
-                                                )),
-                                            Expanded(
-                                                child: Container(
-                                                    height: 36,
-                                                    child: Focus(
-                                                        onFocusChange: (hasFocus) {
-                                                          if(hasFocus) {
-                                                            // do stuff
-                                                          }else{
-                                                            //print('enter value: $text');
-
-                                                          }
-                                                        },
-                                                        child: TextField(
-                                                          enabled: _shishu3EnDisable,
-                                                          style: TextStyle(color: Colors.black),
-                                                          maxLength: 10,
-                                                          keyboardType: TextInputType.number,
-                                                          controller: _shishu3NameController,
-                                                          decoration: InputDecoration(
-                                                            filled: true,
-                                                            fillColor: ColorConstants.transparent,
-                                                            counterText: '',
-                                                            enabledBorder: UnderlineInputBorder(
-                                                              borderSide: BorderSide(color: Colors.black),
-                                                            ),
-                                                            disabledBorder: UnderlineInputBorder(
-                                                              borderSide: BorderSide(color: Colors.black),
-                                                            ),
-                                                            focusedBorder: UnderlineInputBorder(
-                                                              borderSide: BorderSide(color: Colors.black),
-                                                            ),
-                                                          ),
-                                                          onChanged: (text) {
-                                                            //_hbCount=text.trim();
-                                                            print('mahilaheight $text');
-                                                            print('_hbCount $text');
-                                                            //getHBHeightCheck(_animyaHBCountController.text.toString().trim(),text);
-                                                          },
-                                                        ))))
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-
-                                Container(
                                   color: ColorConstants.white,
                                   child: Padding(
                                     padding: const EdgeInsets.all(5.0),
@@ -2997,6 +2932,77 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                     ),
                                   ),
                                 ),
+
+                                Container(
+                                  child: Column(
+                                    children:<Widget>[
+                                      Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                                child: RichText(
+                                                  text: TextSpan(
+                                                      text: Strings.shishu_ka_naam,
+                                                      style: TextStyle(
+                                                          color: Colors.black, fontSize: 13),
+                                                      children: [
+                                                        TextSpan(
+                                                            text: '',
+                                                            style: TextStyle(
+                                                                color: Colors.red,
+                                                                fontWeight: FontWeight.bold,
+                                                                fontSize: 14))
+                                                      ]),
+                                                  textAlign: TextAlign.left,
+                                                )),
+                                            Expanded(
+                                                child: Container(
+                                                    height: 36,
+                                                    child: Focus(
+                                                        onFocusChange: (hasFocus) {
+                                                          if(hasFocus) {
+                                                            // do stuff
+                                                          }else{
+                                                            //print('enter value: $text');
+
+                                                          }
+                                                        },
+                                                        child: TextField(
+                                                          enabled: _shishu3EnDisable,
+                                                          style: TextStyle(color: Colors.black),
+                                                          maxLength: 10,
+                                                          keyboardType: TextInputType.number,
+                                                          controller: _shishu3NameController,
+                                                          decoration: InputDecoration(
+                                                            filled: true,
+                                                            fillColor: ColorConstants.transparent,
+                                                            counterText: '',
+                                                            enabledBorder: UnderlineInputBorder(
+                                                              borderSide: BorderSide(color: Colors.black),
+                                                            ),
+                                                            disabledBorder: UnderlineInputBorder(
+                                                              borderSide: BorderSide(color: Colors.black),
+                                                            ),
+                                                            focusedBorder: UnderlineInputBorder(
+                                                              borderSide: BorderSide(color: Colors.black),
+                                                            ),
+                                                          ),
+                                                          onChanged: (text) {
+                                                            //_hbCount=text.trim();
+                                                            print('mahilaheight $text');
+                                                            print('_hbCount $text');
+                                                            //getHBHeightCheck(_animyaHBCountController.text.toString().trim(),text);
+                                                          },
+                                                        ))))
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+
+
                                 Container(
                                   child: Column(
                                     children:<Widget>[
@@ -3161,75 +3167,6 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                 Divider(height: 1,thickness: 2,color: Colors.black,),
 
                                 Container(
-                                  child: Column(
-                                    children:<Widget>[
-                                      Padding(
-                                        padding: const EdgeInsets.all(5.0),
-                                        child: Row(
-                                          children: [
-                                            Expanded(
-                                                child: RichText(
-                                                  text: TextSpan(
-                                                      text: Strings.shishu_ka_naam,
-                                                      style: TextStyle(
-                                                          color: Colors.black, fontSize: 13),
-                                                      children: [
-                                                        TextSpan(
-                                                            text: '',
-                                                            style: TextStyle(
-                                                                color: Colors.red,
-                                                                fontWeight: FontWeight.bold,
-                                                                fontSize: 14))
-                                                      ]),
-                                                  textAlign: TextAlign.left,
-                                                )),
-                                            Expanded(
-                                                child: Container(
-                                                    height: 36,
-                                                    child: Focus(
-                                                        onFocusChange: (hasFocus) {
-                                                          if(hasFocus) {
-                                                            // do stuff
-                                                          }else{
-                                                            //print('enter value: $text');
-
-                                                          }
-                                                        },
-                                                        child: TextField(
-                                                          enabled: _shishu4EnDisable,
-                                                          style: TextStyle(color: Colors.black),
-                                                          maxLength: 10,
-                                                          keyboardType: TextInputType.number,
-                                                          controller: _shishu4NameController,
-                                                          decoration: InputDecoration(
-                                                            filled: true,
-                                                            fillColor: ColorConstants.transparent,
-                                                            counterText: '',
-                                                            enabledBorder: UnderlineInputBorder(
-                                                              borderSide: BorderSide(color: Colors.black),
-                                                            ),
-                                                            disabledBorder: UnderlineInputBorder(
-                                                              borderSide: BorderSide(color: Colors.black),
-                                                            ),
-                                                            focusedBorder: UnderlineInputBorder(
-                                                              borderSide: BorderSide(color: Colors.black),
-                                                            ),
-                                                          ),
-                                                          onChanged: (text) {
-                                                            //_hbCount=text.trim();
-                                                            print('mahilaheight $text');
-                                                            print('_hbCount $text');
-                                                            //getHBHeightCheck(_animyaHBCountController.text.toString().trim(),text);
-                                                          },
-                                                        ))))
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-
-                                Container(
                                   color: ColorConstants.white,
                                   child: Padding(
                                     padding: const EdgeInsets.all(5.0),
@@ -3359,6 +3296,77 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                     ),
                                   ),
                                 ),
+
+                                Container(
+                                  child: Column(
+                                    children:<Widget>[
+                                      Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                                child: RichText(
+                                                  text: TextSpan(
+                                                      text: Strings.shishu_ka_naam,
+                                                      style: TextStyle(
+                                                          color: Colors.black, fontSize: 13),
+                                                      children: [
+                                                        TextSpan(
+                                                            text: '',
+                                                            style: TextStyle(
+                                                                color: Colors.red,
+                                                                fontWeight: FontWeight.bold,
+                                                                fontSize: 14))
+                                                      ]),
+                                                  textAlign: TextAlign.left,
+                                                )),
+                                            Expanded(
+                                                child: Container(
+                                                    height: 36,
+                                                    child: Focus(
+                                                        onFocusChange: (hasFocus) {
+                                                          if(hasFocus) {
+                                                            // do stuff
+                                                          }else{
+                                                            //print('enter value: $text');
+
+                                                          }
+                                                        },
+                                                        child: TextField(
+                                                          enabled: _shishu4EnDisable,
+                                                          style: TextStyle(color: Colors.black),
+                                                          maxLength: 10,
+                                                          keyboardType: TextInputType.number,
+                                                          controller: _shishu4NameController,
+                                                          decoration: InputDecoration(
+                                                            filled: true,
+                                                            fillColor: ColorConstants.transparent,
+                                                            counterText: '',
+                                                            enabledBorder: UnderlineInputBorder(
+                                                              borderSide: BorderSide(color: Colors.black),
+                                                            ),
+                                                            disabledBorder: UnderlineInputBorder(
+                                                              borderSide: BorderSide(color: Colors.black),
+                                                            ),
+                                                            focusedBorder: UnderlineInputBorder(
+                                                              borderSide: BorderSide(color: Colors.black),
+                                                            ),
+                                                          ),
+                                                          onChanged: (text) {
+                                                            //_hbCount=text.trim();
+                                                            print('mahilaheight $text');
+                                                            print('_hbCount $text');
+                                                            //getHBHeightCheck(_animyaHBCountController.text.toString().trim(),text);
+                                                          },
+                                                        ))))
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+
+
                                 Container(
                                   child: Column(
                                     children:<Widget>[
@@ -3523,75 +3531,6 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                 Divider(height: 1,thickness: 2,color: Colors.black,),
 
                                 Container(
-                                  child: Column(
-                                    children:<Widget>[
-                                      Padding(
-                                        padding: const EdgeInsets.all(5.0),
-                                        child: Row(
-                                          children: [
-                                            Expanded(
-                                                child: RichText(
-                                                  text: TextSpan(
-                                                      text: Strings.shishu_ka_naam,
-                                                      style: TextStyle(
-                                                          color: Colors.black, fontSize: 13),
-                                                      children: [
-                                                        TextSpan(
-                                                            text: '',
-                                                            style: TextStyle(
-                                                                color: Colors.red,
-                                                                fontWeight: FontWeight.bold,
-                                                                fontSize: 14))
-                                                      ]),
-                                                  textAlign: TextAlign.left,
-                                                )),
-                                            Expanded(
-                                                child: Container(
-                                                    height: 36,
-                                                    child: Focus(
-                                                        onFocusChange: (hasFocus) {
-                                                          if(hasFocus) {
-                                                            // do stuff
-                                                          }else{
-                                                            //print('enter value: $text');
-
-                                                          }
-                                                        },
-                                                        child: TextField(
-                                                          enabled: _shishu5EnDisable,
-                                                          style: TextStyle(color: Colors.black),
-                                                          maxLength: 10,
-                                                          keyboardType: TextInputType.number,
-                                                          controller: _shishu5NameController,
-                                                          decoration: InputDecoration(
-                                                            filled: true,
-                                                            fillColor: ColorConstants.transparent,
-                                                            counterText: '',
-                                                            enabledBorder: UnderlineInputBorder(
-                                                              borderSide: BorderSide(color: Colors.black),
-                                                            ),
-                                                            disabledBorder: UnderlineInputBorder(
-                                                              borderSide: BorderSide(color: Colors.black),
-                                                            ),
-                                                            focusedBorder: UnderlineInputBorder(
-                                                              borderSide: BorderSide(color: Colors.black),
-                                                            ),
-                                                          ),
-                                                          onChanged: (text) {
-                                                            //_hbCount=text.trim();
-                                                            print('mahilaheight $text');
-                                                            print('_hbCount $text');
-                                                            //getHBHeightCheck(_animyaHBCountController.text.toString().trim(),text);
-                                                          },
-                                                        ))))
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-
-                                Container(
                                   color: ColorConstants.white,
                                   child: Padding(
                                     padding: const EdgeInsets.all(5.0),
@@ -3720,6 +3659,77 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                     ),
                                   ),
                                 ),
+
+                                Container(
+                                  child: Column(
+                                    children:<Widget>[
+                                      Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                                child: RichText(
+                                                  text: TextSpan(
+                                                      text: Strings.shishu_ka_naam,
+                                                      style: TextStyle(
+                                                          color: Colors.black, fontSize: 13),
+                                                      children: [
+                                                        TextSpan(
+                                                            text: '',
+                                                            style: TextStyle(
+                                                                color: Colors.red,
+                                                                fontWeight: FontWeight.bold,
+                                                                fontSize: 14))
+                                                      ]),
+                                                  textAlign: TextAlign.left,
+                                                )),
+                                            Expanded(
+                                                child: Container(
+                                                    height: 36,
+                                                    child: Focus(
+                                                        onFocusChange: (hasFocus) {
+                                                          if(hasFocus) {
+                                                            // do stuff
+                                                          }else{
+                                                            //print('enter value: $text');
+
+                                                          }
+                                                        },
+                                                        child: TextField(
+                                                          enabled: _shishu5EnDisable,
+                                                          style: TextStyle(color: Colors.black),
+                                                          maxLength: 10,
+                                                          keyboardType: TextInputType.number,
+                                                          controller: _shishu5NameController,
+                                                          decoration: InputDecoration(
+                                                            filled: true,
+                                                            fillColor: ColorConstants.transparent,
+                                                            counterText: '',
+                                                            enabledBorder: UnderlineInputBorder(
+                                                              borderSide: BorderSide(color: Colors.black),
+                                                            ),
+                                                            disabledBorder: UnderlineInputBorder(
+                                                              borderSide: BorderSide(color: Colors.black),
+                                                            ),
+                                                            focusedBorder: UnderlineInputBorder(
+                                                              borderSide: BorderSide(color: Colors.black),
+                                                            ),
+                                                          ),
+                                                          onChanged: (text) {
+                                                            //_hbCount=text.trim();
+                                                            print('mahilaheight $text');
+                                                            print('_hbCount $text');
+                                                            //getHBHeightCheck(_animyaHBCountController.text.toString().trim(),text);
+                                                          },
+                                                        ))))
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+
+
                                 Container(
                                   child: Column(
                                     children:<Widget>[

@@ -1504,7 +1504,7 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                       motherComplId = newVal!;
                                       print('motherComplId:$motherComplId');
                                       if(motherComplId == "5" || motherComplId == "0"){
-                                        _ShowHideReferPlacesView=true;
+                                        _ShowHideReferPlacesView=false;
                                         _ShowHideErrorView=false;
                                       }else if(motherComplId == "3"){//dead
                                         _ShowHideReferPlacesView=false;
@@ -1679,6 +1679,147 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                 Divider(height: 1,thickness: 2,color: Colors.black,),
 
                                 Container(
+                                  color: ColorConstants.white,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                            child: Container(
+                                              color: ColorConstants.white,
+                                              child: RichText(
+                                                text: TextSpan(
+                                                    text: Strings
+                                                        .child_death_or_not,
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 13),
+                                                    children: [
+                                                      TextSpan(
+                                                          text: '*',
+                                                          style: TextStyle(
+                                                              color: Colors.red,
+                                                              fontWeight:
+                                                              FontWeight.bold,
+                                                              fontSize: 10))
+                                                    ]),
+                                                textAlign: TextAlign.left,
+                                              ),
+                                            )),
+                                        Expanded(
+                                            child: Container(
+                                              height: 36,
+                                              child: Padding(
+                                                padding:
+                                                const EdgeInsets.all(5.0),
+                                                child: Row(
+                                                  children: [
+                                                    Expanded(
+                                                        child: Container(
+                                                          margin: EdgeInsets.only(
+                                                              left: 20),
+                                                          height: 20,
+                                                          //Make it equal to height of radio button
+                                                          width: 10,
+                                                          //Make it equal to width of radio button
+                                                          child: Row(
+                                                            children: [
+                                                              Radio<ShihuIsLive>(
+                                                                activeColor:rdChildIsLiveEntry1 == false ? Colors.grey : Colors.black,
+                                                                value: ShihuIsLive.yes,
+                                                                groupValue: _shishuislive,
+                                                                onChanged:rdChildIsLiveEntry1 == false ? null : (ShihuIsLive? value) {
+                                                                  setState(() {
+                                                                    _shishuislive = value ?? _shishuislive;
+                                                                    rdChildIsLive1="1";
+                                                                    _shishuEnDisable=true;
+                                                                    _shishuWgtEnDisable=true;
+                                                                    _ShowHideReferPlacesView=true;
+                                                                    _ShowHideErrorView=false;
+
+                                                                    /*
+                                                                    * Check if any child is live , Save button will be show
+                                                                    */
+                                                                    checkShowHideSaveButton(
+                                                                        rdChildIsLive1,
+                                                                        rdChildIsLive2,
+                                                                        rdChildIsLive3,
+                                                                        rdChildIsLive4,
+                                                                        rdChildIsLive5
+                                                                    );
+                                                                  });
+                                                                },
+                                                              ),
+                                                              Text(
+                                                                Strings.yes,
+                                                                style: TextStyle(
+                                                                    fontSize: 11),
+                                                              )
+                                                            ],
+                                                          ),
+                                                        )),
+                                                    Expanded(
+                                                        child: Container(
+                                                          margin: EdgeInsets.only(
+                                                              right: 20),
+                                                          height: 20,
+                                                          //Make it equal to height of radio button
+                                                          width: 10,
+                                                          //Make it equal to width of radio button
+                                                          child: Row(
+                                                            children: [
+                                                              Radio<ShihuIsLive>(
+                                                                activeColor:rdChildIsLiveEntry1 == false ? Colors.grey : Colors.black,
+                                                                value: ShihuIsLive.no,
+                                                                groupValue: _shishuislive,
+                                                                onChanged:(ShihuIsLive? value) {
+                                                                  setState(() {
+                                                                    _shishuislive = value ?? _shishuislive;
+                                                                    rdChildIsLive1="0";
+
+                                                                    _shishuEnDisable=false;
+                                                                    FocusScopeNode currentFocus = FocusScope.of(context);
+                                                                    if (!currentFocus.hasPrimaryFocus) {
+                                                                      currentFocus.focusedChild!.unfocus();
+                                                                    }
+                                                                    _shishuNameController.text="";
+
+
+                                                                    _shishuWgtEnDisable=false;
+                                                                    _shishuWeightController.text="";
+                                                                    childComplId_1="0";
+
+                                                                    _ReferUnitCode="0";//set default value on child death
+                                                                    print('final ReferUnitCode $_ReferUnitCode');
+
+                                                                    /*
+                                                                    * Check if any child is live refer listing will be show
+                                                                    */
+                                                                    checkifAnyChildLive(
+                                                                        rdChildIsLive1,
+                                                                        rdChildIsLive2,
+                                                                        rdChildIsLive3,
+                                                                        rdChildIsLive4,
+                                                                        rdChildIsLive5);
+                                                                  });
+                                                                },
+                                                              ),
+                                                              Text(Strings.no,
+                                                                  style: TextStyle(
+                                                                      fontSize: 11))
+                                                            ],
+                                                          ),
+                                                        ))
+                                                  ],
+                                                ),
+                                              ),
+                                            ))
+                                      ],
+                                    ),
+                                  ),
+                                ),
+
+                                Container(
                                   child: Column(
                                     children:<Widget>[
                                       Padding(
@@ -1747,137 +1888,6 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                   ),
                                 ),
 
-                                Container(
-                                  color: ColorConstants.white,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(5.0),
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                            child: Container(
-                                              color: ColorConstants.white,
-                                              child: RichText(
-                                                text: TextSpan(
-                                                    text: Strings
-                                                        .child_death_or_not,
-                                                    style: TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 13),
-                                                    children: [
-                                                      TextSpan(
-                                                          text: '*',
-                                                          style: TextStyle(
-                                                              color: Colors.red,
-                                                              fontWeight:
-                                                              FontWeight.bold,
-                                                              fontSize: 10))
-                                                    ]),
-                                                textAlign: TextAlign.left,
-                                              ),
-                                            )),
-                                        Expanded(
-                                            child: Container(
-                                              height: 36,
-                                              child: Padding(
-                                                padding:
-                                                const EdgeInsets.all(5.0),
-                                                child: Row(
-                                                  children: [
-                                                    Expanded(
-                                                        child: Container(
-                                                          margin: EdgeInsets.only(
-                                                              left: 20),
-                                                          height: 20,
-                                                          //Make it equal to height of radio button
-                                                          width: 10,
-                                                          //Make it equal to width of radio button
-                                                          child: Row(
-                                                            children: [
-                                                              Radio<ShihuIsLive>(
-                                                                activeColor:rdChildIsLiveEntry1 == false ? Colors.grey : Colors.black,
-                                                                value: ShihuIsLive.yes,
-                                                                groupValue: _shishuislive,
-                                                                onChanged:rdChildIsLiveEntry1 == false ? null : (ShihuIsLive? value) {
-                                                                  setState(() {
-                                                                    _shishuislive = value ?? _shishuislive;
-                                                                    rdChildIsLive1="1";
-                                                                    _shishuEnDisable=true;
-                                                                    _shishuWgtEnDisable=true;
-                                                                    _ShowHideReferPlacesView=true;
-                                                                    _ShowHideErrorView=true;
-                                                                  });
-                                                                },
-                                                              ),
-                                                              Text(
-                                                                Strings.yes,
-                                                                style: TextStyle(
-                                                                    fontSize: 11),
-                                                              )
-                                                            ],
-                                                          ),
-                                                        )),
-                                                    Expanded(
-                                                        child: Container(
-                                                          margin: EdgeInsets.only(
-                                                              right: 20),
-                                                          height: 20,
-                                                          //Make it equal to height of radio button
-                                                          width: 10,
-                                                          //Make it equal to width of radio button
-                                                          child: Row(
-                                                            children: [
-                                                              Radio<ShihuIsLive>(
-                                                                activeColor:rdChildIsLiveEntry1 == false ? Colors.grey : Colors.black,
-                                                                value: ShihuIsLive.no,
-                                                                groupValue: _shishuislive,
-                                                                onChanged:(ShihuIsLive? value) {
-                                                                  setState(() {
-                                                                    _shishuislive = value ?? _shishuislive;
-                                                                    rdChildIsLive1="0";
-
-                                                                    _shishuEnDisable=false;
-                                                                    FocusScopeNode currentFocus = FocusScope.of(context);
-                                                                    if (!currentFocus.hasPrimaryFocus) {
-                                                                      currentFocus.focusedChild!.unfocus();
-                                                                    }
-                                                                    _shishuNameController.text="";
-
-
-                                                                    _shishuWgtEnDisable=false;
-                                                                    _shishuWeightController.text="";
-                                                                    childComplId_1="0";
-                                                                   // _ShowHideReferPlacesView=false;
-                                                                    //_ShowHideErrorView=false;
-
-                                                                    _ReferUnitCode="0";//set default value on child death
-                                                                    print('final ReferUnitCode $_ReferUnitCode');
-
-                                                                    /*
-                                                                    * Check if any child is live refer listing will be show
-                                                                    */
-                                                                    checkifAnyChildLive(
-                                                                        rdChildIsLive1,
-                                                                        rdChildIsLive2,
-                                                                        rdChildIsLive3,
-                                                                        rdChildIsLive4,
-                                                                        rdChildIsLive5);
-                                                                  });
-                                                                },
-                                                              ),
-                                                              Text(Strings.no,
-                                                                  style: TextStyle(
-                                                                      fontSize: 11))
-                                                            ],
-                                                          ),
-                                                        ))
-                                                  ],
-                                                ),
-                                              ),
-                                            ))
-                                      ],
-                                    ),
-                                  ),
-                                ),
                                 Container(
                                   child: Column(
                                     children:<Widget>[
@@ -2009,7 +2019,7 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                               setState(() {
                                                 childComplId_1 = newVal!;
                                                 print('childComplId_1:$childComplId_1');
-                                                if(childComplId_1 == "12" || childComplId_1 == "0"){
+                                                if(childComplId_1 == "12" || childComplId_1 == "0" || motherComplId == "5"){
                                                   _ShowHideReferPlacesView=false;
                                                 }else{
                                                   _ShowHideReferPlacesView=true;
@@ -2037,6 +2047,149 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                             child: Column(
                               children:<Widget> [
                                 Divider(height: 1,thickness: 2,color: Colors.black,),
+
+                                Container(
+                                  color: ColorConstants.white,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                            child: Container(
+                                              color: ColorConstants.white,
+                                              child: RichText(
+                                                text: TextSpan(
+                                                    text: Strings
+                                                        .child_death_or_not,
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 13),
+                                                    children: [
+                                                      TextSpan(
+                                                          text: '',
+                                                          style: TextStyle(
+                                                              color: Colors.red,
+                                                              fontWeight:
+                                                              FontWeight.bold,
+                                                              fontSize: 10))
+                                                    ]),
+                                                textAlign: TextAlign.left,
+                                              ),
+                                            )),
+                                        Expanded(
+                                            child: Container(
+                                              height: 36,
+                                              child: Padding(
+                                                padding:
+                                                const EdgeInsets.all(5.0),
+                                                child: Row(
+                                                  children: [
+                                                    Expanded(
+                                                        child: Container(
+                                                          margin: EdgeInsets.only(
+                                                              left: 20),
+                                                          height: 20,
+                                                          //Make it equal to height of radio button
+                                                          width: 10,
+                                                          //Make it equal to width of radio button
+                                                          child: Row(
+                                                            children: [
+                                                              Radio<ShihuIsLive2>(
+                                                                activeColor:rdChildIsLiveEntry2 == false ? Colors.grey :  Colors.black,
+                                                                value: ShihuIsLive2.yes,
+                                                                groupValue: _shishuislive2,
+                                                                onChanged: rdChildIsLiveEntry2 == false ? null : (ShihuIsLive2? value) {
+                                                                  setState(() {
+                                                                    _shishuislive2 = value ?? _shishuislive2;
+                                                                    rdChildIsLive2="1";
+                                                                    _shishuWgt2EnDisable=true;
+                                                                    _ShowHideReferPlacesView=true;
+                                                                    _ShowHideErrorView=true;
+                                                                    _shishu2EnDisable=true;
+                                                                    /*
+                                                                    * Check if any child is live , Save button will be show
+                                                                    */
+                                                                    checkShowHideSaveButton(
+                                                                        rdChildIsLive1,
+                                                                        rdChildIsLive2,
+                                                                        rdChildIsLive3,
+                                                                        rdChildIsLive4,
+                                                                        rdChildIsLive5
+                                                                    );
+
+                                                                  });
+                                                                },
+                                                              ),
+                                                              Text(
+                                                                Strings.yes,
+                                                                style: TextStyle(
+                                                                    fontSize: 11),
+                                                              )
+                                                            ],
+                                                          ),
+                                                        )),
+                                                    Expanded(
+                                                        child: Container(
+                                                          margin: EdgeInsets.only(
+                                                              right: 20),
+                                                          height: 20,
+                                                          //Make it equal to height of radio button
+                                                          width: 10,
+                                                          //Make it equal to width of radio button
+                                                          child: Row(
+                                                            children: [
+                                                              Radio<ShihuIsLive2>(
+                                                                activeColor:rdChildIsLiveEntry2 == false ? Colors.grey : Colors.black,
+                                                                value: ShihuIsLive2.no,
+                                                                groupValue: _shishuislive2,
+                                                                onChanged:(ShihuIsLive2? value) {
+                                                                  setState(() {
+                                                                    _shishuislive2 = value ?? _shishuislive2;
+                                                                    rdChildIsLive2="0";
+                                                                    _shishuWgt2EnDisable=false;
+                                                                    _shishuWeight2Controller.text="";
+                                                                    childComplId_2="0";
+                                                                    //_ShowHideReferPlacesView=false;
+                                                                    // _ShowHideErrorView=false;
+
+                                                                    _shishu2NameController.text="";
+                                                                    _shishu2EnDisable=false;
+                                                                    FocusScopeNode currentFocus = FocusScope.of(context);
+                                                                    if (!currentFocus.hasPrimaryFocus) {
+                                                                      currentFocus.focusedChild!.unfocus();
+                                                                    }
+
+                                                                    _ReferUnitCode="0";//set default value on child death
+                                                                    print('final ReferUnitCode $_ReferUnitCode');
+
+                                                                    /*
+                                                                    * Check if any child is live refer listing will be show
+                                                                    */
+                                                                    checkifAnyChildLive(
+                                                                        rdChildIsLive1,
+                                                                        rdChildIsLive2,
+                                                                        rdChildIsLive3,
+                                                                        rdChildIsLive4,
+                                                                        rdChildIsLive5);
+
+                                                                  });
+                                                                },
+                                                              ),
+                                                              Text(Strings.no,
+                                                                  style: TextStyle(
+                                                                      fontSize: 11))
+                                                            ],
+                                                          ),
+                                                        ))
+                                                  ],
+                                                ),
+                                              ),
+                                            ))
+                                      ],
+                                    ),
+                                  ),
+                                ),
+
 
                                 Container(
                                   child: Column(
@@ -2107,136 +2260,7 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                   ),
                                 ),
 
-                                Container(
-                                  color: ColorConstants.white,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(5.0),
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                            child: Container(
-                                              color: ColorConstants.white,
-                                              child: RichText(
-                                                text: TextSpan(
-                                                    text: Strings
-                                                        .child_death_or_not,
-                                                    style: TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 13),
-                                                    children: [
-                                                      TextSpan(
-                                                          text: '',
-                                                          style: TextStyle(
-                                                              color: Colors.red,
-                                                              fontWeight:
-                                                              FontWeight.bold,
-                                                              fontSize: 10))
-                                                    ]),
-                                                textAlign: TextAlign.left,
-                                              ),
-                                            )),
-                                        Expanded(
-                                            child: Container(
-                                              height: 36,
-                                              child: Padding(
-                                                padding:
-                                                const EdgeInsets.all(5.0),
-                                                child: Row(
-                                                  children: [
-                                                    Expanded(
-                                                        child: Container(
-                                                          margin: EdgeInsets.only(
-                                                              left: 20),
-                                                          height: 20,
-                                                          //Make it equal to height of radio button
-                                                          width: 10,
-                                                          //Make it equal to width of radio button
-                                                          child: Row(
-                                                            children: [
-                                                              Radio<ShihuIsLive2>(
-                                                                activeColor:rdChildIsLiveEntry2 == false ? Colors.grey :  Colors.black,
-                                                                value: ShihuIsLive2.yes,
-                                                                groupValue: _shishuislive2,
-                                                                onChanged: rdChildIsLiveEntry2 == false ? null : (ShihuIsLive2? value) {
-                                                                  setState(() {
-                                                                    _shishuislive2 = value ?? _shishuislive2;
-                                                                    rdChildIsLive2="1";
-                                                                    _shishuWgt2EnDisable=true;
-                                                                    _ShowHideReferPlacesView=true;
-                                                                    _ShowHideErrorView=true;
-                                                                    _shishu2EnDisable=true;
-                                                                  });
-                                                                },
-                                                              ),
-                                                              Text(
-                                                                Strings.yes,
-                                                                style: TextStyle(
-                                                                    fontSize: 11),
-                                                              )
-                                                            ],
-                                                          ),
-                                                        )),
-                                                    Expanded(
-                                                        child: Container(
-                                                          margin: EdgeInsets.only(
-                                                              right: 20),
-                                                          height: 20,
-                                                          //Make it equal to height of radio button
-                                                          width: 10,
-                                                          //Make it equal to width of radio button
-                                                          child: Row(
-                                                            children: [
-                                                              Radio<ShihuIsLive2>(
-                                                                activeColor:rdChildIsLiveEntry2 == false ? Colors.grey : Colors.black,
-                                                                value: ShihuIsLive2.no,
-                                                                groupValue: _shishuislive2,
-                                                                onChanged:(ShihuIsLive2? value) {
-                                                                  setState(() {
-                                                                    _shishuislive2 = value ?? _shishuislive2;
-                                                                    rdChildIsLive2="0";
-                                                                    _shishuWgt2EnDisable=false;
-                                                                    _shishuWeight2Controller.text="";
-                                                                    childComplId_2="0";
-                                                                    //_ShowHideReferPlacesView=false;
-                                                                   // _ShowHideErrorView=false;
 
-                                                                    _shishu2NameController.text="";
-                                                                    _shishu2EnDisable=false;
-                                                                    FocusScopeNode currentFocus = FocusScope.of(context);
-                                                                    if (!currentFocus.hasPrimaryFocus) {
-                                                                      currentFocus.focusedChild!.unfocus();
-                                                                    }
-
-                                                                    _ReferUnitCode="0";//set default value on child death
-                                                                    print('final ReferUnitCode $_ReferUnitCode');
-
-                                                                    /*
-                                                                    * Check if any child is live refer listing will be show
-                                                                    */
-                                                                    checkifAnyChildLive(
-                                                                        rdChildIsLive1,
-                                                                        rdChildIsLive2,
-                                                                        rdChildIsLive3,
-                                                                        rdChildIsLive4,
-                                                                        rdChildIsLive5);
-
-                                                                  });
-                                                                },
-                                                              ),
-                                                              Text(Strings.no,
-                                                                  style: TextStyle(
-                                                                      fontSize: 11))
-                                                            ],
-                                                          ),
-                                                        ))
-                                                  ],
-                                                ),
-                                              ),
-                                            ))
-                                      ],
-                                    ),
-                                  ),
-                                ),
                                 Container(
                                   child: Column(
                                     children:<Widget>[
@@ -2400,6 +2424,151 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                 Divider(height: 1,thickness: 2,color: Colors.black,),
 
                                 Container(
+                                  color: ColorConstants.white,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                            child: Container(
+                                              color: ColorConstants.white,
+                                              child: RichText(
+                                                text: TextSpan(
+                                                    text: Strings
+                                                        .child_death_or_not,
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 13),
+                                                    children: [
+                                                      TextSpan(
+                                                          text: '',
+                                                          style: TextStyle(
+                                                              color: Colors.red,
+                                                              fontWeight:
+                                                              FontWeight.bold,
+                                                              fontSize: 10))
+                                                    ]),
+                                                textAlign: TextAlign.left,
+                                              ),
+                                            )),
+                                        Expanded(
+                                            child: Container(
+                                              height: 36,
+                                              child: Padding(
+                                                padding:
+                                                const EdgeInsets.all(5.0),
+                                                child: Row(
+                                                  children: [
+                                                    Expanded(
+                                                        child: Container(
+                                                          margin: EdgeInsets.only(
+                                                              left: 20),
+                                                          height: 20,
+                                                          //Make it equal to height of radio button
+                                                          width: 10,
+                                                          //Make it equal to width of radio button
+                                                          child: Row(
+                                                            children: [
+                                                              Radio<ShihuIsLive3>(
+                                                                activeColor:rdChildIsLiveEntry3 == false ? Colors.grey : Colors.black,
+                                                                value: ShihuIsLive3.yes,
+                                                                groupValue: _shishuislive3,
+                                                                onChanged:rdChildIsLiveEntry3 == false ? null : (ShihuIsLive3? value) {
+                                                                  setState(() {
+                                                                    _shishuislive3 = value ?? _shishuislive3;
+                                                                    rdChildIsLive3="1";
+                                                                    _shishuWgt3EnDisable=true;
+                                                                    _ShowHideReferPlacesView=true;
+                                                                    _ShowHideErrorView=true;
+
+                                                                    _shishu3EnDisable=true;
+
+
+                                                                    /*
+                                                                    * Check if any child is live , Save button will be show
+                                                                    */
+                                                                    checkShowHideSaveButton(
+                                                                        rdChildIsLive1,
+                                                                        rdChildIsLive2,
+                                                                        rdChildIsLive3,
+                                                                        rdChildIsLive4,
+                                                                        rdChildIsLive5
+                                                                    );
+                                                                  });
+                                                                },
+                                                              ),
+                                                              Text(
+                                                                Strings.yes,
+                                                                style: TextStyle(
+                                                                    fontSize: 11),
+                                                              )
+                                                            ],
+                                                          ),
+                                                        )),
+                                                    Expanded(
+                                                        child: Container(
+                                                          margin: EdgeInsets.only(
+                                                              right: 20),
+                                                          height: 20,
+                                                          //Make it equal to height of radio button
+                                                          width: 10,
+                                                          //Make it equal to width of radio button
+                                                          child: Row(
+                                                            children: [
+                                                              Radio<ShihuIsLive3>(
+                                                                activeColor:rdChildIsLiveEntry3 == false ? Colors.grey : Colors.black,
+                                                                value: ShihuIsLive3.no,
+                                                                groupValue: _shishuislive3,
+                                                                onChanged:(ShihuIsLive3? value) {
+                                                                  setState(() {
+                                                                    _shishuislive3 = value ?? _shishuislive3;
+                                                                    rdChildIsLive3="0";
+                                                                    _shishuWgt3EnDisable=false;
+                                                                    _shishuWeight3Controller.text="";
+                                                                    childComplId_3="0";
+                                                                    // _ShowHideReferPlacesView=false;
+                                                                    // _ShowHideErrorView=false;
+
+
+                                                                    _shishu3NameController.text="";
+                                                                    _shishu3EnDisable=false;
+                                                                    FocusScopeNode currentFocus = FocusScope.of(context);
+                                                                    if (!currentFocus.hasPrimaryFocus) {
+                                                                      currentFocus.focusedChild!.unfocus();
+                                                                    }
+
+
+                                                                    _ReferUnitCode="0";//set default value on child death
+                                                                    print('final ReferUnitCode $_ReferUnitCode');
+
+                                                                    /*
+                                                                    * Check if any child is live refer listing will be show
+                                                                    */
+                                                                    checkifAnyChildLive(
+                                                                        rdChildIsLive1,
+                                                                        rdChildIsLive2,
+                                                                        rdChildIsLive3,
+                                                                        rdChildIsLive4,
+                                                                        rdChildIsLive5);
+                                                                  });
+                                                                },
+                                                              ),
+                                                              Text(Strings.no,
+                                                                  style: TextStyle(
+                                                                      fontSize: 11))
+                                                            ],
+                                                          ),
+                                                        ))
+                                                  ],
+                                                ),
+                                              ),
+                                            ))
+                                      ],
+                                    ),
+                                  ),
+                                ),
+
+                                Container(
                                   child: Column(
                                     children:<Widget>[
                                       Padding(
@@ -2468,138 +2637,6 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                   ),
                                 ),
 
-                                Container(
-                                  color: ColorConstants.white,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(5.0),
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                            child: Container(
-                                              color: ColorConstants.white,
-                                              child: RichText(
-                                                text: TextSpan(
-                                                    text: Strings
-                                                        .child_death_or_not,
-                                                    style: TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 13),
-                                                    children: [
-                                                      TextSpan(
-                                                          text: '',
-                                                          style: TextStyle(
-                                                              color: Colors.red,
-                                                              fontWeight:
-                                                              FontWeight.bold,
-                                                              fontSize: 10))
-                                                    ]),
-                                                textAlign: TextAlign.left,
-                                              ),
-                                            )),
-                                        Expanded(
-                                            child: Container(
-                                              height: 36,
-                                              child: Padding(
-                                                padding:
-                                                const EdgeInsets.all(5.0),
-                                                child: Row(
-                                                  children: [
-                                                    Expanded(
-                                                        child: Container(
-                                                          margin: EdgeInsets.only(
-                                                              left: 20),
-                                                          height: 20,
-                                                          //Make it equal to height of radio button
-                                                          width: 10,
-                                                          //Make it equal to width of radio button
-                                                          child: Row(
-                                                            children: [
-                                                              Radio<ShihuIsLive3>(
-                                                                activeColor:rdChildIsLiveEntry3 == false ? Colors.grey : Colors.black,
-                                                                value: ShihuIsLive3.yes,
-                                                                groupValue: _shishuislive3,
-                                                                onChanged:rdChildIsLiveEntry3 == false ? null : (ShihuIsLive3? value) {
-                                                                  setState(() {
-                                                                    _shishuislive3 = value ?? _shishuislive3;
-                                                                    rdChildIsLive3="1";
-                                                                    _shishuWgt3EnDisable=true;
-                                                                    _ShowHideReferPlacesView=true;
-                                                                    _ShowHideErrorView=true;
-
-                                                                    _shishu3EnDisable=true;
-                                                                  });
-                                                                },
-                                                              ),
-                                                              Text(
-                                                                Strings.yes,
-                                                                style: TextStyle(
-                                                                    fontSize: 11),
-                                                              )
-                                                            ],
-                                                          ),
-                                                        )),
-                                                    Expanded(
-                                                        child: Container(
-                                                          margin: EdgeInsets.only(
-                                                              right: 20),
-                                                          height: 20,
-                                                          //Make it equal to height of radio button
-                                                          width: 10,
-                                                          //Make it equal to width of radio button
-                                                          child: Row(
-                                                            children: [
-                                                              Radio<ShihuIsLive3>(
-                                                                activeColor:rdChildIsLiveEntry3 == false ? Colors.grey : Colors.black,
-                                                                value: ShihuIsLive3.no,
-                                                                groupValue: _shishuislive3,
-                                                                onChanged:(ShihuIsLive3? value) {
-                                                                  setState(() {
-                                                                    _shishuislive3 = value ?? _shishuislive3;
-                                                                    rdChildIsLive3="0";
-                                                                    _shishuWgt3EnDisable=false;
-                                                                    _shishuWeight3Controller.text="";
-                                                                    childComplId_3="0";
-                                                                   // _ShowHideReferPlacesView=false;
-                                                                   // _ShowHideErrorView=false;
-
-
-                                                                    _shishu3NameController.text="";
-                                                                    _shishu3EnDisable=false;
-                                                                    FocusScopeNode currentFocus = FocusScope.of(context);
-                                                                    if (!currentFocus.hasPrimaryFocus) {
-                                                                      currentFocus.focusedChild!.unfocus();
-                                                                    }
-
-
-                                                                    _ReferUnitCode="0";//set default value on child death
-                                                                    print('final ReferUnitCode $_ReferUnitCode');
-
-                                                                    /*
-                                                                    * Check if any child is live refer listing will be show
-                                                                    */
-                                                                    checkifAnyChildLive(
-                                                                        rdChildIsLive1,
-                                                                        rdChildIsLive2,
-                                                                        rdChildIsLive3,
-                                                                        rdChildIsLive4,
-                                                                        rdChildIsLive5);
-                                                                  });
-                                                                },
-                                                              ),
-                                                              Text(Strings.no,
-                                                                  style: TextStyle(
-                                                                      fontSize: 11))
-                                                            ],
-                                                          ),
-                                                        ))
-                                                  ],
-                                                ),
-                                              ),
-                                            ))
-                                      ],
-                                    ),
-                                  ),
-                                ),
                                 Container(
                                   child: Column(
                                     children:<Widget>[
@@ -2764,6 +2801,149 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                 Divider(height: 1,thickness: 2,color: Colors.black,),
 
                                 Container(
+                                  color: ColorConstants.white,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                            child: Container(
+                                              color: ColorConstants.white,
+                                              child: RichText(
+                                                text: TextSpan(
+                                                    text: Strings
+                                                        .child_death_or_not,
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 13),
+                                                    children: [
+                                                      TextSpan(
+                                                          text: '',
+                                                          style: TextStyle(
+                                                              color: Colors.red,
+                                                              fontWeight:
+                                                              FontWeight.bold,
+                                                              fontSize: 10))
+                                                    ]),
+                                                textAlign: TextAlign.left,
+                                              ),
+                                            )),
+                                        Expanded(
+                                            child: Container(
+                                              height: 36,
+                                              child: Padding(
+                                                padding:
+                                                const EdgeInsets.all(5.0),
+                                                child: Row(
+                                                  children: [
+                                                    Expanded(
+                                                        child: Container(
+                                                          margin: EdgeInsets.only(
+                                                              left: 20),
+                                                          height: 20,
+                                                          //Make it equal to height of radio button
+                                                          width: 10,
+                                                          //Make it equal to width of radio button
+                                                          child: Row(
+                                                            children: [
+                                                              Radio<ShihuIsLive4>(
+                                                                activeColor:rdChildIsLiveEntry4 == false ? Colors.grey : Colors.black,
+                                                                value: ShihuIsLive4.yes,
+                                                                groupValue: _shishuislive4,
+                                                                onChanged:rdChildIsLiveEntry4 == false ? null : (ShihuIsLive4? value) {
+                                                                  setState(() {
+                                                                    _shishuislive4 = value ?? _shishuislive4;
+                                                                    rdChildIsLive4="1";
+                                                                    _shishuWgt4EnDisable=true;
+                                                                    _ShowHideReferPlacesView=true;
+                                                                    _ShowHideErrorView=true;
+
+                                                                    _shishu4EnDisable=true;
+
+                                                                    /*
+                                                                    * Check if any child is live , Save button will be show
+                                                                    */
+                                                                    checkShowHideSaveButton(
+                                                                        rdChildIsLive1,
+                                                                        rdChildIsLive2,
+                                                                        rdChildIsLive3,
+                                                                        rdChildIsLive4,
+                                                                        rdChildIsLive5
+                                                                    );
+                                                                  });
+                                                                },
+                                                              ),
+                                                              Text(
+                                                                Strings.yes,
+                                                                style: TextStyle(
+                                                                    fontSize: 11),
+                                                              )
+                                                            ],
+                                                          ),
+                                                        )),
+                                                    Expanded(
+                                                        child: Container(
+                                                          margin: EdgeInsets.only(
+                                                              right: 20),
+                                                          height: 20,
+                                                          //Make it equal to height of radio button
+                                                          width: 10,
+                                                          //Make it equal to width of radio button
+                                                          child: Row(
+                                                            children: [
+                                                              Radio<ShihuIsLive4>(
+                                                                activeColor:rdChildIsLiveEntry4 == false ? Colors.grey : Colors.black,
+                                                                value: ShihuIsLive4.no,
+                                                                groupValue: _shishuislive4,
+                                                                onChanged:(ShihuIsLive4? value) {
+                                                                  setState(() {
+                                                                    _shishuislive4 = value ?? _shishuislive4;
+                                                                    rdChildIsLive4="0";
+                                                                    _shishuWgt4EnDisable=false;
+                                                                    _shishuWeight4Controller.text="";
+                                                                    childComplId_4="0";
+                                                                    // _ShowHideReferPlacesView=false;
+                                                                    //_ShowHideErrorView=false;
+
+
+                                                                    _shishu4NameController.text="";
+                                                                    _shishu4EnDisable=false;
+                                                                    FocusScopeNode currentFocus = FocusScope.of(context);
+                                                                    if (!currentFocus.hasPrimaryFocus) {
+                                                                      currentFocus.focusedChild!.unfocus();
+                                                                    }
+
+                                                                    _ReferUnitCode="0";//set default value on child death
+                                                                    print('final ReferUnitCode $_ReferUnitCode');
+
+                                                                    /*
+                                                                    * Check if any child is live refer listing will be show
+                                                                    */
+                                                                    checkifAnyChildLive(
+                                                                        rdChildIsLive1,
+                                                                        rdChildIsLive2,
+                                                                        rdChildIsLive3,
+                                                                        rdChildIsLive4,
+                                                                        rdChildIsLive5);
+                                                                  });
+                                                                },
+                                                              ),
+                                                              Text(Strings.no,
+                                                                  style: TextStyle(
+                                                                      fontSize: 11))
+                                                            ],
+                                                          ),
+                                                        ))
+                                                  ],
+                                                ),
+                                              ),
+                                            ))
+                                      ],
+                                    ),
+                                  ),
+                                ),
+
+                                Container(
                                   child: Column(
                                     children:<Widget>[
                                       Padding(
@@ -2832,137 +3012,6 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                   ),
                                 ),
 
-                                Container(
-                                  color: ColorConstants.white,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(5.0),
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                            child: Container(
-                                              color: ColorConstants.white,
-                                              child: RichText(
-                                                text: TextSpan(
-                                                    text: Strings
-                                                        .child_death_or_not,
-                                                    style: TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 13),
-                                                    children: [
-                                                      TextSpan(
-                                                          text: '',
-                                                          style: TextStyle(
-                                                              color: Colors.red,
-                                                              fontWeight:
-                                                              FontWeight.bold,
-                                                              fontSize: 10))
-                                                    ]),
-                                                textAlign: TextAlign.left,
-                                              ),
-                                            )),
-                                        Expanded(
-                                            child: Container(
-                                              height: 36,
-                                              child: Padding(
-                                                padding:
-                                                const EdgeInsets.all(5.0),
-                                                child: Row(
-                                                  children: [
-                                                    Expanded(
-                                                        child: Container(
-                                                          margin: EdgeInsets.only(
-                                                              left: 20),
-                                                          height: 20,
-                                                          //Make it equal to height of radio button
-                                                          width: 10,
-                                                          //Make it equal to width of radio button
-                                                          child: Row(
-                                                            children: [
-                                                              Radio<ShihuIsLive4>(
-                                                                activeColor:rdChildIsLiveEntry4 == false ? Colors.grey : Colors.black,
-                                                                value: ShihuIsLive4.yes,
-                                                                groupValue: _shishuislive4,
-                                                                onChanged:rdChildIsLiveEntry4 == false ? null : (ShihuIsLive4? value) {
-                                                                  setState(() {
-                                                                    _shishuislive4 = value ?? _shishuislive4;
-                                                                    rdChildIsLive4="1";
-                                                                    _shishuWgt4EnDisable=true;
-                                                                    _ShowHideReferPlacesView=true;
-                                                                    _ShowHideErrorView=true;
-
-                                                                    _shishu4EnDisable=true;
-                                                                  });
-                                                                },
-                                                              ),
-                                                              Text(
-                                                                Strings.yes,
-                                                                style: TextStyle(
-                                                                    fontSize: 11),
-                                                              )
-                                                            ],
-                                                          ),
-                                                        )),
-                                                    Expanded(
-                                                        child: Container(
-                                                          margin: EdgeInsets.only(
-                                                              right: 20),
-                                                          height: 20,
-                                                          //Make it equal to height of radio button
-                                                          width: 10,
-                                                          //Make it equal to width of radio button
-                                                          child: Row(
-                                                            children: [
-                                                              Radio<ShihuIsLive4>(
-                                                                activeColor:rdChildIsLiveEntry4 == false ? Colors.grey : Colors.black,
-                                                                value: ShihuIsLive4.no,
-                                                                groupValue: _shishuislive4,
-                                                                onChanged:(ShihuIsLive4? value) {
-                                                                  setState(() {
-                                                                    _shishuislive4 = value ?? _shishuislive4;
-                                                                    rdChildIsLive4="0";
-                                                                    _shishuWgt4EnDisable=false;
-                                                                    _shishuWeight4Controller.text="";
-                                                                    childComplId_4="0";
-                                                                   // _ShowHideReferPlacesView=false;
-                                                                    //_ShowHideErrorView=false;
-
-
-                                                                    _shishu4NameController.text="";
-                                                                    _shishu4EnDisable=false;
-                                                                    FocusScopeNode currentFocus = FocusScope.of(context);
-                                                                    if (!currentFocus.hasPrimaryFocus) {
-                                                                      currentFocus.focusedChild!.unfocus();
-                                                                    }
-
-                                                                    _ReferUnitCode="0";//set default value on child death
-                                                                    print('final ReferUnitCode $_ReferUnitCode');
-
-                                                                    /*
-                                                                    * Check if any child is live refer listing will be show
-                                                                    */
-                                                                    checkifAnyChildLive(
-                                                                        rdChildIsLive1,
-                                                                        rdChildIsLive2,
-                                                                        rdChildIsLive3,
-                                                                        rdChildIsLive4,
-                                                                        rdChildIsLive5);
-                                                                  });
-                                                                },
-                                                              ),
-                                                              Text(Strings.no,
-                                                                  style: TextStyle(
-                                                                      fontSize: 11))
-                                                            ],
-                                                          ),
-                                                        ))
-                                                  ],
-                                                ),
-                                              ),
-                                            ))
-                                      ],
-                                    ),
-                                  ),
-                                ),
                                 Container(
                                   child: Column(
                                     children:<Widget>[
@@ -3127,6 +3176,148 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                 Divider(height: 1,thickness: 2,color: Colors.black,),
 
                                 Container(
+                                  color: ColorConstants.white,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                            child: Container(
+                                              color: ColorConstants.white,
+                                              child: RichText(
+                                                text: TextSpan(
+                                                    text: Strings
+                                                        .child_death_or_not,
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 13),
+                                                    children: [
+                                                      TextSpan(
+                                                          text: '',
+                                                          style: TextStyle(
+                                                              color: Colors.red,
+                                                              fontWeight:
+                                                              FontWeight.bold,
+                                                              fontSize: 10))
+                                                    ]),
+                                                textAlign: TextAlign.left,
+                                              ),
+                                            )),
+                                        Expanded(
+                                            child: Container(
+                                              height: 36,
+                                              child: Padding(
+                                                padding:
+                                                const EdgeInsets.all(5.0),
+                                                child: Row(
+                                                  children: [
+                                                    Expanded(
+                                                        child: Container(
+                                                          margin: EdgeInsets.only(
+                                                              left: 20),
+                                                          height: 20,
+                                                          //Make it equal to height of radio button
+                                                          width: 10,
+                                                          //Make it equal to width of radio button
+                                                          child: Row(
+                                                            children: [
+                                                              Radio<ShihuIsLive5>(
+                                                                activeColor:rdChildIsLiveEntry5 == false ? Colors.grey : Colors.black,
+                                                                value: ShihuIsLive5.yes,
+                                                                groupValue: _shishuislive5,
+                                                                onChanged:rdChildIsLiveEntry5 == false ? null :  (ShihuIsLive5? value) {
+                                                                  setState(() {
+                                                                    _shishuislive5 = value ?? _shishuislive5;
+                                                                    rdChildIsLive5="1";
+                                                                    _shishuWgt5EnDisable=true;
+                                                                    _ShowHideReferPlacesView=true;
+                                                                    _ShowHideErrorView=true;
+
+                                                                    _shishu5EnDisable=true;
+
+                                                                    /*
+                                                                    * Check if any child is live , Save button will be show
+                                                                    */
+                                                                    checkShowHideSaveButton(
+                                                                        rdChildIsLive1,
+                                                                        rdChildIsLive2,
+                                                                        rdChildIsLive3,
+                                                                        rdChildIsLive4,
+                                                                        rdChildIsLive5
+                                                                    );
+                                                                  });
+                                                                },
+                                                              ),
+                                                              Text(
+                                                                Strings.yes,
+                                                                style: TextStyle(
+                                                                    fontSize: 11),
+                                                              )
+                                                            ],
+                                                          ),
+                                                        )),
+                                                    Expanded(
+                                                        child: Container(
+                                                          margin: EdgeInsets.only(
+                                                              right: 20),
+                                                          height: 20,
+                                                          //Make it equal to height of radio button
+                                                          width: 10,
+                                                          //Make it equal to width of radio button
+                                                          child: Row(
+                                                            children: [
+                                                              Radio<ShihuIsLive5>(
+                                                                activeColor:rdChildIsLiveEntry5 == false ? Colors.grey : Colors.black,
+                                                                value: ShihuIsLive5.no,
+                                                                groupValue: _shishuislive5,
+                                                                onChanged:(ShihuIsLive5? value) {
+                                                                  setState(() {
+                                                                    _shishuislive5 = value ?? _shishuislive5;
+                                                                    rdChildIsLive5="0";
+                                                                    _shishuWgt5EnDisable=false;
+                                                                    _shishuWeight5Controller.text="";
+                                                                    childComplId_5="0";
+                                                                    // _ShowHideReferPlacesView=false;
+                                                                    // _ShowHideErrorView=false;
+
+                                                                    _ReferUnitCode="0";//set default value on child death
+                                                                    print('final ReferUnitCode $_ReferUnitCode');
+
+                                                                    _shishu5NameController.text="";
+                                                                    _shishu5EnDisable=false;
+                                                                    FocusScopeNode currentFocus = FocusScope.of(context);
+                                                                    if (!currentFocus.hasPrimaryFocus) {
+                                                                      currentFocus.focusedChild!.unfocus();
+                                                                    }
+
+                                                                    /*
+                                                                    * Check if any child is live refer listing will be show
+                                                                    */
+                                                                    checkifAnyChildLive(
+                                                                        rdChildIsLive1,
+                                                                        rdChildIsLive2,
+                                                                        rdChildIsLive3,
+                                                                        rdChildIsLive4,
+                                                                        rdChildIsLive5);
+                                                                  });
+                                                                },
+                                                              ),
+                                                              Text(Strings.no,
+                                                                  style: TextStyle(
+                                                                      fontSize: 11))
+                                                            ],
+                                                          ),
+                                                        ))
+                                                  ],
+                                                ),
+                                              ),
+                                            ))
+                                      ],
+                                    ),
+                                  ),
+                                ),
+
+                                Container(
                                   child: Column(
                                     children:<Widget>[
                                       Padding(
@@ -3195,136 +3386,6 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                   ),
                                 ),
 
-                                Container(
-                                  color: ColorConstants.white,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(5.0),
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                            child: Container(
-                                              color: ColorConstants.white,
-                                              child: RichText(
-                                                text: TextSpan(
-                                                    text: Strings
-                                                        .child_death_or_not,
-                                                    style: TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 13),
-                                                    children: [
-                                                      TextSpan(
-                                                          text: '',
-                                                          style: TextStyle(
-                                                              color: Colors.red,
-                                                              fontWeight:
-                                                              FontWeight.bold,
-                                                              fontSize: 10))
-                                                    ]),
-                                                textAlign: TextAlign.left,
-                                              ),
-                                            )),
-                                        Expanded(
-                                            child: Container(
-                                              height: 36,
-                                              child: Padding(
-                                                padding:
-                                                const EdgeInsets.all(5.0),
-                                                child: Row(
-                                                  children: [
-                                                    Expanded(
-                                                        child: Container(
-                                                          margin: EdgeInsets.only(
-                                                              left: 20),
-                                                          height: 20,
-                                                          //Make it equal to height of radio button
-                                                          width: 10,
-                                                          //Make it equal to width of radio button
-                                                          child: Row(
-                                                            children: [
-                                                              Radio<ShihuIsLive5>(
-                                                                activeColor:rdChildIsLiveEntry5 == false ? Colors.grey : Colors.black,
-                                                                value: ShihuIsLive5.yes,
-                                                                groupValue: _shishuislive5,
-                                                                onChanged:rdChildIsLiveEntry5 == false ? null :  (ShihuIsLive5? value) {
-                                                                  setState(() {
-                                                                    _shishuislive5 = value ?? _shishuislive5;
-                                                                    rdChildIsLive5="1";
-                                                                    _shishuWgt5EnDisable=true;
-                                                                    _ShowHideReferPlacesView=true;
-                                                                    _ShowHideErrorView=true;
-
-                                                                    _shishu5EnDisable=true;
-                                                                  });
-                                                                },
-                                                              ),
-                                                              Text(
-                                                                Strings.yes,
-                                                                style: TextStyle(
-                                                                    fontSize: 11),
-                                                              )
-                                                            ],
-                                                          ),
-                                                        )),
-                                                    Expanded(
-                                                        child: Container(
-                                                          margin: EdgeInsets.only(
-                                                              right: 20),
-                                                          height: 20,
-                                                          //Make it equal to height of radio button
-                                                          width: 10,
-                                                          //Make it equal to width of radio button
-                                                          child: Row(
-                                                            children: [
-                                                              Radio<ShihuIsLive5>(
-                                                                activeColor:rdChildIsLiveEntry5 == false ? Colors.grey : Colors.black,
-                                                                value: ShihuIsLive5.no,
-                                                                groupValue: _shishuislive5,
-                                                                onChanged:(ShihuIsLive5? value) {
-                                                                  setState(() {
-                                                                    _shishuislive5 = value ?? _shishuislive5;
-                                                                    rdChildIsLive5="0";
-                                                                    _shishuWgt5EnDisable=false;
-                                                                    _shishuWeight5Controller.text="";
-                                                                    childComplId_5="0";
-                                                                   // _ShowHideReferPlacesView=false;
-                                                                   // _ShowHideErrorView=false;
-
-                                                                    _ReferUnitCode="0";//set default value on child death
-                                                                    print('final ReferUnitCode $_ReferUnitCode');
-
-                                                                    _shishu5NameController.text="";
-                                                                    _shishu5EnDisable=false;
-                                                                    FocusScopeNode currentFocus = FocusScope.of(context);
-                                                                    if (!currentFocus.hasPrimaryFocus) {
-                                                                      currentFocus.focusedChild!.unfocus();
-                                                                    }
-
-                                                                    /*
-                                                                    * Check if any child is live refer listing will be show
-                                                                    */
-                                                                    checkifAnyChildLive(
-                                                                        rdChildIsLive1,
-                                                                        rdChildIsLive2,
-                                                                        rdChildIsLive3,
-                                                                        rdChildIsLive4,
-                                                                        rdChildIsLive5);
-                                                                  });
-                                                                },
-                                                              ),
-                                                              Text(Strings.no,
-                                                                  style: TextStyle(
-                                                                      fontSize: 11))
-                                                            ],
-                                                          ),
-                                                        ))
-                                                  ],
-                                                ),
-                                              ),
-                                            ))
-                                      ],
-                                    ),
-                                  ),
-                                ),
                                 Container(
                                   child: Column(
                                     children:<Widget>[
@@ -5468,10 +5529,34 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
   void checkifAnyChildLive(String rdChildIsLive1, String rdChildIsLive2, String rdChildIsLive3, String rdChildIsLive4, String rdChildIsLive5) {
     if(rdChildIsLive1 == "1" || rdChildIsLive2 == "1" || rdChildIsLive3 == "1" ||rdChildIsLive4 == "1" ||rdChildIsLive5 == "1"){
       _ShowHideReferPlacesView=true;
-      _ShowHideErrorView=true;
-    }else{
       _ShowHideErrorView=false;
+    }else{
+      _ShowHideErrorView=true;
       _ShowHideReferPlacesView=false;
+    }
+    if(_ShowHideShishuEntryView1 == true && rdChildIsLive1 == "0"){
+        setState(() {
+          _ShowHideADDNewVivranView=false;
+        });
+    }else{
+        setState(() {
+          _ShowHideADDNewVivranView=true;
+        });
+    }
+  }
+  void checkShowHideSaveButton(String rdChildIsLive1, String rdChildIsLive2, String rdChildIsLive3, String rdChildIsLive4, String rdChildIsLive5) {
+    if( _ShowHideShishuEntryView1 == true && rdChildIsLive1 == "0"  ||
+        _ShowHideShishuEntryView2 == true && rdChildIsLive2 == "0"  ||
+        _ShowHideShishuEntryView3 == true && rdChildIsLive3 == "0"  ||
+        _ShowHideShishuEntryView4 == true && rdChildIsLive4 == "0"  ||
+        _ShowHideShishuEntryView5 == true && rdChildIsLive5 == "0"){
+        setState(() {
+          _ShowHideADDNewVivranView=false;
+        });
+    }else{
+        setState(() {
+          _ShowHideADDNewVivranView=true;
+        });
     }
   }
 

@@ -2052,10 +2052,12 @@ class _DashboardScreen extends State<DashboardScreen> {
                                 ],
                               ),
                             ),
-                            Container(
+                            Visibility(
+                                visible: false,
+                                child: Container(
 
-                              height: 70,
-                              width: 200,
+                                height: 70,
+                                width: 200,
                                 child: GestureDetector(
                                   onTap: () {
                                     stopTimer();
@@ -2122,7 +2124,7 @@ class _DashboardScreen extends State<DashboardScreen> {
                                     ),
                                   ),
                                 )
-                            ),
+                            )),
                             Container(
                               height: 70.0,
                               child: Row(

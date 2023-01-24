@@ -1138,15 +1138,16 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
 
 
       motherComplId=widget.PNCComp;
+      print('last_motherComplId ${motherComplId}');
       if(widget.PNCComp.isNotEmpty){
         if(motherComplId == "5" || motherComplId == "0"){
-          //  _ShowHideReferPlacesView=false;
+            _ShowHideReferPlacesView=false;
             _ShowHideErrorView=false;
           }else if(motherComplId == "3"){
-            //_ShowHideReferPlacesView=false;
+            _ShowHideReferPlacesView=false;
             _ShowHideErrorView=true;
           }else{
-            //_ShowHideReferPlacesView=true;
+            _ShowHideReferPlacesView=true;
             _ShowHideErrorView=false;
           }
       }

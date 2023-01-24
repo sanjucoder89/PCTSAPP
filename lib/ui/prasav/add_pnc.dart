@@ -1506,12 +1506,15 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                       if(motherComplId == "5" || motherComplId == "0"){
                                         _ShowHideReferPlacesView=false;
                                         _ShowHideErrorView=false;
+                                        _ShowHideADDNewVivranView=true;
                                       }else if(motherComplId == "3"){//dead
                                         _ShowHideReferPlacesView=false;
                                         _ShowHideErrorView=true;
+                                        _ShowHideADDNewVivranView=false;
                                       }else{
                                         _ShowHideReferPlacesView=true;
                                         _ShowHideErrorView=false;
+                                        _ShowHideADDNewVivranView=true;
                                       }
                                     });
                                   },

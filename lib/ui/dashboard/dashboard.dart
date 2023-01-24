@@ -200,6 +200,7 @@ class _DashboardScreen extends State<DashboardScreen> {
       _unitNme=preferences.getString('UnitName').toString();
       _anmName=preferences.getString('ANMName').toString();
       _unitCode=preferences.getString('UnitCode').toString();
+      print('_unitCode ${_unitCode}');
       _topHeaderName=preferences.getString('topName').toString();
       /*
       * 33= Asha Login
@@ -3694,7 +3695,7 @@ class _DashboardScreen extends State<DashboardScreen> {
                         //softWrap: false,
                         style: TextStyle(
                             color: ColorConstants.white,
-                            fontSize: 15,
+                            fontSize: 13,
                             fontWeight: FontWeight.normal),
                       ),
                     )),
@@ -3703,11 +3704,11 @@ class _DashboardScreen extends State<DashboardScreen> {
                       child: Container(
                         //margin: EdgeInsets.only(right: 23),
                         child: Text(
-                          "$_unitNme $_unitCode",
+                          " $_unitNme $_unitCode ",
                           maxLines: 1,
                           style: TextStyle(
                               color: ColorConstants.white,
-                              fontSize: 15,
+                              fontSize: 13,
                               fontWeight: FontWeight.normal),
                         ),
                       ),

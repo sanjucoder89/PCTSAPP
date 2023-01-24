@@ -2177,7 +2177,12 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
                   GestureDetector(
                     onTap: () {
                       if(response_list[0]['DeathDate'].toString() != "null"){
-                        _selectReportDatePopup(int.parse(_reportYYYYdateController.text.toString()),int.parse(_reportMMdateController.text.toString()) ,int.parse(_reportDDdateController.text.toString()));
+                        if(_reportYYYYdateController.text.toString().isEmpty && _reportMMdateController.text.toString().isEmpty && _reportDDdateController.text.toString().isEmpty){
+                          _selectReportDatePopup(0,0,0);
+                        }else{
+                          _selectReportDatePopup(int.parse(_reportYYYYdateController.text.toString()),int.parse(_reportMMdateController.text.toString()) ,int.parse(_reportDDdateController.text.toString()));
+                        }
+
                       }else{
                         _selectReportDatePopup(0,0,0);
                       }
@@ -3298,22 +3303,39 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
         if (formattedDate2.compareTo(getCurrentDate()) > 0) {
           //print('equal to current date#########');
           _showErrorPopup(Strings.aaj_ki_tareek_sai_phale,ColorConstants.AppColorPrimary);
+          _reportDDdateController.text = "";
+          _reportMMdateController.text = "";
+          _reportYYYYdateController.text = "";
         } else {
+
+
           if(widget.DeathReportDate != "null"){
-            var reportDate = DateTime.parse(getConvertRegDateFormat(widget.DeathReportDate));
-            print('reportDate ${reportDate}');//2021-03-12 00:00:00.000
+
+           // var reportDate = DateTime.parse(getConvertRegDateFormat(widget.DeathReportDate));//DeathReportDate
+            var reportDate = DateTime.parse(getConvertRegDateFormat(_deathYYYYdateController.text.toString()+"-"+_deathMMdateController.text.toString()+"-"+_deathDDdateController.text.toString()+" 00:00:00.000"));//DeathReportDate
+           // print('reportDate ${reportDate}');
 
             var selectedParsedDate = DateTime.parse(formattedDate4.toString());
+            //print('selectedParsedDate ${selectedParsedDate}');
 
-            if (selectedParsedDate.compareTo(reportDate) > 0) //2021-04-22 00:00:00.000
-                {
+            if(response_list[0]['DeathDate'].toString() != "null"){
               _reportDDdateController.text = getDate(formattedDate4);
               _reportMMdateController.text = getMonth(formattedDate4);
               _reportYYYYdateController.text = getYear(formattedDate4);
               _reportdeathPostDate=_reportYYYYdateController.text.toString()+ "/"+_reportMMdateController.text.toString()+"/"+_reportDDdateController.text.toString();
-              print('reportDeath $_reportdeathPostDate');
-            }else{
-              _showErrorPopup('शिशु की मृत्यु की दिनांक चुने', ColorConstants.AppColorPrimary);
+
+              if (selectedParsedDate.compareTo(reportDate) > 0)
+                  {
+                _reportDDdateController.text = getDate(formattedDate4);
+                _reportMMdateController.text = getMonth(formattedDate4);
+                _reportYYYYdateController.text = getYear(formattedDate4);
+                _reportdeathPostDate=_reportYYYYdateController.text.toString()+ "/"+_reportMMdateController.text.toString()+"/"+_reportDDdateController.text.toString();
+              }else{
+                _showErrorPopup('शिशु की मृत्यु की दिनांक चुने', ColorConstants.AppColorPrimary);
+                _reportDDdateController.text = "";
+                _reportMMdateController.text = "";
+                _reportYYYYdateController.text = "";
+              }
             }
           }else{
             _reportDDdateController.text = getDate(formattedDate4);

@@ -573,10 +573,10 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
   }
 
   var _showSubDropDown=false;
-  bool _chooseMamtaCard = true;
-  bool _chooseAharCard = true;
+  bool _chooseMamtaCard = false;
+  bool _chooseAharCard = false;
   bool _referView = false;
-  bool _isChildGrowthDiseaseFound = true;
+  bool _isChildGrowthDiseaseFound = false;
 
   @override
   Widget build(BuildContext context) {

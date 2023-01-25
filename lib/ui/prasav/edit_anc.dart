@@ -910,11 +910,11 @@ class _EditANCScreen extends State<EditANCScreen> {
       }
     }
 
-    if (_AlbadoseDDController.text.isNotEmpty) {
+    if (_AlbadoseDDController.text.length == 2 && _AlbadoseMMController.text.length == 2 && _AlbadoseYYYYController.text.length == 4) {
       _Tab_Alb_DatePost=_AlbadoseYYYYController.text.toString()+"/"+_AlbadoseMMController.text.toString()+"/"+_AlbadoseDDController.text.toString();
     }
 
-    if (_CalciumVitaminD3DDController.text.isNotEmpty) {
+    if (_CalciumVitaminD3DDController.text.length == 2 && _CalciumVitaminD3MMController.text.length == 2 && _CalciumVitaminD3DDController.text.length == 4) {
       _cal_DatePost=_CalciumVitaminD3YYYYController.text.toString()+"/"+_CalciumVitaminD3MMController.text.toString()+"/"+_CalciumVitaminD3DDController.text.toString();
     }
 
@@ -1132,11 +1132,11 @@ class _EditANCScreen extends State<EditANCScreen> {
       }
     }
 
-    if (_AlbadoseDDController.text.isNotEmpty) {
+    if (_AlbadoseDDController.text.length == 2 && _AlbadoseMMController.text.length == 2 && _AlbadoseYYYYController.text.length == 4) {
       _Tab_Alb_DatePost=_AlbadoseYYYYController.text.toString()+"/"+_AlbadoseMMController.text.toString()+"/"+_AlbadoseDDController.text.toString();
     }
 
-    if (_CalciumVitaminD3DDController.text.isNotEmpty) {
+    if (_CalciumVitaminD3DDController.text.length == 2 && _CalciumVitaminD3MMController.text.length == 2 && _CalciumVitaminD3DDController.text.length == 4) {
       _cal_DatePost=_CalciumVitaminD3YYYYController.text.toString()+"/"+_CalciumVitaminD3MMController.text.toString()+"/"+_CalciumVitaminD3DDController.text.toString();
     }
 

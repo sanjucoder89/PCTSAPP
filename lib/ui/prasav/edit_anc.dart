@@ -652,7 +652,8 @@ class _EditANCScreen extends State<EditANCScreen> {
   var  edtBP_S=0;
   var  edtBP_D=0;
   void validatePostRequest() {
-
+    print('_highRiskChecked $_highRiskChecked');
+    print('_ReferUnitCode $_ReferUnitCode');
     if(_bloodpreshourSController.text.isNotEmpty){
       edtBP_S=int.parse(_bloodpreshourSController.text.toString());
     }

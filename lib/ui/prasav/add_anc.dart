@@ -613,6 +613,8 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
           _showErrorPopup(Strings.please_choose_upchar_code,Colors.black);
         }else if (_TreatMentCode == "0") {
           _showErrorPopup(Strings.please_choose_upchar_code,Colors.black);
+        }else if(_ReferUnitCode == "0" && _highRiskChecked == true){
+          _showErrorPopup(Strings.choose_refer_sanstha, Colors.black);
         }/*else if(_referData == "0"){
           _showErrorPopup(Strings.choose_refer_type, Colors.black);
         }else if(_distUnitIdCode == "0000"){

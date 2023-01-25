@@ -1143,12 +1143,15 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
         if(motherComplId == "5" || motherComplId == "0"){
             _ShowHideReferPlacesView=false;
             _ShowHideErrorView=false;
+            _ShowHideADDNewVivranView=true;
           }else if(motherComplId == "3"){
             _ShowHideReferPlacesView=false;
             _ShowHideErrorView=true;
+            _ShowHideADDNewVivranView=false;
           }else{
             _ShowHideReferPlacesView=true;
             _ShowHideErrorView=false;
+            _ShowHideADDNewVivranView=true;
           }
       }
       print('widget.PNCFlag ${widget.PNCFlag}');
@@ -1902,12 +1905,15 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                       if(motherComplId == "5" || motherComplId == "0"){
                                         _ShowHideReferPlacesView=false;
                                         _ShowHideErrorView=false;
+                                        _ShowHideADDNewVivranView=true;
                                       }else if(motherComplId == "3"){
                                         _ShowHideReferPlacesView=false;
                                         _ShowHideErrorView=true;
+                                        _ShowHideADDNewVivranView=false;
                                       }else{
                                         _ShowHideReferPlacesView=true;
                                         _ShowHideErrorView=false;
+                                        _ShowHideADDNewVivranView=true;
                                       }
                                       checkifNoneCompl(childComplId_1,childComplId_2,childComplId_3,childComplId_4,childComplId_5);
                                     });

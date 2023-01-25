@@ -3307,15 +3307,12 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
           _reportMMdateController.text = "";
           _reportYYYYdateController.text = "";
         } else {
-
-
           if(widget.DeathReportDate != "null"){
-
            // var reportDate = DateTime.parse(getConvertRegDateFormat(widget.DeathReportDate));//DeathReportDate
-            var reportDate = DateTime.parse(getConvertRegDateFormat(_deathYYYYdateController.text.toString()+"-"+_deathMMdateController.text.toString()+"-"+_deathDDdateController.text.toString()+" 00:00:00.000"));//DeathReportDate
+            var _selecteddeathDate = DateTime.parse(getConvertRegDateFormat(_deathYYYYdateController.text.toString()+"-"+_deathMMdateController.text.toString()+"-"+_deathDDdateController.text.toString()+" 00:00:00.000"));//DeathReportDate
            // print('reportDate ${reportDate}');
 
-            var selectedParsedDate = DateTime.parse(formattedDate4.toString());
+            var selectedReportDate = DateTime.parse(formattedDate4.toString());
             //print('selectedParsedDate ${selectedParsedDate}');
 
             if(response_list[0]['DeathDate'].toString() != "null"){
@@ -3324,8 +3321,8 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
               _reportYYYYdateController.text = getYear(formattedDate4);
               _reportdeathPostDate=_reportYYYYdateController.text.toString()+ "/"+_reportMMdateController.text.toString()+"/"+_reportDDdateController.text.toString();
 
-              if (selectedParsedDate.compareTo(reportDate) > 0)
-                  {
+              if (selectedReportDate.compareTo(_selecteddeathDate) > 0)
+              {
                 _reportDDdateController.text = getDate(formattedDate4);
                 _reportMMdateController.text = getMonth(formattedDate4);
                 _reportYYYYdateController.text = getYear(formattedDate4);

@@ -1909,6 +1909,7 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                         _ShowHideReferPlacesView=true;
                                         _ShowHideErrorView=false;
                                       }
+                                      checkifNoneCompl(childComplId_1,childComplId_2,childComplId_3,childComplId_4,childComplId_5);
                                     });
                                   },
                                   value: motherComplId, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
@@ -2206,7 +2207,6 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                     ),
                                   ),
                                 ),
-
                                 Container(
                                   child: Column(
                                     children:<Widget>[
@@ -2275,8 +2275,6 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                     ],
                                   ),
                                 ),
-
-
                                 Container(
                                   child: Column(
                                     children:<Widget>[
@@ -2365,7 +2363,6 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                     children: [
                                       Container(
                                         width: (MediaQuery.of(context).size.width - 10),
-                                        // width: 411.42857142857144-10,
                                         height: 40,
                                         child: DropdownButtonHideUnderline(
                                           child: DropdownButton(
@@ -2413,6 +2410,7 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                                 }else{
                                                   _ShowHideReferPlacesView=true;
                                                 }
+                                                checkifNoneCompl(childComplId_1,childComplId_2,childComplId_3,childComplId_4,childComplId_5);
                                               });
                                             } : null,
                                             value:
@@ -2777,6 +2775,7 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                                 }else{
                                                   _ShowHideReferPlacesView=true;
                                                 }
+                                                checkifNoneCompl(childComplId_1,childComplId_2,childComplId_3,childComplId_4,childComplId_5);
                                               });
                                             } : null,
                                             value:
@@ -3141,6 +3140,7 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                                 }else{
                                                   _ShowHideReferPlacesView=true;
                                                 }
+                                                checkifNoneCompl(childComplId_1,childComplId_2,childComplId_3,childComplId_4,childComplId_5);
                                               });
                                             } : null,
                                             value:
@@ -3505,6 +3505,7 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                                 }else{
                                                   _ShowHideReferPlacesView=true;
                                                 }
+                                                checkifNoneCompl(childComplId_1,childComplId_2,childComplId_3,childComplId_4,childComplId_5);
                                               });
                                             }: null,
                                             value:
@@ -3868,6 +3869,7 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                                 }else{
                                                   _ShowHideReferPlacesView=true;
                                                 }
+                                                checkifNoneCompl(childComplId_1,childComplId_2,childComplId_3,childComplId_4,childComplId_5);
                                               });
                                             } : null,
                                             value:
@@ -5187,6 +5189,17 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
       _ShowHideReferPlacesView=true;
     }else{
       _ShowHideReferPlacesView=false;
+    }
+  }
+
+  void checkifNoneCompl(String childCompl1,String childCompl2,String childCompl3,String childCompl4,String childCompl5) {
+    if((motherComplId == "5" || motherComplId == "0") && ((childCompl1 == "12" || childCompl1 == "0")
+        && (childCompl2 == "12" || childCompl2 == "0")
+        && (childCompl3 == "12" || childCompl3 == "0")
+        && (childCompl4 == "12" || childCompl4 == "0")
+        && (childCompl5 == "12" || childCompl5 == "0")) ){
+      _ReferUnitCode="0";//set default value on child death
+      print('final ReferUnitCode $_ReferUnitCode');
     }
   }
 

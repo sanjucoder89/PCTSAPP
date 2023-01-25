@@ -522,364 +522,367 @@ class _AncExpandDetails extends State<AncExpandDetails> {
           children:<Widget> [
             Positioned(child: SingleChildScrollView(
               physics: ScrollPhysics(),
-              child: Column(
-                children:<Widget> [
-                  Container(
-                    color: ColorConstants.redTextColor,
-                    height: 50,
-                    child: Column(
-                      children: [
-                        Expanded(child: Row(
-                          children: [
-                            SizedBox(
-                              width: 150,
-                              child: Row(
-                                children: [
-                                  Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: GestureDetector(
-                                        child: Container(
-                                          margin: EdgeInsets.only(left: 10),
-                                          child: Text(
-                                            '$_anmAshaTitle',
-                                            style: TextStyle(
-                                                color: ColorConstants.app_yellow_color,
-                                                fontSize: 13),
-                                          ),
-                                        ),
-                                      )),
-                                  Flexible(child: Container(
-                                    child: Text(_anmName == "null" ? "-" :_anmName,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        softWrap: false,
-                                        style: TextStyle(
-                                          color: ColorConstants.white,
-                                          fontSize: 13,
-                                          overflow: TextOverflow.ellipsis,
-                                        )),
-                                  ))
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Expanded(
+              child: Container(
+                padding: EdgeInsets.only(bottom: 100),
+                child: Column(
+                  children:<Widget> [
+                    Container(
+                      color: ColorConstants.redTextColor,
+                      height: 50,
+                      child: Column(
+                        children: [
+                          Expanded(child: Row(
+                            children: [
+                              SizedBox(
+                                width: 150,
                                 child: Row(
                                   children: [
                                     Align(
-                                      alignment: Alignment.centerRight,
-                                      child: Container(
-                                        margin: EdgeInsets.only(right: 3),
-                                        child: Text(Strings.sanstha_title,
-                                            style: TextStyle(
-                                                color: ColorConstants.app_yellow_color,
-                                                fontSize: 13)),
-                                      ),
-                                    ),
-                                    Flexible(
-                                      child: Container(
-                                        child: Text(_topHeaderName,
-                                            maxLines: 1,
+                                        alignment: Alignment.centerLeft,
+                                        child: GestureDetector(
+                                          child: Container(
+                                            margin: EdgeInsets.only(left: 10),
+                                            child: Text(
+                                              '$_anmAshaTitle',
+                                              style: TextStyle(
+                                                  color: ColorConstants.app_yellow_color,
+                                                  fontSize: 13),
+                                            ),
+                                          ),
+                                        )),
+                                    Flexible(child: Container(
+                                      child: Text(_anmName == "null" ? "-" :_anmName,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          softWrap: false,
+                                          style: TextStyle(
+                                            color: ColorConstants.white,
+                                            fontSize: 13,
                                             overflow: TextOverflow.ellipsis,
-                                            softWrap: false,
-                                            style: TextStyle(
-                                              color: ColorConstants.white,
-                                              fontSize: 13,
-                                              overflow: TextOverflow.ellipsis,
-                                            )),
-                                      ),
-                                    )
+                                          )),
+                                    ))
                                   ],
-                                )),
-                          ],
-                        )),
-                        Container(
-                          color:  ColorConstants.brown_grey,
-                          child: Align(
-                              alignment: Alignment.bottomCenter,
-                              child: GestureDetector(
-                                child: Container(
-                                  child: Text(
-                                    Strings.anc_ka_vivran,
-                                    style: TextStyle(
-                                        color: ColorConstants.white,
-                                        fontSize: 15),
-                                  ),
                                 ),
-                              )),
-                        ),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Expanded(
+                                  child: Row(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.centerRight,
+                                        child: Container(
+                                          margin: EdgeInsets.only(right: 3),
+                                          child: Text(Strings.sanstha_title,
+                                              style: TextStyle(
+                                                  color: ColorConstants.app_yellow_color,
+                                                  fontSize: 13)),
+                                        ),
+                                      ),
+                                      Flexible(
+                                        child: Container(
+                                          child: Text(_topHeaderName,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              softWrap: false,
+                                              style: TextStyle(
+                                                color: ColorConstants.white,
+                                                fontSize: 13,
+                                                overflow: TextOverflow.ellipsis,
+                                              )),
+                                        ),
+                                      )
+                                    ],
+                                  )),
+                            ],
+                          )),
+                          Container(
+                            color:  ColorConstants.brown_grey,
+                            child: Align(
+                                alignment: Alignment.bottomCenter,
+                                child: GestureDetector(
+                                  child: Container(
+                                    child: Text(
+                                      Strings.anc_ka_vivran,
+                                      style: TextStyle(
+                                          color: ColorConstants.white,
+                                          fontSize: 15),
+                                    ),
+                                  ),
+                                )),
+                          ),
 
+                        ],
+                      ),
+                    ),
+                    Container(
+                      width: double.infinity,
+                      height: 20,
+                      color: ColorConstants.grey_light,
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Text('${response_listing.length == 0 ? "" : response_listing[0]['Name']+" w/o "+response_listing[0]['Husbname']}',
+                            style: TextStyle(
+                                color:Colors.black,
+                                fontSize: 15,
+                                overflow: TextOverflow.ellipsis,
+                                fontWeight: FontWeight.bold
+                            )),
+                      ),
+                    ),
+                    const Divider(color: ColorConstants.app_yellow_color,height: 0.5,thickness: 1.5,),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                            child: Container(
+                              //  color: Colors.red,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 5,top: 5,bottom: 2,right: 5),
+                                child: Text(
+                                  Strings.pcts_id_title,
+                                  style: TextStyle(
+                                      fontSize: 13,
+                                      color:Colors.black,
+                                      fontWeight: FontWeight.normal),
+                                ),
+                              ),
+                            )),
+                        Expanded(child: Padding(
+                          padding: const EdgeInsets.only(left: 5,top: 5,bottom: 2,right: 5),
+                          child: Text('${response_listing.length == 0 ? "" : response_listing[0]['pctsid'].toString()}',
+                            style: TextStyle(fontSize: 13,color:Colors.black,fontWeight: FontWeight.normal),),
+                        ))
                       ],
                     ),
-                  ),
-                  Container(
-                    width: double.infinity,
-                    height: 20,
-                    color: ColorConstants.grey_light,
-                    child: Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Text('${response_listing.length == 0 ? "" : response_listing[0]['Name']+" w/o "+response_listing[0]['Husbname']}',
-                          style: TextStyle(
-                              color:Colors.black,
-                              fontSize: 15,
-                              overflow: TextOverflow.ellipsis,
-                              fontWeight: FontWeight.bold
-                          )),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                            child: Container(
+                              //  color: Colors.red,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 5,top: 2,bottom: 2,right: 5),
+                                child: Text(
+                                  Strings.village,
+                                  style: TextStyle(
+                                      fontSize: 13,
+                                      color:Colors.black,
+                                      fontWeight: FontWeight.normal),
+                                ),
+                              ),
+                            )),
+                        Expanded(child: Padding(
+                          padding: const EdgeInsets.only(left: 5,top: 2,bottom: 2,right: 5),
+                          child: Text('${response_listing.length == 0 ? "" : response_listing[0]['Address'].toString()}',
+                            style: TextStyle(fontSize: 13,color:Colors.black,fontWeight: FontWeight.normal),),
+                        ))
+                      ],
                     ),
-                  ),
-                  const Divider(color: ColorConstants.app_yellow_color,height: 0.5,thickness: 1.5,),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                          child: Container(
-                            //  color: Colors.red,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 5,top: 5,bottom: 2,right: 5),
-                              child: Text(
-                                Strings.pcts_id_title,
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    color:Colors.black,
-                                    fontWeight: FontWeight.normal),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                            child: Container(
+                              //  color: Colors.red,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 5,top: 2,bottom: 2,right: 5),
+                                child: Text(
+                                  Strings.yugye_dampati_count,
+                                  style: TextStyle(
+                                      fontSize: 13,
+                                      color:Colors.black,
+                                      fontWeight: FontWeight.normal),
+                                ),
                               ),
-                            ),
-                          )),
-                      Expanded(child: Padding(
-                        padding: const EdgeInsets.only(left: 5,top: 5,bottom: 2,right: 5),
-                        child: Text('${response_listing.length == 0 ? "" : response_listing[0]['pctsid'].toString()}',
-                          style: TextStyle(fontSize: 13,color:Colors.black,fontWeight: FontWeight.normal),),
-                      ))
-                    ],
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                          child: Container(
-                            //  color: Colors.red,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 5,top: 2,bottom: 2,right: 5),
-                              child: Text(
-                                Strings.village,
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    color:Colors.black,
-                                    fontWeight: FontWeight.normal),
+                            )),
+                        Expanded(child: Padding(
+                          padding: const EdgeInsets.only(left: 5,top: 2,bottom: 2,right: 5),
+                          child: Text('${response_listing.length == 0 ? "" : response_listing[0]['ECID'].toString()}',
+                            style: TextStyle(fontSize: 13,color:Colors.black,fontWeight: FontWeight.normal),),
+                        ))
+                      ],
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                            child: Container(
+                              //  color: Colors.red,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 5,top: 2,bottom: 2,right: 5),
+                                child: Text(
+                                  Strings.age,
+                                  style: TextStyle(
+                                      fontSize: 13,
+                                      color:Colors.black,
+                                      fontWeight: FontWeight.normal),
+                                ),
                               ),
-                            ),
-                          )),
-                      Expanded(child: Padding(
-                        padding: const EdgeInsets.only(left: 5,top: 2,bottom: 2,right: 5),
-                        child: Text('${response_listing.length == 0 ? "" : response_listing[0]['Address'].toString()}',
-                          style: TextStyle(fontSize: 13,color:Colors.black,fontWeight: FontWeight.normal),),
-                      ))
-                    ],
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                          child: Container(
-                            //  color: Colors.red,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 5,top: 2,bottom: 2,right: 5),
-                              child: Text(
-                                Strings.yugye_dampati_count,
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    color:Colors.black,
-                                    fontWeight: FontWeight.normal),
+                            )),
+                        Expanded(child: Padding(
+                          padding: const EdgeInsets.only(left: 5,top: 2,bottom: 2,right: 5),
+                          child: Text('${response_listing.length == 0 ? "" : response_listing[0]['Age'].toString()}',
+                            style: TextStyle(fontSize: 13,color:Colors.black,fontWeight: FontWeight.normal),),
+                        ))
+                      ],
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                            child: Container(
+                              //  color: Colors.red,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 5,top: 2,bottom: 2,right: 5),
+                                child: Text(
+                                  Strings.prsav_hone_ki_date,
+                                  style: TextStyle(
+                                      fontSize: 13,
+                                      color:Colors.black,
+                                      fontWeight: FontWeight.normal),
+                                ),
                               ),
-                            ),
-                          )),
-                      Expanded(child: Padding(
-                        padding: const EdgeInsets.only(left: 5,top: 2,bottom: 2,right: 5),
-                        child: Text('${response_listing.length == 0 ? "" : response_listing[0]['ECID'].toString()}',
-                          style: TextStyle(fontSize: 13,color:Colors.black,fontWeight: FontWeight.normal),),
-                      ))
-                    ],
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                          child: Container(
-                            //  color: Colors.red,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 5,top: 2,bottom: 2,right: 5),
-                              child: Text(
-                                Strings.age,
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    color:Colors.black,
-                                    fontWeight: FontWeight.normal),
+                            )),
+                        Expanded(child: Padding(
+                          padding: const EdgeInsets.only(left: 5,top: 2,bottom: 2,right: 5),
+                          child: Text('${response_listing.length == 0 ? "" : getCustomAddDaysDate(response_listing[0]['LMPDT'].toString())}',
+                            style: TextStyle(fontSize: 13,color:Colors.black,fontWeight: FontWeight.normal),),
+                        ))
+                      ],
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                            child: Container(
+                              //  color: Colors.red,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 5,top: 2,bottom: 2,right: 5),
+                                child: Text(
+                                  Strings.panjikaran_ki_tithi,
+                                  style: TextStyle(
+                                      fontSize: 13,
+                                      color:Colors.black,
+                                      fontWeight: FontWeight.normal),
+                                ),
                               ),
-                            ),
-                          )),
-                      Expanded(child: Padding(
-                        padding: const EdgeInsets.only(left: 5,top: 2,bottom: 2,right: 5),
-                        child: Text('${response_listing.length == 0 ? "" : response_listing[0]['Age'].toString()}',
-                          style: TextStyle(fontSize: 13,color:Colors.black,fontWeight: FontWeight.normal),),
-                      ))
-                    ],
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                          child: Container(
-                            //  color: Colors.red,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 5,top: 2,bottom: 2,right: 5),
-                              child: Text(
-                                Strings.prsav_hone_ki_date,
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    color:Colors.black,
-                                    fontWeight: FontWeight.normal),
+                            )),
+                        Expanded(child: Padding(
+                          padding: const EdgeInsets.only(left: 5,top: 2,bottom: 2,right: 5),
+                          child: Text('${response_listing.length == 0 ? "" : getFormattedDate(response_listing[0]['RegDate'].toString())}',
+                            style: TextStyle(fontSize: 13,color:Colors.black,fontWeight: FontWeight.normal),),
+                        ))
+                      ],
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                            child: Container(
+                              //  color: Colors.red,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 5,top: 2,bottom: 2,right: 5),
+                                child: Text(
+                                  Strings.mobile_num,
+                                  style: TextStyle(
+                                      fontSize: 13,
+                                      color:Colors.black,
+                                      fontWeight: FontWeight.normal),
+                                ),
                               ),
-                            ),
-                          )),
-                      Expanded(child: Padding(
-                        padding: const EdgeInsets.only(left: 5,top: 2,bottom: 2,right: 5),
-                        child: Text('${response_listing.length == 0 ? "" : getCustomAddDaysDate(response_listing[0]['LMPDT'].toString())}',
-                          style: TextStyle(fontSize: 13,color:Colors.black,fontWeight: FontWeight.normal),),
-                      ))
-                    ],
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                          child: Container(
-                            //  color: Colors.red,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 5,top: 2,bottom: 2,right: 5),
-                              child: Text(
-                                Strings.panjikaran_ki_tithi,
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    color:Colors.black,
-                                    fontWeight: FontWeight.normal),
+                            )),
+                        Expanded(child: Padding(
+                          padding: const EdgeInsets.only(left: 5,top: 2,bottom: 2,right: 5),
+                          child: Text('${response_listing.length == 0 ? "" : response_listing[0]['Mobileno'].toString()}',
+                            style: TextStyle(fontSize: 13,color:Colors.black,fontWeight: FontWeight.normal),),
+                        ))
+                      ],
+                    ),
+                    _showHideExpandableListView == true ?
+                    _myListView() : Container(),
+                    Visibility(
+                        visible: _showHideAddANCButtonView,
+                        child: GestureDetector(
+                          onTap: (){
+                            print('CheckHRCase ${response_listing[last_pos]['HighRisk'].toString()}');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) => AddNewANCScreen(
+                                      pctsID:response_listing[last_pos]['pctsid'].toString(),
+                                      headerName: second_tab_msg == "3" ?
+                                      Strings.fourth_anc : second_tab_msg == "2" ?
+                                      Strings.third_anc : second_tab_msg == "1" ?
+                                      Strings.second_anc : second_tab_msg == "0" ?
+                                      Strings.pratham_anc : second_tab_msg == "4" ? Strings.anc_ka_vivran : Strings.anc_ka_vivran,
+                                      registered_date: getFormattedDate(response_listing[last_pos]['RegDate'].toString()),
+                                      registered_date2: response_listing[last_pos]['RegDate'].toString(),
+                                      expected_date: response_listing[last_pos]['LMPDT'].toString(),
+                                      anc_date:response_listing[last_pos]['ANCDate'].toString() == "null" ? "" : response_listing[last_pos]['ANCDate'].toString(),
+                                      weight: response_listing[last_pos]['weight'].toString(),
+                                      AncFlag: second_tab_msg == "0" ?
+                                      "1" : second_tab_msg == "1" ?
+                                      "2" : second_tab_msg == "2" ?
+                                      "3" : second_tab_msg == "3" ?
+                                      "4":second_tab_msg == "4" ?
+                                      "" : second_tab_msg,
+                                      TTB: response_listing[last_pos]['TTB'].toString() == "null" ? "" :response_listing[last_pos]['TTB'].toString(),
+                                      TT1: response_listing[last_pos]['TT1'].toString() == "null" ? "" :response_listing[last_pos]['TT1'].toString(),
+                                      TT2: response_listing[last_pos]['TT2'].toString() == "null" ? "" :response_listing[last_pos]['TT2'].toString(),
+                                      UrineA: response_listing[last_pos]['UrineA'].toString(),
+                                      UrineS: response_listing[last_pos]['UrineS'].toString(),
+                                      motherIdIntent: response_listing[last_pos]['MotherID'].toString(),
+                                      VillageAutoID: response_listing[last_pos]['VillageAutoID'].toString(),
+                                      DeliveryComplication: response_listing[last_pos]['DeliveryComplication'].toString(),
+                                      RegUnitID:response_listing[last_pos]['RegUnitID'].toString(),
+                                      Height:response_listing[last_pos]['Height'].toString(),
+                                      AncRegId:widget.ancregid,
+                                      RegUnittype:response_listing[last_pos]['RegUnittype'].toString(),
+                                      Age: response_listing[last_pos]['Age'].toString(),
+                                      ANC1Date: response_listing[last_pos]['ANC1Date'].toString() == "null" ? "" :response_listing[last_pos]['ANC1Date'].toString(),
+                                      ANC2Date: response_listing[last_pos]['ANC2Date'].toString() == "null" ? "" :response_listing[last_pos]['ANC2Date'].toString(),
+                                      ANC3Date: response_listing[last_pos]['ANC3Date'].toString() == "null" ? "" :response_listing[last_pos]['ANC3Date'].toString(),
+                                      ANC4Date: response_listing[last_pos]['ANC4Date'].toString() == "null" ? "" :response_listing[last_pos]['ANC4Date'].toString(),
+                                      PreviousTT1Date: response_listing[last_pos]['PreviousTT1Date'].toString() == "null" ? "" :response_listing[last_pos]['PreviousTT1Date'].toString(),
+                                      PreviousTT2Date: response_listing[last_pos]['PreviousTT2Date'].toString() == "null" ? "" :response_listing[last_pos]['PreviousTT2Date'].toString(),
+                                      PreviousTTBDate: response_listing[last_pos]['PreviousTTBDate'].toString() == "null" ? "" :response_listing[last_pos]['PreviousTTBDate'].toString(),
+                                      HighRisk: response_listing[last_pos]['HighRisk'].toString() == "null" ? "0" :response_listing[last_pos]['HighRisk'].toString()
+                                  )
                               ),
-                            ),
-                          )),
-                      Expanded(child: Padding(
-                        padding: const EdgeInsets.only(left: 5,top: 2,bottom: 2,right: 5),
-                        child: Text('${response_listing.length == 0 ? "" : getFormattedDate(response_listing[0]['RegDate'].toString())}',
-                          style: TextStyle(fontSize: 13,color:Colors.black,fontWeight: FontWeight.normal),),
-                      ))
-                    ],
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
+                            ).then((value){setState(() {
+                              acnDetailsAPI(widget.ancregid);
+                            });});
+                          },
                           child: Container(
-                            //  color: Colors.red,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 5,top: 2,bottom: 2,right: 5),
-                              child: Text(
-                                Strings.mobile_num,
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    color:Colors.black,
-                                    fontWeight: FontWeight.normal),
-                              ),
-                            ),
-                          )),
-                      Expanded(child: Padding(
-                        padding: const EdgeInsets.only(left: 5,top: 2,bottom: 2,right: 5),
-                        child: Text('${response_listing.length == 0 ? "" : response_listing[0]['Mobileno'].toString()}',
-                          style: TextStyle(fontSize: 13,color:Colors.black,fontWeight: FontWeight.normal),),
-                      ))
-                    ],
-                  ),
-                  _showHideExpandableListView == true ?
-                  _myListView() : Container(),
-                  Visibility(
-                      visible: _showHideAddANCButtonView,
-                      child: GestureDetector(
-                        onTap: (){
-                          print('CheckHRCase ${response_listing[last_pos]['HighRisk'].toString()}');
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (BuildContext context) => AddNewANCScreen(
-                                    pctsID:response_listing[last_pos]['pctsid'].toString(),
-                                    headerName: second_tab_msg == "3" ?
-                                    Strings.fourth_anc : second_tab_msg == "2" ?
-                                    Strings.third_anc : second_tab_msg == "1" ?
-                                    Strings.second_anc : second_tab_msg == "0" ?
-                                    Strings.pratham_anc : second_tab_msg == "4" ? Strings.anc_ka_vivran : Strings.anc_ka_vivran,
-                                    registered_date: getFormattedDate(response_listing[last_pos]['RegDate'].toString()),
-                                    registered_date2: response_listing[last_pos]['RegDate'].toString(),
-                                    expected_date: response_listing[last_pos]['LMPDT'].toString(),
-                                    anc_date:response_listing[last_pos]['ANCDate'].toString() == "null" ? "" : response_listing[last_pos]['ANCDate'].toString(),
-                                    weight: response_listing[last_pos]['weight'].toString(),
-                                    AncFlag: second_tab_msg == "0" ?
-                                    "1" : second_tab_msg == "1" ?
-                                    "2" : second_tab_msg == "2" ?
-                                    "3" : second_tab_msg == "3" ?
-                                    "4":second_tab_msg == "4" ?
-                                    "" : second_tab_msg,
-                                    TTB: response_listing[last_pos]['TTB'].toString() == "null" ? "" :response_listing[last_pos]['TTB'].toString(),
-                                    TT1: response_listing[last_pos]['TT1'].toString() == "null" ? "" :response_listing[last_pos]['TT1'].toString(),
-                                    TT2: response_listing[last_pos]['TT2'].toString() == "null" ? "" :response_listing[last_pos]['TT2'].toString(),
-                                    UrineA: response_listing[last_pos]['UrineA'].toString(),
-                                    UrineS: response_listing[last_pos]['UrineS'].toString(),
-                                    motherIdIntent: response_listing[last_pos]['MotherID'].toString(),
-                                    VillageAutoID: response_listing[last_pos]['VillageAutoID'].toString(),
-                                    DeliveryComplication: response_listing[last_pos]['DeliveryComplication'].toString(),
-                                    RegUnitID:response_listing[last_pos]['RegUnitID'].toString(),
-                                    Height:response_listing[last_pos]['Height'].toString(),
-                                    AncRegId:widget.ancregid,
-                                    RegUnittype:response_listing[last_pos]['RegUnittype'].toString(),
-                                    Age: response_listing[last_pos]['Age'].toString(),
-                                    ANC1Date: response_listing[last_pos]['ANC1Date'].toString() == "null" ? "" :response_listing[last_pos]['ANC1Date'].toString(),
-                                    ANC2Date: response_listing[last_pos]['ANC2Date'].toString() == "null" ? "" :response_listing[last_pos]['ANC2Date'].toString(),
-                                    ANC3Date: response_listing[last_pos]['ANC3Date'].toString() == "null" ? "" :response_listing[last_pos]['ANC3Date'].toString(),
-                                    ANC4Date: response_listing[last_pos]['ANC4Date'].toString() == "null" ? "" :response_listing[last_pos]['ANC4Date'].toString(),
-                                    PreviousTT1Date: response_listing[last_pos]['PreviousTT1Date'].toString() == "null" ? "" :response_listing[last_pos]['PreviousTT1Date'].toString(),
-                                    PreviousTT2Date: response_listing[last_pos]['PreviousTT2Date'].toString() == "null" ? "" :response_listing[last_pos]['PreviousTT2Date'].toString(),
-                                    PreviousTTBDate: response_listing[last_pos]['PreviousTTBDate'].toString() == "null" ? "" :response_listing[last_pos]['PreviousTTBDate'].toString(),
-                                    HighRisk: response_listing[last_pos]['HighRisk'].toString() == "null" ? "0" :response_listing[last_pos]['HighRisk'].toString()
-                                )
-                            ),
-                          ).then((value){setState(() {
-                            acnDetailsAPI(widget.ancregid);
-                          });});
-                        },
-                        child: Container(
-                            height: 35,
-                            color: ColorConstants.AppColorPrimary,
-                            margin:EdgeInsets.only(left: 5,right: 5,top: 5,bottom: 0),
-                            child: Row(
-                              children: [
-                                Expanded(child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    '${second_tab_msg == "3" ?
-                                    Strings.fourth_anc_ki_pravsti : second_tab_msg == "2" ?
-                                    Strings.third_anc_ki_pravsti : second_tab_msg == "1" ?
-                                    Strings.second_anc_ki_pravsti : second_tab_msg == "0" ?
-                                    Strings.prathm_anc_ki_pravsti : second_tab_msg == "4" ? "" : ""}',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color:Colors.white,
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.normal
+                              height: 35,
+                              color: ColorConstants.AppColorPrimary,
+                              margin:EdgeInsets.only(left: 5,right: 5,top: 5,bottom: 0),
+                              child: Row(
+                                children: [
+                                  Expanded(child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      '${second_tab_msg == "3" ?
+                                      Strings.fourth_anc_ki_pravsti : second_tab_msg == "2" ?
+                                      Strings.third_anc_ki_pravsti : second_tab_msg == "1" ?
+                                      Strings.second_anc_ki_pravsti : second_tab_msg == "0" ?
+                                      Strings.prathm_anc_ki_pravsti : second_tab_msg == "4" ? "" : ""}',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color:Colors.white,
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.normal
+                                      ),
                                     ),
-                                  ),
-                                )),
-                              ],
-                            )
-                        ),
-                      )),
-                ],
+                                  )),
+                                ],
+                              )
+                          ),
+                        )),
+                  ],
+                ),
               ),
             )),
             Positioned(

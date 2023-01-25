@@ -1198,57 +1198,57 @@ class _AnmWorkPlanListScreen extends State<AnmWorkPlanListScreen> with TickerPro
   var isSterilFound=false;
   Widget _itemBuilder(BuildContext context, int index) {
     return  InkWell(
-      child: GestureDetector(
-        onTap: () {
-          FocusScopeNode currentFocus = FocusScope.of(context);
-          if (!currentFocus.hasPrimaryFocus) {
-            currentFocus.focusedChild!.unfocus();
-          }
+      child: Container(
+        color: (index % 2 == 0) ? ColorConstants.white :ColorConstants.lifebgColor2,
+        child: Column(
+          children: [
+            IntrinsicHeight(child: Row(
+              children: [
+                Container(
+                  width: 25,
+                  child: Text(Ancresponse_list == null ? "" : (index+1).toString(),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(fontSize: 11,
+                    color: Colors.black,
+                    fontWeight: FontWeight.normal),),),
+                const VerticalDivider(
+                  thickness: 1,
+                  color: ColorConstants.app_yellow_color,
+                ),
+                Expanded(child: GestureDetector(
+                  onTap: (){
+                    FocusScopeNode currentFocus = FocusScope.of(context);
+                    if (!currentFocus.hasPrimaryFocus) {
+                      currentFocus.focusedChild!.unfocus();
+                    }
 
-          //API Response Date
-          var ancdueDate = Ancresponse_list[index]['ancdue'].toString().trim().substring(Ancresponse_list[index]['ancdue'].toString().trim().length - 10);
-          //print('ancdueDate $ancdueDate');
-          var inputFormat = DateFormat('dd/MM/yyyy');
-          var date1 = inputFormat.parse(ancdueDate);//15/01/2023
-          //var date1 = inputFormat.parse('15/01/2023');//15/01/2023
+                    //API Response Date
+                    var ancdueDate = Ancresponse_list[index]['ancdue'].toString().trim().substring(Ancresponse_list[index]['ancdue'].toString().trim().length - 10);
+                    //print('ancdueDate $ancdueDate');
+                    var inputFormat = DateFormat('dd/MM/yyyy');
+                    var date1 = inputFormat.parse(ancdueDate);//15/01/2023
+                    //var date1 = inputFormat.parse('15/01/2023');//15/01/2023
 
-          var outputFormat = DateFormat('yyyy-MM-dd');
-          var date2 = outputFormat.format(date1); // 2019-08-18
-          //print('date2 ${date2}');
+                    var outputFormat = DateFormat('yyyy-MM-dd');
+                    var date2 = outputFormat.format(date1); // 2019-08-18
+                    //print('date2 ${date2}');
 
 
-          var parseCalenderSelectedAncDate = DateTime.parse(date2);
+                    var parseCalenderSelectedAncDate = DateTime.parse(date2);
 
-          var intentAncDate = DateTime.parse(getConvertRegDateFormat(getCurrentDate()));
-          //print('anc calendr ${parseCalenderSelectedAncDate}');
-          //print('anc intentt ${intentAncDate}');
-          final diff_lmp_ancdate = parseCalenderSelectedAncDate.difference(intentAncDate).inDays;
-          print('check_diff_date ${diff_lmp_ancdate}');
-          if (diff_lmp_ancdate > 0) {
-            _showErrorPopup(Strings.not_eligible_anc_,ColorConstants.AppColorPrimary);
-          }else{
-            print('done');
-            findPrasavDataByIDAPI(Ancresponse_list[index]['pctsid'].toString().trim(),"1");//Tag Id 1= ANC
-          }
-        },
-        child: Container(
-          color: (index % 2 == 0) ? ColorConstants.white :ColorConstants.lifebgColor2,
-          child: Column(
-            children: [
-              IntrinsicHeight(child: Row(
-                children: [
-                  Container(
-                    width: 25,
-                    child: Text(Ancresponse_list == null ? "" : (index+1).toString(),
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(fontSize: 11,
-                      color: Colors.black,
-                      fontWeight: FontWeight.normal),),),
-                  const VerticalDivider(
-                    thickness: 1,
-                    color: ColorConstants.app_yellow_color,
-                  ),
-                  Expanded(child: Container(child:Padding(
+                    var intentAncDate = DateTime.parse(getConvertRegDateFormat(getCurrentDate()));
+                    //print('anc calendr ${parseCalenderSelectedAncDate}');
+                    //print('anc intentt ${intentAncDate}');
+                    final diff_lmp_ancdate = parseCalenderSelectedAncDate.difference(intentAncDate).inDays;
+                    print('check_diff_date ${diff_lmp_ancdate}');
+                    if (diff_lmp_ancdate > 0) {
+                      _showErrorPopup(Strings.not_eligible_anc_,ColorConstants.AppColorPrimary);
+                    }else{
+                      print('done');
+                      findPrasavDataByIDAPI(Ancresponse_list[index]['pctsid'].toString().trim(),"1");//Tag Id 1= ANC
+                    }
+                  },
+                  child: Container(child:Padding(
                     padding: const EdgeInsets.all(3.0),
                     child: Text(
                       '${Ancresponse_list == null ? "" : Ancresponse_list[index]['name'].toString()+' w/o '+Ancresponse_list[index]['Husbname'].toString()}\n(${Ancresponse_list[index]['pctsid'].toString()})',
@@ -1258,183 +1258,183 @@ class _AnmWorkPlanListScreen extends State<AnmWorkPlanListScreen> with TickerPro
                           color: ColorConstants.AppColorPrimary,
                           fontWeight: FontWeight.normal),
                     ),
-                  ),)),
-                  const VerticalDivider(
-                    thickness: 1,
-                    color: ColorConstants.app_yellow_color,
-                  ),
-                  //getFormattedDate
-                  Container(
-                    width: 80,
-                    child: Text(getFormattedDate('${Ancresponse_list == null ? "": Ancresponse_list[index]['LMPDT'].toString().substring(0,10)}')
-                      ,textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 11)),),
-                  const VerticalDivider(
-                    thickness: 1,
-                    color: ColorConstants.app_yellow_color,
-                  ),
-                  Expanded(child: Container(child: Text('${Ancresponse_list == null ? "": Ancresponse_list[index]['ancdue'].toString()}',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 11)),))
+                  ),),
+                )),
+                const VerticalDivider(
+                  thickness: 1,
+                  color: ColorConstants.app_yellow_color,
+                ),
+                //getFormattedDate
+                Container(
+                  width: 80,
+                  child: Text(getFormattedDate('${Ancresponse_list == null ? "": Ancresponse_list[index]['LMPDT'].toString().substring(0,10)}')
+                    ,textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 11)),),
+                const VerticalDivider(
+                  thickness: 1,
+                  color: ColorConstants.app_yellow_color,
+                ),
+                Expanded(child: Container(child: Text('${Ancresponse_list == null ? "": Ancresponse_list[index]['ancdue'].toString()}',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 11)),))
 
-                ],
-              ),),
-              const Divider(
-                height: 2,
-                thickness: 1,
-                color: ColorConstants.app_yellow_color,
-              ),
-            ],
-          ),
+              ],
+            ),),
+            const Divider(
+              height: 2,
+              thickness: 1,
+              color: ColorConstants.app_yellow_color,
+            ),
+          ],
+        ),
 
-        ),
-        ),
+      ),
 
     );
   }
   Widget _pncItemBuilder(BuildContext context, int index) {
     return InkWell(
-      child: GestureDetector(
-        onTap: () {
-          FocusScopeNode currentFocus = FocusScope.of(context);
-          if (!currentFocus.hasPrimaryFocus) {
-            currentFocus.focusedChild!.unfocus();
-          }
-          findPrasavDataByIDAPI(Ancresponse_list[index]['pctsid'].toString().trim(),"2");//Tag Id 1= ANC
-        },
-        child: Container(
-          color: (index % 2 == 0) ? ColorConstants.white :ColorConstants.lifebgColor2,
-          child: Column(
-            children: [
-              IntrinsicHeight(child: Row(
-                children: [
-                  Container(
-                    width: 25,
-                    child: Text(Pncresponse_list == null ? "" : (index+1).toString(),
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(fontSize: 11,
-                      color: Colors.black,
-                      fontWeight: FontWeight.normal),),),
-                  const VerticalDivider(
-                    thickness: 1,
-                    color: ColorConstants.app_yellow_color,
-                  ),
-                  Expanded(child: Container(child:Padding(
+      child: Container(
+        color: (index % 2 == 0) ? ColorConstants.white :ColorConstants.lifebgColor2,
+        child: Column(
+          children: [
+            IntrinsicHeight(child: Row(
+              children: [
+                Container(
+                  width: 25,
+                  child: Text(Pncresponse_list == null ? "" : (index+1).toString(),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(fontSize: 11,
+                    color: Colors.black,
+                    fontWeight: FontWeight.normal),),),
+                const VerticalDivider(
+                  thickness: 1,
+                  color: ColorConstants.app_yellow_color,
+                ),
+                Expanded(child: GestureDetector(
+                  onTap: (){
+                    FocusScopeNode currentFocus = FocusScope.of(context);
+                    if (!currentFocus.hasPrimaryFocus) {
+                      currentFocus.focusedChild!.unfocus();
+                    }
+                    findPrasavDataByIDAPI(Ancresponse_list[index]['pctsid'].toString().trim(),"2");//Tag Id 1= ANC
+                  },
+                  child: Container(child:Padding(
                     padding: const EdgeInsets.all(3.0),
                     child: Text(
                       '${Pncresponse_list == null ? "" : Pncresponse_list[index]['name'].toString()+' w/o '+Pncresponse_list[index]['Husbname'].toString()}\n(${Pncresponse_list[index]['pctsid'].toString()})',
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                           fontSize: 11,
-                          color: Colors.black,
+                          color: ColorConstants.AppColorPrimary,
                           fontWeight: FontWeight.normal),
                     ),
-                  ),)),
-                  const VerticalDivider(
-                    thickness: 1,
-                    color: ColorConstants.app_yellow_color,
-                  ),
-                  //getFormattedDate
-                  Container(
-                    width: 80,
-                    child: Text(('${Pncresponse_list[index]['deliveryDate'].toString() == "null" ? "-": getFormattedDate(Pncresponse_list[index]['deliveryDate'].toString().substring(0,10))}')
-                      ,textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 11)),),
-                  const VerticalDivider(
-                    thickness: 1,
-                    color: ColorConstants.app_yellow_color,
-                  ),
-                  Expanded(child: Container(child: Text('${Pncresponse_list[index]['PNCDueDate'].toString() == "null" ? "-": Pncresponse_list[index]['PNCDueDate'].toString()}',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 11)),))
+                  ),),
+                )),
+                const VerticalDivider(
+                  thickness: 1,
+                  color: ColorConstants.app_yellow_color,
+                ),
+                //getFormattedDate
+                Container(
+                  width: 80,
+                  child: Text(('${Pncresponse_list[index]['deliveryDate'].toString() == "null" ? "-": getFormattedDate(Pncresponse_list[index]['deliveryDate'].toString().substring(0,10))}')
+                    ,textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 11)),),
+                const VerticalDivider(
+                  thickness: 1,
+                  color: ColorConstants.app_yellow_color,
+                ),
+                Expanded(child: Container(child: Text('${Pncresponse_list[index]['PNCDueDate'].toString() == "null" ? "-": Pncresponse_list[index]['PNCDueDate'].toString()}',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 11)),))
 
-                ],
-              ),),
-              const Divider(
-                height: 2,
-                thickness: 1,
-                color: ColorConstants.app_yellow_color,
-              ),
-            ],
-          ),
+              ],
+            ),),
+            const Divider(
+              height: 2,
+              thickness: 1,
+              color: ColorConstants.app_yellow_color,
+            ),
+          ],
+        ),
 
-        ),
-        ),
+      ),
 
     );
   }
   Widget _ImmuItemBuilder(BuildContext context, int index) {
     return InkWell(
-      child: GestureDetector(
-        onTap: () {
-          FocusScopeNode currentFocus = FocusScope.of(context);
-          if (!currentFocus.hasPrimaryFocus) {
-            currentFocus.focusedChild!.unfocus();
-          }
-          Navigator.push(context, MaterialPageRoute(builder: (context) => TikaKaranDetails(
-              pctsID: Immresponse_list[index]['pctsid'].toString(),
-              infantId:Immresponse_list[index]['infantid'].toString()
-          ),));
-          print('Immresponse_list>> : ${Immresponse_list[index]['name'].toString()}');
-        },
-        child: Container(
-          color: (index % 2 == 0) ? ColorConstants.white :ColorConstants.lifebgColor2,
-          child: Column(
-            children: [
-              IntrinsicHeight(child: Row(
-                children: [
-                  Container(
-                    width: 25,
-                    child: Text(Immresponse_list == null ? "" : (index+1).toString(),
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(fontSize: 11,
-                      color: Colors.black,
-                      fontWeight: FontWeight.normal),),),
-                  const VerticalDivider(
-                    thickness: 1,
-                    color: ColorConstants.app_yellow_color,
-                  ),
-                  Expanded(child: Container(child:Padding(
+      child: Container(
+        color: (index % 2 == 0) ? ColorConstants.white :ColorConstants.lifebgColor2,
+        child: Column(
+          children: [
+            IntrinsicHeight(child: Row(
+              children: [
+                Container(
+                  width: 25,
+                  child: Text(Immresponse_list == null ? "" : (index+1).toString(),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(fontSize: 11,
+                    color: Colors.black,
+                    fontWeight: FontWeight.normal),),),
+                const VerticalDivider(
+                  thickness: 1,
+                  color: ColorConstants.app_yellow_color,
+                ),
+                Expanded(child: GestureDetector(
+                  onTap: (){
+                    FocusScopeNode currentFocus = FocusScope.of(context);
+                    if (!currentFocus.hasPrimaryFocus) {
+                      currentFocus.focusedChild!.unfocus();
+                    }
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => TikaKaranDetails(
+                        pctsID: Immresponse_list[index]['pctsid'].toString(),
+                        infantId:Immresponse_list[index]['infantid'].toString()
+                    ),));
+                    print('Immresponse_list>> : ${Immresponse_list[index]['name'].toString()}');
+                  },
+                  child: Container(child:Padding(
                     padding: const EdgeInsets.all(3.0),
                     child: Text(
                       '${Immresponse_list == null ? "" : Immresponse_list[index]['name'].toString()+' w/o '+Immresponse_list[index]['Husbname'].toString()}\n(${Immresponse_list[index]['pctsid'].toString()})',
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                           fontSize: 11,
-                          color: Colors.black,
+                          color: ColorConstants.AppColorPrimary,
                           fontWeight: FontWeight.normal),
                     ),
-                  ),)),
-                  const VerticalDivider(
-                    thickness: 1,
-                    color: ColorConstants.app_yellow_color,
-                  ),
-                  //getFormattedDate
-                  Container(
-                    width: 80,
-                    child: Text(('${Immresponse_list[index]['deliveryDate'].toString() == "null" ? "-": getFormattedDate(Immresponse_list[index]['deliveryDate'].toString().substring(0,10))}')
-                      ,textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 11)),),
-                  const VerticalDivider(
-                    thickness: 1,
-                    color: ColorConstants.app_yellow_color,
-                  ),
-                  Expanded(child: Container(child: Text('${Immresponse_list[index]['immudue'].toString() == "null" ? "-": Immresponse_list[index]['immudue'].toString()}',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 11)),))
+                  ),),
+                )),
+                const VerticalDivider(
+                  thickness: 1,
+                  color: ColorConstants.app_yellow_color,
+                ),
+                //getFormattedDate
+                Container(
+                  width: 80,
+                  child: Text(('${Immresponse_list[index]['deliveryDate'].toString() == "null" ? "-": getFormattedDate(Immresponse_list[index]['deliveryDate'].toString().substring(0,10))}')
+                    ,textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 11)),),
+                const VerticalDivider(
+                  thickness: 1,
+                  color: ColorConstants.app_yellow_color,
+                ),
+                Expanded(child: Container(child: Text('${Immresponse_list[index]['immudue'].toString() == "null" ? "-": Immresponse_list[index]['immudue'].toString()}',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 11)),))
 
-                ],
-              ),),
-              const Divider(
-                height: 2,
-                thickness: 1,
-                color: ColorConstants.app_yellow_color,
-              ),
-            ],
-          ),
+              ],
+            ),),
+            const Divider(
+              height: 2,
+              thickness: 1,
+              color: ColorConstants.app_yellow_color,
+            ),
+          ],
+        ),
 
-        ),
-        ),
+      ),
 
     );
   }

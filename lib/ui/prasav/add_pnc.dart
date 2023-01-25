@@ -2022,7 +2022,7 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                               setState(() {
                                                 childComplId_1 = newVal!;
                                                 print('childComplId_1:$childComplId_1');
-                                                if(childComplId_1 == "12" || childComplId_1 == "0" || motherComplId == "5"){
+                                                if((childComplId_1 == "12" || childComplId_1 == "0") && (motherComplId == "5" || motherComplId == "0")){
                                                   _ShowHideReferPlacesView=false;
                                                 }else{
                                                   _ShowHideReferPlacesView=true;
@@ -2396,7 +2396,7 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                               setState(() {
                                                 childComplId_2 = newVal!;
                                                 print('childComplId_2:$childComplId_2');
-                                                if(childComplId_2 == "12" || childComplId_2 == "0"){
+                                                if((childComplId_1 == "12" || childComplId_1 == "0") && (motherComplId == "5" || motherComplId == "0")){
                                                   _ShowHideReferPlacesView=false;
                                                 }else{
                                                   _ShowHideReferPlacesView=true;
@@ -2773,7 +2773,7 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                               setState(() {
                                                 childComplId_3 = newVal!;
                                                 print('childComplId_3:$childComplId_3');
-                                                if(childComplId_3 == "12" || childComplId_3 == "0"){
+                                                if((childComplId_1 == "12" || childComplId_1 == "0") && (motherComplId == "5" || motherComplId == "0")){
                                                   _ShowHideReferPlacesView=false;
                                                 }else{
                                                   _ShowHideReferPlacesView=true;
@@ -3148,7 +3148,7 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                               setState(() {
                                                 childComplId_4 = newVal!;
                                                 print('childComplId_4:$childComplId_4');
-                                                if(childComplId_4 == "12" || childComplId_4 == "0"){
+                                                if((childComplId_1 == "12" || childComplId_1 == "0") && (motherComplId == "5" || motherComplId == "0")){
                                                   _ShowHideReferPlacesView=false;
                                                 }else{
                                                   _ShowHideReferPlacesView=true;
@@ -3522,7 +3522,7 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                               setState(() {
                                                 childComplId_5 = newVal!;
                                                 print('childComplId_5:$childComplId_5');
-                                                if(childComplId_5 == "12" || childComplId_5 == "0"){
+                                                if((childComplId_1 == "12" || childComplId_1 == "0") && (motherComplId == "5" || motherComplId == "0")){
                                                   _ShowHideReferPlacesView=false;
                                                 }else{
                                                   _ShowHideReferPlacesView=true;

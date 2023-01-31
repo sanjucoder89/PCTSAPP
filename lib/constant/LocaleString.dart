@@ -618,6 +618,7 @@ class Strings {
   static const String child_kad_in_cm = "बच्चे का कद (सेमी. में)";
   static const String ors_packet = "ओआरएस का पैकेट दिया गया";
   static const String ifa_srip = "आईएफ़ए सिरप दी गयी";
+  static const String ifa_srip_choose = "आईएफ़ए सिरप दी गयी चुनें";
   static const String fill_mamta_card = "ममता कार्ड से वृद्धि निगरानी चार्ट भरा गया";
   static const String child_color = "बच्चे को किस रंग में वर्गीकृत किया गया";
   static const String child_age_ahar = "बच्चे को उम्र के अनुसार पूरक आहार दिया जा रहा है";

@@ -130,7 +130,7 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
   var _hbycPostDate="";
   var _weightPostData="0";
   var _heightPostData="";
-  var _orsPostData="0";
+  var _orsPostData="0";//none=0,yes=,no=
   var _ifaPostData="0";
   var _mamtaPostData="0";
   var _dietPostData="0";
@@ -393,7 +393,17 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
       _showErrorPopup(Strings.choose_visit_date,ColorConstants.AppColorPrimary);
     }else if(_shishuKadController.text.toString().isEmpty){
       _showErrorPopup(Strings.enter_height_incm,ColorConstants.AppColorPrimary);
-    }else if(_orsPostData.isEmpty){
+    }else if(_orsPostData == "0"){
+      _showErrorPopup(Strings.choose_ors_packet,ColorConstants.AppColorPrimary);
+    }else if(_ifaPostData == "0"){
+      _showErrorPopup(Strings.ifa_srip_choose,ColorConstants.AppColorPrimary);
+    }else if(_mamtaPostData == "0"){
+      _showErrorPopup(Strings.choose_mamta_packet,ColorConstants.AppColorPrimary);
+    }else if(_dietPostData == "0"){
+      _showErrorPopup(Strings.choose_child_ahar,ColorConstants.AppColorPrimary);
+    }else if(_diabiliyPostData == "0"){
+      _showErrorPopup(Strings.choose_child_dieses,ColorConstants.AppColorPrimary);
+    }/*else if(_orsPostData.isEmpty){
       _showErrorPopup(Strings.choose_ors_packet,ColorConstants.AppColorPrimary);
     }else if(_mamtaPostData.isEmpty){
       _showErrorPopup(Strings.choose_mamta_packet,ColorConstants.AppColorPrimary);
@@ -401,7 +411,7 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
       _showErrorPopup(Strings.choose_child_ahar,ColorConstants.AppColorPrimary);
     }else if(_diabiliyPostData.isEmpty){
       _showErrorPopup(Strings.choose_child_dieses,ColorConstants.AppColorPrimary);
-    }else if(_referView == true && _ReferUnitCode == "0"){
+    }*/else if(_referView == true && _ReferUnitCode == "0"){
       _showErrorPopup(Strings.choose_refer_type,ColorConstants.AppColorPrimary);
     }else if((_selectedPlacesReferCode == "10" || _selectedPlacesReferCode == "9" || _selectedPlacesReferCode == "8") && (sub_heading == "" || sub_heading =="चुनें" || _selectedSubUnitCode == "0")){
       _showErrorPopup("कृपया "+sub_heading +" चुनें!",ColorConstants.AppColorPrimary);

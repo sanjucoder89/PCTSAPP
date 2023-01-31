@@ -657,13 +657,15 @@ class _EditHBYCFormState extends State<EditHBYCForm> {
       _showErrorPopup(Strings.choose_visit_date,ColorConstants.AppColorPrimary);
     }else if(_shishuKadController.text.toString().isEmpty){
       _showErrorPopup(Strings.enter_height_incm,ColorConstants.AppColorPrimary);
-    }else if(_orsPostData.isEmpty){
+    }else if(_orsPostData == "0"){
       _showErrorPopup(Strings.choose_ors_packet,ColorConstants.AppColorPrimary);
-    }else if(_mamtaPostData.isEmpty){
+    }else if(_ifaPostData == "0"){
+      _showErrorPopup(Strings.ifa_srip_choose,ColorConstants.AppColorPrimary);
+    }else if(_mamtaPostData == "0"){
       _showErrorPopup(Strings.choose_mamta_packet,ColorConstants.AppColorPrimary);
-    }else if(_dietPostData.isEmpty){
+    }else if(_dietPostData == "0"){
       _showErrorPopup(Strings.choose_child_ahar,ColorConstants.AppColorPrimary);
-    }else if(_diabiliyPostData.isEmpty){
+    }else if(_diabiliyPostData == "0"){
       _showErrorPopup(Strings.choose_child_dieses,ColorConstants.AppColorPrimary);
     }else if(_referView == true && _ReferUnitCode == "0"){
       _showErrorPopup(Strings.choose_refer_type,ColorConstants.AppColorPrimary);

@@ -2054,9 +2054,8 @@ class _DashboardScreen extends State<DashboardScreen> {
                               ),
                             ),
                             Visibility(
-                                visible: false,
+                                visible: true,
                                 child: Container(
-
                                 height: 70,
                                 width: 200,
                                 child: GestureDetector(

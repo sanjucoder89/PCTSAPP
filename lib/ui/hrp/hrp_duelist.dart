@@ -22,6 +22,7 @@ import '../prasav/before/model/GetVillageListData.dart';
 import '../samparksutra/samparksutra.dart';
 import '../splashnew.dart';
 import '../videos/tab_view.dart';
+import 'hrp_expand_details.dart';
 
 String getFormattedDate(String date) {
   if(date != "null"){
@@ -621,12 +622,13 @@ class _HrpDueScreenList extends State<HrpDueScreenList> {
     return InkWell(
       child: GestureDetector(
         onTap: (){
-          /*Navigator.push(
+          Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AncExpandDetails(ancregid:response_listing[index]['ancregid'].toString()),
+              builder: (context) => HRPExpandDetails(ANCRegID:response_listing[index]['ancregid'].toString(),
+                  MotherID: response_listing[index]['motherid'].toString()),
             ),
-          );*/
+          );
         },
         child: Container(
           decoration: BoxDecoration(

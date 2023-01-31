@@ -42,8 +42,9 @@ String getFormattedDate(String date) {
 }
 
 class HRPExpandDetails extends StatefulWidget {
-  const HRPExpandDetails({Key? key, required this.infantId}) : super(key: key);
-  final String infantId;
+  const HRPExpandDetails({Key? key, required this.ANCRegID, required this.MotherID}) : super(key: key);
+  final String ANCRegID;
+  final String MotherID;
   @override
   State<StatefulWidget> createState() => _HRPExpandDetails();
 
@@ -56,17 +57,17 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
   var option4=Strings.app_ki_jankari;
   var option5=Strings.help_desk;
   late SharedPreferences preferences;
-  var _anc_details_url = AppConstants.app_base_url + "uspDataforManageHBYC";
+  var _anc_details_url = AppConstants.app_base_url + "uspDataforManageHighRiskCases";
   var _help_desk_url = AppConstants.app_base_url + "HelpDesk";
   var _logout_url = AppConstants.app_base_url + "LogoutToken";
 
-  var _verify_record_url = AppConstants.app_base_url + "uspANMHBYCVerify";
-  var _delete_record_url = AppConstants.app_base_url + "DeleteHBYCDetail";
+  var _verify_record_url = AppConstants.app_base_url + "uspANMHighRiskVerify";
+  var _delete_record_url = AppConstants.app_base_url + "DeleteHighRiskDetail";
 
 
   List help_response_listing = [];
   List response_listing = [];
-  List<CustomManageANCList> custom_anc_list=[];
+  List<CustomManageHRPList> custom_anc_list=[];
   var second_tab_msg="";
   var ancRegID="";
   var mthrID="";
@@ -75,7 +76,13 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
   var _topHeaderName="";
   var last_pos=0;
   bool _showHideExpandableListView=false; //for enable disable covid date
-  bool _showHideAddANCButtonView=false;
+
+  bool _showHideAddFirstHRPButtonView=true;
+  bool _showHideAddSecondHRPButtonView=true;
+  bool _showHideAddfourthdHRPButtonView=true;
+  bool _showHideAddThirdHRPButtonView=true;
+  bool _showHideAddFifthHRPButtonView=true;
+
   bool _showHideEditButtonView=false;
   bool _showVerifyButtonView=false;
   var _selectedhbycFlag="";
@@ -83,7 +90,7 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
   /*
   * API FOR Get ANC Details
   * */
-  Future<String> hbycDetailsAPI(String InfantID) async {
+  Future<String> hbycDetailsAPI(String ancRegId,String mthrId) async {
     await EasyLoading.show(
       status: 'loading...',
       maskType: EasyLoadingMaskType.black,
@@ -92,9 +99,17 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
     _anmAshaTitle=preferences.getString("AppRoleID").toString() == '33' ? Strings.aasha_title : Strings.anm_title;
     _anmName=preferences.getString('ANMName').toString();
     _topHeaderName=preferences.getString('topName').toString();
-    print('InfantID ${InfantID}');
+    print('ancRegId ${ancRegId}');
+    print('mthrId ${mthrId}');
     var response = await post(Uri.parse(_anc_details_url), body: {
-      "InfantID":InfantID,
+      //MotherID:11935763
+      // ANCRegID:17251662
+      // TokenNo:12644f01-9229-4764-a38f-93d9f7132f8a
+      // UserID:0101065030203
+      "MotherID":"8250299",
+      //"MotherID":ancRegId,
+      "ANCRegID":"10145777",
+      //"ANCRegID":mthrId,
       "TokenNo": preferences.getString('Token'),
       "UserID": preferences.getString('UserId')
     });
@@ -110,47 +125,37 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
           _showHideExpandableListView=true;
           for (int i = 0; i < response_listing.length; i++){
             custom_anc_list.add(
-              CustomManageANCList(
-                Weight: response_listing[i]['HBYCWeight'].toString(),
-                BloodGroup:response_listing[i]['BloodGroup'].toString(),
-                ChildName: response_listing[i]['ChildName'].toString() == "null" ? "" : response_listing[i]['ChildName'].toString(),
-                Sex: response_listing[i]['Sex'].toString(),
-                Birth_date:response_listing[i]['Birth_date'].toString(),
-                finyear: response_listing[i]['finyear'].toString(),
-                villageautoid: response_listing[i]['villageautoid'].toString(),
-                unitcode: response_listing[i]['unitcode'].toString(),
-                villagename:response_listing[i]['villagename'].toString(),
-                childid: response_listing[i]['childid'].toString(),
-                ancregid: response_listing[i]['ancregid'].toString(),
-                motherid: response_listing[i]['motherid'].toString(),
-                pctsid: response_listing[i]['pctsid'].toString(),
-                name:response_listing[i]['name'].toString(),
-                Mobileno: response_listing[i]['Mobileno'].toString(),
-                age: response_listing[i]['age'].toString(),
-                Husbname: response_listing[i]['Husbname'].toString(),
-                ECID: response_listing[i]['ECID'].toString(),
-                IsHusband: response_listing[i]['IsHusband'].toString(),
-                ReferUnitID:response_listing[i]['ReferUnitID'].toString(),
-                Height: response_listing[i]['Height'].toString(),
-                HBYCWeight: response_listing[i]['HBYCWeight'].toString(),
-                HBYCFlag: response_listing[i]['HBYCFlag'].toString(),
-                VisitDate: response_listing[i]['VisitDate'].toString(),
-                ORSPacket: response_listing[i]['ORSPacket'].toString(),
-                IFASirap: response_listing[i]['IFASirap'].toString(),
-                GrowthChart: response_listing[i]['GrowthChart'].toString(),
-                Color: response_listing[i]['Color'].toString(),
-                FoodAccordingAge:response_listing[i]['FoodAccordingAge'].toString(),
-                GrowthLate: response_listing[i]['GrowthLate'].toString(),
-                Refer: response_listing[i]['Refer'].toString(),
-                ashaAutoID: response_listing[i]['ashaAutoID'].toString(),
-                RegUnitid: response_listing[i]['RegUnitid'].toString(),
-                RegUnittype: response_listing[i]['RegUnittype'].toString(),
-                infantid:response_listing[i]['infantid'].toString(),
-                ReferUnitcode: response_listing[i]['ReferUnitcode'].toString(),
-                ReferUnittype: response_listing[i]['ReferUnittype'].toString(),
-                ANMVerify: response_listing[i]['ANMVerify'].toString(),
+              CustomManageHRPList(
+                Name: response_listing[i]['Name'].toString(),
+                HusbName:response_listing[i]['HusbName'].toString(),
+                Age: response_listing[i]['Age'].toString() == "null" ? "" : response_listing[i]['Age'].toString(),
+                MobileNo: response_listing[i]['MobileNo'].toString(),
+                VillageName:response_listing[i]['VillageName'].toString(),
+                VillageAutoID: response_listing[i]['VillageAutoID'].toString(),
+                RegDate: response_listing[i]['RegDate'].toString(),
+                LmpDate: response_listing[i]['LmpDate'].toString(),
+                ExpectedDate:response_listing[i]['ExpectedDate'].toString(),
+                ANC1Date: response_listing[i]['ANC1Date'].toString(),
+                ANC2Date: response_listing[i]['ANC2Date'].toString(),
+                ANC3Date: response_listing[i]['ANC3Date'].toString(),
+                ANC4Date: response_listing[i]['ANC4Date'].toString(),
+                ContactDate:response_listing[i]['ContactDate'].toString(),
+                AncFlag: response_listing[i]['AncFlag'].toString(),
+                Ashaautoid: response_listing[i]['Ashaautoid'].toString(),
+                AshaName: response_listing[i]['AshaName'].toString(),
+                ContactUnitType: response_listing[i]['ContactUnitType'].toString(),
+                ContactDistrictUnitCode: response_listing[i]['ContactDistrictUnitCode'].toString(),
+                ContactUnitID:response_listing[i]['ContactUnitID'].toString(),
+                DelUnitType: response_listing[i]['DelUnitType'].toString(),
+                DelDistrictUnitCode: response_listing[i]['DelDistrictUnitCode'].toString(),
+                DelPlaceUnitID: response_listing[i]['DelPlaceUnitID'].toString(),
+                ReferUnitType: response_listing[i]['ReferUnitType'].toString(),
+                ReferDistrictUnitCode: response_listing[i]['ReferDistrictUnitCode'].toString(),
+                ReferUnitID: response_listing[i]['ReferUnitID'].toString(),
+                ANMVerify:  response_listing[i]['ANMVerify'].toString(),
+                Freeze: response_listing[i]['Freeze'].toString(),
                 Media: response_listing[i]['Media'].toString(),
-                Freeze: response_listing[i]['Media'].toString()
+                ContactUnitName: response_listing[i]['ContactUnitName'].toString()
               ),
             );
             last_pos=custom_anc_list.length-1;
@@ -195,18 +200,43 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
               });
             }*/
           }
+
+          for (int i = 0; i < custom_anc_list.length; i++){
+                if(custom_anc_list[i].AncFlag == "0"){
+                    _showHideAddFirstHRPButtonView=true;
+                    _showHideAddSecondHRPButtonView=true;
+                    _showHideAddThirdHRPButtonView=true;
+                    _showHideAddfourthdHRPButtonView=true;
+                    _showHideAddFifthHRPButtonView=true;
+                }
+                if(custom_anc_list[i].AncFlag == "5"){
+                  _showHideAddFirstHRPButtonView=false;
+                }
+                if(custom_anc_list[i].AncFlag == "6"){
+                  _showHideAddSecondHRPButtonView=false;
+                }
+                if(custom_anc_list[i].AncFlag == "7"){
+                  _showHideAddThirdHRPButtonView=false;
+                }
+                if(custom_anc_list[i].AncFlag == "8"){
+                  _showHideAddfourthdHRPButtonView=false;
+                }
+                if(custom_anc_list[i].AncFlag == "9"){
+                  _showHideAddFifthHRPButtonView=false;
+                }
+          }
         }
 
-        second_tab_msg=response_listing[response_listing.length -1]['HBYCFlag'].toString() == "null" ? "0" : response_listing[response_listing.length -1]['HBYCFlag'].toString();//get last position value
+        second_tab_msg=response_listing[response_listing.length -1]['AncFlag'].toString() == "null" ? "0" : response_listing[response_listing.length -1]['AncFlag'].toString();//get last position value
         print('last position flag: ${second_tab_msg}');
         /*
           * IF ALL 4 ANC FILLED THEN HIDE FOURTH BUTTON LAYOUT , NO OTHER ANC FORM WILL BE FILED
          */
         print('last_pos ${last_pos}');
         if(last_pos == 5){
-          _showHideAddANCButtonView=false;
+         // _showHideAddANCButtonView=false;
         }else{
-          _showHideAddANCButtonView=true;
+        //  _showHideAddANCButtonView=true;
         }
 
       } else {
@@ -266,7 +296,7 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
 
   Future<String> verifyHBYCAPI(String _flagtype,String _ancregid) async {
     var response = await post(Uri.parse(_verify_record_url), body: {
-      "InfantId": _ancregid,
+      "ANCRegID": _ancregid,
       "type": _flagtype,
       "TokenNo": preferences.getString('Token'),
       "UserID": preferences.getString('UserId')
@@ -281,7 +311,7 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
             gravity: ToastGravity.BOTTOM,
             backgroundColor: Colors.green,
             textColor: Colors.white);
-        hbycDetailsAPI(widget.infantId);
+        hbycDetailsAPI(widget.ANCRegID,widget.MotherID);
       } else {
         Fluttertoast.showToast(
             msg: apiResponse.message.toString(),
@@ -295,11 +325,12 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
   }
 
   Future<String> deleteHBYCAPI(String _flagtype,String _ancregid) async {
-
     var response = await delete(Uri.parse(_delete_record_url), body: {
-      "InfantId": _ancregid,
-      "HbycFlag": _flagtype,
+      //AppVersion IOSAppVersion ANCRegid ANCFlag
+      "ANCRegid": _ancregid,
+      "ANCFlag": _flagtype,
       "AppVersion": "5.5.5.22",
+      "IOSAppVersion": "",
       "TokenNo": preferences.getString('Token'),
       "UserID": preferences.getString('UserId')
     });
@@ -313,7 +344,7 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
             gravity: ToastGravity.BOTTOM,
             backgroundColor: Colors.green,
             textColor: Colors.white);
-        hbycDetailsAPI(widget.infantId);
+        hbycDetailsAPI(widget.ANCRegID,widget.MotherID);
       } else {
         Fluttertoast.showToast(
             msg: apiResponse.message.toString(),
@@ -337,7 +368,7 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
   @override
   void initState() {
     super.initState();
-    hbycDetailsAPI(widget.infantId);
+    hbycDetailsAPI(widget.ANCRegID,widget.MotherID);
     checkLoginTypeSession();
     getHelpDesk();
   }
@@ -666,7 +697,7 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                               child: GestureDetector(
                                 child: Container(
                                   child: Text(
-                                    Strings.hbyc_title,
+                                    Strings.hrp_title,
                                     style: TextStyle(
                                         color: ColorConstants.white,
                                         fontSize: 15),
@@ -684,7 +715,7 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                     color: ColorConstants.grey_light,
                     child: Align(
                       alignment: Alignment.bottomCenter,
-                      child: Text('${response_listing.length == 0 ? "" : response_listing[0]['name']+" w/o "+response_listing[0]['Husbname']}',
+                      child: Text('${response_listing.length == 0 ? "" : response_listing[0]['Name']+" w/o "+response_listing[0]['HusbName']}',
                           style: TextStyle(
                               color:Colors.black,
                               fontSize: 15,
@@ -694,7 +725,7 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                     ),
                   ),
                   const Divider(color: ColorConstants.app_yellow_color,height: 1,thickness: 2,),
-                  Row(
+                  /*Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(
@@ -717,7 +748,7 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                           style: TextStyle(fontSize: 13,color:Colors.black,fontWeight: FontWeight.normal),),
                       ))
                     ],
-                  ),
+                  ),*/
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -737,7 +768,7 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                           )),
                       Expanded(child: Padding(
                         padding: const EdgeInsets.all(5.0),
-                        child: Text('${response_listing.length == 0 ? "" : response_listing[0]['villagename'].toString()}',
+                        child: Text('${response_listing.length == 0 ? "" : response_listing[0]['VillageName'].toString()}',
                           style: TextStyle(fontSize: 13,color:Colors.black,fontWeight: FontWeight.normal),),
                       ))
                     ],
@@ -761,7 +792,7 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                           )),
                       Expanded(child: Padding(
                         padding: const EdgeInsets.all(5.0),
-                        child: Text('${response_listing.length == 0 ? "" : response_listing[0]['Mobileno'].toString()}',
+                        child: Text('${response_listing.length == 0 ? "" : response_listing[0]['MobileNo'].toString()}',
                           style: TextStyle(fontSize: 13,color:Colors.black,fontWeight: FontWeight.normal),),
                       ))
                     ],
@@ -785,7 +816,7 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                           )),
                       Expanded(child: Padding(
                         padding: const EdgeInsets.all(5.0),
-                        child: Text('${response_listing.length == 0 ? "" : response_listing[0]['age'].toString()}',
+                        child: Text('${response_listing.length == 0 ? "" : response_listing[0]['Age'].toString()}',
                           style: TextStyle(fontSize: 13,color:Colors.black,fontWeight: FontWeight.normal),),
                       ))
                     ],
@@ -814,21 +845,69 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                       ))
                     ],
                   ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                          child: Container(
+                            //  color: Colors.red,
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Text(
+                                Strings.panjikaran_ki_tithi,
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    color:Colors.black,
+                                    fontWeight: FontWeight.normal),
+                              ),
+                            ),
+                          )),
+                      Expanded(child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Text('${response_listing.length == 0 ? "" : getFormattedDate(response_listing[0]['RegDate'].toString())}',
+                          style: TextStyle(fontSize: 13,color:Colors.black,fontWeight: FontWeight.normal),),
+                      ))
+                    ],
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                          child: Container(
+                            //  color: Colors.red,
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Text(
+                                Strings.akhri_mahaveer_ki_tareek,
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    color:Colors.black,
+                                    fontWeight: FontWeight.normal),
+                              ),
+                            ),
+                          )),
+                      Expanded(child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Text('${response_listing.length == 0 ? "" : getFormattedDate(response_listing[0]['ExpectedDate'].toString())}',
+                          style: TextStyle(fontSize: 13,color:Colors.black,fontWeight: FontWeight.normal),),
+                      ))
+                    ],
+                  ),
                   _showHideExpandableListView == true ?
                   _myListView() : Container(),
                   Visibility(
-                      visible: _showHideAddANCButtonView,
+                      visible: _showHideAddFirstHRPButtonView,
                       child: GestureDetector(
                         onTap: (){
                           if(preferences.getString("AppRoleID") == "31" || preferences.getString("AppRoleID") == "32" || preferences.getString("AppRoleID") == "33"){
-                            Navigator.push(
+                            /*Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (BuildContext context) => AddHBYCForm(
                                       RegUnitID:response_listing[last_pos]['RegUnitid'].toString(),
                                       VillageAutoID:response_listing[last_pos]['villageautoid'].toString(),
                                       RegUnittype: response_listing[last_pos]['RegUnittype'].toString(),
-                                      HBYCFlag: response_listing[last_pos]['HBYCFlag'].toString(),
+                                      HBYCFlag: response_listing[last_pos]['AncFlag'].toString(),
                                       Birth_date: response_listing[last_pos]['Birth_date'].toString(),
                                       motherid: response_listing[last_pos]['motherid'].toString(),
                                       ancregid: response_listing[last_pos]['ancregid'].toString(),
@@ -836,8 +915,8 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                                   )
                               ),
                             ).then((value){setState(() {
-                              hbycDetailsAPI(widget.infantId);
-                            });});
+                              hbycDetailsAPI(widget.ANCRegID,widget.MotherID);
+                            });});*/
                           }
                         },
                         child: Container(
@@ -853,7 +932,275 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
-                                        '${Strings.add_pravsti_hbyc_vivran}',
+                                        '${Strings.add_second_pravsti_hrp_vivran}',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color:Colors.white,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.normal
+                                        ),
+                                      ),
+                                      /*Text(
+                                  '${second_tab_msg == "0" ?
+                                  Strings.first_hbyc_prasti_vivran : second_tab_msg == "3" ?
+                                  Strings.second_hbyc_vivran : second_tab_msg == "6" ?
+                                  Strings.third_hbyc_vivran : second_tab_msg == "9" ?
+                                  Strings.fourth_hbyc_vivran : second_tab_msg == "12" ?
+                                  Strings.fifth_hbyc_vivran : second_tab_msg == "15" ?
+                                  "" : ""}',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color:Colors.white,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.normal
+                                  ),
+                                )*/
+                                    ),
+                                  ],
+                                )),
+                              ],
+                            )
+                        ),
+                      )),
+                  Visibility(
+                      visible: _showHideAddSecondHRPButtonView,
+                      child: GestureDetector(
+                        onTap: (){
+                          if(preferences.getString("AppRoleID") == "31" || preferences.getString("AppRoleID") == "32" || preferences.getString("AppRoleID") == "33"){
+                            /*Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) => AddHBYCForm(
+                                      RegUnitID:response_listing[last_pos]['RegUnitid'].toString(),
+                                      VillageAutoID:response_listing[last_pos]['villageautoid'].toString(),
+                                      RegUnittype: response_listing[last_pos]['RegUnittype'].toString(),
+                                      HBYCFlag: response_listing[last_pos]['AncFlag'].toString(),
+                                      Birth_date: response_listing[last_pos]['Birth_date'].toString(),
+                                      motherid: response_listing[last_pos]['motherid'].toString(),
+                                      ancregid: response_listing[last_pos]['ancregid'].toString(),
+                                      infantid: response_listing[last_pos]['infantid'].toString()
+                                  )
+                              ),
+                            ).then((value){setState(() {
+                              hbycDetailsAPI(widget.ANCRegID,widget.MotherID);
+                            });});*/
+                          }
+                        },
+                        child: Container(
+                            height: 35,
+                            color: ColorConstants.AppColorPrimary,
+                            margin:EdgeInsets.only(left: 5,right: 5,top: 5,bottom: 0),
+                            child: Row(
+                              children: [
+                                Expanded(child: Row(
+                                  //crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children:<Widget> [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        '${Strings.add_second_pravsti_hrp_vivran}',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color:Colors.white,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.normal
+                                        ),
+                                      ),
+                                      /*Text(
+                                  '${second_tab_msg == "0" ?
+                                  Strings.first_hbyc_prasti_vivran : second_tab_msg == "3" ?
+                                  Strings.second_hbyc_vivran : second_tab_msg == "6" ?
+                                  Strings.third_hbyc_vivran : second_tab_msg == "9" ?
+                                  Strings.fourth_hbyc_vivran : second_tab_msg == "12" ?
+                                  Strings.fifth_hbyc_vivran : second_tab_msg == "15" ?
+                                  "" : ""}',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color:Colors.white,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.normal
+                                  ),
+                                )*/
+                                    ),
+                                  ],
+                                )),
+                              ],
+                            )
+                        ),
+                      )),
+                  Visibility(
+                      visible: _showHideAddThirdHRPButtonView,
+                      child: GestureDetector(
+                        onTap: (){
+                          if(preferences.getString("AppRoleID") == "31" || preferences.getString("AppRoleID") == "32" || preferences.getString("AppRoleID") == "33"){
+                            /*Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) => AddHBYCForm(
+                                      RegUnitID:response_listing[last_pos]['RegUnitid'].toString(),
+                                      VillageAutoID:response_listing[last_pos]['villageautoid'].toString(),
+                                      RegUnittype: response_listing[last_pos]['RegUnittype'].toString(),
+                                      HBYCFlag: response_listing[last_pos]['AncFlag'].toString(),
+                                      Birth_date: response_listing[last_pos]['Birth_date'].toString(),
+                                      motherid: response_listing[last_pos]['motherid'].toString(),
+                                      ancregid: response_listing[last_pos]['ancregid'].toString(),
+                                      infantid: response_listing[last_pos]['infantid'].toString()
+                                  )
+                              ),
+                            ).then((value){setState(() {
+                              hbycDetailsAPI(widget.ANCRegID,widget.MotherID);
+                            });});*/
+                          }
+                        },
+                        child: Container(
+                            height: 35,
+                            color: ColorConstants.AppColorPrimary,
+                            margin:EdgeInsets.only(left: 5,right: 5,top: 5,bottom: 0),
+                            child: Row(
+                              children: [
+                                Expanded(child: Row(
+                                  //crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children:<Widget> [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        '${Strings.add_third_pravsti_hrp_vivran}',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color:Colors.white,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.normal
+                                        ),
+                                      ),
+                                      /*Text(
+                                  '${second_tab_msg == "0" ?
+                                  Strings.first_hbyc_prasti_vivran : second_tab_msg == "3" ?
+                                  Strings.second_hbyc_vivran : second_tab_msg == "6" ?
+                                  Strings.third_hbyc_vivran : second_tab_msg == "9" ?
+                                  Strings.fourth_hbyc_vivran : second_tab_msg == "12" ?
+                                  Strings.fifth_hbyc_vivran : second_tab_msg == "15" ?
+                                  "" : ""}',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color:Colors.white,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.normal
+                                  ),
+                                )*/
+                                    ),
+                                  ],
+                                )),
+                              ],
+                            )
+                        ),
+                      )),
+                  Visibility(
+                      visible: _showHideAddfourthdHRPButtonView,
+                      child: GestureDetector(
+                        onTap: (){
+                          if(preferences.getString("AppRoleID") == "31" || preferences.getString("AppRoleID") == "32" || preferences.getString("AppRoleID") == "33"){
+                            /*Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) => AddHBYCForm(
+                                      RegUnitID:response_listing[last_pos]['RegUnitid'].toString(),
+                                      VillageAutoID:response_listing[last_pos]['villageautoid'].toString(),
+                                      RegUnittype: response_listing[last_pos]['RegUnittype'].toString(),
+                                      HBYCFlag: response_listing[last_pos]['AncFlag'].toString(),
+                                      Birth_date: response_listing[last_pos]['Birth_date'].toString(),
+                                      motherid: response_listing[last_pos]['motherid'].toString(),
+                                      ancregid: response_listing[last_pos]['ancregid'].toString(),
+                                      infantid: response_listing[last_pos]['infantid'].toString()
+                                  )
+                              ),
+                            ).then((value){setState(() {
+                              hbycDetailsAPI(widget.ANCRegID,widget.MotherID);
+                            });});*/
+                          }
+                        },
+                        child: Container(
+                            height: 35,
+                            color: ColorConstants.AppColorPrimary,
+                            margin:EdgeInsets.only(left: 5,right: 5,top: 5,bottom: 0),
+                            child: Row(
+                              children: [
+                                Expanded(child: Row(
+                                  //crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children:<Widget> [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        '${Strings.add_fourth_pravsti_hrp_vivran}',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color:Colors.white,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.normal
+                                        ),
+                                      ),
+                                      /*Text(
+                                  '${second_tab_msg == "0" ?
+                                  Strings.first_hbyc_prasti_vivran : second_tab_msg == "3" ?
+                                  Strings.second_hbyc_vivran : second_tab_msg == "6" ?
+                                  Strings.third_hbyc_vivran : second_tab_msg == "9" ?
+                                  Strings.fourth_hbyc_vivran : second_tab_msg == "12" ?
+                                  Strings.fifth_hbyc_vivran : second_tab_msg == "15" ?
+                                  "" : ""}',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color:Colors.white,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.normal
+                                  ),
+                                )*/
+                                    ),
+                                  ],
+                                )),
+                              ],
+                            )
+                        ),
+                      )),
+                  Visibility(
+                      visible: _showHideAddFifthHRPButtonView,
+                      child: GestureDetector(
+                        onTap: (){
+                          if(preferences.getString("AppRoleID") == "31" || preferences.getString("AppRoleID") == "32" || preferences.getString("AppRoleID") == "33"){
+                            /*Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) => AddHBYCForm(
+                                      RegUnitID:response_listing[last_pos]['RegUnitid'].toString(),
+                                      VillageAutoID:response_listing[last_pos]['villageautoid'].toString(),
+                                      RegUnittype: response_listing[last_pos]['RegUnittype'].toString(),
+                                      HBYCFlag: response_listing[last_pos]['AncFlag'].toString(),
+                                      Birth_date: response_listing[last_pos]['Birth_date'].toString(),
+                                      motherid: response_listing[last_pos]['motherid'].toString(),
+                                      ancregid: response_listing[last_pos]['ancregid'].toString(),
+                                      infantid: response_listing[last_pos]['infantid'].toString()
+                                  )
+                              ),
+                            ).then((value){setState(() {
+                              hbycDetailsAPI(widget.ANCRegID,widget.MotherID);
+                            });});*/
+                          }
+                        },
+                        child: Container(
+                            height: 35,
+                            color: ColorConstants.AppColorPrimary,
+                            margin:EdgeInsets.only(left: 5,right: 5,top: 5,bottom: 0),
+                            child: Row(
+                              children: [
+                                Expanded(child: Row(
+                                  //crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children:<Widget> [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        '${Strings.add_fifth_pravsti_hrp_vivran}',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                             color:Colors.white,
@@ -910,7 +1257,7 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(5),
-                                child: Text('${Strings.delete_anc}',style: TextStyle(fontSize: 13,color: ColorConstants.black),),
+                                child: Text('${Strings.delete_hrp}',style: TextStyle(fontSize: 13,color: ColorConstants.black),),
                               )
                             ],)),
                             Expanded(child: Row(children: [
@@ -1073,13 +1420,13 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                     Flexible(child: Padding(
                       padding: const EdgeInsets.only(left: 2),
                       child: Text(
-                        '${custom_anc_list[list_index].HBYCFlag.toString() == "0" ?
-                        list_index == 0 && isExpanded == true ? Strings.first_hbyc_vivran_close : Strings.first_hbyc_vivran  : custom_anc_list[list_index].HBYCFlag.toString() == "3" ?
-                        list_index == 0 && isExpanded == true ? Strings.first_hbyc_vivran_close : Strings.first_hbyc_vivran :  custom_anc_list[list_index].HBYCFlag.toString() == "6" ?
-                        list_index == 1 && isExpanded == true ? Strings.second_hbyc_vivran_close : Strings.second_hbyc_vivran: custom_anc_list[list_index].HBYCFlag.toString() == "9" ?
-                        list_index == 2 && isExpanded == true ? Strings.third_hbyc_vivran_close : Strings.third_hbyc_vivran: custom_anc_list[list_index].HBYCFlag.toString() == "12" ?
-                        list_index == 3 && isExpanded == true ? Strings.fourth_hbyc_vivran_close : Strings.fourth_hbyc_vivran : custom_anc_list[list_index].HBYCFlag.toString() == "15" ?
-                        list_index == 4 && isExpanded == true ? Strings.fifth_hbyc_vivran_close : Strings.fifth_hbyc_vivran : ""}',
+                        '${custom_anc_list[list_index].AncFlag.toString() == "0" ?
+                        list_index == 0 && isExpanded == true ? Strings.first_hrp_vivran_close : Strings.first_hrp_vivran  : custom_anc_list[list_index].AncFlag.toString() == "5" ?
+                        list_index == 0 && isExpanded == true ? Strings.first_hrp_vivran_close : Strings.first_hrp_vivran :  custom_anc_list[list_index].AncFlag.toString() == "6" ?
+                        list_index == 1 && isExpanded == true ? Strings.second_hrp_vivran_close : Strings.second_hrp_vivran: custom_anc_list[list_index].AncFlag.toString() == "7" ?
+                        list_index == 2 && isExpanded == true ? Strings.third_hrp_vivran_close : Strings.third_hrp_vivran: custom_anc_list[list_index].AncFlag.toString() == "8" ?
+                        list_index == 3 && isExpanded == true ? Strings.fourth_hrp_vivran_close : Strings.fourth_hrp_vivran : custom_anc_list[list_index].AncFlag.toString() == "9" ?
+                        list_index == 4 && isExpanded == true ? Strings.fifth_hrp_vivran_close : Strings.fifth_hrp_vivran : ""}',
                         style: TextStyle(
                             color:Colors.white,
                             fontSize: 13,
@@ -1099,30 +1446,30 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                           visible: preferences.getString("AppRoleID") == "32" ? custom_anc_list[list_index].ANMVerify.toString() == "0" ? true : false :false,
                           child: GestureDetector(
                             onTap: (){
-                              if(custom_anc_list[list_index].HBYCFlag.toString() == "3"){
-                                _verifyHBYCDetails("क्या आप"+" "+Strings.first_hbyc+" "+"को सत्यापित करना चाहते है |",
-                                    custom_anc_list[list_index].HBYCFlag.toString(),
-                                    custom_anc_list[list_index].infantid.toString(),
+                              if(custom_anc_list[list_index].AncFlag.toString() == "5"){
+                                _verifyHBYCDetails("क्या आप"+" "+Strings.first_hrp+" "+"को सत्यापित करना चाहते है |",
+                                    custom_anc_list[list_index].AncFlag.toString(),
+                                    widget.ANCRegID,
                                     ColorConstants.black);
-                              }else if(custom_anc_list[list_index].HBYCFlag.toString() == "6"){
-                                _verifyHBYCDetails("क्या आप"+" "+Strings.second_hbyc+" "+"को सत्यापित करना चाहते है |",
-                                    custom_anc_list[list_index].HBYCFlag.toString(),
-                                    custom_anc_list[list_index].infantid.toString(),
+                              }else if(custom_anc_list[list_index].AncFlag.toString() == "6"){
+                                _verifyHBYCDetails("क्या आप"+" "+Strings.sec_hrp+" "+"को सत्यापित करना चाहते है |",
+                                    custom_anc_list[list_index].AncFlag.toString(),
+                                    widget.ANCRegID,
                                     ColorConstants.black);
-                              }else if(custom_anc_list[list_index].HBYCFlag.toString() == "9"){
-                                _verifyHBYCDetails("क्या आप"+" "+Strings.third_hbyc+" "+"को सत्यापित करना चाहते है |",
-                                    custom_anc_list[list_index].HBYCFlag.toString(),
-                                    custom_anc_list[list_index].infantid.toString(),
+                              }else if(custom_anc_list[list_index].AncFlag.toString() == "7"){
+                                _verifyHBYCDetails("क्या आप"+" "+Strings.third_hrp+" "+"को सत्यापित करना चाहते है |",
+                                    custom_anc_list[list_index].AncFlag.toString(),
+                                    widget.ANCRegID,
                                     ColorConstants.black);
-                              }else if(custom_anc_list[list_index].HBYCFlag.toString() == "12"){
-                                _verifyHBYCDetails("क्या आप"+" "+Strings.fourth_hbyc+" "+"को सत्यापित करना चाहते है |",
-                                    custom_anc_list[list_index].HBYCFlag.toString(),
-                                    custom_anc_list[list_index].infantid.toString(),
+                              }else if(custom_anc_list[list_index].AncFlag.toString() == "8"){
+                                _verifyHBYCDetails("क्या आप"+" "+Strings.fourth_hrp+" "+"को सत्यापित करना चाहते है |",
+                                    custom_anc_list[list_index].AncFlag.toString(),
+                                    widget.ANCRegID,
                                     ColorConstants.black);
-                              }else if(custom_anc_list[list_index].HBYCFlag.toString() == "15"){
-                                _verifyHBYCDetails("क्या आप"+" "+Strings.fifth_hbyc+" "+"को सत्यापित करना चाहते है |",
-                                    custom_anc_list[list_index].HBYCFlag.toString(),
-                                    custom_anc_list[list_index].infantid.toString(),
+                              }else if(custom_anc_list[list_index].AncFlag.toString() == "9"){
+                                _verifyHBYCDetails("क्या आप"+" "+Strings.fifth_hrp+" "+"को सत्यापित करना चाहते है |",
+                                    custom_anc_list[list_index].AncFlag.toString(),
+                                    widget.ANCRegID,
                                     ColorConstants.black);
                               }
                             },
@@ -1145,30 +1492,30 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                           visible: preferences.getString("AppRoleID") == "32" ? custom_anc_list[list_index].ANMVerify.toString() == "0" ? true : false :false,
                           child: GestureDetector(
                             onTap: (){
-                              if(custom_anc_list[list_index].HBYCFlag.toString() == "3"){
-                                _deleteHBYCDetails("क्या आप"+" "+Strings.first_hbyc+" "+"को डिलीट करना चाहते है |",
-                                    custom_anc_list[list_index].HBYCFlag.toString(),
-                                    custom_anc_list[list_index].infantid.toString(),
+                              if(custom_anc_list[list_index].AncFlag.toString() == "5"){
+                                _deleteHBYCDetails("क्या आप"+" "+Strings.first_hrp+" "+"को डिलीट करना चाहते है |",
+                                    custom_anc_list[list_index].AncFlag.toString(),
+                                    widget.ANCRegID,
                                     ColorConstants.black);
-                              }else if(custom_anc_list[list_index].HBYCFlag.toString() == "6"){
-                                _deleteHBYCDetails("क्या आप"+" "+Strings.second_hbyc+" "+"को डिलीट करना चाहते है |",
-                                    custom_anc_list[list_index].HBYCFlag.toString(),
-                                    custom_anc_list[list_index].infantid.toString(),
+                              }else if(custom_anc_list[list_index].AncFlag.toString() == "6"){
+                                _deleteHBYCDetails("क्या आप"+" "+Strings.sec_hrp+" "+"को डिलीट करना चाहते है |",
+                                    custom_anc_list[list_index].AncFlag.toString(),
+                                    widget.ANCRegID,
                                     ColorConstants.black);
-                              }else if(custom_anc_list[list_index].HBYCFlag.toString() == "9"){
-                                _deleteHBYCDetails("क्या आप"+" "+Strings.third_hbyc+" "+"को डिलीट करना चाहते है |",
-                                    custom_anc_list[list_index].HBYCFlag.toString(),
-                                    custom_anc_list[list_index].infantid.toString(),
+                              }else if(custom_anc_list[list_index].AncFlag.toString() == "7"){
+                                _deleteHBYCDetails("क्या आप"+" "+Strings.third_hrp+" "+"को डिलीट करना चाहते है |",
+                                    custom_anc_list[list_index].AncFlag.toString(),
+                                    widget.ANCRegID,
                                     ColorConstants.black);
-                              }else if(custom_anc_list[list_index].HBYCFlag.toString() == "12"){
-                                _deleteHBYCDetails("क्या आप"+" "+Strings.fourth_hbyc+" "+"को डिलीट करना चाहते है |",
-                                    custom_anc_list[list_index].HBYCFlag.toString(),
-                                    custom_anc_list[list_index].infantid.toString(),
+                              }else if(custom_anc_list[list_index].AncFlag.toString() == "8"){
+                                _deleteHBYCDetails("क्या आप"+" "+Strings.fourth_hrp+" "+"को डिलीट करना चाहते है |",
+                                    custom_anc_list[list_index].AncFlag.toString(),
+                                    widget.ANCRegID,
                                     ColorConstants.black);
-                              }else if(custom_anc_list[list_index].HBYCFlag.toString() == "15"){
-                                _deleteHBYCDetails("क्या आप"+" "+Strings.fifth_hbyc+" "+"को डिलीट करना चाहते है |",
-                                    custom_anc_list[list_index].HBYCFlag.toString(),
-                                    custom_anc_list[list_index].infantid.toString(),
+                              }else if(custom_anc_list[list_index].AncFlag.toString() == "9"){
+                                _deleteHBYCDetails("क्या आप"+" "+Strings.fifth_hrp+" "+"को डिलीट करना चाहते है |",
+                                    custom_anc_list[list_index].AncFlag.toString(),
+                                    widget.ANCRegID,
                                     ColorConstants.black);
                               }
                             },
@@ -1231,12 +1578,12 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                                     )
                                 ),
                               ).then((value){setState(() {
-                                hbycDetailsAPI(widget.infantId);
+                                hbycDetailsAPI(widget.ANCRegID,widget.MotherID);
                               });});*/
                             },
                             child: Visibility(
                               //visible:  true,
-                              visible: preferences.getString("AppRoleID") == "33" && preferences.getString("ANMAutoID") == custom_anc_list[list_index].ashaAutoID.toString() ? true : preferences.getString("AppRoleID") == "32" && custom_anc_list[list_index].ANMVerify.toString() == "0" ? true :false,
+                              visible: preferences.getString("AppRoleID") == "33" && preferences.getString("ANMAutoID") == custom_anc_list[list_index].Ashaautoid.toString() ? true : preferences.getString("AppRoleID") == "32" && custom_anc_list[list_index].ANMVerify.toString() == "0" ? true :false,
                               child: Align(
                                 alignment: Alignment.centerRight,
                                 child: Container(
@@ -1280,7 +1627,7 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(5.0),
                                       child: Text(
-                                        Strings.sishu_ka_naam,
+                                        Strings.sanstha_ka_naam,
                                         style: TextStyle(
                                             fontSize: 13,
                                             color:Colors.black,
@@ -1290,7 +1637,7 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                                   )),
                               Expanded(child: Padding(
                                 padding: const EdgeInsets.all(5.0),
-                                child: Text('${custom_anc_list.length == 0 ? "" : custom_anc_list[list_index].ChildName}',
+                                child: Text('${custom_anc_list.length == 0 ? "" : custom_anc_list[list_index].ContactUnitName}',
                                   style: TextStyle(fontSize: 13,color:Colors.black,fontWeight: FontWeight.normal),),
                               ))
                             ],
@@ -1304,7 +1651,7 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(5.0),
                                       child: Text(
-                                        Strings.shishu_ki_ling,
+                                        Strings.sanstha_ki_tithi,
                                         style: TextStyle(
                                             fontSize: 13,
                                             color:Colors.black,
@@ -1314,108 +1661,11 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                                   )),
                               Expanded(child: Padding(
                                 padding: const EdgeInsets.all(5.0),
-                                child: Text('${custom_anc_list.length == 0 ? "" : custom_anc_list[list_index].Sex.toString() == "1" ? Strings.boy_title : custom_anc_list[list_index].Sex.toString() == "2" ? Strings.girl_title : custom_anc_list[list_index].Sex.toString() == "3" ? Strings.transgender : ""}',
+                                child: Text('${custom_anc_list.length == 0 ? "" : getFormattedDate(custom_anc_list[list_index].ContactDate.toString())}',
                                   style: TextStyle(fontSize: 13,color:Colors.black,fontWeight: FontWeight.normal),),
                               ))
                             ],
                           ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                  child: Container(
-                                    //  color: Colors.red,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(5.0),
-                                      child: Text(
-                                        Strings.shishu_ki_pcts_id,
-                                        style: TextStyle(
-                                            fontSize: 13,
-                                            color:Colors.black,
-                                            fontWeight: FontWeight.normal),
-                                      ),
-                                    ),
-                                  )),
-                              Expanded(child: Padding(
-                                padding: const EdgeInsets.all(5.0),
-                                child: Text('${custom_anc_list.length == 0 ? "" : custom_anc_list[list_index].pctsid.toString()}',
-                                  style: TextStyle(fontSize: 13,color:Colors.black,fontWeight: FontWeight.normal),),
-                              ))
-                            ],
-                          ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                  child: Container(
-                                    //  color: Colors.red,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(5.0),
-                                      child: Text(
-                                        Strings.janm_tithi_2,
-                                        style: TextStyle(
-                                            fontSize: 13,
-                                            color:Colors.black,
-                                            fontWeight: FontWeight.normal),
-                                      ),
-                                    ),
-                                  )),
-                              Expanded(child: Padding(
-                                padding: const EdgeInsets.all(5.0),
-                                child: Text('${custom_anc_list.length == 0 ? "" : getFormattedDate(custom_anc_list[list_index].Birth_date.toString())}',
-                                  style: TextStyle(fontSize: 13,color:Colors.black,fontWeight: FontWeight.normal),),
-                              ))
-                            ],
-                          ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                  child: Container(
-                                    //  color: Colors.red,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(5.0),
-                                      child: Text(
-                                        Strings.hbyc_tithi_2,
-                                        style: TextStyle(
-                                            fontSize: 13,
-                                            color:Colors.black,
-                                            fontWeight: FontWeight.normal),
-                                      ),
-                                    ),
-                                  )),
-                              Expanded(child: Padding(
-                                padding: const EdgeInsets.all(5.0),
-                                child: Text('${custom_anc_list.length == 0 ? "" : getFormattedDate(custom_anc_list[list_index].VisitDate.toString())}',
-                                  style: TextStyle(fontSize: 13,color:Colors.black,fontWeight: FontWeight.normal),),
-                              ))
-                            ],
-                          ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                  child: Container(
-                                    //  color: Colors.red,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(5.0),
-                                      child: Text(
-                                        Strings.shishu_ka_weight,
-                                        style: TextStyle(
-                                            fontSize: 13,
-                                            color:Colors.black,
-                                            fontWeight: FontWeight.normal),
-                                      ),
-                                    ),
-                                  )),
-                              Expanded(child: Padding(
-                                padding: const EdgeInsets.all(5.0),
-                                child: Text('${custom_anc_list.length == 0 ? "" : custom_anc_list[list_index].Weight.toString()}',
-                                  style: TextStyle(fontSize: 13,color:Colors.black,fontWeight: FontWeight.normal),),
-                              ))
-                            ],
-                          ),
-
                         ],
                       ),
                     ),
@@ -1789,7 +2039,7 @@ class ExpandableContainer extends StatelessWidget {
   ExpandableContainer({
     required this.child,
     this.collapsedHeight = 0.0,
-    this.expandedHeight = 165.0,
+    this.expandedHeight = 60,
     this.expanded = true,
   });
 
@@ -1885,88 +2135,70 @@ class ExpandedTile extends StatelessWidget {
   }
 }
 
-class CustomManageANCList {
-  String? Weight;
-  String? BloodGroup;
-  String? ChildName;
-  String? Sex;
-  String? Birth_date;
-  String? finyear;
-  String? villageautoid;
-  String? unitcode;
-  String? villagename;
-  String? childid;
-  String? ancregid;
-  String? motherid;
-  String? pctsid;
-  String? name;
-  String? Mobileno;
-  String? age;
-  String? Husbname;
-  String? ECID;
-  String? IsHusband;
+class CustomManageHRPList {
+  String? Name;
+  String? HusbName;
+  String? Age;
+  String? MobileNo;
+  String? VillageName;
+  String? VillageAutoID;
+  String? RegDate;
+  String? LmpDate;
+  String? ExpectedDate;
+  String? ANC1Date;
+  String? ANC2Date;
+  String? ANC3Date;
+  String? ANC4Date;
+  String? ContactDate;
+  String? AncFlag;
+  String? Ashaautoid;
+  String? AshaName;
+  String? ContactUnitType;
+  String? ContactDistrictUnitCode;
+  String? ContactUnitID;
+  String? DelUnitType;
+  String? DelDistrictUnitCode;
+  String? DelPlaceUnitID;
+  String? ReferUnitType;
+  String? ReferDistrictUnitCode;
   String? ReferUnitID;
-  String? Height;
-  String? HBYCWeight;
-  String? HBYCFlag;
-  String? VisitDate;
-  String? ORSPacket;
-  String? IFASirap;
-  String? GrowthChart;
-  String? Color;
-  String? FoodAccordingAge;
-  String? GrowthLate;
-  String? Refer;
-  String? ashaAutoID;
-  String? RegUnitid;
-  String? RegUnittype;
-  String? infantid;
-  String? ReferUnitcode;
-  String? ReferUnittype;
   String? ANMVerify;
-  String? Media;
   String? Freeze;
+  String? Media;
+  String? ContactUnitName;
+  String? ECID;
 
-  CustomManageANCList({
-    this.Weight,
-    this.BloodGroup,
-    this.ChildName,
-    this.Sex,
-    this.Birth_date,
-    this.finyear,
-    this.villageautoid,
-    this.unitcode,
-    this.villagename,
-    this.childid,
-    this.ancregid,
-    this.motherid,
-    this.pctsid,
-    this.name,
-    this.Mobileno,
-    this.age,
-    this.Husbname,
-    this.ECID,
-    this.IsHusband,
+  CustomManageHRPList({
+    this.Name,
+    this.HusbName,
+    this.Age,
+    this.MobileNo,
+    this.VillageName,
+    this.VillageAutoID,
+    this.RegDate,
+    this.LmpDate,
+    this.ExpectedDate,
+    this.ANC1Date,
+    this.ANC2Date,
+    this.ANC3Date,
+    this.ANC4Date,
+    this.ContactDate,
+    this.AncFlag,
+    this.Ashaautoid,
+    this.AshaName,
+    this.ContactUnitType,
+    this.ContactDistrictUnitCode,
+    this.ContactUnitID,
+    this.DelUnitType,
+    this.DelDistrictUnitCode,
+    this.DelPlaceUnitID,
+    this.ReferUnitType,
+    this.ReferDistrictUnitCode,
     this.ReferUnitID,
-    this.Height,
-    this.HBYCWeight,
-    this.HBYCFlag,
-    this.VisitDate,
-    this.ORSPacket,
-    this.IFASirap,
-    this.GrowthChart,
-    this.Color,
-    this.FoodAccordingAge,
-    this.GrowthLate,
-    this.Refer,
-    this.ashaAutoID,
-    this.RegUnitid,
-    this.RegUnittype,
-    this.infantid,
-    this.ReferUnitcode,
-    this.ReferUnittype,
     this.ANMVerify,
-    this.Media,
     this.Freeze,
+    this.Media,
+    this.ContactUnitName,
+    this.ECID
   });
 }

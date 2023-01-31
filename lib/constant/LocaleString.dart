@@ -142,6 +142,7 @@ class Strings {
   static const String in_process= "भुगतान प्रक्रिया में है ";
   static const String pcts_id_title = "पीसीटीएस आईडी";
   static const String panjikaran_ki_tithi = "पंजीकरण की तिथि ";
+  static const String akhri_mahaveer_ki_tareek = "आखिरी माहवारी की तारीक ";
   static const String aakhri_mahaveer_ki_tithi = "आखिरी माहवारी की तिथि ";
   static const String highrisk_due_cases = "हाईरिस्क के डयू केसेज";
   static const String anc_mahaveer_due_cases = "एएनसी के डयू केसेज";
@@ -151,6 +152,7 @@ class Strings {
   static const String krmank = "क्र.सं.";
   static const String seva_ka_naam = "सेवा का नाम ";
   static const String gift_amount = "प्रोत्साहन की राशि (₹)";
+  static const String hrp_title = "हाई रिस्क";
   static const String hbyc_title = "एचबीवाईसी";
   static const String verification_on_click = "सत्यापन करने के लिए सम्बन्धित केस पर क्लिक करें ";
   static const String click_info = "उक्त पीसीटीएस आईडी के विवरण हेतु क्लिक करें";
@@ -196,6 +198,39 @@ class Strings {
 
 
   static const String add_pravsti_hbyc_vivran = "एचबीवाईसी की प्रविष्टि हेतु क्लिक करें ";
+
+  static const String add_first_pravsti_hrp_vivran = "प्रथम विजिट की प्रविष्टि हेतु क्लिक करें ";
+  static const String add_second_pravsti_hrp_vivran = "द्वितीय विजिट की प्रविष्टि हेतु क्लिक करें ";
+  static const String add_third_pravsti_hrp_vivran = "तृतीय विजिट की प्रविष्टि हेतु क्लिक करें ";
+  static const String add_fourth_pravsti_hrp_vivran = "चतुर्थ विजिट की प्रविष्टि हेतु क्लिक करें ";
+  static const String add_fifth_pravsti_hrp_vivran = "पंचम विजिट की प्रविष्टि हेतु क्लिक करें ";
+
+
+
+  static const String first_hrp_vivran_save_krai = "प्रथम विजिट का विवरण दर्ज करे";
+  static const String second_hrp_vivran_save_krai = "द्वितीय विजिट का विवरण दर्ज करे";
+  static const String third_hrp_vivran_save_krai = "तृतीय विजिट का विवरण दर्ज करे";
+  static const String fourth_hrp_vivran_save_krai = "चतुर्थ विजिट का विवरण दर्ज करे";
+  static const String fifth_hrp_vivran_save_krai = "पंचम विजिट का विवरण दर्ज करे";
+
+
+
+  static const String first_hrp_vivran = "प्रथम विजिट का विवरण देंखे";
+  static const String second_hrp_vivran = "द्वितीय विजिट का विवरण देंखे";
+  static const String third_hrp_vivran = "तृतीय विजिट का विवरण देंखे";
+  static const String fourth_hrp_vivran = "चतुर्थ विजिट का विवरण देंखे";
+  static const String fifth_hrp_vivran = "पंचम विजिट का विवरण देंखे";
+
+
+  static const String first_hrp_vivran_close = "प्रथम विजिट का विवरण बंद करें";
+  static const String second_hrp_vivran_close = "द्वितीय विजिट का विवरण बंद करें";
+  static const String third_hrp_vivran_close = "तृतीय विजिट का विवरण बंद करें";
+  static const String fourth_hrp_vivran_close = "चतुर्थ विजिट का विवरण बंद करें";
+  static const String fifth_hrp_vivran_close = "पंचम विजिट का विवरण बंद करें";
+
+
+
+
 
   static const String first_hbyc_vivran = "प्रथम एचबीवाईसी का विवरण देंखे";
   static const String second_hbyc_vivran = "द्वितीय एचबीवाईसी का विवरण देंखे";
@@ -245,6 +280,13 @@ class Strings {
   static const String upkendra_title = "उपकेंद्र";
   static const String yes = "हाँ ";
   static const String no = "नहीं";
+
+
+  static const String first_hrp = "प्रथम हाई रिस्क";
+  static const String sec_hrp = "द्वितीय हाई रिस्क";
+  static const String third_hrp = "तृतीय हाई रिस्क";
+  static const String fourth_hrp = "चतुर्थ हाई रिस्क";
+  static const String fifth_hrp = "पंचम हाई रिस्क";
 
 
   static const String first_hbyc = "प्रथम एचबीवाईसी";
@@ -463,6 +505,8 @@ class Strings {
   static const String call_anm = "एएनएम को कॉल करें ";
   static const String view_selected_anm = "चयनित एएनएम के रिकॉर्ड देखने के लिए क्लिक करें ";
   static const String anm_ka_naam = "एएनएम का नाम";
+  static const String sanstha_ka_naam = "संस्था का नाम";
+  static const String sanstha_ki_tithi = "संस्था की तिथि";
   static const String sanstha_title = "संस्था :";
   static const String iron_sukroj_1 = "आयरन सुक्रोज 1";
   static const String iron_sukroj_2 = "आयरन सुक्रोज 2";
@@ -627,6 +671,7 @@ class Strings {
   static const String green_title = "हरा";
   static const String yellow_title = "पीला";
   static const String red_title = "लाल";
+  static const String delete_hrp = "डिलीट हाई रिस्क";
   static const String delete_anc = "डिलीट एएनसी";
   static const String verify_anc = "डाटा सत्यापन";
   static const String edit_anc = "प्रविष्टि सुधारें";

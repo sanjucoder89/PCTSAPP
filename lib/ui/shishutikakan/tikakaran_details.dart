@@ -581,98 +581,104 @@ class _TikaKaranDetailsState extends State<TikaKaranDetails> {
                                   child: Text('${response_listing[index]['immudate'].toString() == "null" ? "-" :response_listing[index]['immudate']}',textAlign:TextAlign.center,
                                     style: TextStyle(color: response_listing[index]['ANMVerify'].toString() == "1" ? ColorConstants.hbyc_bg_green : response_listing[index]['ashaautoid'].toString() == "0" ? ColorConstants.AppColorPrimary : response_listing[index]['ashaautoid'].toString() == preferences.getString("ANMAutoID").toString() ? ColorConstants.AppColorPrimary : ColorConstants.black,
                                         fontSize: 12,
-                                        decoration: response_listing[index]['clickable'].toString() == "0" ? TextDecoration.none : TextDecoration.underline,
-                                        fontWeight: FontWeight.normal),),
+                                        decoration: response_listing[index]['ANMVerify'].toString() == "0" ? TextDecoration.underline : TextDecoration.none,
+                                        fontWeight: response_listing[index]['ANMVerify'].toString() == "0" ? FontWeight.bold : FontWeight.normal ),),
                                 ) : GestureDetector(
                                    onTap: (){
                                      setState(() {
-                                        if(response_listing[index]['immucode'].toString() == "1" ||
-                                            response_listing[index]['immucode'].toString() == "5" ||
-                                            response_listing[index]['immucode'].toString() == "8" ||
-                                            response_listing[index]['immucode'].toString() == "11" ||
-                                            response_listing[index]['immucode'].toString() == "4"||
-                                            response_listing[index]['immucode'].toString() == "7"||
-                                            response_listing[index]['immucode'].toString() == "10"||
-                                            response_listing[index]['immucode'].toString() == "13"||
-                                            response_listing[index]['immucode'].toString() == "6"||
-                                            response_listing[index]['immucode'].toString() == "9"||
-                                            response_listing[index]['immucode'].toString() == "12"||
-                                            response_listing[index]['immucode'].toString() == "31"||
-                                            response_listing[index]['immucode'].toString() == "32"||
-                                            response_listing[index]['immucode'].toString() == "33" ) {
-                                          //nothing to do for ANM
-                                        }else{
-                                          if(response_listing[index]['clickable'].toString() == "1") {
+                                       // if (childImmBeans.get(getItemCount() - 1).getFreeze_Immu() == 1) {
+                                       if(response_listing[response_listing.length - 1]['Freeze_Immu'] == 1){
+                                         if(response_listing[index]['immucode'].toString() == "1" ||
+                                             response_listing[index]['immucode'].toString() == "5" ||
+                                             response_listing[index]['immucode'].toString() == "8" ||
+                                             response_listing[index]['immucode'].toString() == "11" ||
+                                             response_listing[index]['immucode'].toString() == "4"||
+                                             response_listing[index]['immucode'].toString() == "7"||
+                                             response_listing[index]['immucode'].toString() == "10"||
+                                             response_listing[index]['immucode'].toString() == "13"||
+                                             response_listing[index]['immucode'].toString() == "6"||
+                                             response_listing[index]['immucode'].toString() == "9"||
+                                             response_listing[index]['immucode'].toString() == "12"||
+                                             response_listing[index]['immucode'].toString() == "31"||
+                                             response_listing[index]['immucode'].toString() == "32"||
+                                             response_listing[index]['immucode'].toString() == "33" ) {
+                                           //nothing to do for ANM
+                                         }else{
+                                           if(response_listing[index]['clickable'].toString() == "1") {
+                                             if (response_listing[index]['ANMVerify'].toString() == "0") {
+                                               if (response_listing[index]['ashaautoid'].toString() == "0" || response_listing[index]['ashaautoid'].toString() == preferences.getString("ANMAutoID").toString()) {
+                                                 Navigator.push(context,
+                                                     MaterialPageRoute(builder: (context) =>
+                                                         UpdateShishuTikakarnScreen(
+                                                             pctsID: widget.pctsID,
+                                                             infantId: widget.infantId,
+                                                             immuname: response_listing[index]['immuname'].toString() == "null"
+                                                                 ? ""
+                                                                 : response_listing[index]['immuname']
+                                                                 .toString(),
+                                                             immucode: response_listing[index]['immucode']
+                                                                 .toString() == "null"
+                                                                 ? ""
+                                                                 : response_listing[index]['immucode']
+                                                                 .toString(),
+                                                             birthdate: response_listing[index]['Birth_date']
+                                                                 .toString() == "null"
+                                                                 ? ""
+                                                                 : response_listing[index]['Birth_date']
+                                                                 .toString(),
+                                                             villageautoid: response_listing[index]['VillageAutoID']
+                                                                 .toString() == "null"
+                                                                 ? ""
+                                                                 : response_listing[index]['VillageAutoID']
+                                                                 .toString(),
+                                                             regunitid: response_listing[index]['RegUnitID']
+                                                                 .toString() == "null"
+                                                                 ? ""
+                                                                 : response_listing[index]['RegUnitID']
+                                                                 .toString(),
+                                                             immdate: response_listing[index]['immudate']
+                                                                 .toString() == "null"
+                                                                 ? ""
+                                                                 : response_listing[index]['immudate']
+                                                                 .toString(),
+                                                             aashaautoid: response_listing[index]['ashaautoid']
+                                                                 .toString() == "null"
+                                                                 ? ""
+                                                                 : response_listing[index]['ashaautoid']
+                                                                 .toString(),
+                                                             childid: widget.pctsID,
+                                                             weight: response_listing[index]['weight']
+                                                                 .toString() == "null"
+                                                                 ? ""
+                                                                 : response_listing[index]['weight']
+                                                                 .toString(),
+                                                             unitcode: response_listing[index]['unitcode']
+                                                                 .toString() == "null"
+                                                                 ? ""
+                                                                 : response_listing[index]['unitcode']
+                                                                 .toString(),
+                                                             Media:response_listing[index]['Media']
+                                                                 .toString()
+                                                         )
+                                                     )
+                                                 ).then((value) {
+                                                   setState(() {
+                                                     this.getShishuDetailsAPI();
+                                                   });
+                                                 });
+                                               }
+                                             }
+                                           }
+                                         }
+                                       }
 
-                                            Navigator.push(context,
-                                                MaterialPageRoute(builder: (context) =>
-                                                    UpdateShishuTikakarnScreen(
-                                                      pctsID: widget.pctsID,
-                                                      infantId: widget.infantId,
-                                                      immuname: response_listing[index]['immuname'].toString() == "null"
-                                                          ? ""
-                                                          : response_listing[index]['immuname']
-                                                          .toString(),
-                                                      immucode: response_listing[index]['immucode']
-                                                          .toString() == "null"
-                                                          ? ""
-                                                          : response_listing[index]['immucode']
-                                                          .toString(),
-                                                      birthdate: response_listing[index]['Birth_date']
-                                                          .toString() == "null"
-                                                          ? ""
-                                                          : response_listing[index]['Birth_date']
-                                                          .toString(),
-                                                      villageautoid: response_listing[index]['VillageAutoID']
-                                                          .toString() == "null"
-                                                          ? ""
-                                                          : response_listing[index]['VillageAutoID']
-                                                          .toString(),
-                                                      regunitid: response_listing[index]['RegUnitID']
-                                                          .toString() == "null"
-                                                          ? ""
-                                                          : response_listing[index]['RegUnitID']
-                                                          .toString(),
-                                                      immdate: response_listing[index]['immudate']
-                                                          .toString() == "null"
-                                                          ? ""
-                                                          : response_listing[index]['immudate']
-                                                          .toString(),
-                                                      aashaautoid: response_listing[index]['ashaautoid']
-                                                          .toString() == "null"
-                                                          ? ""
-                                                          : response_listing[index]['ashaautoid']
-                                                          .toString(),
-                                                      childid: widget.pctsID,
-                                                      weight: response_listing[index]['weight']
-                                                          .toString() == "null"
-                                                          ? ""
-                                                          : response_listing[index]['weight']
-                                                          .toString(),
-                                                      unitcode: response_listing[index]['unitcode']
-                                                          .toString() == "null"
-                                                          ? ""
-                                                          : response_listing[index]['unitcode']
-                                                          .toString(),
-                                                      Media:response_listing[index]['Media']
-                                                        .toString()
-                                                    )
-                                                )
-                                            ).then((value) {
-                                              setState(() {
-                                                this.getShishuDetailsAPI();
-                                              });
-                                            });
-
-                                          }
-                                        }
                                      });
                                    },
                                   child: Text('${response_listing[index]['immudate'].toString() == "null" ? "-" :response_listing[index]['immudate']}',textAlign:TextAlign.center,
-                                    style: TextStyle(color: response_listing[index]['clickable'].toString() == "1" ? ColorConstants.hbyc_bg_green : ColorConstants.black,
+                                    style: TextStyle(color: response_listing[index]['ANMVerify'].toString() == "1" ? ColorConstants.hbyc_bg_green : response_listing[index]['ashaautoid'].toString() == "0" ? ColorConstants.AppColorPrimary : response_listing[index]['ashaautoid'].toString() == preferences.getString("ANMAutoID").toString() ? ColorConstants.AppColorPrimary : ColorConstants.black,
                                         fontSize: 12,
-                                        decoration: response_listing[index]['clickable'].toString() == "0" ? TextDecoration.none : TextDecoration.underline,
-                                        fontWeight: FontWeight.normal),),
+                                        decoration: response_listing[index]['ANMVerify'].toString() == "0" ? TextDecoration.underline : TextDecoration.none,
+                                        fontWeight: response_listing[index]['ANMVerify'].toString() == "0" ? FontWeight.bold : FontWeight.normal ),),
                                 )),
                               ],
                             ),

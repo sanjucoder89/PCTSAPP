@@ -139,7 +139,7 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
   var _riskPostData="0";
   var _Media="";
   var _UpdateUserNo="";
-
+  var _changeBlockTitle=Strings.block;
   TextEditingController _shishuWeightController = TextEditingController();
   TextEditingController _shishuKadController = TextEditingController();
 
@@ -587,7 +587,7 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
   bool _chooseAharCard = false;
   bool _referView = false;
   bool _isChildGrowthDiseaseFound = false;
-
+  bool _isDropDownRefresh=false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -689,6 +689,7 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
                       ],
                     ),
                   ),
+
                   Padding(
                     padding: const EdgeInsets.all(5.0),
                     child: RichText(
@@ -786,6 +787,7 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
                       ],
                     ),
                   ),
+
                   Padding(
                     padding: const EdgeInsets.all(5.0),
                     child: Row(
@@ -1971,6 +1973,12 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
                                              setState(() {
                                                _selectedPlacesReferCode = newVal!;
                                                print('refercode:$_selectedPlacesReferCode');
+
+                                               if(_selectedPlacesReferCode == "13" ||_selectedPlacesReferCode == "6" ||_selectedPlacesReferCode == "15" ||_selectedPlacesReferCode == "7" || _selectedPlacesReferCode == "5"){
+                                                 _changeBlockTitle=Strings.sanstha_type;
+                                               }else{
+                                                 _changeBlockTitle=Strings.block;
+                                               }
                                                for(int i=0 ;i<custom_placesrefer_list.length; i++){
                                                  if(_selectedPlacesReferCode == "10" || _selectedPlacesReferCode == "9" || _selectedPlacesReferCode == "8"){
                                                    if(_selectedPlacesReferCode == custom_placesrefer_list[i].code.toString()){
@@ -1983,6 +1991,12 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
                                                  }
                                                }
                                                getDistrictListAPI("3");
+
+                                               if(_isDropDownRefresh == true){
+                                                 _isDropDownRefresh=false;
+                                                 _selectedBlockUnitCode = custom_block_list[0].unitcode.toString();
+                                                 print('_selectedDistrictUnitCode ${_selectedBlockUnitCode}');
+                                               }
                                              });
                                            },
                                            value: _selectedPlacesReferCode, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
@@ -2073,6 +2087,7 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
                                                _selectedDistrictUnitCode = newVal!;
                                                print('distrcode:$_selectedDistrictUnitCode');
                                                print('ReferCode:$_selectedPlacesReferCode');
+
                                                if(_selectedPlacesReferCode == "8" ||_selectedPlacesReferCode == "9" ||_selectedPlacesReferCode == "10" ||_selectedPlacesReferCode == "16"){
                                                  getBlockListAPI("4",_selectedDistrictUnitCode.substring(0, 4));
                                                }else{
@@ -2097,7 +2112,7 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
                                      color: Colors.white,
                                      child: RichText(
                                        text: TextSpan(
-                                           text: Strings.block,
+                                           text: _changeBlockTitle,
                                            style: TextStyle(
                                                color: Colors.black, fontSize: 13),
                                            children: [
@@ -2171,6 +2186,7 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
                                              setState(() {
                                                _selectedBlockUnitCode = newVal!;
                                                print('blockcode:$_selectedBlockUnitCode');
+                                               _isDropDownRefresh=true;//that mean first time block value selected,now value will be reset if refer jila value changed
                                                _ReferUnitCode=_selectedBlockUnitCode;
                                                getSubDataListAPI(_selectedPlacesReferCode,_ReferUnitCode);
                                              });

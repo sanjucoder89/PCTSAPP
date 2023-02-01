@@ -837,9 +837,11 @@ class _AncExpandDetails extends State<AncExpandDetails> {
                                       VillageAutoID: response_listing[last_pos]['VillageAutoID'].toString(),
                                       DeliveryComplication: response_listing[last_pos]['DeliveryComplication'].toString(),
                                       RegUnitID:response_listing[last_pos]['RegUnitID'].toString(),
+                                      //Height:"30",
                                       Height:response_listing[last_pos]['Height'].toString(),
                                       AncRegId:widget.ancregid,
                                       RegUnittype:response_listing[last_pos]['RegUnittype'].toString(),
+                                      //Age: "17",
                                       Age: response_listing[last_pos]['Age'].toString(),
                                       ANC1Date: response_listing[last_pos]['ANC1Date'].toString() == "null" ? "" :response_listing[last_pos]['ANC1Date'].toString(),
                                       ANC2Date: response_listing[last_pos]['ANC2Date'].toString() == "null" ? "" :response_listing[last_pos]['ANC2Date'].toString(),
@@ -849,6 +851,7 @@ class _AncExpandDetails extends State<AncExpandDetails> {
                                       PreviousTT2Date: response_listing[last_pos]['PreviousTT2Date'].toString() == "null" ? "" :response_listing[last_pos]['PreviousTT2Date'].toString(),
                                       PreviousTTBDate: response_listing[last_pos]['PreviousTTBDate'].toString() == "null" ? "" :response_listing[last_pos]['PreviousTTBDate'].toString(),
                                       HighRisk: response_listing[last_pos]['HighRisk'].toString() == "null" ? "0" :response_listing[last_pos]['HighRisk'].toString()
+                                      //HighRisk: "1"
                                   )
                               ),
                             ).then((value){setState(() {

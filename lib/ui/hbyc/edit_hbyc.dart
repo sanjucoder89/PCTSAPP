@@ -184,7 +184,7 @@ class _EditHBYCFormState extends State<EditHBYCForm> {
   List<CustomDistrictCodeList> custom_district_list = [];
   List<CustomBlockCodeList> custom_block_list = [];
   List<CustomSubCodeList> custom_sub_list = [];
-
+  var _changeBlockTitle=Strings.block;
   var _selectedPlacesReferCode = "0";
   var _selectedDistrictUnitCode = "0";
   var _selectedBlockUnitCode = "0";
@@ -2185,6 +2185,14 @@ class _EditHBYCFormState extends State<EditHBYCForm> {
                                              setState(() {
                                                _selectedPlacesReferCode = newVal!;
                                                print('refercode:$_selectedPlacesReferCode');
+
+
+                                               if(_selectedPlacesReferCode == "13" ||_selectedPlacesReferCode == "6" ||_selectedPlacesReferCode == "15" ||_selectedPlacesReferCode == "7" || _selectedPlacesReferCode == "5"){
+                                                 _changeBlockTitle=Strings.sanstha_type;
+                                               }else{
+                                                 _changeBlockTitle=Strings.block;
+                                               }
+
                                                for(int i=0 ;i<custom_placesrefer_list.length; i++){
                                                  if(_selectedPlacesReferCode == "10" || _selectedPlacesReferCode == "9" || _selectedPlacesReferCode == "8"){
                                                    if(_selectedPlacesReferCode == custom_placesrefer_list[i].code.toString()){
@@ -2311,7 +2319,7 @@ class _EditHBYCFormState extends State<EditHBYCForm> {
                                      color: Colors.white,
                                      child: RichText(
                                        text: TextSpan(
-                                           text: Strings.block,
+                                           text:_changeBlockTitle,
                                            style: TextStyle(
                                                color: Colors.black, fontSize: 13),
                                            children: [

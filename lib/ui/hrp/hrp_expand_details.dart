@@ -23,6 +23,7 @@ import '../../../constant/ApiUrl.dart';
 import '../../../constant/LocaleString.dart';
 import '../../../constant/MyAppColor.dart';
 import '../prasav/model/ActionRecordsData.dart';
+import 'add_hrp.dart';
 
 
 
@@ -75,7 +76,7 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
   var _anmName="";
   var _topHeaderName="";
   var last_pos=0;
-  bool _showHideExpandableListView=false; //for enable disable covid date
+  bool _showHideExpandableListView=false;
 
   bool _showHideAddFirstHRPButtonView=true;
   bool _showHideAddSecondHRPButtonView=true;
@@ -102,14 +103,10 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
     print('ancRegId ${ancRegId}');
     print('mthrId ${mthrId}');
     var response = await post(Uri.parse(_anc_details_url), body: {
-      //MotherID:11935763
-      // ANCRegID:17251662
-      // TokenNo:12644f01-9229-4764-a38f-93d9f7132f8a
-      // UserID:0101065030203
-      "MotherID":"8250299",
-      //"MotherID":ancRegId,
-      "ANCRegID":"10145777",
-      //"ANCRegID":mthrId,
+     //  "ANCRegID":"10145777",
+      //"MotherID":"8250299",
+      "MotherID":mthrId,
+      "ANCRegID":ancRegId,
       "TokenNo": preferences.getString('Token'),
       "UserID": preferences.getString('UserId')
     });
@@ -120,8 +117,7 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
         custom_anc_list.clear();
         response_listing = resBody['ResposeData'];
        // print('anc-resp-.len ${response_listing.length}');
-        _showHideExpandableListView=false;
-        if(response_listing[0]['HBYCFlag'].toString() != "0"){
+        if(response_listing[0]['AncFlag'].toString() != "null"){
           _showHideExpandableListView=true;
           for (int i = 0; i < response_listing.length; i++){
             custom_anc_list.add(
@@ -140,7 +136,7 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                 ANC3Date: response_listing[i]['ANC3Date'].toString(),
                 ANC4Date: response_listing[i]['ANC4Date'].toString(),
                 ContactDate:response_listing[i]['ContactDate'].toString(),
-                AncFlag: response_listing[i]['AncFlag'].toString(),
+                AncFlag: response_listing[i]['AncFlag'].toString() == "null" ? "0" : response_listing[i]['AncFlag'].toString(),
                 Ashaautoid: response_listing[i]['Ashaautoid'].toString(),
                 AshaName: response_listing[i]['AshaName'].toString(),
                 ContactUnitType: response_listing[i]['ContactUnitType'].toString(),
@@ -203,6 +199,7 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
 
           for (int i = 0; i < custom_anc_list.length; i++){
                 if(custom_anc_list[i].AncFlag == "0"){
+
                     _showHideAddFirstHRPButtonView=true;
                     _showHideAddSecondHRPButtonView=true;
                     _showHideAddThirdHRPButtonView=true;
@@ -326,7 +323,6 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
 
   Future<String> deleteHBYCAPI(String _flagtype,String _ancregid) async {
     var response = await delete(Uri.parse(_delete_record_url), body: {
-      //AppVersion IOSAppVersion ANCRegid ANCFlag
       "ANCRegid": _ancregid,
       "ANCFlag": _flagtype,
       "AppVersion": "5.5.5.22",
@@ -900,23 +896,20 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                       child: GestureDetector(
                         onTap: (){
                           if(preferences.getString("AppRoleID") == "31" || preferences.getString("AppRoleID") == "32" || preferences.getString("AppRoleID") == "33"){
-                            /*Navigator.push(
+                            Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (BuildContext context) => AddHBYCForm(
-                                      RegUnitID:response_listing[last_pos]['RegUnitid'].toString(),
-                                      VillageAutoID:response_listing[last_pos]['villageautoid'].toString(),
-                                      RegUnittype: response_listing[last_pos]['RegUnittype'].toString(),
-                                      HBYCFlag: response_listing[last_pos]['AncFlag'].toString(),
-                                      Birth_date: response_listing[last_pos]['Birth_date'].toString(),
-                                      motherid: response_listing[last_pos]['motherid'].toString(),
-                                      ancregid: response_listing[last_pos]['ancregid'].toString(),
-                                      infantid: response_listing[last_pos]['infantid'].toString()
+                                  builder: (BuildContext context) => AddHRPScreen(
+                                      VillageAutoID:response_listing[last_pos]['VillageAutoID'].toString(),
+                                      HRFlag: "5",
+                                      ANCRegId: widget.ANCRegID,
+                                      MotherId: widget.MotherID,
+                                      ContactDate: response_listing[last_pos]['ContactDate'].toString()
                                   )
                               ),
                             ).then((value){setState(() {
                               hbycDetailsAPI(widget.ANCRegID,widget.MotherID);
-                            });});*/
+                            });});
                           }
                         },
                         child: Container(
@@ -932,7 +925,7 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
-                                        '${Strings.add_second_pravsti_hrp_vivran}',
+                                        '${Strings.add_first_pravsti_hrp_vivran}',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                             color:Colors.white,
@@ -967,23 +960,20 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                       child: GestureDetector(
                         onTap: (){
                           if(preferences.getString("AppRoleID") == "31" || preferences.getString("AppRoleID") == "32" || preferences.getString("AppRoleID") == "33"){
-                            /*Navigator.push(
+                            Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (BuildContext context) => AddHBYCForm(
-                                      RegUnitID:response_listing[last_pos]['RegUnitid'].toString(),
-                                      VillageAutoID:response_listing[last_pos]['villageautoid'].toString(),
-                                      RegUnittype: response_listing[last_pos]['RegUnittype'].toString(),
-                                      HBYCFlag: response_listing[last_pos]['AncFlag'].toString(),
-                                      Birth_date: response_listing[last_pos]['Birth_date'].toString(),
-                                      motherid: response_listing[last_pos]['motherid'].toString(),
-                                      ancregid: response_listing[last_pos]['ancregid'].toString(),
-                                      infantid: response_listing[last_pos]['infantid'].toString()
+                                  builder: (BuildContext context) => AddHRPScreen(
+                                      VillageAutoID:response_listing[last_pos]['VillageAutoID'].toString(),
+                                      HRFlag: "6",
+                                      ANCRegId: widget.ANCRegID,
+                                      MotherId: widget.MotherID,
+                                      ContactDate: response_listing[last_pos]['ContactDate'].toString()
                                   )
                               ),
                             ).then((value){setState(() {
                               hbycDetailsAPI(widget.ANCRegID,widget.MotherID);
-                            });});*/
+                            });});
                           }
                         },
                         child: Container(
@@ -1034,23 +1024,20 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                       child: GestureDetector(
                         onTap: (){
                           if(preferences.getString("AppRoleID") == "31" || preferences.getString("AppRoleID") == "32" || preferences.getString("AppRoleID") == "33"){
-                            /*Navigator.push(
+                            Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (BuildContext context) => AddHBYCForm(
-                                      RegUnitID:response_listing[last_pos]['RegUnitid'].toString(),
-                                      VillageAutoID:response_listing[last_pos]['villageautoid'].toString(),
-                                      RegUnittype: response_listing[last_pos]['RegUnittype'].toString(),
-                                      HBYCFlag: response_listing[last_pos]['AncFlag'].toString(),
-                                      Birth_date: response_listing[last_pos]['Birth_date'].toString(),
-                                      motherid: response_listing[last_pos]['motherid'].toString(),
-                                      ancregid: response_listing[last_pos]['ancregid'].toString(),
-                                      infantid: response_listing[last_pos]['infantid'].toString()
+                                  builder: (BuildContext context) => AddHRPScreen(
+                                      VillageAutoID:response_listing[last_pos]['VillageAutoID'].toString(),
+                                      HRFlag: "7",
+                                      ANCRegId: widget.ANCRegID,
+                                      MotherId: widget.MotherID,
+                                      ContactDate: response_listing[last_pos]['ContactDate'].toString()
                                   )
                               ),
                             ).then((value){setState(() {
                               hbycDetailsAPI(widget.ANCRegID,widget.MotherID);
-                            });});*/
+                            });});
                           }
                         },
                         child: Container(
@@ -1101,23 +1088,20 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                       child: GestureDetector(
                         onTap: (){
                           if(preferences.getString("AppRoleID") == "31" || preferences.getString("AppRoleID") == "32" || preferences.getString("AppRoleID") == "33"){
-                            /*Navigator.push(
+                            Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (BuildContext context) => AddHBYCForm(
-                                      RegUnitID:response_listing[last_pos]['RegUnitid'].toString(),
-                                      VillageAutoID:response_listing[last_pos]['villageautoid'].toString(),
-                                      RegUnittype: response_listing[last_pos]['RegUnittype'].toString(),
-                                      HBYCFlag: response_listing[last_pos]['AncFlag'].toString(),
-                                      Birth_date: response_listing[last_pos]['Birth_date'].toString(),
-                                      motherid: response_listing[last_pos]['motherid'].toString(),
-                                      ancregid: response_listing[last_pos]['ancregid'].toString(),
-                                      infantid: response_listing[last_pos]['infantid'].toString()
+                                  builder: (BuildContext context) => AddHRPScreen(
+                                      VillageAutoID:response_listing[last_pos]['VillageAutoID'].toString(),
+                                      HRFlag: "8",
+                                      ANCRegId: widget.ANCRegID,
+                                      MotherId: widget.MotherID,
+                                      ContactDate: response_listing[last_pos]['ContactDate'].toString()
                                   )
                               ),
                             ).then((value){setState(() {
                               hbycDetailsAPI(widget.ANCRegID,widget.MotherID);
-                            });});*/
+                            });});
                           }
                         },
                         child: Container(
@@ -1168,23 +1152,20 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                       child: GestureDetector(
                         onTap: (){
                           if(preferences.getString("AppRoleID") == "31" || preferences.getString("AppRoleID") == "32" || preferences.getString("AppRoleID") == "33"){
-                            /*Navigator.push(
+                            Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (BuildContext context) => AddHBYCForm(
-                                      RegUnitID:response_listing[last_pos]['RegUnitid'].toString(),
-                                      VillageAutoID:response_listing[last_pos]['villageautoid'].toString(),
-                                      RegUnittype: response_listing[last_pos]['RegUnittype'].toString(),
-                                      HBYCFlag: response_listing[last_pos]['AncFlag'].toString(),
-                                      Birth_date: response_listing[last_pos]['Birth_date'].toString(),
-                                      motherid: response_listing[last_pos]['motherid'].toString(),
-                                      ancregid: response_listing[last_pos]['ancregid'].toString(),
-                                      infantid: response_listing[last_pos]['infantid'].toString()
+                                  builder: (BuildContext context) => AddHRPScreen(
+                                      VillageAutoID:response_listing[last_pos]['VillageAutoID'].toString(),
+                                      HRFlag: "9",
+                                      ANCRegId: widget.ANCRegID,
+                                      MotherId: widget.MotherID,
+                                      ContactDate: response_listing[last_pos]['ContactDate'].toString()
                                   )
                               ),
                             ).then((value){setState(() {
                               hbycDetailsAPI(widget.ANCRegID,widget.MotherID);
-                            });});*/
+                            });});
                           }
                         },
                         child: Container(

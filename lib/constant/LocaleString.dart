@@ -312,6 +312,7 @@ class Strings {
   static const String second_anc = "द्वितीय एएनसी ";
   static const String third_anc = "तृतीय एएनसी ";
   static const String fourth_anc = "चतुर्थ एएनसी ";
+  static const String sampark_date = "सम्पर्क की तारीक ";
   static const String aasha_chunai = "आशा चुनें ";
   static const String try_again = "कृपया वापस प्रयास करें ";
   static const String aanganbadi_chunai = "आँगनवाड़ी चुनें ";
@@ -384,6 +385,8 @@ class Strings {
   static const String refer_sanstha = "रैफर संस्था ";
   static const String refer_block_choose = "रैफर संस्था चुनें ";
   static const String block = "ब्लॉक";
+  static const String highrisk_report = "हाईरिस्क जाँच";
+  static const String prasv_yujna = "संस्था जहाँ प्रसव के लिये योजना बनाई है ";
   static const String choose_block = "ब्लॉक चुनें";
   static const String chc_phc_title = "CHC/PHC";
   static const String sa_pra_dispensary = "सा.स्वा.केन्द्र/प्रा.स्वा.केन्द्र/डिस्पेंसरी ";
@@ -505,6 +508,7 @@ class Strings {
   static const String call_anm = "एएनएम को कॉल करें ";
   static const String view_selected_anm = "चयनित एएनएम के रिकॉर्ड देखने के लिए क्लिक करें ";
   static const String anm_ka_naam = "एएनएम का नाम";
+  static const String hospital_sanstha_ka_naam = "चिकत्सा संस्था का नाम";
   static const String sanstha_ka_naam = "संस्था का नाम";
   static const String sanstha_ki_tithi = "संस्था की तिथि";
   static const String sanstha_title = "संस्था :";
@@ -532,6 +536,7 @@ class Strings {
   static const String choose_sukroj_date = "सुक्रोज की तिथि चुनें";
   static const String choose_sukroj2_date = "सुक्रोज 2 की तिथि चुनें";
   static const String choose_sukroj3_date = "सुक्रोज 3 की तिथि चुनें";
+
 
 
   static const String other_hospital = "अन्य सरकारी अस्पताल";

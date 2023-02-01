@@ -479,6 +479,11 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
         _PurvJatilEnDisableCB=false;
       }
 
+      if(widget.HighRisk == "1"){//if case is highrisk thn purvjatil checkbox will be enabled
+        _purvJatilPrastutiCheckb=true;
+        _PurvJatilEnDisableCB=false;
+      }
+
     }
     print('LoginAshaID: ${preferences.getString('ANMAutoID')}');
     var response = await post(Uri.parse(_aasha_list_url), body: {
@@ -1335,7 +1340,7 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
   bool _HighbloodpresourEnDisableCB = true;
   bool _ChotakadEnDisableCB = true;
   bool _AgeEnDisableCB = true;
-  bool _PurvJatilEnDisableCB = true;
+  bool _PurvJatilEnDisableCB = false;
   bool _APHEnDisableCB = true;
   bool _TransverselieEnDisableCB = true;
   bool _MadhumayeEnDisableCB = true;
@@ -2020,9 +2025,9 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
                                             //_hbCount=text.trim();
                                             print('mahilaheight $text');
                                             print('_hbCount $text');
-                                            if(widget.HighRisk == "0") { //0=no HR 1=HR
+                                            //if(widget.HighRisk == "0") { //0=no HR 1=HR
                                               getHBHeightCheck(_animyaHBCountController.text.toString().trim(),text);
-                                            }
+                                            //}
                                           },
                                         ))))
                           ],
@@ -2093,9 +2098,9 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
                                         }else{
 
                                         }
-                                        if(widget.HighRisk == "0"){//0=no HR 1=HR
+                                       // if(widget.HighRisk == "0"){//0=no HR 1=HR
                                           getHBHeightCheck(text,_mahilaHeightController.text.toString().trim());
-                                        }
+                                       // }
                                       }
                                     },
                                   ))))
@@ -5455,7 +5460,7 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
                                                     item.title.toString(),
                                                     //Names that the api dropdown contains
                                                     style: TextStyle(
-                                                      fontSize: 10.0,
+                                                      fontSize: 14.0,
                                                     ),
                                                   ),
                                                 )),
@@ -5545,7 +5550,7 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
                                                   child: Text(item.unitNameHindi.toString(),
                                                     //Names that the api dropdown contains
                                                     style: TextStyle(
-                                                      fontSize: 10.0,
+                                                      fontSize: 14.0,
                                                     ),
                                                   ),
                                                 )),
@@ -5637,7 +5642,7 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
                                                     item.unitNameHindi.toString(),
                                                     //Names that the api dropdown contains
                                                     style: TextStyle(
-                                                      fontSize: 10.0,
+                                                      fontSize: 14.0,
                                                     ),
                                                   ),
                                                 )),
@@ -9406,12 +9411,15 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
                   if (int.parse(widget.Age) < 18 || int.parse(widget.Age) > 35) {
                     _highRiskChecked=true;//checked highrisk chkbox
                     _highRiskEnDisableCB=false;//enable or disable highrisk checkbox
+                    _showHideHighRiskView = true;
                   }else if (double.parse(_hb) <= 7.0) {
                     _highRiskChecked=true;//checked highrisk chkbox
                     _highRiskEnDisableCB=false;//enable or disable highrisk checkbox
+                    _showHideHighRiskView = true;
                   } else{
                     _highRiskChecked=false;
                     _highRiskEnDisableCB=true;//enable or disable highrisk checkbox
+                    _showHideHighRiskView = false;
                   }
                 }
               }else{
@@ -9424,9 +9432,11 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
                   if (int.parse(widget.Age) < 18 || int.parse(widget.Age) > 35) {
                     _highRiskChecked=true;//checked highrisk chkbox
                     _highRiskEnDisableCB=false;//enable or disable highrisk checkbox
+                    _showHideHighRiskView = true;
                   } else {
                     _highRiskChecked=false;
                     _highRiskEnDisableCB=true;//enable or disable highrisk checkbox
+                    _showHideHighRiskView = true;
                   }
                 }
               }
@@ -9492,10 +9502,9 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
 
   void getBloodPresourSystolicValue(String _bloodPresS) {
     print('_bloodPresS $_bloodPresS');
-
       setState(() {
         if(_bloodPresS.isEmpty){
-          _ChotakadEnDisableCB=true;
+          _ChotakadEnDisableCB=false;
           _highbloodpresourCheckb=false;
           custom_high_pragnancy_cvslist.removeWhere((item) => item.rishId == 1);//remove 1 from csv
         }else if(int.parse(_bloodPresS) > 140){
@@ -9504,8 +9513,10 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
           _highbloodpresourCheckb=true;
           custom_high_pragnancy_cvslist.add(CustomHighRiskPragnancyList(rishId: 1,rishValue: "1"));//add 1 in csv listing
         }else{
-          _highRiskEnDisableCB=true;//enable or disable highrisk checkbox
-          _highbloodpresourCheckb=false;
+          if(_highRiskChecked == false){
+            _highRiskEnDisableCB=true;//enable or disable highrisk checkbox
+            _highbloodpresourCheckb=false;
+          }
           custom_high_pragnancy_cvslist.removeWhere((item) => item.rishId == 1);//remove 1 from csv
         }
       });
@@ -9515,9 +9526,8 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
     print('_bloodPresD $_bloodPresD');
     setState(() {
       if(_bloodPresD.isEmpty){
-
         _highbloodpresourCheckb=false;
-        _ChotakadEnDisableCB=true;
+        _ChotakadEnDisableCB=false;
         custom_high_pragnancy_cvslist.removeWhere((item) => item.rishId == 1);//remove 1 from csv
 
       }else if(int.parse(_bloodPresD) > 90){
@@ -9526,8 +9536,10 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
         _highbloodpresourCheckb=true;
         custom_high_pragnancy_cvslist.add(CustomHighRiskPragnancyList(rishId: 1,rishValue: "1"));//add 1 in csv listing
       }else{
-        _highRiskEnDisableCB=true;//enable or disable highrisk checkbox
-        _highbloodpresourCheckb=false;
+        if(_highRiskChecked == false){
+          _highRiskEnDisableCB=true;//enable or disable highrisk checkbox
+          _highbloodpresourCheckb=false;
+        }
         custom_high_pragnancy_cvslist.removeWhere((item) => item.rishId == 1);//remove 1 from csv
       }
     });

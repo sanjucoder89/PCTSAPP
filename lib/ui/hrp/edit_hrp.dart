@@ -637,10 +637,15 @@ class _EditHRPScreenState extends State<EditHRPScreen> {
     _selectedHRPDate = getDate(_lastHrpAPIDate.toString())+"/"+getMonth(_lastHrpAPIDate.toString())+"/"+getYear(_lastHrpAPIDate.toString());
     print('_lastHRPDate ${_selectedHRPDate}');
 
-    _selectedDistrictUnitCode=widget.ContactUnitType;
-    _selectedDistrictUnitCode2=widget.DelUnitType;
+    _selectedPlacesReferCode=widget.ContactUnitType;
+    _selectedPlacesReferCode2=widget.DelUnitType;
 
-    //_sele=widget.DelUnitType;
+    getDistrictListAPI("3");
+
+    _selectedDistrictUnitCode=widget.ContactDistrictUnitCode;
+    _selectedDistrictUnitCode2=widget.DelDistrictUnitCode;
+
+
   }
 
 

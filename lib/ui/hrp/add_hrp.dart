@@ -1582,16 +1582,16 @@ class _AddHRPScreenState extends State<AddHRPScreen> {
         if (formattedDate2.compareTo(getCurrentDate()) > 0) {
           _showErrorPopup(Strings.aaj_ki_tareek_sai_phale,ColorConstants.AppColorPrimary);
         }else{
-          var calendrHrpDate = DateTime.parse(formattedDate4.toString());
-          var lastHrpDate = DateTime.parse(getConvertRegDateFormat(widget.ContactDate));
-          final diff_in_date = calendrHrpDate.difference(lastHrpDate).inDays;
-          print('diff_in_date ${diff_in_date}');
-          if(diff_in_date <= 25){
+          //var calendrHrpDate = DateTime.parse(formattedDate4.toString());
+          //var lastHrpDate = DateTime.parse(getConvertRegDateFormat(widget.ContactDate));
+          //final diff_in_date = calendrHrpDate.difference(lastHrpDate).inDays;
+          //print('diff_in_date ${diff_in_date}');
+          /*if(diff_in_date <= 25){
             _showErrorPopup("Please Check Enter Date",Colors.black);
-          }else{
+          }else{*/
             _selectedHRPDateAPI=formattedDateAPI;
             _selectedHRPDate=finalhrpDate;
-          }
+          //}
         }
       });
     });

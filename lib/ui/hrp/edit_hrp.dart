@@ -36,16 +36,54 @@ String getConvertRegDateFormat(String date) {
   var outputDate = outputFormat.format(inputDate);
   return outputDate.toString();
 }
+String getDate(String date) {
+  /// Convert into local date format.
+  var localDate = DateTime.parse(date).toLocal();
+  var inputFormat = DateFormat('yyyy-MM-dd');
+  var inputDate = inputFormat.parse(localDate.toString());
 
+  /// outputFormat - convert into format you want to show.
+  var outputFormat = DateFormat('dd');
+  var outputDate = outputFormat.format(inputDate);
+  return outputDate.toString();
+}
 
-class AddHRPScreen extends StatefulWidget {
-  const AddHRPScreen(
+String getMonth(String date) {
+  /// Convert into local date format.
+  var localDate = DateTime.parse(date).toLocal();
+  var inputFormat = DateFormat('yyyy-MM-dd');
+  var inputDate = inputFormat.parse(localDate.toString());
+
+  /// outputFormat - convert into format you want to show.
+  var outputFormat = DateFormat('MM');
+  var outputDate = outputFormat.format(inputDate);
+  return outputDate.toString();
+}
+String getYear(String date) {
+  /// Convert into local date format.
+  var localDate = DateTime.parse(date).toLocal();
+  var inputFormat = DateFormat('yyyy-MM-dd');
+  var inputDate = inputFormat.parse(localDate.toString());
+
+  /// outputFormat - convert into format you want to show.
+  var outputFormat = DateFormat('yyyy');
+  var outputDate = outputFormat.format(inputDate);
+  return outputDate.toString();
+}
+class EditHRPScreen extends StatefulWidget {
+  const EditHRPScreen(
       {Key? key,
         required this.VillageAutoID,
         required this.HRFlag,
         required this.ANCRegId,
         required this.MotherId,
-        required this.ContactDate
+        required this.ContactDate,
+        required this.Ashaautoid,
+        required this.ContactUnitType,
+        required this.ContactDistrictUnitCode,
+        required this.DelUnitType,
+        required this.DelDistrictUnitCode,
+        required this.Media
       })
       : super(key: key);
 
@@ -55,18 +93,24 @@ class AddHRPScreen extends StatefulWidget {
   final String ANCRegId;
   final String MotherId;
   final String ContactDate;
+  final String Ashaautoid;
+  final String ContactUnitType;
+  final String ContactDistrictUnitCode;
+  final String DelUnitType;
+  final String DelDistrictUnitCode;
+  final String Media;
 
 
   @override
-  State<AddHRPScreen> createState() => _AddHRPScreenState();
+  State<EditHRPScreen> createState() => _EditHRPScreenState();
 }
 
-class _AddHRPScreenState extends State<AddHRPScreen> {
+class _EditHRPScreenState extends State<EditHRPScreen> {
 
   var _aasha_list_url = AppConstants.app_base_url + "PostASHAList";
   var _get_district_list_url = AppConstants.app_base_url + "postDistdata";
   var _get_block_list_url = AppConstants.app_base_url + "postBlockData";
-  var _add_hrp_form_url = AppConstants.app_base_url + "PostHighRiskDetail";
+  var _edit_hrp_form_url = AppConstants.app_base_url + "PutHighRiskDetail";
 
   late SharedPreferences preferences;
   var _help_desk_url = AppConstants.app_base_url + "HelpDesk";
@@ -552,7 +596,54 @@ class _AddHRPScreenState extends State<AddHRPScreen> {
       custom_placesrefer_list.add(CustomPlacesReferCodeList(title: Strings.setelite_hospital, code:"5"));
     }
     print('custom_placesrefer_list.len ${custom_placesrefer_list.length}');
+
+    setPreviousData();
   }
+  bool _ShowHideEditableView=false;
+  bool _isAshaEntryORANMEntry=false;//false= anm , true =asha
+  void setPreviousData() {
+
+    if(preferences.getString("AppRoleID") == "31" || preferences.getString("AppRoleID") == "32" || preferences.getString("AppRoleID") == "33"){
+      _ShowHideEditableView = true;
+    }else{
+      _ShowHideEditableView=false;
+    }
+
+    if(preferences.getString("AppRoleID").toString() == '33'){
+      _isItAsha=true;
+      aashaId = preferences.getString('ANMAutoID').toString();
+    }else{
+      if(preferences.getString("AppRoleID").toString() == '32') {
+        if(widget.Media == "1"){
+          _isAshaEntryORANMEntry=false;
+          _isItAsha=false;
+          aashaId = widget.Ashaautoid;
+        }else{
+          if(preferences.getString('ANMAutoID').toString() == widget.Ashaautoid){
+            _isAshaEntryORANMEntry=false;//update btn will show
+          }else{
+            if(preferences.getString("AppRoleID").toString() == '32') {//if last is anm btn will show for all asha
+              _isAshaEntryORANMEntry=false;//update btn will show
+            }
+          }
+          _isItAsha=true;//not editable
+          aashaId = widget.Ashaautoid;//set to last asha
+        }
+      }
+    }
+    print('aashaId ${aashaId}');
+
+    var _lastHrpAPIDate= DateTime.parse(getConvertRegDateFormat(widget.ContactDate));// "VisitDate": "2019-02-28T00:00:00",
+    _selectedHRPDate = getDate(_lastHrpAPIDate.toString())+"/"+getMonth(_lastHrpAPIDate.toString())+"/"+getYear(_lastHrpAPIDate.toString());
+    print('_lastHRPDate ${_selectedHRPDate}');
+
+    _selectedDistrictUnitCode=widget.ContactUnitType;
+    _selectedDistrictUnitCode2=widget.DelUnitType;
+
+    //_sele=widget.DelUnitType;
+  }
+
+
   var _selectedHRPDate="DD/MM/YYYY";
   var _selectedHRPDateAPI="DD/MM/YYYY";
   @override
@@ -1433,7 +1524,8 @@ class _AddHRPScreenState extends State<AddHRPScreen> {
                 ],
               ),
             ),)),
-            GestureDetector(
+            _ShowHideEditableView == true ?
+            _isAshaEntryORANMEntry == false ? GestureDetector(
               onTap: (){
                 postHbycRequest();
               },
@@ -1464,6 +1556,10 @@ class _AddHRPScreenState extends State<AddHRPScreen> {
                 ),
               ),
             )
+                :
+            Container()
+                :
+            Container()
           ],
         ),
       ),
@@ -1521,7 +1617,7 @@ class _AddHRPScreenState extends State<AddHRPScreen> {
       maskType: EasyLoadingMaskType.black,
     );
     preferences = await SharedPreferences.getInstance();
-    var response = await post(Uri.parse(_add_hrp_form_url), body: {
+    var response = await post(Uri.parse(_edit_hrp_form_url), body: {
       "AppVersion":"5.5.5.22",
       "IOSAppVersion":"",
       "ANCDate":_selectedHRPDateAPI,
@@ -1759,6 +1855,8 @@ class _AddHRPScreenState extends State<AddHRPScreen> {
     super.dispose();
     EasyLoading.dismiss();
   }
+
+
 }
 class CustomAashaList {
   String? ASHAName;

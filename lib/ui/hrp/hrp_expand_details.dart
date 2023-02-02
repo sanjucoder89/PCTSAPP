@@ -24,6 +24,7 @@ import '../../../constant/LocaleString.dart';
 import '../../../constant/MyAppColor.dart';
 import '../prasav/model/ActionRecordsData.dart';
 import 'add_hrp.dart';
+import 'edit_hrp.dart';
 
 
 
@@ -1522,11 +1523,28 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                            //  visible: preferences.getString("AppRoleID").toString() == "33" ? custom_anc_list[list_index].ANMVerify.toString() == "0" ?  custom_anc_list[list_index].ashaAutoID.toString() == "0" || custom_anc_list[list_index].ashaAutoID.toString() == preferences.getString('ANMAutoID') ? true: false : false : custom_anc_list[list_index].Freeze.toString() == "0" ? true : true ,
                             child: GestureDetector(
                             onTap: (){
-                              // print('on edit click last_pos>>>>>>>>>> ${last_pos}');
-                              if(last_pos > 0){
-                                //print('pnc LastDate-if  ${response_listing[last_pos - 1]['PNCDate'].toString()}');
-                              }else{
-                                //print('pnc LastDate-else  ${response_listing[last_pos]['PNCDate'].toString()}');
+                               //print('AncFlag >>>>>>>>>> ${response_listing[list_index]['AncFlag'].toString()}');
+                              if(preferences.getString("AppRoleID") == "31" || preferences.getString("AppRoleID") == "32" || preferences.getString("AppRoleID") == "33"){
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) => EditHRPScreen(
+                                          VillageAutoID:response_listing[list_index]['VillageAutoID'].toString(),
+                                          HRFlag: response_listing[list_index]['AncFlag'].toString(),
+                                          ANCRegId: widget.ANCRegID,
+                                          MotherId: widget.MotherID,
+                                          ContactDate: response_listing[list_index]['ContactDate'].toString(),
+                                          Ashaautoid: response_listing[list_index]['Ashaautoid'].toString(),
+                                          ContactUnitType: response_listing[list_index]['ContactUnitType'].toString(),
+                                          ContactDistrictUnitCode: response_listing[list_index]['ContactDistrictUnitCode'].toString(),
+                                          DelUnitType: response_listing[list_index]['DelUnitType'].toString(),
+                                          DelDistrictUnitCode: response_listing[list_index]['DelDistrictUnitCode'].toString(),
+                                          Media: response_listing[list_index]['Media'].toString()
+                                      )
+                                  ),
+                                ).then((value){setState(() {
+                                  hbycDetailsAPI(widget.ANCRegID,widget.MotherID);
+                                });});
                               }
                               /*Navigator.push(
                                 context,

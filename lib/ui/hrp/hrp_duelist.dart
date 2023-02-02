@@ -211,7 +211,8 @@ class _HrpDueScreenList extends State<HrpDueScreenList> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => AncExpandDetails(ancregid:find_response_listing[0]['ancregid'].toString()),
+            builder: (context) => HRPExpandDetails(ANCRegID:response_listing[0]['ancregid'].toString(),
+                MotherID: response_listing[0]['motherid'].toString()),
           ),
         );
       } else {

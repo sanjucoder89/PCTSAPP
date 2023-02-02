@@ -351,7 +351,18 @@ class _LoginScreen extends State<LoginScreen> {
             message: "यह यूजर आईडी एप्लीकेशन के लिए अमान्य है |");
       } else if (_Resetpwd == '1') {
         //move to change password
-
+      // for change password
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (BuildContext context) => ChangePasswordscreen(
+                Mobileno: _MobileNo,
+                Deviceid:Imei.toString(),
+                Token:TokenId
+              //   Val_Flag: valFlag,
+            ),
+          ),
+        );
       } else {
         // VaildMobileFlag = 1 for blank or null
         // VaildMobileFlag = 2 for mobile no not valid

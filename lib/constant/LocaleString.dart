@@ -483,6 +483,7 @@ class Strings {
   static const String panjikaran_kai_baad_ka = "पंजीकरण के बाद की तारीख चुने";
   static const String difference_btw_png_deli = "The diffrence between PNC Date and Delivery cannot be equal to 1 day for Institutional Delivery !";
   static const String please_select_before_date = "Please select before date of ExpectedDate";
+  static const String please_select_after_date = "Please select after date of ANC Date";
   static const String tt_and_last_anc_date_greater_28days = "TT date and Last Anc date should be greater than 28 days";
   static const String tab_albedazole_cant_before_reg_date = "Tab. Albedazole cant be less than Registration date";
   static const String tab_albedazole_cant_after_anc_date = "Tab. Albedazole date cant be grater than ANC date ";

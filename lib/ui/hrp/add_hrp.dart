@@ -45,8 +45,9 @@ class AddHRPScreen extends StatefulWidget {
         required this.HRFlag,
         required this.ANCRegId,
         required this.MotherId,
-        required this.ContactDate
-      })
+        required this.ContactDate,
+        required this.ExpectedDate,
+        required this.ANCDate})
       : super(key: key);
 
 
@@ -55,7 +56,8 @@ class AddHRPScreen extends StatefulWidget {
   final String ANCRegId;
   final String MotherId;
   final String ContactDate;
-
+  final String ExpectedDate;
+  final String ANCDate;
 
   @override
   State<AddHRPScreen> createState() => _AddHRPScreenState();
@@ -898,7 +900,7 @@ class _AddHRPScreenState extends State<AddHRPScreen> {
                               alignment: Alignment.centerLeft,
                               child: Padding(
                                 padding: const EdgeInsets.only(left: 5),
-                                child: Text(_selectedHRPDate,style:TextStyle(color: Colors.grey,fontSize: 13),),
+                                child: Text(_selectedHRPDate,style:TextStyle(color: _selectedHRPDate == "DD/MM/YYYY" ? Colors.grey : Colors.black,fontSize: 13),),
                               ),
                             ),
                           ),
@@ -1585,6 +1587,24 @@ class _AddHRPScreenState extends State<AddHRPScreen> {
         if (formattedDate2.compareTo(getCurrentDate()) > 0) {
           _showErrorPopup(Strings.aaj_ki_tareek_sai_phale,ColorConstants.AppColorPrimary);
         }else{
+
+          var selectedParsedDate = DateTime.parse(formattedDate4.toString());
+          var expectedParsedDate = DateTime.parse(getConvertRegDateFormat(widget.ExpectedDate));
+          var lastAncParsedDate = DateTime.parse(getConvertRegDateFormat(widget.ANCDate));
+
+          print('_expectedDate ${selectedParsedDate}');
+          if (selectedParsedDate.compareTo(expectedParsedDate) >= 0) {
+             //print('greater date');
+            _showErrorPopup(Strings.please_select_before_date,Colors.black);
+          }else{
+            //print('lower date');
+            if(selectedParsedDate.compareTo(lastAncParsedDate) <= 0){
+              _showErrorPopup(Strings.please_select_after_date,Colors.black);
+            }else{
+              _selectedHRPDateAPI=formattedDateAPI;
+              _selectedHRPDate=finalhrpDate;
+            }
+          }
           //var calendrHrpDate = DateTime.parse(formattedDate4.toString());
           //var lastHrpDate = DateTime.parse(getConvertRegDateFormat(widget.ContactDate));
           //final diff_in_date = calendrHrpDate.difference(lastHrpDate).inDays;
@@ -1592,8 +1612,7 @@ class _AddHRPScreenState extends State<AddHRPScreen> {
           /*if(diff_in_date <= 25){
             _showErrorPopup("Please Check Enter Date",Colors.black);
           }else{*/
-            _selectedHRPDateAPI=formattedDateAPI;
-            _selectedHRPDate=finalhrpDate;
+
           //}
         }
       });

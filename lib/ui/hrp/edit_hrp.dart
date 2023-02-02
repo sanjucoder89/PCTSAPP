@@ -83,7 +83,11 @@ class EditHRPScreen extends StatefulWidget {
         required this.ContactDistrictUnitCode,
         required this.DelUnitType,
         required this.DelDistrictUnitCode,
-        required this.Media
+        required this.Media,
+        required this.ContactUnitCode,
+        required this.DelUnitCode,
+        required this.ExpectedDate,
+        required this.ANCDate
       })
       : super(key: key);
 
@@ -99,6 +103,10 @@ class EditHRPScreen extends StatefulWidget {
   final String DelUnitType;
   final String DelDistrictUnitCode;
   final String Media;
+  final String ContactUnitCode;
+  final String DelUnitCode;
+  final String ExpectedDate;
+  final String ANCDate;
 
 
   @override
@@ -405,6 +413,9 @@ class _EditHRPScreenState extends State<EditHRPScreen> {
   bool _ifDistrctChange=false;
   bool _ifDistrctChange2=false;
 
+  bool _ifBlockChange=false;
+  bool _ifBlockChange2=false;
+
   Future<GetDistrictListData> getDistrictListAPI(String refUnitType) async {
     preferences = await SharedPreferences.getInstance();
     var response = await post(Uri.parse(_get_district_list_url), body: {
@@ -426,6 +437,7 @@ class _EditHRPScreenState extends State<EditHRPScreen> {
           _selectedDistrictUnitCode = custom_district_list[0].unitcode.toString();
         }else{
           _selectedDistrictUnitCode=widget.ContactDistrictUnitCode+"0000000";
+          getBlockListAPI(_selectedPlacesReferCode,_selectedDistrictUnitCode.substring(0, 4));
         }
        // print('_selectedDistrictUnitCode ${_selectedDistrictUnitCode}');
         //print('disctict.len ${custom_district_list.length}');
@@ -457,6 +469,7 @@ class _EditHRPScreenState extends State<EditHRPScreen> {
           _selectedDistrictUnitCode2 = response_district_list2[0].unitcode.toString();
         }else{
           _selectedDistrictUnitCode2=widget.DelDistrictUnitCode+"0000000";
+          getBlockListAPI2(_selectedPlacesReferCode2,_selectedDistrictUnitCode2.substring(0, 4));
         }
        // _selectedDistrictUnitCode2 = custom_district_list2[0].unitcode.toString();
         print('_selectedDistrictUnitCode2 ${_selectedDistrictUnitCode2}');
@@ -473,11 +486,6 @@ class _EditHRPScreenState extends State<EditHRPScreen> {
   List response_block_list= [];
   List response_block_list2= [];
   Future<GetBlockListData> getBlockListAPI(String refUnitType,String refUnitCode) async {
-
-    await EasyLoading.show(
-      status: 'loading...',
-      maskType: EasyLoadingMaskType.black,
-    );
     print('referUnitCode $refUnitCode');
     print('refUnitType $refUnitType');
     preferences = await SharedPreferences.getInstance();
@@ -501,7 +509,11 @@ class _EditHRPScreenState extends State<EditHRPScreen> {
         for (int i = 0; i < response_block_list.length; i++) {
           custom_block_list.add(CustomBlockCodeList(unitcode: resBody['ResposeData'][i]['unitcode'],unitNameHindi: resBody['ResposeData'][i]['unitNameHindi']));
         }
-        _selectedBlockUnitCode = custom_block_list[0].unitcode.toString();
+        if(_ifBlockChange == true){
+          _selectedBlockUnitCode = custom_block_list[0].unitcode.toString();
+        }else{
+          _selectedBlockUnitCode = widget.ContactUnitCode;
+        }
         print('_selectedDistrictUnitCode ${_selectedBlockUnitCode}');
         print('block.len ${custom_block_list.length}');
       } else {
@@ -509,25 +521,17 @@ class _EditHRPScreenState extends State<EditHRPScreen> {
         print('block.len ${custom_block_list.length}');
 
       }
-      EasyLoading.dismiss();
     });
     print('response:${apiResponse.message}');
     return GetBlockListData.fromJson(resBody);
   }
 
   Future<GetBlockListData> getBlockListAPI2(String refUnitType,String refUnitCode) async {
-    await EasyLoading.show(
-      status: 'loading...',
-      maskType: EasyLoadingMaskType.black,
-    );
     print('referUnitCode $refUnitCode');
     print('refUnitType $refUnitType');
     preferences = await SharedPreferences.getInstance();
     var response = await post(Uri.parse(_get_block_list_url), body: {
-      //RefUnittype:9
-      // RefUnitCode:0101
-      // TokenNo:730c8ec9-d70b-44a1-b68e-0f5cfe7e3957
-      // UserID:0101010020201
+
       "RefUnittype": refUnitType,
       "RefUnitCode": refUnitCode,
       "TokenNo": preferences.getString('Token'),
@@ -543,7 +547,11 @@ class _EditHRPScreenState extends State<EditHRPScreen> {
         for (int i = 0; i < response_block_list2.length; i++) {
           custom_block_list2.add(CustomBlockCodeList(unitcode: resBody['ResposeData'][i]['unitcode'],unitNameHindi: resBody['ResposeData'][i]['unitNameHindi']));
         }
-        _selectedBlockUnitCode2 = custom_block_list2[0].unitcode.toString();
+        if(_ifBlockChange2 == true){
+          _selectedBlockUnitCode2 = custom_block_list2[0].unitcode.toString();
+        }else{
+          _selectedBlockUnitCode2 = widget.DelUnitCode;
+        }
         print('_selectedDistrictUnitCode2 ${_selectedBlockUnitCode2}');
         print('block2.len ${custom_block_list2.length}');
       } else {
@@ -551,7 +559,6 @@ class _EditHRPScreenState extends State<EditHRPScreen> {
         print('block.len ${custom_block_list2.length}');
 
       }
-      EasyLoading.dismiss();
     });
     print('response:${apiResponse.message}');
     return GetBlockListData.fromJson(resBody);
@@ -632,6 +639,7 @@ class _EditHRPScreenState extends State<EditHRPScreen> {
 
     var _lastHrpAPIDate= DateTime.parse(getConvertRegDateFormat(widget.ContactDate));// "VisitDate": "2019-02-28T00:00:00",
     _selectedHRPDate = getDate(_lastHrpAPIDate.toString())+"/"+getMonth(_lastHrpAPIDate.toString())+"/"+getYear(_lastHrpAPIDate.toString());
+    _selectedHRPDateAPI=getYear(_lastHrpAPIDate.toString())+"/"+getMonth(_lastHrpAPIDate.toString())+"/"+getDate(_lastHrpAPIDate.toString());
 
     _selectedPlacesReferCode=widget.ContactUnitType;
     _selectedPlacesReferCode2=widget.DelUnitType;
@@ -646,6 +654,7 @@ class _EditHRPScreenState extends State<EditHRPScreen> {
     }else{
       _changeTitle=Strings.block;
     }
+
    //set title for block refer code view 1
     if(_selectedPlacesReferCode2 == "9" || _selectedPlacesReferCode2 == "8" || _selectedPlacesReferCode2 == "6" || _selectedPlacesReferCode2 == "7" || _selectedPlacesReferCode2 == "5"){
       for(int i=0 ;i<custom_placesrefer_list.length; i++){
@@ -656,10 +665,8 @@ class _EditHRPScreenState extends State<EditHRPScreen> {
     }else{
       _changeTitle2=Strings.block;
     }
-
     getDistrictListAPI("3");
     getDistrictListAPI2("3");
-
 
   }
 
@@ -1010,7 +1017,7 @@ class _EditHRPScreenState extends State<EditHRPScreen> {
                               alignment: Alignment.centerLeft,
                               child: Padding(
                                 padding: const EdgeInsets.only(left: 5),
-                                child: Text(_selectedHRPDate,style:TextStyle(color: Colors.grey,fontSize: 13),),
+                                child: Text(_selectedHRPDate,style:TextStyle(color: _selectedHRPDate == "DD/MM/YYYY" ? Colors.grey : Colors.black,fontSize: 13),),
                               ),
                             ),
                           ),

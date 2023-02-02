@@ -118,6 +118,7 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
         custom_anc_list.clear();
         response_listing = resBody['ResposeData'];
        // print('anc-resp-.len ${response_listing.length}');
+        _showHideExpandableListView=false;
         if(response_listing[0]['AncFlag'].toString() != "null"){
           _showHideExpandableListView=true;
           for (int i = 0; i < response_listing.length; i++){
@@ -132,10 +133,7 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                 RegDate: response_listing[i]['RegDate'].toString(),
                 LmpDate: response_listing[i]['LmpDate'].toString(),
                 ExpectedDate:response_listing[i]['ExpectedDate'].toString(),
-                ANC1Date: response_listing[i]['ANC1Date'].toString(),
-                ANC2Date: response_listing[i]['ANC2Date'].toString(),
-                ANC3Date: response_listing[i]['ANC3Date'].toString(),
-                ANC4Date: response_listing[i]['ANC4Date'].toString(),
+                ANCDate: response_listing[i]['ANCDate'].toString(),
                 ContactDate:response_listing[i]['ContactDate'].toString(),
                 AncFlag: response_listing[i]['AncFlag'].toString() == "null" ? "0" : response_listing[i]['AncFlag'].toString(),
                 Ashaautoid: response_listing[i]['Ashaautoid'].toString(),
@@ -156,51 +154,10 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
               ),
             );
             last_pos=custom_anc_list.length-1;
-            //print('last_pos=> ${last_pos}');
-            //Show Hide Edit Button Functionality
-            /*if(response_listing[i]['Freeze'].toString() == "0" && last_pos == i){
-              setState(() {
-                _showHideEditButtonView=true;
-              });
-            }else{
-              setState(() {
-                _showHideEditButtonView=false;
-              });
-            }*/
-//      print('admin_role_ID ${preferences.getString("AppRoleID").toString()}');
-            /*if(preferences.getString("AppRoleID") == "33"){
-                if(int.parse(response_listing[i]['Ashaautoid']) == 0 || response_listing[i]['Ashaautoid'].toString() == preferences.getString("ANMAutoID")){
-                  setState(() {
-                    _showHideEditButtonView=true;
-                  });
-                }
-            }else{
-              setState(() {
-                _showHideEditButtonView=false;
-              });
-            }*/
-
-            //Visible Verify Button according to condition
-            /*if(preferences.getString("AppRoleID") == "32"){
-              if(custom_anc_list[i].ANMVerify == "0"){
-                setState(() {
-                  _showVerifyButtonView=true;
-                });
-              }else{
-                setState(() {
-                  _showVerifyButtonView=false;
-                });
-              }
-            }else{
-              setState(() {
-                _showVerifyButtonView=false;
-              });
-            }*/
           }
 
           for (int i = 0; i < custom_anc_list.length; i++){
                 if(custom_anc_list[i].AncFlag == "0"){
-
                     _showHideAddFirstHRPButtonView=true;
                     _showHideAddSecondHRPButtonView=true;
                     _showHideAddThirdHRPButtonView=true;
@@ -223,6 +180,12 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                   _showHideAddFifthHRPButtonView=false;
                 }
           }
+        }else{
+          _showHideAddFirstHRPButtonView=true;
+          _showHideAddSecondHRPButtonView=true;
+          _showHideAddThirdHRPButtonView=true;
+          _showHideAddfourthdHRPButtonView=true;
+          _showHideAddFifthHRPButtonView=true;
         }
 
         second_tab_msg=response_listing[response_listing.length -1]['AncFlag'].toString() == "null" ? "0" : response_listing[response_listing.length -1]['AncFlag'].toString();//get last position value
@@ -322,8 +285,9 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
     return "Success";
   }
 
-  Future<String> deleteHBYCAPI(String _flagtype,String _ancregid) async {
+  Future<String> deleteHBYCAPI(String _flagtype,String _ancregid,String _motherid) async {
     var response = await delete(Uri.parse(_delete_record_url), body: {
+      "motherid": _motherid,
       "ANCRegid": _ancregid,
       "ANCFlag": _flagtype,
       "AppVersion": "5.5.5.22",
@@ -905,7 +869,9 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                                       HRFlag: "5",
                                       ANCRegId: widget.ANCRegID,
                                       MotherId: widget.MotherID,
-                                      ContactDate: response_listing[last_pos]['ContactDate'].toString()
+                                      ContactDate: response_listing[last_pos]['ContactDate'].toString(),
+                                      ExpectedDate: response_listing[last_pos]['ExpectedDate'].toString(),
+                                      ANCDate: response_listing[last_pos]['ANCDate'].toString()
                                   )
                               ),
                             ).then((value){setState(() {
@@ -969,7 +935,9 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                                       HRFlag: "6",
                                       ANCRegId: widget.ANCRegID,
                                       MotherId: widget.MotherID,
-                                      ContactDate: response_listing[last_pos]['ContactDate'].toString()
+                                      ContactDate: response_listing[last_pos]['ContactDate'].toString(),
+                                      ExpectedDate: response_listing[last_pos]['ExpectedDate'].toString(),
+                                      ANCDate: response_listing[last_pos]['ANCDate'].toString()
                                   )
                               ),
                             ).then((value){setState(() {
@@ -1033,7 +1001,10 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                                       HRFlag: "7",
                                       ANCRegId: widget.ANCRegID,
                                       MotherId: widget.MotherID,
-                                      ContactDate: response_listing[last_pos]['ContactDate'].toString()
+                                      ContactDate: response_listing[last_pos]['ContactDate'].toString(),
+                                      ExpectedDate: response_listing[last_pos]['ExpectedDate'].toString(),
+                                      ANCDate: response_listing[last_pos]['ANCDate'].toString()
+
                                   )
                               ),
                             ).then((value){setState(() {
@@ -1097,7 +1068,9 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                                       HRFlag: "8",
                                       ANCRegId: widget.ANCRegID,
                                       MotherId: widget.MotherID,
-                                      ContactDate: response_listing[last_pos]['ContactDate'].toString()
+                                      ContactDate: response_listing[last_pos]['ContactDate'].toString(),
+                                      ExpectedDate: response_listing[last_pos]['ExpectedDate'].toString(),
+                                      ANCDate: response_listing[last_pos]['ANCDate'].toString()
                                   )
                               ),
                             ).then((value){setState(() {
@@ -1161,7 +1134,9 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                                       HRFlag: "9",
                                       ANCRegId: widget.ANCRegID,
                                       MotherId: widget.MotherID,
-                                      ContactDate: response_listing[last_pos]['ContactDate'].toString()
+                                      ContactDate: response_listing[last_pos]['ContactDate'].toString(),
+                                      ExpectedDate: response_listing[last_pos]['ExpectedDate'].toString(),
+                                      ANCDate: response_listing[last_pos]['ANCDate'].toString()
                                   )
                               ),
                             ).then((value){setState(() {
@@ -1371,7 +1346,7 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
           Container(
             height: 40,
             margin:EdgeInsets.only(left: 5,right: 5,top: 5,bottom: 0),
-            color: custom_anc_list[list_index].ANMVerify.toString() == "1" ? ColorConstants.hbyc_bg_green : ColorConstants.AppColorPrimary,
+            color: custom_anc_list.length != 0 ? custom_anc_list[list_index].ANMVerify.toString() == "1" ? ColorConstants.hbyc_bg_green : ColorConstants.AppColorPrimary : ColorConstants.AppColorPrimary,
             padding: EdgeInsets.symmetric(horizontal: 5.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -1402,13 +1377,13 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                     Flexible(child: Padding(
                       padding: const EdgeInsets.only(left: 2),
                       child: Text(
-                        '${custom_anc_list[list_index].AncFlag.toString() == "0" ?
+                        '${custom_anc_list.length != 0 ? custom_anc_list[list_index].AncFlag.toString() == "0" ?
                         list_index == 0 && isExpanded == true ? Strings.first_hrp_vivran_close : Strings.first_hrp_vivran  : custom_anc_list[list_index].AncFlag.toString() == "5" ?
                         list_index == 0 && isExpanded == true ? Strings.first_hrp_vivran_close : Strings.first_hrp_vivran :  custom_anc_list[list_index].AncFlag.toString() == "6" ?
                         list_index == 1 && isExpanded == true ? Strings.second_hrp_vivran_close : Strings.second_hrp_vivran: custom_anc_list[list_index].AncFlag.toString() == "7" ?
                         list_index == 2 && isExpanded == true ? Strings.third_hrp_vivran_close : Strings.third_hrp_vivran: custom_anc_list[list_index].AncFlag.toString() == "8" ?
                         list_index == 3 && isExpanded == true ? Strings.fourth_hrp_vivran_close : Strings.fourth_hrp_vivran : custom_anc_list[list_index].AncFlag.toString() == "9" ?
-                        list_index == 4 && isExpanded == true ? Strings.fifth_hrp_vivran_close : Strings.fifth_hrp_vivran : ""}',
+                        list_index == 4 && isExpanded == true ? Strings.fifth_hrp_vivran_close : Strings.fifth_hrp_vivran : "" : Strings.first_hrp_vivran_close}',
                         style: TextStyle(
                             color:Colors.white,
                             fontSize: 13,
@@ -1478,26 +1453,31 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                                 _deleteHBYCDetails("क्या आप"+" "+Strings.first_hrp+" "+"को डिलीट करना चाहते है |",
                                     custom_anc_list[list_index].AncFlag.toString(),
                                     widget.ANCRegID,
+                                    widget.MotherID,
                                     ColorConstants.black);
                               }else if(custom_anc_list[list_index].AncFlag.toString() == "6"){
                                 _deleteHBYCDetails("क्या आप"+" "+Strings.sec_hrp+" "+"को डिलीट करना चाहते है |",
                                     custom_anc_list[list_index].AncFlag.toString(),
                                     widget.ANCRegID,
+                                    widget.MotherID,
                                     ColorConstants.black);
                               }else if(custom_anc_list[list_index].AncFlag.toString() == "7"){
                                 _deleteHBYCDetails("क्या आप"+" "+Strings.third_hrp+" "+"को डिलीट करना चाहते है |",
                                     custom_anc_list[list_index].AncFlag.toString(),
                                     widget.ANCRegID,
+                                    widget.MotherID,
                                     ColorConstants.black);
                               }else if(custom_anc_list[list_index].AncFlag.toString() == "8"){
                                 _deleteHBYCDetails("क्या आप"+" "+Strings.fourth_hrp+" "+"को डिलीट करना चाहते है |",
                                     custom_anc_list[list_index].AncFlag.toString(),
                                     widget.ANCRegID,
+                                    widget.MotherID,
                                     ColorConstants.black);
                               }else if(custom_anc_list[list_index].AncFlag.toString() == "9"){
                                 _deleteHBYCDetails("क्या आप"+" "+Strings.fifth_hrp+" "+"को डिलीट करना चाहते है |",
                                     custom_anc_list[list_index].AncFlag.toString(),
                                     widget.ANCRegID,
+                                    widget.MotherID,
                                     ColorConstants.black);
                               }
                             },
@@ -1539,7 +1519,11 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                                           ContactDistrictUnitCode: response_listing[list_index]['ContactDistrictUnitCode'].toString(),
                                           DelUnitType: response_listing[list_index]['DelUnitType'].toString(),
                                           DelDistrictUnitCode: response_listing[list_index]['DelDistrictUnitCode'].toString(),
-                                          Media: response_listing[list_index]['Media'].toString()
+                                          Media: response_listing[list_index]['Media'].toString(),
+                                          ContactUnitCode: response_listing[list_index]['ContactUnitCode'].toString(),
+                                          DelUnitCode: response_listing[list_index]['DelUnitCode'].toString(),
+                                          ExpectedDate: response_listing[list_index]['ExpectedDate'].toString(),
+                                          ANCDate: response_listing[last_pos]['ANCDate'].toString()
                                       )
                                   ),
                                 ).then((value){setState(() {
@@ -1928,7 +1912,7 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
     );
   }
 
-  Future<void> _deleteHBYCDetails(String msg,String _flag,String ancregId,Color _color) async {
+  Future<void> _deleteHBYCDetails(String msg,String _flag,String ancregId,String motherid,Color _color) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -1964,8 +1948,8 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                         onTap: (){
                           //close popup dialoge
                           Navigator.pop(context);
-                          print('flag or ancregid $_flag $ancregId');
-                          deleteHBYCAPI(_flag,ancregId);
+                          print('flag or ancregid or motherid $_flag $ancregId $motherid');
+                          deleteHBYCAPI(_flag,ancregId,motherid);
                         },
                         child: Card(
                           shape: RoundedRectangleBorder(
@@ -2144,10 +2128,7 @@ class CustomManageHRPList {
   String? RegDate;
   String? LmpDate;
   String? ExpectedDate;
-  String? ANC1Date;
-  String? ANC2Date;
-  String? ANC3Date;
-  String? ANC4Date;
+  String? ANCDate;
   String? ContactDate;
   String? AncFlag;
   String? Ashaautoid;
@@ -2177,10 +2158,7 @@ class CustomManageHRPList {
     this.RegDate,
     this.LmpDate,
     this.ExpectedDate,
-    this.ANC1Date,
-    this.ANC2Date,
-    this.ANC3Date,
-    this.ANC4Date,
+    this.ANCDate,
     this.ContactDate,
     this.AncFlag,
     this.Ashaautoid,

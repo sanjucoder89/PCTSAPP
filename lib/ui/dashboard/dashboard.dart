@@ -2054,7 +2054,7 @@ class _DashboardScreen extends State<DashboardScreen> {
                               ),
                             ),
                             Visibility(
-                                visible: true,
+                                visible: false,
                                 child: Container(
                                 height: 70,
                                 width: 200,

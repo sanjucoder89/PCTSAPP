@@ -307,8 +307,9 @@ class _AshaIncentiveState extends State<AshaIncentive> {
                                 )),
                             Expanded(child: Padding(
                               padding: const EdgeInsets.all(5.0),
+                              child: Text('${response_list.length == 0 ? "-" : response_list[0]['Accountno'].toString()}',
                               //child: Text('${response_list.length == 0 ? "-" : response_list[0]['Accountno'].toString()}',
-                              child: Text('${response_list.length == 0 ? "-" : response_list[0]['Accountno'].toString().substring(0, 2) + "******" + response_list[0]['Accountno'].toString().substring(12, 14)}',
+                              //child: Text('${response_list[0]['Accountno'].toString().length == 0 ? "-" : response_list[0]['Accountno'].toString().substring(0, 2) + "******" + response_list[0]['Accountno'].toString().substring(12, 14)}',
                                 style: TextStyle(fontSize: 14,color:ColorConstants.black,fontWeight: FontWeight.normal),),
                             ))
                           ],

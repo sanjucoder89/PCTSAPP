@@ -384,12 +384,11 @@ class _EditHRPScreenState extends State<EditHRPScreen> {
           aashaId = custom_aasha_list[0].ASHAAutoid.toString();
           _isItAsha=false;
         }
-        print('aashaId ${aashaId}');
+       // print('aashaId ${aashaId}');
       }
       EasyLoading.dismiss();
       addPlacesReferList();
     });
-    print('response:${apiResponse.message}');
     return "Success";
   }
 
@@ -403,12 +402,10 @@ class _EditHRPScreenState extends State<EditHRPScreen> {
   var _selectedDistrictUnitCode2 = "0000";
   var _selectedBlockUnitCode = "0";
   var _selectedBlockUnitCode2 = "0";
+  bool _ifDistrctChange=false;
+  bool _ifDistrctChange2=false;
 
   Future<GetDistrictListData> getDistrictListAPI(String refUnitType) async {
-    await EasyLoading.show(
-      status: 'loading...',
-      maskType: EasyLoadingMaskType.black,
-    );
     preferences = await SharedPreferences.getInstance();
     var response = await post(Uri.parse(_get_district_list_url), body: {
       "RefUnittype": refUnitType,
@@ -425,25 +422,21 @@ class _EditHRPScreenState extends State<EditHRPScreen> {
         for (int i = 0; i < response_district_list.length; i++) {
           custom_district_list.add(CustomDistrictCodeList(unitcode: resBody['ResposeData'][i]['unitcode'],unitNameHindi: resBody['ResposeData'][i]['unitNameHindi']));
         }
-        _selectedDistrictUnitCode = custom_district_list[0].unitcode.toString();
-        print('_selectedDistrictUnitCode ${_selectedDistrictUnitCode}');
-        print('disctict.len ${custom_district_list.length}');
+        if(_ifDistrctChange == true){
+          _selectedDistrictUnitCode = custom_district_list[0].unitcode.toString();
+        }else{
+          _selectedDistrictUnitCode=widget.ContactDistrictUnitCode+"0000000";
+        }
+       // print('_selectedDistrictUnitCode ${_selectedDistrictUnitCode}');
+        //print('disctict.len ${custom_district_list.length}');
       } else {
         custom_district_list.clear();
-        print('disctict.len ${custom_district_list.length}');
       }
-
-      EasyLoading.dismiss();
     });
-    print('response:${apiResponse.message}');
     return GetDistrictListData.fromJson(resBody);
   }
 
   Future<GetDistrictListData> getDistrictListAPI2(String refUnitType) async {
-    await EasyLoading.show(
-      status: 'loading...',
-      maskType: EasyLoadingMaskType.black,
-    );
     preferences = await SharedPreferences.getInstance();
     var response = await post(Uri.parse(_get_district_list_url), body: {
       "RefUnittype": refUnitType,
@@ -460,14 +453,18 @@ class _EditHRPScreenState extends State<EditHRPScreen> {
         for (int i = 0; i < response_district_list2.length; i++) {
           custom_district_list2.add(CustomDistrictCodeList(unitcode: resBody['ResposeData'][i]['unitcode'],unitNameHindi: resBody['ResposeData'][i]['unitNameHindi']));
         }
-        _selectedDistrictUnitCode2 = custom_district_list2[0].unitcode.toString();
+        if(_ifDistrctChange2 == true){
+          _selectedDistrictUnitCode2 = response_district_list2[0].unitcode.toString();
+        }else{
+          _selectedDistrictUnitCode2=widget.DelDistrictUnitCode+"0000000";
+        }
+       // _selectedDistrictUnitCode2 = custom_district_list2[0].unitcode.toString();
         print('_selectedDistrictUnitCode2 ${_selectedDistrictUnitCode2}');
         print('disctict2.len ${custom_district_list2.length}');
       } else {
         custom_district_list2.clear();
         print('disctict.len ${custom_district_list2.length}');
       }
-      EasyLoading.dismiss();
     });
     print('response:${apiResponse.message}');
     return GetDistrictListData.fromJson(resBody);
@@ -603,6 +600,7 @@ class _EditHRPScreenState extends State<EditHRPScreen> {
   bool _isAshaEntryORANMEntry=false;//false= anm , true =asha
   void setPreviousData() {
 
+    //check Role ID
     if(preferences.getString("AppRoleID") == "31" || preferences.getString("AppRoleID") == "32" || preferences.getString("AppRoleID") == "33"){
       _ShowHideEditableView = true;
     }else{
@@ -631,22 +629,40 @@ class _EditHRPScreenState extends State<EditHRPScreen> {
         }
       }
     }
-    print('aashaId ${aashaId}');
 
     var _lastHrpAPIDate= DateTime.parse(getConvertRegDateFormat(widget.ContactDate));// "VisitDate": "2019-02-28T00:00:00",
     _selectedHRPDate = getDate(_lastHrpAPIDate.toString())+"/"+getMonth(_lastHrpAPIDate.toString())+"/"+getYear(_lastHrpAPIDate.toString());
-    print('_lastHRPDate ${_selectedHRPDate}');
 
     _selectedPlacesReferCode=widget.ContactUnitType;
     _selectedPlacesReferCode2=widget.DelUnitType;
 
-    getDistrictListAPI("3");
+    //set title for block refer code view 1
+    if(_selectedPlacesReferCode == "9" || _selectedPlacesReferCode == "8" || _selectedPlacesReferCode == "6" || _selectedPlacesReferCode == "7" || _selectedPlacesReferCode == "5"){
+      for(int i=0 ;i<custom_placesrefer_list.length; i++){
+        if(_selectedPlacesReferCode == custom_placesrefer_list[i].code.toString()){
+          _changeTitle=custom_placesrefer_list[i].title.toString();
+        }
+      }
+    }else{
+      _changeTitle=Strings.block;
+    }
+   //set title for block refer code view 1
+    if(_selectedPlacesReferCode2 == "9" || _selectedPlacesReferCode2 == "8" || _selectedPlacesReferCode2 == "6" || _selectedPlacesReferCode2 == "7" || _selectedPlacesReferCode2 == "5"){
+      for(int i=0 ;i<custom_placesrefer_list.length; i++){
+        if(_selectedPlacesReferCode2 == custom_placesrefer_list[i].code.toString()){
+          _changeTitle2=custom_placesrefer_list[i].title.toString();
+        }
+      }
+    }else{
+      _changeTitle2=Strings.block;
+    }
 
-    _selectedDistrictUnitCode=widget.ContactDistrictUnitCode;
-    _selectedDistrictUnitCode2=widget.DelDistrictUnitCode;
+    getDistrictListAPI("3");
+    getDistrictListAPI2("3");
 
 
   }
+
 
 
   var _selectedHRPDate="DD/MM/YYYY";
@@ -1435,7 +1451,6 @@ class _EditHRPScreenState extends State<EditHRPScreen> {
                                   _selectedDistrictUnitCode2 = newVal!;
                                   print('distrcode:$_selectedDistrictUnitCode2');
                                   print('ReferCode:$_selectedPlacesReferCode2');
-
                                   getBlockListAPI2(_selectedPlacesReferCode2,_selectedDistrictUnitCode2.substring(0, 4));
                                 });
                               },
@@ -1544,7 +1559,7 @@ class _EditHRPScreenState extends State<EditHRPScreen> {
                     child: Center(
                       child: RichText(
                         text: TextSpan(
-                            text: Strings.vivran_save_krai,
+                            text: Strings.vivran_update_krai,
                             style: TextStyle(color: Colors.white, fontSize: 13),
                             children: [
                               TextSpan(
@@ -1622,7 +1637,7 @@ class _EditHRPScreenState extends State<EditHRPScreen> {
       maskType: EasyLoadingMaskType.black,
     );
     preferences = await SharedPreferences.getInstance();
-    var response = await post(Uri.parse(_edit_hrp_form_url), body: {
+    var response = await put(Uri.parse(_edit_hrp_form_url), body: {
       "AppVersion":"5.5.5.22",
       "IOSAppVersion":"",
       "ANCDate":_selectedHRPDateAPI,
@@ -1651,9 +1666,10 @@ class _EditHRPScreenState extends State<EditHRPScreen> {
       }
       EasyLoading.dismiss();
     });
-    print('response-message:${apiResponse.message}');
+   // print('response-message:${apiResponse.message}');
     return SavedHBYCDetailsData.fromJson(resBody);
   }
+
   reLoginDialog() {
     showDialog(
       context: context,
@@ -1848,11 +1864,12 @@ class _EditHRPScreenState extends State<EditHRPScreen> {
     // return DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now());
     return DateFormat('yyyy/MM/dd').format(DateTime.now());
   }
+
   @override
   void initState() {
     super.initState();
     getAashaListAPI();
-
+    getHelpDesk();
   }
 
   @override

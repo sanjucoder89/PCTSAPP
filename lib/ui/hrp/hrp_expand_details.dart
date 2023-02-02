@@ -2038,7 +2038,7 @@ class ExpandableContainer extends StatelessWidget {
   ExpandableContainer({
     required this.child,
     this.collapsedHeight = 0.0,
-    this.expandedHeight = 60,
+    this.expandedHeight = 80,
     this.expanded = true,
   });
 

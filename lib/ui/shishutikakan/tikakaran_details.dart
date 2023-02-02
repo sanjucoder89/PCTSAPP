@@ -673,7 +673,10 @@ class _TikaKaranDetailsState extends State<TikaKaranDetails> {
                                                  });
                                                });
                                              }else{
-                                               if(response_listing[index]['ashaautoid'] == "33" && preferences.getString("AppRoleID").toString() == "33"){
+                                               //login ashaid or tika asha id same
+                                               //login approleid or lis
+                                               //if(preferences.getString('ANMAutoID').toString() == widget.ashaAutoID){
+                                               if(preferences.getString('ANMAutoID').toString() == response_listing[index]['ashaautoid'].toString()){
                                                  Navigator.push(context,
                                                      MaterialPageRoute(builder: (context) =>
                                                          UpdateShishuTikakarnScreen(

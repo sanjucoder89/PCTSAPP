@@ -340,6 +340,7 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
             UnitName: resBody[i]['UnitName'].toString(),
             UnitCode:resBody[i]['UnitCode'].toString()));
       }
+      _selectedSubUnitCode=custom_sub_list[0].UnitCode.toString();
       print('custom_sub_list.len ${custom_sub_list.length}');
       EasyLoading.dismiss();
     });

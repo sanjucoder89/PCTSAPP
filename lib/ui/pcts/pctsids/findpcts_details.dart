@@ -734,8 +734,8 @@ class _FindPCTSDetails extends State<FindPCTSDetails> {
                                           fontSize: 14),
                                     )),
                                     Expanded(
-                                        child: Text(
-                                      '${_mahila_vivaran_response.length == 0 ? "" : _mahila_vivaran_response[0]['Mobileno'].toString() == "" ? "N/A" : _mahila_vivaran_response[0]['Mobileno'].toString().substring(0, 2) + "******" + _mahila_vivaran_response[0]['Mobileno'].toString().substring(8, 10)}',
+                                        //child: Text('${_mahila_vivaran_response.length == 0 ? "" : _mahila_vivaran_response[0]['Mobileno'].toString()}',
+                                        child: Text('${_mahila_vivaran_response.length == 0 ? "" : _mahila_vivaran_response[0]['Mobileno'].toString() == "null" ? "N/A" : _mahila_vivaran_response[0]['Mobileno'].toString().substring(0, 2) + "******" + _mahila_vivaran_response[0]['Mobileno'].toString().substring(8, 10)}',
                                       style: TextStyle(
                                           color: Colors.black, fontSize: 14),
                                     ))
@@ -2572,7 +2572,7 @@ class _FindPCTSDetails extends State<FindPCTSDetails> {
                       Expanded(
                           child: Center(
                               child: Text(
-                                '${_anc_vivaran_response.length == 0 ? "" : _anc_vivaran_response[index]['HB'] <= 7.0 ? "360" : "180"}',
+                                '${_anc_vivaran_response.length == 0 ? "" : _anc_vivaran_response[index]['HB'].toString() == "null" ? "" : _anc_vivaran_response[index]['HB'] <= 7.0 ? "360" : "180"}',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     color: ColorConstants.AppColorPrimary,
@@ -2591,7 +2591,7 @@ class _FindPCTSDetails extends State<FindPCTSDetails> {
                           margin: EdgeInsets.all(3),
                           child: Center(
                               child: Text(
-                                '${_anc_vivaran_response.length == 0 ? "" : _anc_vivaran_response[index]['HB'] <= 7.0 ? Strings.yes : Strings.no}',
+                                '${_anc_vivaran_response.length == 0 ? "" : _anc_vivaran_response[index]['HB'].toString() == "null" ? "" : _anc_vivaran_response[index]['HB'] <= 7.0 ? Strings.yes : Strings.no}',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     color: ColorConstants.AppColorPrimary,

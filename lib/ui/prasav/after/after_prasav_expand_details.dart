@@ -181,7 +181,19 @@ class _AfterPrasavExpandDetails extends State<AfterPrasavExpandDetails> {
         second_tab_msg=response_listing[response_listing.length -1]['PNCFlag'].toString() == "null" ? "0" : response_listing[response_listing.length -1]['PNCFlag'].toString();//get last position value
         print('last position flag: ${second_tab_msg}');
 
-        if(second_tab_msg == "7"){
+
+        // PNCFlag: second_tab_msg == "0" ?
+        //                                         "1" : second_tab_msg == "1" ?
+        //                                         "1" : second_tab_msg == "2" ?
+        //                                         "3" : second_tab_msg == "3" ?
+        //                                         "4":second_tab_msg == "4" ?
+        //                                         "5":second_tab_msg == "5" ?
+        //                                         "6":second_tab_msg == "6" ?
+        //                                         "7":second_tab_msg == "7" ?
+
+
+        //if(second_tab_msg == "7"){
+        if(response_listing.length  == 7){
         //  _checkLoginType=false;
           _showHideAddANCButtonView=false;
         }else{

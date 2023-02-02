@@ -177,6 +177,18 @@ class _UpdateShishuTikakarnScreenState extends State<UpdateShishuTikakarnScreen>
               ASHAName: response_list[i]['ASHAName'].toString(),
               ASHAAutoid: response_list[i]['ASHAAutoid'].toString()));
         }
+
+        if(widget.Media == "2"){
+          if(preferences.getString("AppRoleID") == "32"){
+            Media="3";
+          }else{
+            Media=widget.Media;
+          }
+        }else{
+          Media="1";
+        }
+
+
         //aashaId = custom_aasha_list[0].ASHAAutoid.toString();
 
         if(preferences.getString("AppRoleID").toString() == '33'){
@@ -256,10 +268,10 @@ class _UpdateShishuTikakarnScreenState extends State<UpdateShishuTikakarnScreen>
     preferences = await SharedPreferences.getInstance();
 
     if(preferences.getString("AppRoleID") == "33"){
-      Media="2";
+      //Media="2";
       UpdateUserNo=preferences.getString("ANMAutoID").toString();
     }else{
-      Media="1";
+      //Media="3";
       UpdateUserNo=preferences.getString("UserNo").toString();
     }
     print('LoginUnitID ${preferences.getString('UnitID')}');

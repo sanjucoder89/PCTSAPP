@@ -9396,11 +9396,15 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
     print('HB $_hb');
     print('Height $_height');
     setState(() {
+
+
       if(_hb.isEmpty){
         _isIronSukrojViewToggle(false);//hide sukroj view on empty
         _highAnaimiyaCheckb=false;
         custom_high_pragnancy_cvslist.removeWhere((item) => item.rishId == 0);//remove 7 from csv ids
       }else if(double.parse(_hb) < 10.0){
+
+
               if(double.parse(_hb) <= 7.0){
                 _highAnaimiyaCheckb=true;
                 custom_high_pragnancy_cvslist.add(CustomHighRiskPragnancyList(rishId: 0,rishValue: "7"));//add 7 in csv
@@ -9409,17 +9413,35 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
 
                 if(widget.Age != "null"){
                   if (int.parse(widget.Age) < 18 || int.parse(widget.Age) > 35) {
-                    _highRiskChecked=true;//checked highrisk chkbox
-                    _highRiskEnDisableCB=false;//enable or disable highrisk checkbox
-                    _showHideHighRiskView = true;
+                    if(widget.HighRisk == "1"){
+                      //this case is High Risk Case , check box value will not be changed
+                    }else{
+                      _highRiskChecked=true;//checked highrisk chkbox
+                      _highRiskEnDisableCB=false;//enable or disable highrisk checkbox
+                      _showHideHighRiskView = true;
+
+                    }
+
                   }else if (double.parse(_hb) <= 7.0) {
-                    _highRiskChecked=true;//checked highrisk chkbox
-                    _highRiskEnDisableCB=false;//enable or disable highrisk checkbox
-                    _showHideHighRiskView = true;
+                    if(widget.HighRisk == "1"){
+                      //this case is High Risk Case , check box value will not be changed
+                    }else{
+                      _highRiskChecked=true;//checked highrisk chkbox
+                      _highRiskEnDisableCB=false;//enable or disable highrisk checkbox
+                      _showHideHighRiskView = true;
+
+                    }
+
                   } else{
-                    _highRiskChecked=false;
-                    _highRiskEnDisableCB=true;//enable or disable highrisk checkbox
-                    _showHideHighRiskView = false;
+                    if(widget.HighRisk == "1"){
+                      //this case is High Risk Case , check box value will not be changed
+                    }else{
+                      _highRiskChecked=false;
+                      _highRiskEnDisableCB=true;//enable or disable highrisk checkbox
+                      _showHideHighRiskView = false;
+
+                    }
+
                   }
                 }
               }else{
@@ -9430,13 +9452,22 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
                 _isIronSukrojViewToggle(true);
                 if(widget.Age != "null"){
                   if (int.parse(widget.Age) < 18 || int.parse(widget.Age) > 35) {
-                    _highRiskChecked=true;//checked highrisk chkbox
-                    _highRiskEnDisableCB=false;//enable or disable highrisk checkbox
-                    _showHideHighRiskView = true;
+                    if(widget.HighRisk == "1"){
+                      //this case is High Risk Case , check box value will not be changed
+                    }else{
+                      _highRiskChecked=true;//checked highrisk chkbox
+                      _highRiskEnDisableCB=false;//enable or disable highrisk checkbox
+                      _showHideHighRiskView = true;
+                    }
+
                   } else {
-                    _highRiskChecked=false;
-                    _highRiskEnDisableCB=true;//enable or disable highrisk checkbox
-                    _showHideHighRiskView = true;
+                    if(widget.HighRisk == "1"){
+                      //this case is High Risk Case , check box value will not be changed
+                    }else{
+                      _highRiskChecked=false;
+                      _highRiskEnDisableCB=true;//enable or disable highrisk checkbox
+                      _showHideHighRiskView = true;
+                    }
                   }
                 }
               }
@@ -9469,13 +9500,21 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
         _highAnaimiyaCheckb=false;
         custom_high_pragnancy_cvslist.removeWhere((item) => item.rishId == 0);//remove 7 from csv ids
         if (int.parse(widget.Age) < 18 ||int.parse(widget.Age)> 35) {
-          _highRiskChecked=true;//checked highrisk chkbox
-          _highRiskEnDisableCB=false;//enable or disable highrisk checkbox
-          _showHideHighRiskView = true;
+          if(widget.HighRisk == "1"){
+            //this case is High Risk Case , check box value will not be changed
+          }else{
+            _highRiskChecked=true;//checked highrisk chkbox
+            _highRiskEnDisableCB=false;//enable or disable highrisk checkbox
+            _showHideHighRiskView = true;
+          }
         } else {
-          _highRiskChecked=false;
-          _highRiskEnDisableCB=true;//enable or disable highrisk checkbox
-          _showHideHighRiskView = false;
+          if(widget.HighRisk == "1"){
+            //this case is High Risk Case , check box value will not be changed
+          }else{
+            _highRiskChecked=false;
+            _highRiskEnDisableCB=true;//enable or disable highrisk checkbox
+            _showHideHighRiskView = false;
+          }
         }
       }
 

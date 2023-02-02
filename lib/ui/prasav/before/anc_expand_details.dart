@@ -189,7 +189,7 @@ class _AncExpandDetails extends State<AncExpandDetails> {
           /*
             * IF ALL 4 ANC FILLED THEN HIDE FOURTH BUTTON LAYOUT , NO OTHER ANC FORM WILL BE FILED
            */
-          if(last_pos == 3){
+          if(response_listing.length == 3){
             _showHideAddANCButtonView=false;
           }else{
             _showHideAddANCButtonView=true;

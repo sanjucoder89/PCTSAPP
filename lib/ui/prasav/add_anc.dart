@@ -11,6 +11,7 @@ import 'package:uuid/uuid.dart';
 import 'package:intl/intl.dart'; //for date format
 import '../../constant/AboutAppDialoge.dart';
 import '../../constant/ApiUrl.dart';
+import '../../constant/IosVersion.dart';
 import '../../constant/MyAppColor.dart';
 import '../../utils/ShowPlayStoreDialoge.dart';
 import '../dashboard/model/GetHelpDeskData.dart';
@@ -347,11 +348,12 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
   bool? _covidDDEnabledDisabled; //for enable disable covid date
   bool? _covidMMEnabledDisabled;//for enable disable covid date
   bool? _covidYYYYEnabledDisabled;//for enable disable covid date
-
+  var _checkPlatform="0";
   bool _isItAsha=false;
   Future<String> getAashaListAPI() async {
     preferences = await SharedPreferences.getInstance();
     print('inside without risk =>  ${widget.HighRisk}');
+    _checkPlatform=preferences.getString("CheckPlatform").toString();
     //Reset all radio button for first time
     setState(() {
       _pet = Pet.none;
@@ -977,7 +979,8 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
       "Latitude": _latitude,
       "Longitude":_longitude,
       //"AppVersion": packageInfo.version,
-      "AppVersion": "5.5.5.22",
+      "AppVersion": _checkPlatform == "0" ? preferences.getString("Appversion") : "",
+      "IOSAppVersion": _checkPlatform == "1" ? IosVersion.ios_version : "",
       "UpdateUserNo":_UpdateUserNo,
       "EntryUserNo": _UpdateUserNo,
       "CovidCase":_iscovidCase,
@@ -1174,7 +1177,8 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
       "IronSucrose4": _Iron_sukroj_Post4,
       "Latitude": _latitude,
       "Longitude":_longitude,
-      "AppVersion":"5.5.5.22",
+      "AppVersion": _checkPlatform == "0" ? preferences.getString("Appversion") : "",
+      "IOSAppVersion": _checkPlatform == "1" ? IosVersion.ios_version : "",
       "UpdateUserNo":_UpdateUserNo,
       "EntryUserNo": _UpdateUserNo,
       "CovidCase":_iscovidCase,

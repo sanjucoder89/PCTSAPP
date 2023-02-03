@@ -15,6 +15,7 @@ import 'package:geolocator/geolocator.dart';
 
 import '../../constant/AboutAppDialoge.dart';
 import '../../constant/ApiUrl.dart';
+import '../../constant/IosVersion.dart';
 import '../../constant/LocaleString.dart';
 import '../../constant/MyAppColor.dart';
 import '../../utils/ShowPlayStoreDialoge.dart';
@@ -969,10 +970,11 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
     return "Success";
   }
   bool _isItAsha=false;
+  var _checkPlatform="0";
   Future<String> getAashaListAPI() async {
     preferences = await SharedPreferences.getInstance();
     print('AppROleD ${preferences.getString("AppRoleID")}');
-
+    _checkPlatform=preferences.getString("CheckPlatform").toString();
     if(preferences.getString("AppRoleID") == "31" || preferences.getString("AppRoleID") == "32" || preferences.getString("AppRoleID") == "33"){
       setState(() {
         _ShowHideADDNewVivranView = true;
@@ -5085,7 +5087,8 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
       "media":_Media,
       "DeliveryDate":widget.DeliveryAbortionDate,
       "DelplaceCode":widget.DelplaceCode,
-      "AppVersion":"5.5.5.22",
+      "AppVersion": _checkPlatform == "0" ? preferences.getString("Appversion") : "",
+      "IOSAppVersion": _checkPlatform == "1" ? IosVersion.ios_version : "",
       "UpdateUserNo":_UpdateUserNo,
       "EntryUserNo": _UpdateUserNo,
       "TokenNo": preferences.getString('Token'),

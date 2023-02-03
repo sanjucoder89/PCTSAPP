@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart'; //for date format
 import '../../constant/AboutAppDialoge.dart';
 import '../../constant/ApiUrl.dart';
+import '../../constant/IosVersion.dart';
 import '../../constant/LocaleString.dart';
 import '../../constant/MyAppColor.dart';
 import '../../utils/ShowPlayStoreDialoge.dart';
@@ -304,12 +305,14 @@ class _AddHRPScreenState extends State<AddHRPScreen> {
   var _changeTitle2=Strings.block;
   bool _isDropDownRefresh=false;
   bool _isDropDownRefresh2=false;
+  var _checkPlatform="0";
   Future<String> getAashaListAPI() async {
     await EasyLoading.show(
       status: 'loading...',
       maskType: EasyLoadingMaskType.black,
     );
     preferences = await SharedPreferences.getInstance();
+    _checkPlatform=preferences.getString("CheckPlatform").toString();
     print('LoginUnitid ${preferences.getString('UnitID')}');
     print('RegUnitid ${preferences.getString('UnitID')}');
     print('VillageAutoid ${widget.VillageAutoID}');
@@ -1524,8 +1527,8 @@ class _AddHRPScreenState extends State<AddHRPScreen> {
     );
     preferences = await SharedPreferences.getInstance();
     var response = await post(Uri.parse(_add_hrp_form_url), body: {
-      "AppVersion":"5.5.5.22",
-      "IOSAppVersion":"",
+      "AppVersion": _checkPlatform == "0" ? preferences.getString("Appversion") : "",
+      "IOSAppVersion": _checkPlatform == "1" ? IosVersion.ios_version : "",
       "ANCDate":_selectedHRPDateAPI,
       "ANCFlag":widget.HRFlag,
       "ContactUnitcode":_selectedBlockUnitCode,

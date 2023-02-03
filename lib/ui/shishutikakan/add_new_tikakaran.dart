@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart'; //for date format
 import '../../constant/AboutAppDialoge.dart';
 import '../../constant/ApiUrl.dart';
+import '../../constant/IosVersion.dart';
 import '../../constant/LocaleString.dart';
 import '../../constant/LogoutAppDialoge.dart';
 import '../../constant/MyAppColor.dart';
@@ -241,13 +242,15 @@ class _AddNewTikakarnScreenState extends State<AddNewTikakarnScreen> {
     return "Success";
   }
   bool _isItAsha=false;
+
+  var _checkPlatform="0";
   Future<String> getAashaListAPI() async {
     await EasyLoading.show(
       status: 'loading...',
       maskType: EasyLoadingMaskType.black,
     );
     preferences = await SharedPreferences.getInstance();
-
+    _checkPlatform=preferences.getString("CheckPlatform").toString();
     IMMDate_post=widget.immdate;
     final split = widget.immdate.split('/');
     print('split.length ${split.length}');
@@ -2251,7 +2254,8 @@ class _AddNewTikakarnScreenState extends State<AddNewTikakarnScreen> {
       "BirthDate": widget.birthdate,
       "PartImmu": PartImmu,
       "LoginUnitid": preferences.getString('UnitID').toString(),
-      "AppVersion":"5.5.5.22",
+      "AppVersion": _checkPlatform == "0" ? preferences.getString("Appversion") : "",
+      "IOSAppVersion": _checkPlatform == "1" ? IosVersion.ios_version : "",
       "EntryUserNo": UpdateUserNo,
       "UpdateUserNo": UpdateUserNo,
       "Media": Media,

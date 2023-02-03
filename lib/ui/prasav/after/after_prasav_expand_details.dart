@@ -12,6 +12,7 @@ import 'package:pcts/ui/prasav/edit_pnc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
 import '../../../constant/ApiUrl.dart';
+import '../../../constant/IosVersion.dart';
 import '../../../constant/LocaleString.dart';
 import '../../../constant/MyAppColor.dart';
 import '../../dashboard/model/GetHelpDeskData.dart';
@@ -94,12 +95,15 @@ class _AfterPrasavExpandDetails extends State<AfterPrasavExpandDetails> {
   /*
   * API FOR Get ANC Details
   * */
+  var _checkPlatform="0";
   Future<String> pcnDetailsAPI(String ancRegId) async {
     await EasyLoading.show(
       status: 'loading...',
       maskType: EasyLoadingMaskType.black,
     );
     preferences = await SharedPreferences.getInstance();
+
+    _checkPlatform=preferences.getString("CheckPlatform").toString();
     print('ancRegId ${ancRegId}');
     _anmAshaTitle=preferences.getString("AppRoleID").toString() == '33' ? Strings.aasha_title : Strings.anm_title;
     _anganbadiTitle=preferences.getString("AnganwariHindi").toString();
@@ -266,7 +270,8 @@ class _AfterPrasavExpandDetails extends State<AfterPrasavExpandDetails> {
     var response = await delete(Uri.parse(_delete_record_url), body: {
       "Ancregid": _ancregid,
       "PNCFlag": _flagtype,
-      "AppVersion": "5.5.5.22",
+      "AppVersion": _checkPlatform == "0" ? preferences.getString("Appversion") : "",
+      "IOSAppVersion": _checkPlatform == "1" ? IosVersion.ios_version : "",
       "TokenNo": preferences.getString('Token'),
       "UserID": preferences.getString('UserId')
     });

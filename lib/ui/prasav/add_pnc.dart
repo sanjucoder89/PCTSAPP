@@ -13,6 +13,7 @@ import 'package:geocoding/geocoding.dart' as geocoding;
 import 'package:geolocator/geolocator.dart';
 
 import '../../constant/ApiUrl.dart';
+import '../../constant/IosVersion.dart';
 import '../../constant/LocaleString.dart';
 import '../../constant/MyAppColor.dart';
 import '../../utils/ShowPlayStoreDialoge.dart';
@@ -869,10 +870,11 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
     return "Success";
   }
   bool _isItAsha=false;
+  var _checkPlatform="0";
   Future<String> getAashaListAPI() async {
     preferences = await SharedPreferences.getInstance();
     print('AppROleD ${preferences.getString("AppRoleID")}');
-
+    _checkPlatform=preferences.getString("CheckPlatform").toString();
     print('DischarDT ${widget.DischargeDT }');
     print('DelplaceCode ${widget.DelplaceCode }');
     if(widget.DischargeDT == "null"){
@@ -5422,7 +5424,8 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
       "DelplaceCode":widget.DelplaceCode,
       "Latitude":_latitude,
       "Longitude":_longitude,
-      "AppVersion":"5.5.5.22",
+      "AppVersion": _checkPlatform == "0" ? preferences.getString("Appversion") : "",
+      "IOSAppVersion": _checkPlatform == "1" ? IosVersion.ios_version : "",
       "UpdateUserNo":_UpdateUserNo,
       "EntryUserNo": _UpdateUserNo,
       "TokenNo": preferences.getString('Token'),

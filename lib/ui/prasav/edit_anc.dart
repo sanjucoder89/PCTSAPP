@@ -11,6 +11,7 @@ import 'package:uuid/uuid.dart';
 import 'package:intl/intl.dart'; //for date format
 import '../../constant/AboutAppDialoge.dart';
 import '../../constant/ApiUrl.dart';
+import '../../constant/IosVersion.dart';
 import '../../constant/MyAppColor.dart';
 import '../../utils/ShowPlayStoreDialoge.dart';
 import '../dashboard/model/GetHelpDeskData.dart';
@@ -402,9 +403,10 @@ class _EditANCScreen extends State<EditANCScreen> {
 
   bool _isItAsha=false;
   bool _isAshaEntryORANMEntry=false;//false= anm , true =asha
+  var _checkPlatform="0";
   Future<String> getAashaListAPI() async {
     preferences = await SharedPreferences.getInstance();
-
+    _checkPlatform=preferences.getString("CheckPlatform").toString();
 
     //Reset all radio button for first time
     setState(() {
@@ -1040,7 +1042,8 @@ class _EditANCScreen extends State<EditANCScreen> {
      // "Latitude": _latitude,
      // "Longitude":_longitude,
       //"AppVersion": packageInfo.version,
-      "AppVersion":"5.5.5.22",
+      "AppVersion": _checkPlatform == "0" ? preferences.getString("Appversion") : "",
+      "IOSAppVersion": _checkPlatform == "1" ? IosVersion.ios_version : "",
       "UpdateUserNo":_UpdateUserNo,
       "EntryUserNo": _UpdateUserNo,
       "CovidCase":_iscovidCase,
@@ -1236,7 +1239,8 @@ class _EditANCScreen extends State<EditANCScreen> {
       "IronSucrose4": _Iron_sukroj_Post4,
       "Latitude": _latitude,
       "Longitude":_longitude,
-      "AppVersion":"5.5.5.22",
+      "AppVersion": _checkPlatform == "0" ? preferences.getString("Appversion") : "",
+      "IOSAppVersion": _checkPlatform == "1" ? IosVersion.ios_version : "",
       "UpdateUserNo":_UpdateUserNo,
       "EntryUserNo": _UpdateUserNo,
       "CovidCase":_iscovidCase,

@@ -8,6 +8,7 @@ import 'package:http/http.dart';
 import 'package:marquee_widget/marquee_widget.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pcts/Model/PostSaltData.dart';
+import 'package:pcts/constant/IosVersion.dart';
 import 'package:pcts/constant/LocaleString.dart';
 import 'package:pcts/ui/loginui/loginscreen.dart';
 import 'package:pcts/ui/pcts/pctsids/findpcts.dart';
@@ -112,16 +113,19 @@ class _SplashState extends State<SplashNew> {
   var _andr_version="";
   Future<String> getSaltData() async {
     preferences = await SharedPreferences.getInstance();
-    preferences.setString("Appversion", packageName);
+    preferences.setString("CheckPlatform", _checkPlatform);
+
+    //preferences.setString("Appversion", packageName); //uncomment line when app is going for live
+    preferences.setString("Appversion", "5.5.5.22");
+
     deviceId = await PlatformDeviceId.getDeviceId;
     preferences.setString("deviceId", deviceId);
     Token = uuid.v4();
     var response = await post(Uri.parse(urlsaltdata), body: {
       "DeviceID": deviceId,
       "TokenNo": Token,
-      //"AppVersion": preferences.getString("Appversion"),
-      "AppVersion": '5.5.5.22',
-      "IOSAppVersion": '5.5.5.22',
+      "AppVersion": _checkPlatform == "0" ? preferences.getString("Appversion") : "",
+      "IOSAppVersion": _checkPlatform == "1" ? IosVersion.ios_version : "",
       ///"AppVersion": '5.6.9.22',
     });
     var resBody = json.decode(response.body);
@@ -333,9 +337,18 @@ class _SplashState extends State<SplashNew> {
           CustomInvaildRequestDialoge(),
     );
   }
-
+  /*
+  *
+  * Check Platform
+  *
+  * //0=android,1=ios
+  *
+  *
+  * */
+  var _checkPlatform="0";
   Future<void> checkPlatform() async {
     if(Platform.isAndroid == true){
+      _checkPlatform="0";
         print('platform=> _Android_');
         if (Platform.isAndroid) {
           var androidInfo = await DeviceInfoPlugin().androidInfo;
@@ -351,6 +364,7 @@ class _SplashState extends State<SplashNew> {
 
         }
     }else if(Platform.isIOS ==  true){
+      _checkPlatform="1";
       print('platform=> _IOS_');
       if (Platform.isIOS) {
         var iosInfo = await DeviceInfoPlugin().iosInfo;

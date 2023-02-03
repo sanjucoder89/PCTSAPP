@@ -13,6 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constant/AboutAppDialoge.dart';
 import '../../constant/ApiUrl.dart';
+import '../../constant/IosVersion.dart';
 import '../../constant/LocaleString.dart';
 import '../../constant/LogoutAppDialoge.dart';
 import '../../constant/MyAppColor.dart';
@@ -251,8 +252,11 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
   List aasha_response_list = [];
   bool _isItAsha=true;
   bool _isAshaEntryORANMEntry=false;//false= anm , true =asha
+  var _checkPlatform="0";
   Future<String> getAashaListAPI(String _RegUnitid,String _villageautoid) async {
     preferences = await SharedPreferences.getInstance();
+
+    _checkPlatform=preferences.getString("CheckPlatform").toString();
     var response = await post(Uri.parse(_aasha_list_url), body: {
       "LoginUnitid": preferences.getString('UnitID'),
       "DelplaceUnitid": "0",
@@ -3884,7 +3888,8 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
       "BirthDate": response_list[0]['Birth_date'].toString(),
       "EntryUnitID": preferences.getString('UnitID').toString(),
       "LoginUserID": preferences.getString('UserId').toString(),
-      "AppVersion":"5.5.5.22",
+      "AppVersion": _checkPlatform == "0" ? preferences.getString("Appversion") : "",
+      "IOSAppVersion": _checkPlatform == "1" ? IosVersion.ios_version : "",
       "UpdateUserNo": _UpdateUserNo,
       "EntryUserNo": _UpdateUserNo,
       "Media":Media,
@@ -3949,7 +3954,8 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
       "BirthDate": response_list[0]['Birth_date'].toString(),
       "EntryUnitID": preferences.getString('UnitID').toString(),
       "LoginUserID": preferences.getString('UserId').toString(),
-      "AppVersion":"5.5.5.22",
+      "AppVersion": _checkPlatform == "0" ? preferences.getString("Appversion") : "",
+      "IOSAppVersion": _checkPlatform == "1" ? IosVersion.ios_version : "",
       "UpdateUserNo": _UpdateUserNo,
       "EntryUserNo": _UpdateUserNo,
       "Media":Media,

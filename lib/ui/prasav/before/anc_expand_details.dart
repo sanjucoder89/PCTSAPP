@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
 import '../../../constant/AboutAppDialoge.dart';
 import '../../../constant/ApiUrl.dart';
+import '../../../constant/IosVersion.dart';
 import '../../../constant/LocaleString.dart';
 import '../../../constant/LogoutAppDialoge.dart';
 import '../../../constant/MyAppColor.dart';
@@ -107,12 +108,14 @@ class _AncExpandDetails extends State<AncExpandDetails> {
   /*
   * API FOR Get ANC Details
   * */
+  var _checkPlatform="0";
   Future<String> acnDetailsAPI(String ancRegId) async {
     await EasyLoading.show(
       status: 'loading...',
       maskType: EasyLoadingMaskType.black,
     );
     preferences = await SharedPreferences.getInstance();
+    _checkPlatform=preferences.getString("CheckPlatform").toString();
     print('ancRegId ${ancRegId}');
     print('TokenNo ${preferences.getString('Token')}');
     print('UserID ${preferences.getString('UserId')}');
@@ -271,7 +274,8 @@ class _AncExpandDetails extends State<AncExpandDetails> {
     var response = await delete(Uri.parse(_delete_record_url), body: {
       "ANCRegID": _ancregid,
       "ANCFlag": _flagtype,
-      "AppVersion": "5.5.5.22",
+      "AppVersion": _checkPlatform == "0" ? preferences.getString("Appversion") : "",
+      "IOSAppVersion": _checkPlatform == "1" ? IosVersion.ios_version : "",
       "TokenNo": preferences.getString('Token'),
       "UserID": preferences.getString('UserId')
     });

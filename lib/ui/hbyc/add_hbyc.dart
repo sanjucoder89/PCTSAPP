@@ -9,6 +9,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pcts/ui/prasav/model/GetAashaListData.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../constant/ApiUrl.dart';
+import '../../constant/IosVersion.dart';
 import '../../constant/LocaleString.dart';
 import '../../constant/MyAppColor.dart';
 import '../../utils/ShowPlayStoreDialoge.dart';
@@ -177,12 +178,14 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
   List response_subdata_list= [];
   var _customHBYCDate="";
   bool _isItAsha=false;
+  var _checkPlatform="0";
   Future<String> getAashaListAPI() async {
     await EasyLoading.show(
       status: 'loading...',
       maskType: EasyLoadingMaskType.black,
     );
     preferences = await SharedPreferences.getInstance();
+    _checkPlatform=preferences.getString("CheckPlatform").toString();
     var response = await post(Uri.parse(_aasha_list_url), body: {
       "LoginUnitid": preferences.getString('UnitID'),
       "DelplaceUnitid": "0",
@@ -503,7 +506,8 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
       "ReferUnitcode": _referView == true ? _ReferUnitCode : "0",
       "BirthDate":widget.Birth_date,
       "Media": _Media,
-      "AppVersion": "5.5.5.22",
+      "AppVersion": _checkPlatform == "0" ? preferences.getString("Appversion") : "",
+      "IOSAppVersion": _checkPlatform == "1" ? IosVersion.ios_version : "",
       "TokenNo": preferences.getString('Token'),
       "UserID": preferences.getString('UserId')
     });

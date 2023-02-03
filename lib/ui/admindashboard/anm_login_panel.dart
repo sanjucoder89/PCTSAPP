@@ -1,39 +1,37 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
-import 'package:pcts/constant/AboutAppDialoge.dart';
-import 'package:pcts/constant/ApiUrl.dart';
-import 'package:pcts/constant/LogoutAppDialoge.dart';
-import 'package:pcts/ui/admindashboard/model/UnitTypeListData.dart';
-import 'package:pcts/ui/dashboard/dashboard.dart';
-import 'package:pcts/ui/samparksutra/samparksutra.dart';
-import 'package:pcts/ui/videos/tab_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../constant/AboutAppDialoge.dart';
+import '../../constant/ApiUrl.dart';
 import '../../constant/LocaleString.dart';
 import '../../constant/MyAppColor.dart';
+import '../dashboard/dashboard.dart';
 import '../dashboard/model/GetHelpDeskData.dart';
 import '../dashboard/model/LogoutData.dart';
 import '../prasav/model/GetDistrictListData.dart';
+import '../samparksutra/samparksutra.dart';
 import '../splashnew.dart';
+import '../videos/tab_view.dart';
 import 'model/AnmBlockListData.dart';
 import 'model/AnmListData.dart';
 import 'model/CHCPHCListData.dart';
 import 'model/GetANMLoginData.dart';
+import 'model/UnitTypeListData.dart';
 import 'model/UpkendraListData.dart';
 
-class ANMPanelScreen extends StatefulWidget {
-  const ANMPanelScreen({Key? key}) : super(key: key);
+class ANMLoginPanel extends StatefulWidget {
+  const ANMLoginPanel({Key? key}) : super(key: key);
 
   @override
-  State<ANMPanelScreen> createState() => _ANMPanelScreenState();
+  State<ANMLoginPanel> createState() => _ANMLoginPanelState();
 }
 
-class _ANMPanelScreenState extends State<ANMPanelScreen> {
-
+class _ANMLoginPanelState extends State<ANMLoginPanel> {
   List help_response_listing = [];
   late SharedPreferences preferences;
   var _help_desk_url = AppConstants.app_base_url + "HelpDesk";
@@ -41,42 +39,78 @@ class _ANMPanelScreenState extends State<ANMPanelScreen> {
   var _unittype_code_url = AppConstants.app_base_url + "PostUnittypeList";
   var _district_code_url = AppConstants.app_base_url + "PostDistdataAdmin";
   var _block_code_url = AppConstants.app_base_url + "PostBlockList";
+  var _anm_code_url = AppConstants.app_base_url + "postANMListByUnitcode";
   var _chcphc_code_url = AppConstants.app_base_url + "PostCHCPHC";
   var _subcentre_code_url = AppConstants.app_base_url + "postfillSubcenter1";
-  var _anm_code_url = AppConstants.app_base_url + "postANMListByUnitcode";
   var _anm_login_data_url = AppConstants.app_base_url + "PostANMAutoid";
 
+  Future<String> getHelpDesk() async {
+    await EasyLoading.show(
+      status: 'loading...',
+      maskType: EasyLoadingMaskType.black,
+    );
+    var response = await post(Uri.parse(_help_desk_url), body: {
+      "type": "2",
+    });
+    var resBody = json.decode(response.body);
+    final apiResponse = GetHelpDeskData.fromJson(resBody);
+    setState(() {
+      if (apiResponse.status == true) {
+        help_response_listing = resBody['ResposeData'];
+        if(resBody['ResposeData'].length > 0){
+        }
+      }
+      getUnitTypeCodeListAPI();
+    });
+    return "Success";
+  }
+
+
+  var _showCHCPHCView=false;
+  var _showUpkendraView=false;
+
+
+
+
+  List response_unitype_list= [];
+  List<CustomUnitTypeCodeList> custom_unitype_list = [];
   var _selected_unit_code="0";
+
+
+  List response_district_list= [];
+  List<CustomDistrictCodeList> custom_district_list = [];
   var _selected_district_code="0";
+
+
+
+  List response_block_list= [];
+  List<CustomBlockCodeList> custom_block_list = [];
   var _selected_block_code="0";
+
+
+  List response_chcphc_list= [];
+  List<CustomCHCPHCCodeList> custom_chcphc_list = [];
   var _selected_chcphc_code="0";
-  var _selected_upkendra_code="0";
+
+
+  List response_anm_list= [];
+  List<CustomANMCodeList> custom_anm_list = [];
   var _selected_anm_code="0";
+
+
+  List response_upkendra_list= [];
+  List<CustomUpkendraCodeList> custom_upkendra_list = [];
+  var _selected_upkendra_code="0";
+
+  List response_anm_data_list= [];
+
   var _selected_asha_autoid="0";
   var _selected_asha_phoneno="";
-
-
-  var _showCHCView=false;
-  var _showUpkendraView=false;
-  var _dynamicTitle=Strings.sa_pra_kendra;
-  List response_unitype_list= [];
-  List response_district_list= [];
-  List response_block_list= [];
-  List response_chcphc_list= [];
-  List response_upkendra_list= [];
-  List response_anm_list= [];
-  List response_anm_data_list= [];
-  List<CustomUnitTypeCodeList> custom_unitype_list = [];
-  List<CustomDistrictCodeList> custom_district_list = [];
-  List<CustomBlockCodeList> custom_block_list = [];
-  List<CustomCHCPHCCodeList> custom_chcphc_list = [];
-  List<CustomUpkendraCodeList> custom_upkendra_list = [];
-  List<CustomANMCodeList> custom_anm_list = [];
 
   Future<UnitTypeListData> getUnitTypeCodeListAPI() async {
     preferences = await SharedPreferences.getInstance();
     print('LoginUnitType ${preferences.getString('UnitType')}');
-   // print('unit_type ${preferences.getString('UnitType')}');
+    // print('unit_type ${preferences.getString('UnitType')}');
     var response = await post(Uri.parse(_unittype_code_url), body: {
       "LoginUnitType": preferences.getString('UnitType'),
       "TokenNo": preferences.getString('Token'),
@@ -88,27 +122,26 @@ class _ANMPanelScreenState extends State<ANMPanelScreen> {
       if (apiResponse.status == true) {
         response_unitype_list = resBody['ResposeData'];
         custom_unitype_list.clear();
-        //custom_unitype_list.add(CustomUnitTypeCodeList(UnitTypeCode:"0", UnittypeNameHindi:Strings.choose));
         for (int i = 0; i < response_unitype_list.length; i++) {
           custom_unitype_list.add(CustomUnitTypeCodeList(UnitTypeCode: resBody['ResposeData'][i]['UnitTypeCode'].toString(),
               UnittypeNameHindi: resBody['ResposeData'][i]['UnittypeNameHindi'].toString()));
         }
         _selected_unit_code = custom_unitype_list[0].UnitTypeCode.toString();
-       // print('_selected_unit_code ${_selected_unit_code}');
-       // print('unittype_list ${custom_unitype_list.length}');
+         print('_selected_unit_code ${_selected_unit_code}');
       } else {
         custom_unitype_list.clear();
-        //print('unitype_list.len ${custom_unitype_list.length}');
       }
       EasyLoading.dismiss();
+      getDistrictCodeListAPI();
     });
     print('response:${apiResponse.message}');
     return UnitTypeListData.fromJson(resBody);
   }
 
+
   Future<GetDistrictListData> getDistrictCodeListAPI() async {
     preferences = await SharedPreferences.getInstance();
-   /* print('UnitCode ${preferences.getString('UnitCode')}');
+    /* print('UnitCode ${preferences.getString('UnitCode')}');
     print('unit_type ${preferences.getString('UnitType')}');*/
     var response = await post(Uri.parse(_district_code_url), body: {
       "UnitCode": preferences.getString('UnitCode').toString().length == 0 ? "00000000000" : preferences.getString('UnitCode').toString(),
@@ -122,23 +155,21 @@ class _ANMPanelScreenState extends State<ANMPanelScreen> {
       if (apiResponse.status == true) {
         response_district_list = resBody['ResposeData'];
         custom_district_list.clear();
-        //custom_district_list.add(CustomUnitTypeCodeList(UnitTypeCode:"0", UnittypeNameHindi:Strings.choose));
         for (int i = 0; i < response_district_list.length; i++) {
           custom_district_list.add(CustomDistrictCodeList(unitcode: resBody['ResposeData'][i]['unitcode'].toString(),
               unitNameHindi: resBody['ResposeData'][i]['unitNameHindi'].toString()));
         }
         _selected_district_code = custom_district_list[0].unitcode.toString();
-       // print('_dis_code ${_selected_district_code}');
-        //print('dis_list ${custom_district_list.length}');
+         print('_dis_code ${_selected_district_code}');
       } else {
         custom_district_list.clear();
-       // print('dis_list.len ${custom_district_list.length}');
       }
       EasyLoading.dismiss();
     });
     print('response:${apiResponse.message}');
     return GetDistrictListData.fromJson(resBody);
   }
+
 
   Future<AnmBlockListData> getBlockCodeListAPI(String _unitCode,String _unitType) async {
     preferences = await SharedPreferences.getInstance();
@@ -167,17 +198,14 @@ class _ANMPanelScreenState extends State<ANMPanelScreen> {
       if (apiResponse.status == true) {
         response_block_list = resBody['ResposeData'];
         custom_block_list.clear();
-        //custom_district_list.add(CustomUnitTypeCodeList(UnitTypeCode:"0", UnittypeNameHindi:Strings.choose));
         for (int i = 0; i < response_block_list.length; i++) {
           custom_block_list.add(CustomBlockCodeList(UnitName:resBody['ResposeData'][i]['UnitName'].toString(),
               UnitCode:resBody['ResposeData'][i]['UnitCode'].toString()));
         }
         _selected_block_code = custom_block_list[0].UnitCode.toString();
-       // print('_block_code ${_selected_block_code}');
-       // print('block_list ${custom_block_list.length}');
+        print('_block_code ${_selected_block_code}');
       } else {
         custom_block_list.clear();
-       // print('block_list.len ${custom_block_list.length}');
       }
       EasyLoading.dismiss();
     });
@@ -185,11 +213,12 @@ class _ANMPanelScreenState extends State<ANMPanelScreen> {
     return AnmBlockListData.fromJson(resBody);
   }
 
+
   Future<CHCPHCListData> getCHCPHCCodeListAPI(String _unitCode,String _unitType) async {
     preferences = await SharedPreferences.getInstance();
-    /*print('UnitCode ${_unitCode}');
-    print('UnitType ${_unitType}');
-    print('LoginUnitCode ${preferences.getString('UnitCode').toString().length == 0 ? "00000000000" : preferences.getString('UnitCode').toString()}');
+    print('CHCUnitCode ${_unitCode}');
+    print('CHCUnitType ${_unitType}');
+    /*print('LoginUnitCode ${preferences.getString('UnitCode').toString().length == 0 ? "00000000000" : preferences.getString('UnitCode').toString()}');
     print('LoginUnitType ${preferences.getString('UnitType')}');
     print('unit_type ${preferences.getString('UnitType')}');*/
     var response = await post(Uri.parse(_chcphc_code_url), body: {
@@ -234,9 +263,9 @@ class _ANMPanelScreenState extends State<ANMPanelScreen> {
 
   Future<UpkendraListData> getUpkendraCodeListAPI(String _unitCode,String _unitType) async {
     preferences = await SharedPreferences.getInstance();
-    /*print('UnitCode ${_unitCode}');
-    print('UnitType ${_unitType}');
-    print('LoginUnitCode ${preferences.getString('UnitCode').toString().length == 0 ? "00000000000" : preferences.getString('UnitCode').toString()}');
+    print('UpKendraUnitCode ${_unitCode}');
+    print('UpKendraUnitType ${_unitType}');
+    /*print('LoginUnitCode ${preferences.getString('UnitCode').toString().length == 0 ? "00000000000" : preferences.getString('UnitCode').toString()}');
     print('LoginUnitType ${preferences.getString('UnitType')}');
     print('unit_type ${preferences.getString('UnitType')}');*/
     var response = await post(Uri.parse(_subcentre_code_url), body: {
@@ -260,17 +289,15 @@ class _ANMPanelScreenState extends State<ANMPanelScreen> {
 
         response_upkendra_list = resBody['ResposeData'];
         custom_upkendra_list.clear();
-       // custom_upkendra_list.add(CustomUpkendraCodeList(UnitName:Strings.choose, UnitCode:"0"));
+        // custom_upkendra_list.add(CustomUpkendraCodeList(UnitName:Strings.choose, UnitCode:"0"));
         for (int i = 0; i < response_upkendra_list.length; i++) {
           custom_upkendra_list.add(CustomUpkendraCodeList(UnitName:resBody['ResposeData'][i]['UnitName'].toString(),
               UnitCode:resBody['ResposeData'][i]['UnitCode'].toString()));
         }
         _selected_upkendra_code = custom_upkendra_list[0].UnitCode.toString();
-       // print('_upkendra_code ${_selected_upkendra_code}');
-        //print('upkendra_list ${custom_upkendra_list.length}');
+         print('_upkendra_code ${_selected_upkendra_code}');
       } else {
         custom_upkendra_list.clear();
-       // print('upkendra_list.len ${custom_upkendra_list.length}');
       }
       EasyLoading.dismiss();
     });
@@ -278,10 +305,12 @@ class _ANMPanelScreenState extends State<ANMPanelScreen> {
     return UpkendraListData.fromJson(resBody);
   }
 
-  Future<AnmListData> getANMCodeListAPI(String _unitCode,String _unitType) async {
+
+  Future<AnmListData> getANMCodeListAPI(String _unitCode) async {
     preferences = await SharedPreferences.getInstance();
     print('UnitCode ${_unitCode}');
-   // print('UnitType ${_unitType}');
+    //01240260200
+    // print('UnitType ${_unitType}');
     //print('LoginUnitCode ${preferences.getString('UnitCode').toString().length == 0 ? "00000000000" : preferences.getString('UnitCode').toString()}');
     //print('LoginUnitType ${preferences.getString('UnitType')}');
     //print('unit_type ${preferences.getString('UnitType')}');
@@ -297,7 +326,7 @@ class _ANMPanelScreenState extends State<ANMPanelScreen> {
       if (apiResponse.status == true) {
         response_anm_list = resBody['ResposeData'];
         custom_anm_list.clear();
-       // custom_upkendra_list.add(CustomUpkendraCodeList(UnitName:Strings.choose, UnitCode:"0"));
+        // custom_upkendra_list.add(CustomUpkendraCodeList(UnitName:Strings.choose, UnitCode:"0"));
         for (int i = 0; i < response_anm_list.length; i++) {
           custom_anm_list.add(CustomANMCodeList(AshaName:resBody['ResposeData'][i]['AshaName'].toString(),
               ashaAutoID:resBody['ResposeData'][i]['ashaAutoID'].toString(),
@@ -316,6 +345,7 @@ class _ANMPanelScreenState extends State<ANMPanelScreen> {
     print('response:${apiResponse.message}');
     return AnmListData.fromJson(resBody);
   }
+
 
   Future<GetANMLoginData> getANMDataAPI(String _anmAutoID) async {
     await EasyLoading.show(
@@ -365,11 +395,11 @@ class _ANMPanelScreenState extends State<ANMPanelScreen> {
         preferences.setString("UnitCode", response_anm_data_list[0]['unitcode'].toString());
         preferences.setString("DistrictName",  response_anm_data_list[0]['DistrictName'].toString());
         preferences.setString("BlockName",  response_anm_data_list[0]['BlockName'].toString());
-       // preferences.setString("Token", _Token);
-       // preferences.setString("AnganwariHindi", _AnganwariHindi);
+        // preferences.setString("Token", _Token);
+        // preferences.setString("AnganwariHindi", _AnganwariHindi);
         preferences.setString("UserId", preferences.getString("UserId").toString());
-       // preferences.setString("AppRoleID", _AppRoleID);
-       // preferences.setString("UserNo", _UserNo);
+        // preferences.setString("AppRoleID", _AppRoleID);
+        // preferences.setString("UserNo", _UserNo);
         preferences.setString("UnitType", preferences.getString("UnitType").toString());
         preferences.setString("UnitID", response_anm_data_list[0]['unitid'].toString());
         preferences.setString("ANMName", response_anm_data_list[0]['AshaName'].toString());
@@ -413,30 +443,11 @@ class _ANMPanelScreenState extends State<ANMPanelScreen> {
     return GetANMLoginData.fromJson(resBody);
   }
 
-
-
-  Future<String> getHelpDesk() async {
-    await EasyLoading.show(
-      status: 'loading...',
-      maskType: EasyLoadingMaskType.black,
-    );
-    var response = await post(Uri.parse(_help_desk_url), body: {
-      "type": "2",
-    });
-    var resBody = json.decode(response.body);
-    final apiResponse = GetHelpDeskData.fromJson(resBody);
-    setState(() {
-      if (apiResponse.status == true) {
-        help_response_listing = resBody['ResposeData'];
-        if(resBody['ResposeData'].length > 0){
-        }
-      }
-      getUnitTypeCodeListAPI();
-    });
-    return "Success";
+  @override
+  void initState() {
+    super.initState();
+    getHelpDesk();
   }
-
-
 
   @override
   void dispose() {
@@ -444,6 +455,11 @@ class _ANMPanelScreenState extends State<ANMPanelScreen> {
     EasyLoading.dismiss();
   }
 
+
+  bool _isUnitTypeChanged=false;
+  var _dynamicTitle=Strings.block;
+  var _dynamicTitle2="";
+  var _dynamicTitle3="";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -651,14 +667,17 @@ class _ANMPanelScreenState extends State<ANMPanelScreen> {
       body: Container(
         color: ColorConstants.anmpanel_bg_color,
         child: Column(
-          children: [
+          children:<Widget>[
             Container(
-              margin: EdgeInsets.all(5),
-              width: MediaQuery.of(context).size.width,
-              color: ColorConstants.redTextColor,
-              height: 30,
-              child: Center(child: Text('${Strings.anm_panel}',textAlign:TextAlign.center,style: TextStyle(color: ColorConstants.white,fontSize: 16),))
+                margin: EdgeInsets.all(5),
+                width: MediaQuery.of(context).size.width,
+                color: ColorConstants.redTextColor,
+                height: 30,
+                child: Center(child: Text('${Strings.anm_panel}',textAlign:TextAlign.center,style: TextStyle(color: ColorConstants.white,fontSize: 16),))
             ),
+            /*
+            * Unit Type List View
+            * */
             Padding(
               padding: const EdgeInsets.all(5.0),
               child: Align(
@@ -725,8 +744,77 @@ class _ANMPanelScreenState extends State<ANMPanelScreen> {
                           setState(() {
                             _selected_unit_code = newVal!;
                             print('_selected_unit_code:$_selected_unit_code');
-                            //getBlockListAPI(_selectedPlacesReferCode,_selectedDistrictUnitCode.substring(0, 4));
-                            if(_selected_unit_code == "8" || _selected_unit_code == "9" || _selected_unit_code == "10" || _selected_unit_code == "14"){
+                            if(_selected_unit_code == "5" || _selected_unit_code == "6" || _selected_unit_code == "7" || _selected_unit_code == "13" || _selected_unit_code == "15"){
+                              _showCHCPHCView=false;
+                              for(int i=0 ;i<custom_unitype_list.length; i++){
+                                if(_selected_unit_code == custom_unitype_list[i].UnitTypeCode.toString()){
+                                    _dynamicTitle=custom_unitype_list[i].UnittypeNameHindi.toString();
+                                    _dynamicTitle2="";
+                                    print('_dynamicTitle $_dynamicTitle');
+                                    break;
+                                }else{
+                                  _dynamicTitle=Strings.block;
+                                }
+                              }
+                            }else{
+                              if(_selected_unit_code == "8" || _selected_unit_code == "9" || _selected_unit_code == "10"){
+                                _showCHCPHCView=true;
+                                _showUpkendraView=false;
+                                for(int i=0 ;i<custom_unitype_list.length; i++){
+                                  if(_selected_unit_code == custom_unitype_list[i].UnitTypeCode.toString()){
+                                    _dynamicTitle=Strings.block;
+                                    _dynamicTitle2=custom_unitype_list[i].UnittypeNameHindi.toString();
+                                    print('_dynamicTitle2 $_dynamicTitle2');
+                                    break;
+                                  }else{
+                                    _dynamicTitle2="";
+                                  }
+                                }
+                              }else{
+                                  if(_selected_unit_code == "11"){
+                                    for(int i=0 ;i<custom_unitype_list.length; i++){
+                                      if(_selected_unit_code == custom_unitype_list[i].UnitTypeCode.toString()){
+                                        _dynamicTitle=Strings.block;
+                                        _dynamicTitle3=custom_unitype_list[i].UnittypeNameHindi.toString();
+                                        _dynamicTitle2=Strings.sa_pra_kendra;
+                                        print('v $_dynamicTitle2');
+                                        break;
+                                      }else{
+                                        _dynamicTitle2="";
+                                      }
+                                    }
+                                    _showUpkendraView=true;
+                                    _showCHCPHCView=true;
+                                  }else{
+                                    if(_selected_unit_code == "14"){
+                                      _dynamicTitle=Strings.city_dispencry;
+                                      for(int i=0 ;i<custom_unitype_list.length; i++){
+                                        if(_selected_unit_code == custom_unitype_list[i].UnitTypeCode.toString()){
+                                          _dynamicTitle2=custom_unitype_list[i].UnittypeNameHindi.toString();
+                                          print('v $_dynamicTitle2');
+                                          break;
+                                        }
+                                      }
+                                      _showCHCPHCView=true;
+                                    }else{
+                                      _showCHCPHCView=false;
+                                      _showUpkendraView=false;
+                                    }
+                                  }
+                              }
+                            }
+                            if(_isUnitTypeChanged == true){//if Unit Type Change ,all value will be reset
+                              _isUnitTypeChanged=false;
+                              _selected_district_code = custom_district_list[0].unitcode.toString();
+                              _selected_block_code = custom_block_list[0].UnitCode.toString();
+                              _selected_anm_code = custom_anm_list[0].ashaAutoID.toString();
+                              if(custom_chcphc_list.length > 0){
+                                _selected_chcphc_code = custom_chcphc_list[0].UnitCode.toString();
+                              }
+                              _selected_asha_phoneno="";
+                            }
+                            //getBlockListAPI(_selected_unit_code,_selectedDistrictUnitCode.substring(0, 4));
+                            /*if(_selected_unit_code == "8" || _selected_unit_code == "9" || _selected_unit_code == "10" || _selected_unit_code == "14"){
                               _showCHCView=true;
                               _showUpkendraView=false;
                             }else if(_selected_unit_code == "11"){
@@ -735,8 +823,8 @@ class _ANMPanelScreenState extends State<ANMPanelScreen> {
                             }else{
                               _showCHCView=false;
                               _showUpkendraView=false;
-                            }
-                            getDistrictCodeListAPI();
+                            }*/
+
                           });
                         },
                         value: _selected_unit_code,
@@ -747,6 +835,9 @@ class _ANMPanelScreenState extends State<ANMPanelScreen> {
               ),
             ),
 
+            /*
+            * District View
+            * */
             Padding(
               padding: const EdgeInsets.all(5.0),
               child: Align(
@@ -825,12 +916,13 @@ class _ANMPanelScreenState extends State<ANMPanelScreen> {
             ),
 
 
+            /*Dynamic 1 Block View*/
             Padding(
               padding: const EdgeInsets.all(5.0),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Container(
-                    child: Text('${Strings.choose_block}'
+                    child: Text(_dynamicTitle
                       ,style: TextStyle(color: ColorConstants.black,fontSize: 13),)
                 ),
               ),
@@ -891,7 +983,14 @@ class _ANMPanelScreenState extends State<ANMPanelScreen> {
                           setState(() {
                             _selected_block_code = newVal!;
                             print('_selected_block_code:$_selected_block_code');
-                            getCHCPHCCodeListAPI(_selected_block_code,_selected_unit_code);
+                            getANMCodeListAPI(_selected_block_code);
+                            if(_selected_unit_code == "8" || _selected_unit_code == "9" || _selected_unit_code == "10"){
+                              getCHCPHCCodeListAPI(_selected_block_code,_selected_unit_code);
+                            }else if(_selected_unit_code == "11"){
+
+                            }else if(_selected_unit_code == "14"){
+                              getCHCPHCCodeListAPI(_selected_block_code,_selected_unit_code);
+                            }
                           });
                         },
                         value: _selected_block_code,
@@ -901,17 +1000,19 @@ class _ANMPanelScreenState extends State<ANMPanelScreen> {
                 ],
               ),
             ),
+
+
+
+            /*Dynamic 2 Block View*/
             Visibility(
-              visible: _showCHCView,
-              child: Container(
-              child: Column(
-                children:<Widget>[
+                visible: _showCHCPHCView,
+                child: Column(children:<Widget>[
                   Padding(
                     padding: const EdgeInsets.all(5.0),
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Container(
-                          child: Text('${_dynamicTitle}'
+                          child: Text(_dynamicTitle2
                             ,style: TextStyle(color: ColorConstants.black,fontSize: 13),)
                       ),
                     ),
@@ -972,7 +1073,11 @@ class _ANMPanelScreenState extends State<ANMPanelScreen> {
                                 setState(() {
                                   _selected_chcphc_code = newVal!;
                                   print('_selected_chcphc_code:$_selected_chcphc_code');
-                                  getUpkendraCodeListAPI(_selected_chcphc_code,_selected_unit_code);
+                                  if(_selected_unit_code == "8" || _selected_unit_code == "9" || _selected_unit_code == "10"){
+                                    getANMCodeListAPI(_selected_chcphc_code);
+                                  }else if(_selected_unit_code == "11"){
+                                    getUpkendraCodeListAPI(_selected_chcphc_code,_selected_unit_code);
+                                  }
                                 });
                               },
                               value: _selected_chcphc_code,
@@ -982,93 +1087,98 @@ class _ANMPanelScreenState extends State<ANMPanelScreen> {
                       ],
                     ),
                   ),
-                ],
-              ),
-            )),
+                ],)),
+
+
+            /* UpKendra View */
             Visibility(
-              visible: _showUpkendraView,
-              child: Container(
-              child: Column(
-                children:<Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                          child: Text('${Strings.up_swasthya}'
-                            ,style: TextStyle(color: ColorConstants.black,fontSize: 13),)
+                visible: _showUpkendraView,
+                child: Container(
+                  child: Column(
+                    children:<Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Container(
+                              child: Text(_dynamicTitle3
+                                ,style: TextStyle(color: ColorConstants.black,fontSize: 13),)
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(color: Colors.black)),
-                    padding: EdgeInsets.all(1),
-                    margin: EdgeInsets.all(3),
-                    height: 30,
-                    child: Row(
-                      children: [
-                        Container(
-                          width:
-                          (MediaQuery.of(context).size.width - 10),
-                          height: 40,
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton(
-                              icon: Padding(
-                                padding:
-                                const EdgeInsets.only(right: 10),
-                                child: Image.asset(
-                                  'Images/ic_dropdown.png',
-                                  height: 12,
-                                  alignment: Alignment.centerRight,
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(color: Colors.black)),
+                        padding: EdgeInsets.all(1),
+                        margin: EdgeInsets.all(3),
+                        height: 30,
+                        child: Row(
+                          children: [
+                            Container(
+                              width:
+                              (MediaQuery.of(context).size.width - 10),
+                              height: 40,
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButton(
+                                  icon: Padding(
+                                    padding:
+                                    const EdgeInsets.only(right: 10),
+                                    child: Image.asset(
+                                      'Images/ic_dropdown.png',
+                                      height: 12,
+                                      alignment: Alignment.centerRight,
+                                    ),
+                                  ),
+                                  iconSize: 15,
+                                  elevation: 11,
+                                  //style: TextStyle(color: Colors.black),
+                                  style:
+                                  Theme.of(context).textTheme.bodyText1,
+                                  isExpanded: true,
+                                  // hint: new Text("Select State"),
+                                  items: custom_upkendra_list.map((item) {
+                                    return DropdownMenuItem(
+                                        child: Row(
+                                          children: [
+                                            new Flexible(
+                                                child: Padding(
+                                                  padding:
+                                                  const EdgeInsets.all(2.0),
+                                                  child: Text(item.UnitName.toString(),
+                                                    //Names that the api dropdown contains
+                                                    style: TextStyle(
+                                                      fontSize: 14.0,
+                                                    ),
+                                                  ),
+                                                )),
+                                          ],
+                                        ),
+                                        value: item.UnitCode.toString() //Id that has to be passed that the dropdown has.....
+                                      //value: "चुनें"     //Id that has to be passed that the dropdown has.....
+                                    );
+                                  }).toList(),
+                                  onChanged: (String? newVal) {
+                                    setState(() {
+                                      _selected_upkendra_code = newVal!;
+                                      print('_selected_upkendra_code:$_selected_upkendra_code');
+                                      getANMCodeListAPI(_selected_upkendra_code);
+                                    });
+                                  },
+                                  value: _selected_upkendra_code,
                                 ),
                               ),
-                              iconSize: 15,
-                              elevation: 11,
-                              //style: TextStyle(color: Colors.black),
-                              style:
-                              Theme.of(context).textTheme.bodyText1,
-                              isExpanded: true,
-                              // hint: new Text("Select State"),
-                              items: custom_upkendra_list.map((item) {
-                                return DropdownMenuItem(
-                                    child: Row(
-                                      children: [
-                                        new Flexible(
-                                            child: Padding(
-                                              padding:
-                                              const EdgeInsets.all(2.0),
-                                              child: Text(item.UnitName.toString(),
-                                                //Names that the api dropdown contains
-                                                style: TextStyle(
-                                                  fontSize: 14.0,
-                                                ),
-                                              ),
-                                            )),
-                                      ],
-                                    ),
-                                    value: item.UnitCode.toString() //Id that has to be passed that the dropdown has.....
-                                  //value: "चुनें"     //Id that has to be passed that the dropdown has.....
-                                );
-                              }).toList(),
-                              onChanged: (String? newVal) {
-                                setState(() {
-                                  _selected_upkendra_code = newVal!;
-                                  print('_selected_upkendra_code:$_selected_upkendra_code');
-                                  getANMCodeListAPI(_selected_upkendra_code,_selected_unit_code);
-                                });
-                              },
-                              value: _selected_upkendra_code,
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            )),
+                )),
+
+
+
+            /*ANM List View*/
             Padding(
               padding: const EdgeInsets.all(5.0),
               child: Align(
@@ -1135,14 +1245,15 @@ class _ANMPanelScreenState extends State<ANMPanelScreen> {
                           setState(() {
                             _selected_anm_code = newVal!;
                             print('_selected_anm_code:$_selected_anm_code');
+                            _isUnitTypeChanged=true;
                             for (int i = 0; i < custom_anm_list.length; i++) {
-                                if(_selected_anm_code == custom_anm_list[i].ashaAutoID.toString()){
-                                  _selected_asha_autoid=custom_anm_list[i].ashaAutoID.toString();
-                                  _selected_asha_phoneno=custom_anm_list[i].AshaPhone.toString();
-                                  print('_selected_asha_phoneno:$_selected_asha_phoneno');
-                                }
+                              if(_selected_anm_code == custom_anm_list[i].ashaAutoID.toString()){
+                                _selected_asha_autoid=custom_anm_list[i].ashaAutoID.toString();
+                                _selected_asha_phoneno=custom_anm_list[i].AshaPhone.toString();
+                                print('_selected_asha_phoneno:$_selected_asha_phoneno');
+                              }
                             }
-                            });
+                          });
                         },
                         value: _selected_anm_code,
 
@@ -1181,6 +1292,8 @@ class _ANMPanelScreenState extends State<ANMPanelScreen> {
                 ],
               ),
             ),
+
+
             GestureDetector(
               onTap: (){
                 getANMDataAPI(_selected_asha_autoid);
@@ -1198,17 +1311,13 @@ class _ANMPanelScreenState extends State<ANMPanelScreen> {
                 ),
               ),
             )
+
           ],
         ),
       ),
     );
   }
 
-  @override
-  void initState() {
-    super.initState();
-    getHelpDesk();
-  }
 
   ShowAboutAppDetails() {
     showDialog(
@@ -1253,7 +1362,7 @@ class _ANMPanelScreenState extends State<ANMPanelScreen> {
     await showDialog(
         context: context,
         builder: (_) => AlertDialog(
-          title: const Text('${Strings.exit_from_app}',style: TextStyle(fontSize: 15,color: ColorConstants.AppColorPrimary),),
+          title: Text('${Strings.exit_from_app}',style: TextStyle(fontSize: 15,color: ColorConstants.AppColorPrimary),),
           actions: [
             ElevatedButton(
                 onPressed: () {
@@ -1416,7 +1525,6 @@ class _ANMPanelScreenState extends State<ANMPanelScreen> {
     );
   }
 }
-
 class CustomUnitTypeCodeList {
   String UnitTypeCode;
   String UnittypeNameHindi;
@@ -1452,5 +1560,5 @@ class CustomANMCodeList {
   String? ashaAutoID;
   String? AshaPhone;
 
-  CustomANMCodeList({this.AshaName,this.ashaAutoID,this.AshaPhone});
+  CustomANMCodeList({this.AshaName, this.ashaAutoID, this.AshaPhone});
 }

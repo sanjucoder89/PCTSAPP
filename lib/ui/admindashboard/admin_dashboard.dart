@@ -24,6 +24,7 @@ import '../samparksutra/samparksutra.dart';
 import '../splashnew.dart';
 import '../videos/tab_view.dart';
 import 'HomePage.dart';
+import 'anm_login_panel.dart';
 import 'anm_panel.dart';
 import 'chart_app.dart';
 import 'model/DeathCountData.dart';
@@ -860,7 +861,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                           context,
                           MaterialPageRoute(
                             builder: (BuildContext context) =>
-                                ANMPanelScreen(),
+                                ANMLoginPanel(),//ANMLoginPanel ,ANMPanelScreen
                           )).then((value){setState(() {
                      //   startTimer();
                       });});

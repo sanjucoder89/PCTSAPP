@@ -386,6 +386,7 @@ class Strings {
   static const String refer_block_choose = "रैफर संस्था चुनें ";
   static const String prsav_centr_choose = "क्‍या प्रसव संस्था चुनें ";
   static const String block = "ब्लॉक";
+  static const String city_dispencry = "सिटी डिस्पेंसरी";
   static const String highrisk_report = "हाईरिस्क जाँच";
   static const String prasv_yujna = "संस्था जहाँ प्रसव के लिये योजना बनाई है ";
   static const String choose_block = "ब्लॉक चुनें";

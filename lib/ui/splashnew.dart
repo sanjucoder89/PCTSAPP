@@ -114,10 +114,8 @@ class _SplashState extends State<SplashNew> {
   Future<String> getSaltData() async {
     preferences = await SharedPreferences.getInstance();
     preferences.setString("CheckPlatform", _checkPlatform);
-
     //preferences.setString("Appversion", packageName); //uncomment line when app is going for live
     preferences.setString("Appversion", "5.5.5.22");
-
     deviceId = await PlatformDeviceId.getDeviceId;
     preferences.setString("deviceId", deviceId);
     Token = uuid.v4();

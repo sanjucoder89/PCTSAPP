@@ -84,10 +84,10 @@ dev_dependencies:
     sdk: flutter
 
 flutter_icons:
-  android: "launcher_icon"
   ios: true
-  image_path: "Images/ic_launcher.png"
-  min_sdk_android: 21 # android min sdk min:16, default 21
+  android: true
+  image_path_ios: "Images/launcher/pctslogo.jpg"
+  image_path_android: "Images/launcher/pctslogo.jpg"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

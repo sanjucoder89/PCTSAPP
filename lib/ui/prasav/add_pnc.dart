@@ -1863,7 +1863,7 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                                           enabled: _shishuEnDisable,
                                                           style: TextStyle(color: Colors.black),
                                                           maxLength: 10,
-                                                          keyboardType: TextInputType.number,
+                                                          keyboardType: TextInputType.text,
                                                           controller: _shishuNameController,
                                                           decoration: InputDecoration(
                                                             filled: true,
@@ -2235,7 +2235,7 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                                           enabled: _shishu2EnDisable,
                                                           style: TextStyle(color: Colors.black),
                                                           maxLength: 10,
-                                                          keyboardType: TextInputType.number,
+                                                          keyboardType: TextInputType.text,
                                                           controller: _shishu2NameController,
                                                           decoration: InputDecoration(
                                                             filled: true,
@@ -2612,7 +2612,7 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                                           enabled: _shishu3EnDisable,
                                                           style: TextStyle(color: Colors.black),
                                                           maxLength: 10,
-                                                          keyboardType: TextInputType.number,
+                                                          keyboardType: TextInputType.text,
                                                           controller: _shishu3NameController,
                                                           decoration: InputDecoration(
                                                             filled: true,
@@ -2987,7 +2987,7 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                                           enabled: _shishu4EnDisable,
                                                           style: TextStyle(color: Colors.black),
                                                           maxLength: 10,
-                                                          keyboardType: TextInputType.number,
+                                                          keyboardType: TextInputType.text,
                                                           controller: _shishu4NameController,
                                                           decoration: InputDecoration(
                                                             filled: true,
@@ -3361,7 +3361,7 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                                           enabled: _shishu5EnDisable,
                                                           style: TextStyle(color: Colors.black),
                                                           maxLength: 10,
-                                                          keyboardType: TextInputType.number,
+                                                          keyboardType: TextInputType.text,
                                                           controller: _shishu5NameController,
                                                           decoration: InputDecoration(
                                                             filled: true,

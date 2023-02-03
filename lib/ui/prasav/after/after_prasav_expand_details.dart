@@ -197,7 +197,7 @@ class _AfterPrasavExpandDetails extends State<AfterPrasavExpandDetails> {
 
 
         //if(second_tab_msg == "7"){
-        if(response_listing.length  == 7){
+        if(response_listing.length  == 6){
         //  _checkLoginType=false;
           _showHideAddANCButtonView=false;
         }else{

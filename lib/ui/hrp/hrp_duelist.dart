@@ -22,6 +22,7 @@ import '../prasav/before/model/GetVillageListData.dart';
 import '../samparksutra/samparksutra.dart';
 import '../splashnew.dart';
 import '../videos/tab_view.dart';
+import 'Model/FindPCTSIDData.dart';
 import 'hrp_expand_details.dart';
 
 String getFormattedDate(String date) {
@@ -192,27 +193,33 @@ class _HrpDueScreenList extends State<HrpDueScreenList> {
       maskType: EasyLoadingMaskType.black,
     );
     preferences = await SharedPreferences.getInstance();
+    print('PCTSID $id');
+    print('TagName ${"9"}');
+    print('TokenNo ${preferences.getString('Token')}');
+    print('UserId ${preferences.getString('UserId')}');
     var response = await post(Uri.parse(_find_prasav_id), body: {
       //PCTSID:01010900404991090
       // TagName:3
       // TokenNo:fc9b1a5a-2593-4bbe-ab40-b70b7785a041
       // UserID:0101010020201
       "PCTSID":id,
-      "TagName":"1",
+      "TagName":"9",
       "TokenNo": preferences.getString('Token'),
       "UserID": preferences.getString('UserId')
     });
     var resBody = json.decode(response.body);
-    final apiResponse = GetPrasavListData.fromJson(resBody);
+    final apiResponse = FindPCTSIDData.fromJson(resBody);
     setState(() {
       if (apiResponse.status == true) {
         find_response_listing = resBody['ResposeData'];
         print('find-resp-listing.len ${find_response_listing.length}');
+        //print('find-resp-listing.ancregid ${find_response_listing[0]['ancregid'].toString()}');
+        //print('find-resp-listing.MotherID ${find_response_listing[0]['MotherID'].toString()}');
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => HRPExpandDetails(ANCRegID:response_listing[0]['ancregid'].toString(),
-                MotherID: response_listing[0]['motherid'].toString()),
+            builder: (context) => HRPExpandDetails(ANCRegID:find_response_listing[0]['ancregid'].toString(),
+                MotherID: find_response_listing[0]['MotherID'].toString()),
           ),
         );
       } else {

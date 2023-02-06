@@ -104,6 +104,25 @@ class _AshaIncentiveState extends State<AshaIncentive> {
   }
 
 
+  String number="=+911234567890";
+
+  //String newNumber=number;
+
+
+  String replaceCharAt(String oldString, int index, String newChar) {
+    return oldString.substring(0, index) + newChar + oldString.substring(index + 1);
+  }
+
+  String _mobNumberMasking(String number) {
+    var newNumber = number;
+    for(int i=6; i<number.length;i++){
+      newNumber = replaceCharAt(newNumber, i, "*") ;
+      //print("PHONE_NUMBER_LOOP:$newNumber");
+    }
+    //print("FinalNumber:$newNumber");
+    return newNumber;
+  }
+
 
   int getLength() {
     if(response_list.isNotEmpty){
@@ -236,7 +255,6 @@ class _AshaIncentiveState extends State<AshaIncentive> {
                 child: DottedBorder(
                   color: ColorConstants.AppColorPrimary,
                   strokeWidth: 1,
-
                   child: Container(
                     child: Column(
                       children: [
@@ -307,9 +325,7 @@ class _AshaIncentiveState extends State<AshaIncentive> {
                                 )),
                             Expanded(child: Padding(
                               padding: const EdgeInsets.all(5.0),
-                              child: Text('${response_list.length == 0 ? "-" : response_list[0]['Accountno'].toString()}',
-                              //child: Text('${response_list.length == 0 ? "-" : response_list[0]['Accountno'].toString()}',
-                              //child: Text('${response_list[0]['Accountno'].toString().length == 0 ? "-" : response_list[0]['Accountno'].toString().substring(0, 2) + "******" + response_list[0]['Accountno'].toString().substring(12, 14)}',
+                              child: Text('${response_list.length == 0 ? "-" : response_list[0]['Accountno'].toString().length > 0 ? _mobNumberMasking(response_list[0]['Accountno'].toString()) : ""}',
                                 style: TextStyle(fontSize: 14,color:ColorConstants.black,fontWeight: FontWeight.normal),),
                             ))
                           ],
@@ -421,7 +437,8 @@ class _AshaIncentiveState extends State<AshaIncentive> {
                 ),
               ),
 
-              isParentExpand == true ? Container(
+              isParentExpand == true ?
+              Container(
                 color: ColorConstants.prsav_header_color,
                 height: 40,
                 child: Row(
@@ -462,8 +479,13 @@ class _AshaIncentiveState extends State<AshaIncentive> {
 
                   ],
                 ),
-              ) : Container(),
-              isParentExpand == true ? _myListView() : Container()
+              )
+                  :
+              Container(),
+              isParentExpand == true ?
+              _myListView()
+                  :
+              Container()
 
             ],
           ),

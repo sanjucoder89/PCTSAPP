@@ -837,7 +837,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
         referBlockView=false;
       }
 
-      if(preferences.getString("AppRoleID") == "31" || preferences.getString("AppRoleID") == "32"){
+      if(preferences.getString("AppRoleID") == "31" || preferences.getString("AppRoleID") == "32"){//anm
           if(response_list[0]['DeathDate'].toString() == "null"){
             finalButtonView=true;
             submit_title=Strings.vivran_save_krai;
@@ -856,6 +856,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
           submit_title="एएनएम द्वारा सत्यापित ";
           isClickableEnableDisable=false;//clickable false if logged in via Asha or ANMVerify == 1
         }else{
+          submit_title=Strings.vivran_save_krai;
           if(response_list[0]['DeathDate'].toString() == "null"){
             print('chikuu');
             finalButtonView=true;

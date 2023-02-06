@@ -419,6 +419,8 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
       _showErrorPopup(Strings.choose_refer_type,ColorConstants.AppColorPrimary);
     }else if((_selectedPlacesReferCode == "10" || _selectedPlacesReferCode == "9" || _selectedPlacesReferCode == "8") && (sub_heading == "" || sub_heading =="चुनें" || _selectedSubUnitCode == "0")){
       _showErrorPopup("कृपया "+sub_heading +" चुनें!",ColorConstants.AppColorPrimary);
+    }else if(_shishuWeightController.text.toString() == "0" ||  int.parse(_shishuWeightController.text.toString()) < 0){
+      _showErrorPopup(Strings.enter_correct_weight,ColorConstants.AppColorPrimary);
     }else{
       if(_shishuWeightController.text.toString().trim().isEmpty){
         _weightPostData="0";

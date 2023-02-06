@@ -272,7 +272,7 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
 
   List response_district_list= [];
   List response_block_list= [];
-
+  bool _isChanged=false;
   Future<GetDistrictListData> getDistrictListAPI(String refUnitType) async {
     /*await EasyLoading.show(
       status: 'loading...',
@@ -297,19 +297,21 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
         _selectedDistrictUnitCode = custom_district_list[0].unitcode.toString();
         print('_selectedDistrictUnitCode ${_selectedDistrictUnitCode}');
         print('disctict.len ${custom_district_list.length}');
-        if(widget.ReferDistrictCode.isNotEmpty){
-          setState(() {
-            for (int i = 0; i < response_district_list.length; i++) {
-              if(widget.ReferDistrictCode == resBody['ResposeData'][i]['unitcode']){
-                print('insideForLoop ${resBody['ResposeData'][i]['unitcode']}');
-                _selectedDistrictUnitCode = resBody['ResposeData'][i]['unitcode'].toString();
-                print('_selectedDistrictUnitCodeafter ${_selectedDistrictUnitCode}');
-                getBlockListAPI(_selectedPlacesReferCode,_selectedDistrictUnitCode.substring(0, 4));
-                break;
+        print('_isChanged ${_isChanged}');
+          if(widget.ReferDistrictCode.isNotEmpty){
+            setState(() {
+              for (int i = 0; i < response_district_list.length; i++) {
+                if(widget.ReferDistrictCode == resBody['ResposeData'][i]['unitcode']){
+                  print('insideForLoop ${resBody['ResposeData'][i]['unitcode']}');
+                  _selectedDistrictUnitCode = resBody['ResposeData'][i]['unitcode'].toString();
+                  print('_selectedDistrictUnitCodeafter ${_selectedDistrictUnitCode}');
+                  getBlockListAPI(_selectedPlacesReferCode,_selectedDistrictUnitCode.substring(0, 4));
+                  break;
+                }
               }
-            }
-          });
-        }
+            });
+          }
+
       } else {
         custom_district_list.clear();
         print('disctict.len ${custom_district_list.length}');
@@ -322,10 +324,6 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
   }
 
   Future<GetBlockListData> getBlockListAPI(String refUnitType,String refUnitCode) async {
-    await EasyLoading.show(
-      status: 'loading...',
-      maskType: EasyLoadingMaskType.black,
-    );
     print('referUnitCode $refUnitCode');
     preferences = await SharedPreferences.getInstance();
     var response = await post(Uri.parse(_get_block_list_url), body: {
@@ -359,6 +357,8 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                 _selectedBlockUnitCode = resBody['ResposeData'][i]['unitcode'].toString();
                 print('_selectedBlockUnitCodeater ${_selectedBlockUnitCode}');
                 _ReferUnitCode=_selectedBlockUnitCode;
+                _isChanged=true;
+                print('_isChangedLast ${_isChanged}');
                 break;
               }
             }
@@ -369,7 +369,6 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
         print('block.len ${custom_block_list.length}');
 
       }
-      EasyLoading.dismiss();
     });
     print('response:${apiResponse.message}');
     return GetBlockListData.fromJson(resBody);
@@ -381,17 +380,12 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Location location = new Location();
     LocationData _pos = await location.getLocation();
-    print('curr lat ${_pos.latitude}');
-    print('curr lng ${_pos.longitude}');
     if(_pos.latitude != null){
       _latitude=_pos.latitude.toString();
     }
     if(_pos.longitude != null){
       _longitude=_pos.longitude.toString();
     }
-    print('live loc lat $_latitude');
-    print('live loc lng $_longitude');
-
     setState(() {
       prefs.setString("latitude", _latitude);
       prefs.setString("longitude", _longitude);
@@ -3993,7 +3987,17 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                           setState(() {
                                             _selectedPlacesReferCode = newVal!;
                                             print('refercode:$_selectedPlacesReferCode');
-                                            getDistrictListAPI("3");
+                                            if(_isChanged == true){
+                                              _isChanged=false;
+                                              _selectedBlockUnitCode = custom_block_list[0].unitcode.toString();
+                                              print('_selectedDistrictUnitCode ${_selectedBlockUnitCode}');
+                                              _selectedDistrictUnitCode = custom_district_list[0].unitcode.toString();
+                                              print('_selectedDistrictUnitCode ${_selectedDistrictUnitCode}');
+
+                                              print('_isChangedDrop ${_isChanged}');
+                                            }else{
+                                              getDistrictListAPI("3");
+                                            }
                                           });
                                         },
                                         value: _selectedPlacesReferCode, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
@@ -4175,6 +4179,8 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                             _selectedBlockUnitCode = newVal!;
                                             print('blockcode:$_selectedBlockUnitCode');
                                             _ReferUnitCode=_selectedBlockUnitCode;
+                                            _isChanged=true;
+                                            print('_isChangedFromDropDown  ${_isChanged}');
                                           });
                                         },
                                         value:

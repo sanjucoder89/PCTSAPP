@@ -527,6 +527,7 @@ class Strings {
   static const String choose_refer_district = "रैफर जिला चुनें  ";
   static const String choose_refer_sanstha = "रैफर संस्था चुनें ";
   static const String sanstha_type = "संस्था का प्रकार";
+  static const String enter_correct_weight = "सही वेट एंटर करे";
 
 
   static const String weight_msg_green = "महिला का वजन LMP से आज तक #.##1 किग्रा ही बढा है, जबकि #.##2 किग्रा बढना था। यह सामान्‍य से थोडा कम है। दिन में कम से कम दो घण्‍टे एवं रात में आठ घण्‍टे का आराम अवश्‍य करें, दिन में कम से कम तीन बार भोजन करें एवं भोजन में हरे पत्‍तेदार सब्जियां ज्‍यादा देवें। समय-समय पर महिला की जांच चिकित्‍सक से करवाये, टी.टी. के टीके लगवाये।";

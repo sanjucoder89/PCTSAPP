@@ -1132,7 +1132,7 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
 
   bool _ShowHideErrorView=false;
 
-
+  bool _isChanged=false;
   bool _ShowHideReferPlacesView=false;
 
   @override
@@ -1505,7 +1505,8 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                     setState(() {
                                       motherComplId = newVal!;
                                       print('motherComplId:$motherComplId');
-                                      if(motherComplId == "5" || motherComplId == "0"){
+                                      if((motherComplId == "5" || motherComplId == "0") && (childComplId_1 == "12" ||
+                                          childComplId_2 == "12" || childComplId_3 == "12" || childComplId_4 == "12" || childComplId_5 == "12")){
                                         _ShowHideReferPlacesView=false;
                                         _ShowHideErrorView=false;
                                         _ShowHideADDNewVivranView=true;
@@ -3645,6 +3646,12 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                             _selectedPlacesReferCode = newVal!;
                                             print('refercode:$_selectedPlacesReferCode');
                                             getDistrictListAPI("3");
+
+                                            if(_isChanged == true){
+                                              _isChanged=false;
+                                              _selectedBlockUnitCode = custom_block_list[0].unitcode.toString();
+                                              print('_selectedDistrictUnitCode ${_selectedBlockUnitCode}');
+                                            }
                                           });
                                         },
                                         value: _selectedPlacesReferCode, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
@@ -3826,6 +3833,7 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                             _selectedBlockUnitCode = newVal!;
                                             print('blockcode:$_selectedBlockUnitCode');
                                             _ReferUnitCode=_selectedBlockUnitCode;
+                                            _isChanged=true;
                                           });
                                         },
                                         value:

@@ -225,6 +225,13 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
           _childahar=ChildAhar.none;
           _childfounddisese=ChildFoundDisease.none;
           _childrefer=ChildRefer.none;
+
+          if(preferences.getString("AppRoleID") == "31" || preferences.getString("AppRoleID") == "32" || preferences.getString("AppRoleID") == "33"){
+            _ShowHideADDNewVivranView = true;
+          }else{
+            _ShowHideADDNewVivranView=false;
+          }
+
         });
       }
       EasyLoading.dismiss();
@@ -2313,7 +2320,8 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
                 ],
               ),
             ),)),
-            GestureDetector(
+            _ShowHideADDNewVivranView == true
+                ? GestureDetector(
               onTap: (){
                 postHbycRequest();
               },
@@ -2344,13 +2352,15 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
                 ),
               ),
             )
+                :
+            Container()
           ],
         ),
       ),
 
     );
   }
-
+  bool _ShowHideADDNewVivranView=false; //show button for sa or anm/asha login
   getCurrentDate() {
     // return DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now());
     return DateFormat('yyyy/MM/dd').format(DateTime.now());

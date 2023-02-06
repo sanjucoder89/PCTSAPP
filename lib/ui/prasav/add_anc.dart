@@ -415,6 +415,7 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
 
     if(widget.PreviousTT1Date.isNotEmpty){
       _isTT1SelectedToggle(false);
+      _isTTBSelectedToggle(false);
     }
     if(widget.PreviousTT2Date.isNotEmpty){
       _isTT2SelectedToggle(false);
@@ -423,6 +424,8 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
       _isTT1SelectedToggle(false);
       _isTT2SelectedToggle(false);
     }
+
+
     if(widget.anc_date.isNotEmpty){
 
     }
@@ -431,6 +434,7 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
       setState(() {
         _mahilaHeightController.text="";
         _mahilaHeightEnabledDisabled=true;
+        _showHideMahilaHeightView=true;
       });
     }else{
       setState(() {
@@ -7803,7 +7807,7 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
 
             //print('current exptd date: ${expectedParsedDate}');//2021-01-17 00:00:00.000
             final exptedDate_281 = expectedParsedDate.add(const Duration(days: 281));
-            //print('after exptd date: ${exptedDate_281}');//2021-10-25 00:00:00.000
+            print('after exptd date: ${exptedDate_281}');//2021-10-25 00:00:00.000
             if (selectedParsedDate.compareTo(exptedDate_281) > 0) {
               // print('greater date');
               _showErrorPopup(Strings.please_select_before_date,Colors.black);
@@ -7936,13 +7940,13 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
 
               //print('current exptd date: ${expectedParsedDate}');
               final exptedDate_281 = expectedParsedDate.add(const Duration(days: 281));
-              //print('after exptd date: ${exptedDate_281}');
+              print('after exptd date: ${exptedDate_281}');
               if (selectedParsedDate.compareTo(exptedDate_281) > 0) {
                 // print('greater date');
                 _showErrorPopup(Strings.please_select_before_date,Colors.black);
               }else if(widget.anc_date.toString().isNotEmpty){
                 // print('lessthan date');
-                print('checkANCDate ${widget.anc_date}');
+               // print('checkANCDate ${widget.anc_date}');
                 /*var selectedParsedDate = DateTime.parse(formattedDate4.toString());
                 var ancParsedDate = DateTime.parse(getConvertRegDateFormat(widget.anc_date));
                 print('current anc date: ${ancParsedDate}');

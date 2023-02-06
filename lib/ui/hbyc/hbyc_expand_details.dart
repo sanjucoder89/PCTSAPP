@@ -820,7 +820,7 @@ class _HBYCExpandDetails extends State<HBYCExpandDetails> {
                       visible: _showHideAddANCButtonView,
                       child: GestureDetector(
                         onTap: (){
-                          if(preferences.getString("AppRoleID") == "31" || preferences.getString("AppRoleID") == "32" || preferences.getString("AppRoleID") == "33"){
+                         // if(preferences.getString("AppRoleID") == "31" || preferences.getString("AppRoleID") == "32" || preferences.getString("AppRoleID") == "33"){
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -838,7 +838,7 @@ class _HBYCExpandDetails extends State<HBYCExpandDetails> {
                             ).then((value){setState(() {
                               hbycDetailsAPI(widget.infantId);
                             });});
-                          }
+                          //}
                         },
                         child: Container(
                             height: 35,

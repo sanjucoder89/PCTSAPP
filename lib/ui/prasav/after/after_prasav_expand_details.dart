@@ -817,7 +817,7 @@ class _AfterPrasavExpandDetails extends State<AfterPrasavExpandDetails> {
                         visible: _showHideAddANCButtonView,
                         child: GestureDetector(
                           onTap: (){
-                            if(preferences.getString("AppRoleID") == "31" || preferences.getString("AppRoleID") == "32" || preferences.getString("AppRoleID") == "33"){
+                            //if(preferences.getString("AppRoleID") == "31" || preferences.getString("AppRoleID") == "32" || preferences.getString("AppRoleID") == "33"){
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -866,7 +866,7 @@ class _AfterPrasavExpandDetails extends State<AfterPrasavExpandDetails> {
                               ).then((value){setState(() {
                                 pcnDetailsAPI(widget.ancregid);
                               });});
-                            }
+                           // }
                           },
                           child: Container(
                               height: 35,

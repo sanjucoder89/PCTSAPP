@@ -860,7 +860,7 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                       visible: _showHideAddFirstHRPButtonView,
                       child: GestureDetector(
                         onTap: (){
-                          if(preferences.getString("AppRoleID") == "31" || preferences.getString("AppRoleID") == "32" || preferences.getString("AppRoleID") == "33"){
+                         // if(preferences.getString("AppRoleID") == "31" || preferences.getString("AppRoleID") == "32" || preferences.getString("AppRoleID") == "33"){
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -877,7 +877,7 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                             ).then((value){setState(() {
                               hbycDetailsAPI(widget.ANCRegID,widget.MotherID);
                             });});
-                          }
+                         // }
                         },
                         child: Container(
                             height: 35,
@@ -926,7 +926,7 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                       visible: _showHideAddSecondHRPButtonView,
                       child: GestureDetector(
                         onTap: (){
-                          if(preferences.getString("AppRoleID") == "31" || preferences.getString("AppRoleID") == "32" || preferences.getString("AppRoleID") == "33"){
+                         // if(preferences.getString("AppRoleID") == "31" || preferences.getString("AppRoleID") == "32" || preferences.getString("AppRoleID") == "33"){
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -943,7 +943,7 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                             ).then((value){setState(() {
                               hbycDetailsAPI(widget.ANCRegID,widget.MotherID);
                             });});
-                          }
+                        //  }
                         },
                         child: Container(
                             height: 35,
@@ -992,7 +992,7 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                       visible: _showHideAddThirdHRPButtonView,
                       child: GestureDetector(
                         onTap: (){
-                          if(preferences.getString("AppRoleID") == "31" || preferences.getString("AppRoleID") == "32" || preferences.getString("AppRoleID") == "33"){
+                          //if(preferences.getString("AppRoleID") == "31" || preferences.getString("AppRoleID") == "32" || preferences.getString("AppRoleID") == "33"){
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -1010,7 +1010,7 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                             ).then((value){setState(() {
                               hbycDetailsAPI(widget.ANCRegID,widget.MotherID);
                             });});
-                          }
+                         // }
                         },
                         child: Container(
                             height: 35,
@@ -1059,7 +1059,7 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                       visible: _showHideAddfourthdHRPButtonView,
                       child: GestureDetector(
                         onTap: (){
-                          if(preferences.getString("AppRoleID") == "31" || preferences.getString("AppRoleID") == "32" || preferences.getString("AppRoleID") == "33"){
+                          //if(preferences.getString("AppRoleID") == "31" || preferences.getString("AppRoleID") == "32" || preferences.getString("AppRoleID") == "33"){
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -1076,7 +1076,7 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                             ).then((value){setState(() {
                               hbycDetailsAPI(widget.ANCRegID,widget.MotherID);
                             });});
-                          }
+                         // }
                         },
                         child: Container(
                             height: 35,
@@ -1125,7 +1125,7 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                       visible: _showHideAddFifthHRPButtonView,
                       child: GestureDetector(
                         onTap: (){
-                          if(preferences.getString("AppRoleID") == "31" || preferences.getString("AppRoleID") == "32" || preferences.getString("AppRoleID") == "33"){
+                        //  if(preferences.getString("AppRoleID") == "31" || preferences.getString("AppRoleID") == "32" || preferences.getString("AppRoleID") == "33"){
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -1142,7 +1142,7 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
                             ).then((value){setState(() {
                               hbycDetailsAPI(widget.ANCRegID,widget.MotherID);
                             });});
-                          }
+                          //}
                         },
                         child: Container(
                             height: 35,

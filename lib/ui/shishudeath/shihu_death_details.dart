@@ -251,6 +251,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
   List<CustomAashaList> custom_aasha_list = [];
   List aasha_response_list = [];
   bool _isItAsha=true;
+  bool _ShowHideADDNewVivranView=false; //show button for sa or anm/asha login
   bool _isAshaEntryORANMEntry=false;//false= anm , true =asha
   var _checkPlatform="0";
   Future<String> getAashaListAPI(String _RegUnitid,String _villageautoid) async {
@@ -572,6 +573,13 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
   void setPreviousData() {
 
     setState(() {
+
+      if(preferences.getString("AppRoleID") == "31" || preferences.getString("AppRoleID") == "32" || preferences.getString("AppRoleID") == "33"){
+        _ShowHideADDNewVivranView = true;
+      }else{
+        _ShowHideADDNewVivranView=false;
+      }
+
       if(response_list[0]['DeathDate'].toString() != "null"){
         if(response_list[0]['Status'].toString() == "2"){
           if(response_list[0]['flag'].toString() == "0"){
@@ -3016,7 +3024,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
             ),
 
 
-            _isAshaEntryORANMEntry == false
+            _ShowHideADDNewVivranView == true ? _isAshaEntryORANMEntry == false
                 ?
             GestureDetector(
               onTap: (){
@@ -3051,6 +3059,8 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
                 ),
               ),
             )
+                :
+            Container()
                 :
             Container()
 

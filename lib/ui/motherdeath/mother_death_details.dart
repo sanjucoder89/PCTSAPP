@@ -2715,6 +2715,8 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
             SizedBox(
               height: 20,
             ),
+            _ShowHideADDNewVivranView == true
+                ?
             Visibility(
                 visible: finalButtonView,
                 child: GestureDetector(
@@ -2748,14 +2750,16 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
                   ),
                 ),
               ),
-            )),
+            ))
+              :
+            Container(),
           ],
         ),
       ),
 
     );
   }
-
+  bool _ShowHideADDNewVivranView=false; //show button for sa or anm/asha login
   var finalButtonText=Strings.vivran_save_krai;
   int getLength() {
     if(custom_tikai_list.isNotEmpty){
@@ -3665,6 +3669,13 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
   void setPreviousData() {
 
    setState(() {
+
+     if(preferences.getString("AppRoleID") == "31" || preferences.getString("AppRoleID") == "32" || preferences.getString("AppRoleID") == "33"){
+       _ShowHideADDNewVivranView = true;
+     }else{
+       _ShowHideADDNewVivranView=false;
+     }
+
      getDeathReasonListAPI();
 
      dreasonId=response_list[0]['ParentReasonId'].toString() == "null" ? "0" : response_list[0]['ParentReasonId'].toString();

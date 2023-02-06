@@ -348,6 +348,12 @@ class _AddHRPScreenState extends State<AddHRPScreen> {
         print('aashaId ${aashaId}');
       }
       EasyLoading.dismiss();
+
+      if(preferences.getString("AppRoleID") == "31" || preferences.getString("AppRoleID") == "32" || preferences.getString("AppRoleID") == "33"){
+        _ShowHideADDNewVivranView = true;
+      }else{
+        _ShowHideADDNewVivranView=false;
+      }
       addPlacesReferList();
     });
     print('response:${apiResponse.message}');
@@ -1438,6 +1444,8 @@ class _AddHRPScreenState extends State<AddHRPScreen> {
                 ],
               ),
             ),)),
+            _ShowHideADDNewVivranView == true
+                ?
             GestureDetector(
               onTap: (){
                 postHbycRequest();
@@ -1469,11 +1477,14 @@ class _AddHRPScreenState extends State<AddHRPScreen> {
                 ),
               ),
             )
+                :
+            Container()
           ],
         ),
       ),
     );
   }
+  bool _ShowHideADDNewVivranView=false; //show button for sa or anm/asha login
   var _Media="";
   var _UpdateUserNo="";
   postHbycRequest() async {

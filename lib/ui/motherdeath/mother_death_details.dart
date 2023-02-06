@@ -350,12 +350,13 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
     return "Success";
   }
 
-  var _Flag="0";//0 deafult, 1= for fave, 2= update
-
+  var _Flag="0";//0 deafult, 1= for save, 2= update
+  var isChanged=false;
   Future<String> getDeathSubReasonListAPI(String _parentReasonId,String _type) async {
 
     preferences = await SharedPreferences.getInstance();
-
+    print('_parentReasonId $_parentReasonId');
+    print('_type $_type');
     var response = await post(Uri.parse(_get_death_sub_reason_list_url)
         //ParentReasonId:69
       // Flag:0
@@ -384,21 +385,31 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
               DeathType: dsubreason_response_list[i]['DeathType'].toString()
           ));
         }
-        if(widget.CheckWhere == "post"){
-          if(_parentReasonId == "0"){
+        print('checkisChanged $isChanged');
+        if(isChanged == false){
+          if(response_list[0]['EntryDate'].toString() == "null"){
             dsubreasonId = custom_subreason_list[0].ReasonID.toString();
           }else{
+            isChanged=true;
+            print('assignIsChanged $isChanged');
             dsubreasonId=response_list[0]['ReasonID'].toString() == "null" ? "0" : response_list[0]['ReasonID'].toString();
           }
-        }else{
-          if(_type == "post"){
-            dsubreasonId =  custom_subreason_list[0].ReasonID.toString();
+          /*if(widget.CheckWhere == "post"){
+            if(_parentReasonId == "0"){
+              dsubreasonId = custom_subreason_list[0].ReasonID.toString();
+            }else{
+              dsubreasonId=response_list[0]['ReasonID'].toString() == "null" ? "0" : response_list[0]['ReasonID'].toString();
+            }
           }else{
-            dsubreasonId = response_list[0]['ReasonID'].toString() == "null" ? "0" : response_list[0]['ReasonID'].toString();
-          }
-
+            if(_type == "post"){
+              dsubreasonId =  custom_subreason_list[0].ReasonID.toString();
+            }else{
+              dsubreasonId = response_list[0]['ReasonID'].toString() == "null" ? "0" : response_list[0]['ReasonID'].toString();
+            }
+          }*/
+        }else{
+          dsubreasonId = custom_subreason_list[0].ReasonID.toString();
         }
-
       } else {
         _showErrorPopup(apiResponse.message.toString(), ColorConstants.AppColorPrimary);
       }
@@ -1826,7 +1837,19 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
                           setState(() {
                             dreasonId = newVal!;
                             print('dreasonId:$dreasonId');
-                            getDeathSubReasonListAPI(dreasonId,"post");
+                            print('_EntryDeath:$_EntryDeath');
+                            if(_EntryDeath == "null"){
+                              getDeathSubReasonListAPI(dreasonId,"post");
+                              _Flag="1";
+                              finalButtonText=Strings.vivran_save_krai;
+                            }else{
+                              _Flag="2";
+                              getDeathSubReasonListAPI(dreasonId,"update");
+                            }
+                            if(isChanged == true){
+                              //isChanged=false;
+                              dsubreasonId = custom_subreason_list[0].ReasonID.toString();
+                            }
                           });
                         } : null,
                         value:
@@ -1905,6 +1928,7 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
                           setState(() {
                             dsubreasonId = newVal!;
                             print('dsubreasonId:$dsubreasonId');
+                            isChanged=true;
                           });
                         } : null,
                         value:
@@ -3683,7 +3707,7 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
      }else{
        _Flag="2";
      }
-
+     print('_FlagLast $_Flag');
 
      if(response_list[0]['DeathDate'].toString() != "null"){
        _DeathDeath=response_list[0]['DeathDate'].toString() == "null" ? "0" : response_list[0]['DeathDate'].toString();

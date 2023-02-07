@@ -114,6 +114,9 @@ class _AshaIncentiveState extends State<AshaIncentive> {
   }
 
   String _mobNumberMasking(String number) {
+
+
+
     var newNumber = number;
     for(int i=6; i<number.length;i++){
       newNumber = replaceCharAt(newNumber, i, "*") ;
@@ -326,6 +329,7 @@ class _AshaIncentiveState extends State<AshaIncentive> {
                             Expanded(child: Padding(
                               padding: const EdgeInsets.all(5.0),
                               child: Text('${response_list.length == 0 ? "-" : response_list[0]['Accountno'].toString().length > 0 ? _mobNumberMasking(response_list[0]['Accountno'].toString()) : ""}',
+                              //child: Text('${response_list[0]['Accountno'].toString().length == 0 ? "-" : response_list[0]['Accountno'].toString().substring(0, 2) + "******" + response_list[0]['Accountno'].toString().substring(12, 14)}',
                                 style: TextStyle(fontSize: 14,color:ColorConstants.black,fontWeight: FontWeight.normal),),
                             ))
                           ],

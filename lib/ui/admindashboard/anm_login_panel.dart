@@ -5,6 +5,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../constant/AboutAppDialoge.dart';
 import '../../constant/ApiUrl.dart';
@@ -215,6 +216,10 @@ class _ANMLoginPanelState extends State<ANMLoginPanel> {
 
 
   Future<CHCPHCListData> getCHCPHCCodeListAPI(String _unitCode,String _unitType) async {
+    await EasyLoading.show(
+      status: 'loading...',
+      maskType: EasyLoadingMaskType.black,
+    );
     preferences = await SharedPreferences.getInstance();
     print('CHCUnitCode ${_unitCode}');
     print('CHCUnitType ${_unitType}');
@@ -442,6 +447,16 @@ class _ANMLoginPanelState extends State<ANMLoginPanel> {
     print('response:${apiResponse.message}');
     return GetANMLoginData.fromJson(resBody);
   }
+
+
+  _launchCaller(String _phoneno) async {
+    final Uri launchUri = Uri(
+      scheme: 'tel',
+      path: _phoneno,
+    );
+    await launchUrl(launchUri);
+  }
+
 
   @override
   void initState() {
@@ -1265,8 +1280,6 @@ class _ANMLoginPanelState extends State<ANMLoginPanel> {
               ),
             ),
 
-
-
             Container(
               margin: EdgeInsets.all(10),
               height: 40,
@@ -1279,14 +1292,19 @@ class _ANMLoginPanelState extends State<ANMLoginPanel> {
                     padding: const EdgeInsets.only(left: 5),
                     child: Text('${Strings.call_anm}'),
                   ),),
-                  Expanded(child: Padding(
-                    padding: const EdgeInsets.only(left: 5),
-                    child: Row(
-                      children: [
-                        Text('${_selected_asha_phoneno}',style: TextStyle(color: ColorConstants.AppColorDark,decoration: TextDecoration.underline,),),
-                        SizedBox(width: 5,),
-                        Icon(Icons.local_phone,color: ColorConstants.AppColorDark,size: 20,)
-                      ],
+                  Expanded(child: GestureDetector(
+                    onTap: (){
+                      _launchCaller(_selected_asha_phoneno);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 5),
+                      child: Row(
+                        children: [
+                          Text('${_selected_asha_phoneno}',style: TextStyle(color: ColorConstants.AppColorDark,decoration: TextDecoration.underline,),),
+                          SizedBox(width: 5,),
+                          Icon(Icons.local_phone,color: ColorConstants.AppColorDark,size: 20,)
+                        ],
+                      ),
                     ),
                   ))
                 ],

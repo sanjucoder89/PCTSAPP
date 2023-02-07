@@ -111,6 +111,7 @@ class _SplashState extends State<SplashNew> {
   var _loader=false;
   var _ios_version="";
   var _andr_version="";
+  var AppVersion = 0;
   Future<String> getSaltData() async {
     preferences = await SharedPreferences.getInstance();
     preferences.setString("CheckPlatform", _checkPlatform);
@@ -129,8 +130,7 @@ class _SplashState extends State<SplashNew> {
     var resBody = json.decode(response.body);
     final apiResponse = PostSaltData.fromJson(resBody);
     saltdata = apiResponse.resposeData;
-    var AppVersion = apiResponse.appVersion;
-    // var AppVersion = '1';
+    AppVersion = apiResponse.appVersion!;
 
     bool? Status = apiResponse.status;
     var message = apiResponse.message;
@@ -151,6 +151,7 @@ class _SplashState extends State<SplashNew> {
           });
         }
       } else {
+        _loader=true;
         reLoginDialog();
       }
     }
@@ -236,9 +237,17 @@ class _SplashState extends State<SplashNew> {
                       if(saltvalue.isNotEmpty){
                         var result = await Connectivity().checkConnectivity();
                         if(result == ConnectivityResult.mobile) {
-                          _openMyPage();
+                          if(AppVersion == 0){
+                            _openMyPage();
+                          }else{
+                            reLoginDialog();
+                          }
                         }else if(result == ConnectivityResult.wifi) {
-                          _openMyPage();
+                          if(AppVersion == 0){
+                            _openMyPage();
+                          }else{
+                            reLoginDialog();
+                          }
                         }else if(result == ConnectivityResult.none){
                           print("No internet connection");
                           showInternetDialoge();

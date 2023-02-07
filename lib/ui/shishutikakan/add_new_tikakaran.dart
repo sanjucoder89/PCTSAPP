@@ -2224,8 +2224,6 @@ class _AddNewTikakarnScreenState extends State<AddNewTikakarnScreen> {
       IMMDate_post=_tikaYYYYdateController.text.toString()+"/"+_tikaMMdateController.text.toString()+"/"+_tikaDDdateController.text.toString();
     }
 
-
-
     print('UpdateRequest=>\n'
         'InfantID:${widget.infantId+
         "ASHAAutoid:"+aashaId+

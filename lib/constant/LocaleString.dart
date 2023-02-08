@@ -174,6 +174,7 @@ class Strings {
   static const String choosepncDate = "पीएनसी की तिथि चुनें ";
   static const String kya_shishu_is_live = "क्या शिशु जीवित है चुनें";
   static const String enter_shishu_weight = "शिशु का वजन डालें ";
+  static const String enter_correct_shishu_weight = "शिशु का सही वजन डालें ";
   static const String choose_danger_symp_in_shishu = "शिशु में खतरे वाले लक्षण चुनें ";
 
   static const String PPH = "पी.पी.एच.";
@@ -347,6 +348,7 @@ class Strings {
   static const String enter_name = "कृप्या नाम लिखें";
   static const String owner_mo_num = "मुखिया का मोबाइल न.";
   static const String enter_owner_mo_num = "मोबाइल नं दर्ज करें ";
+  static const String enter_correct_mo_num = "मोबाइल नं सही दर्ज करें ";
   static const String enter_correct_mob_num = "कृपया सही मोबाइल नं दर्ज करें ";
   static const String enter_child_date = "कृप्या शिशु की मृत्यु की दिनांक डालें";
 
@@ -500,6 +502,7 @@ class Strings {
   static const String enter_weight = "कृपया वजन डालें ";
   static const String enter_weight_child = "शिशु का वजन डालें ";
   static const String enter_weight_child2 = "शिशु का वजन दर्ज करें ";
+  static const String enter_correct_weight_child2 = "शिशु का सही वजन दर्ज करें ";
 
   static const String child_weight_notmorethn_9kg = "शिशु का वजन 9 kg से ज्यादा नहीं होना चाहिए ";
 

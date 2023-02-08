@@ -3663,6 +3663,8 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
       _showErrorPopup(Strings.is_bcg_apply,ColorConstants.AppColorPrimary);
     }else if(_enterChildWeight.text.toString().isEmpty){
       _showErrorPopup(Strings.enter_weight_child2,ColorConstants.AppColorPrimary);
+    }else if(_enterChildWeight.text.toString() == "0" || int.parse(_enterChildWeight.text.toString()) < 0){
+      _showErrorPopup(Strings.enter_correct_weight_child2,ColorConstants.AppColorPrimary);
     }else if(double.parse(_enterChildWeight.text.toString()) > 9.0 ){
       _showErrorPopup(Strings.child_weight_notmorethn_9kg,ColorConstants.AppColorPrimary);
     }else if(_mukhiyaNameController.text.toString().isEmpty){
@@ -3671,6 +3673,8 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
       _showErrorPopup(Strings.enter_correct_owner_name,ColorConstants.AppColorPrimary);
     }else if(_mukhiyaMobNoController.text.toString().isEmpty){
       _showErrorPopup(Strings.enter_owner_mo_num,ColorConstants.AppColorPrimary);
+    }else if(_mukhiyaMobNoController.text.toString() == "0" || int.parse(_mukhiyaMobNoController.text.toString()) < 0){
+      _showErrorPopup(Strings.enter_correct_mo_num,ColorConstants.AppColorPrimary);
     }/*else if(!_mukhiyaMobNoController.text.toString().contains(new RegExp(pattern))){
       _showErrorPopup(Strings.enter_correct_mob_num,ColorConstants.AppColorPrimary);
     }*/else if(_deathDDdateController.text.isEmpty){

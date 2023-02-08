@@ -117,6 +117,7 @@ class _SplashState extends State<SplashNew> {
     preferences.setString("CheckPlatform", _checkPlatform);
     //preferences.setString("Appversion", packageName); //uncomment line when app is going for live
     preferences.setString("Appversion", "5.5.5.22");
+    //preferences.setString("Appversion", "5.7.12.22");//play store version
     deviceId = await PlatformDeviceId.getDeviceId;
     preferences.setString("deviceId", deviceId);
     Token = uuid.v4();

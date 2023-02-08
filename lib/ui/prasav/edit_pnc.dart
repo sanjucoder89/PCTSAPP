@@ -4910,14 +4910,24 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
       _showErrorPopup(Strings.kya_shishu_is_live,Colors.black);
     }else if(_shishuWeightController.text.toString().isEmpty && _shishuWgtEnDisable == true){
       _showErrorPopup(Strings.enter_shishu_weight,Colors.black);
+    }else if((_shishuWeightController.text.toString() == "0" && _shishuWgtEnDisable == true) || int.parse(_shishuWeightController.text.toString()) < 0 && _shishuWgtEnDisable == true){
+      _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
     }else if(_shishuWeight2Controller.text.toString().isEmpty && _shishuWgt2EnDisable == true){
       _showErrorPopup(Strings.enter_shishu_weight,Colors.black);
+    }else if((_shishuWeight2Controller.text.toString() == "0" && _shishuWgt2EnDisable == true) || int.parse(_shishuWeight2Controller.text.toString()) < 0 && _shishuWgt2EnDisable == true){
+      _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
     }else if(_shishuWeight3Controller.text.toString().isEmpty && _shishuWgt3EnDisable == true){
       _showErrorPopup(Strings.enter_shishu_weight,Colors.black);
+    }else if((_shishuWeight3Controller.text.toString() == "0" && _shishuWgt3EnDisable == true) || int.parse(_shishuWeight3Controller.text.toString()) < 0 && _shishuWgt3EnDisable == true){
+      _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
     }else if(_shishuWeight4Controller.text.toString().isEmpty && _shishuWgt4EnDisable == true){
       _showErrorPopup(Strings.enter_shishu_weight,Colors.black);
+    }else if((_shishuWeight4Controller.text.toString() == "0" && _shishuWgt4EnDisable == true) || int.parse(_shishuWeight4Controller.text.toString()) < 0 && _shishuWgt4EnDisable == true){
+      _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
     }else if(_shishuWeight5Controller.text.toString().isEmpty && _shishuWgt5EnDisable == true){
       _showErrorPopup(Strings.enter_shishu_weight,Colors.black);
+    }else if((_shishuWeight5Controller.text.toString() == "0" && _shishuWgt5EnDisable == true) || int.parse(_shishuWeight5Controller.text.toString()) < 0 && _shishuWgt5EnDisable == true){
+      _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
     }else if(_ShowHideShishuEntryView1 == true && rdChildIsLive1 == "0" && rdChildIsLiveEntry1 == true){
       _showErrorPopup(Strings.pncDetailUpdate,Colors.black);
     }else if(_ShowHideShishuEntryView2 == true && rdChildIsLive2 == "0" && rdChildIsLiveEntry2 == true){

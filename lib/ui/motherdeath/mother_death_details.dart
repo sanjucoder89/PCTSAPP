@@ -1368,7 +1368,7 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
                         iconSize: 15,
                         elevation: 11,
                         //style: TextStyle(color: Colors.black),
-                        style: Theme.of(context).textTheme.bodyText1,
+                        //style: Theme.of(context).textTheme.bodyText1,
                         isExpanded: true,
                         // hint: new Text("Select State"),
                         items: custom_aasha_list.map((item) {
@@ -1380,7 +1380,7 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
                                         item.ASHAName.toString(),
                                         //Names that the api dropdown contains
                                         style: TextStyle(
-                                          fontSize: 12.0,
+                                          fontSize: 14.0,
                                         ),
                                       )),
                                 ],
@@ -1808,7 +1808,7 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
                         iconSize: 15,
                         elevation: 11,
                         //style: TextStyle(color: Colors.black),
-                        style: Theme.of(context).textTheme.bodyText1,
+                        //style: Theme.of(context).textTheme.bodyText1,
                         isExpanded: true,
                         // hint: new Text("Select State"),
                         items: custom_reason_list.map((item) {
@@ -1823,7 +1823,7 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
                                           item.ReasonName.toString(),
                                           //Names that the api dropdown contains
                                           style: TextStyle(
-                                            fontSize: 12.0,
+                                            fontSize: 14.0,
                                           ),
                                         ),
                                       )),
@@ -1900,7 +1900,7 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
                         iconSize: 15,
                         elevation: 11,
                         //style: TextStyle(color: Colors.black),
-                        style: Theme.of(context).textTheme.bodyText1,
+                        //style: Theme.of(context).textTheme.bodyText1,
                         isExpanded: true,
                         // hint: new Text("Select State"),
                         items: custom_subreason_list.map((item) {
@@ -1914,7 +1914,7 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
                                           item.ReasonName.toString(),
                                           //Names that the api dropdown contains
                                           style: TextStyle(
-                                            fontSize: 12.0,
+                                            fontSize: 14.0,
                                           ),
                                         ),
                                       )),
@@ -2127,7 +2127,7 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
                         iconSize: 15,
                         elevation: 11,
                         //style: TextStyle(color: Colors.black),
-                        style: Theme.of(context).textTheme.bodyText1,
+                       // style: Theme.of(context).textTheme.bodyText1,
                         isExpanded: true,
                         // hint: new Text("Select State"),
                         items: death_place_list.map((item) {
@@ -2142,7 +2142,7 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
                                           item.title.toString(),
                                           //Names that the api dropdown contains
                                           style: TextStyle(
-                                            fontSize: 12.0,
+                                            fontSize: 14.0,
                                           ),
                                         ),
                                       )),
@@ -2236,7 +2236,7 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
                                       iconSize: 15,
                                       elevation: 11,
                                       //style: TextStyle(color: Colors.black),
-                                      style: Theme.of(context).textTheme.bodyText1,
+                                      //style: Theme.of(context).textTheme.bodyText1,
                                       isExpanded: true,
                                       // hint: new Text("Select State"),
                                       items: refer_sanstha_list.map((item) {
@@ -2251,7 +2251,7 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
                                                         item.title.toString(),
                                                         //Names that the api dropdown contains
                                                         style: TextStyle(
-                                                          fontSize: 12.0,
+                                                          fontSize: 14.0,
                                                         ),
                                                       ),
                                                     )),
@@ -2356,8 +2356,7 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
                               iconSize: 15,
                               elevation: 11,
                               //style: TextStyle(color: Colors.black),
-                              style:
-                              Theme.of(context).textTheme.bodyText1,
+                             // style: Theme.of(context).textTheme.bodyText1,
                               isExpanded: true,
                               // hint: new Text("Select State"),
                               items: custom_district_list.map((item) {
@@ -2371,7 +2370,7 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
                                               child: Text(item.unitNameHindi.toString(),
                                                 //Names that the api dropdown contains
                                                 style: TextStyle(
-                                                  fontSize: 12.0,
+                                                  fontSize: 140,
                                                 ),
                                               ),
                                             )),
@@ -2450,8 +2449,7 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
                               iconSize: 15,
                               elevation: 11,
                               //style: TextStyle(color: Colors.black),
-                              style:
-                              Theme.of(context).textTheme.bodyText1,
+                             // style: Theme.of(context).textTheme.bodyText1,
                               isExpanded: true,
                               // hint: new Text("Select State"),
                               items: custom_block_list.map((item) {
@@ -2466,7 +2464,7 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
                                                 item.UnitName.toString(),
                                                 //Names that the api dropdown contains
                                                 style: TextStyle(
-                                                  fontSize: 12.0,
+                                                  fontSize: 14.0,
                                                 ),
                                               ),
                                             )),
@@ -2582,8 +2580,7 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
                                 iconSize: 15,
                                 elevation: 11,
                                 //style: TextStyle(color: Colors.black),
-                                style:
-                                Theme.of(context).textTheme.bodyText1,
+                               // style: Theme.of(context).textTheme.bodyText1,
                                 isExpanded: true,
                                 // hint: new Text("Select State"),
                                 items: custom_chcph_list.map((item) {
@@ -2598,7 +2595,7 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
                                                   item.UnitName.toString(),
                                                   //Names that the api dropdown contains
                                                   style: TextStyle(
-                                                    fontSize: 12.0,
+                                                    fontSize: 14.0,
                                                   ),
                                                 ),
                                               )),
@@ -2669,8 +2666,7 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
                               iconSize: 15,
                               elevation: 11,
                               //style: TextStyle(color: Colors.black),
-                              style:
-                              Theme.of(context).textTheme.bodyText1,
+                             // style: Theme.of(context).textTheme.bodyText1,
                               isExpanded: true,
                               // hint: new Text("Select State"),
                               items: custom_upswasthya_list.map((item) {
@@ -2685,7 +2681,7 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
                                                 item.UnitName.toString(),
                                                 //Names that the api dropdown contains
                                                 style: TextStyle(
-                                                  fontSize: 12.0,
+                                                  fontSize: 14.0,
                                                 ),
                                               ),
                                             )),
@@ -2960,6 +2956,7 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
     if(_selectedReferSanstha == "17"){
       _selectedDeathPlace="17";
     }
+    print('LoginUserId ${preferences.getString('UserId').toString()}');
     print('PostRequest=>'
         'LoginUserID:${preferences.getString('UserId').toString()+
         "DeathUnitCode:"+_selectedDeathPlace == "2" ? _postDeathUnitID : "0"+
@@ -2999,8 +2996,7 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
       print('== Interface: ${interface.name} ==');
       for (var addr in interface.addresses) {
         _IPAddress=addr.address;
-        print(
-            'my-ip-address ${addr.address} ${addr.host} ${addr.isLoopback} ${addr.rawAddress} ${addr.type.name}');
+        print('my-ip-address ${addr.address} ${addr.host} ${addr.isLoopback} ${addr.rawAddress} ${addr.type.name}');
       }
     }
 
@@ -3008,7 +3004,7 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
       "LoginUserID":preferences.getString('UserId').toString(),
       "DeathUnitCode":_selectedDeathPlace == "2" ? _postDeathUnitID : "0",
       "motherid":widget.MotherID,
-      "Name":response_list[0]['Name'].toString(),
+      "Name":response_list[0]['Name'].toString().trim(),
       "ReasonID":dsubreasonId != "0" ? dsubreasonId : dreasonId,
       "Age": ageController.text.toString().trim(),
       "DeathDate": _DeathDeath,

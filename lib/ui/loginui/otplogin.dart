@@ -188,10 +188,8 @@ class _OtpLoginPage extends State<OtpLoginPage> {
                           fontWeight: FontWeight.bold,
                         ),
                         length: 4,
-
                         obscureText: true,
                         obscuringCharacter: '*',
-
                         blinkWhenObscuring: true,
                         animationType: AnimationType.fade,
                         validator: (v) {
@@ -323,13 +321,13 @@ class _OtpLoginPage extends State<OtpLoginPage> {
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.all(2.0),
-                        child: Text('पंजीकृत मोबाइल नंबर ',style: TextStyle(color: Colors.red),),
+                        child: Text('पंजीकृत मोबाइल नंबर ',style: TextStyle(color: Colors.red,fontSize: 12),),
                       ),Padding(
                         padding: const EdgeInsets.all(2.0),
-                        child: Text('${widget.Mobileno.substring(0, 2) + "******" + widget.Mobileno.substring(8, 10)}',style: TextStyle(color:ColorConstants.text_green),),
+                        child: Text('${widget.Mobileno.substring(0, 2) + "******" + widget.Mobileno.substring(8, 10)}',style: TextStyle(color:ColorConstants.text_green,fontSize: 12),),
                       ),Padding(
                         padding: const EdgeInsets.all(2.0),
-                        child: Text(' को बदलने के लिए क्लिक करें |',style: TextStyle(color:Colors.red),),
+                        child: Text(' को बदलने के लिए क्लिक करें |',style: TextStyle(color:Colors.red,fontSize: 12),),
                       )
                     ],
                   ),

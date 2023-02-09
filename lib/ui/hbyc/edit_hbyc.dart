@@ -209,6 +209,7 @@ class _EditHBYCFormState extends State<EditHBYCForm> {
   List response_subdata_list= [];
   bool _ShowHideEditableView=false;
   var _checkPlatform="0";
+  bool _isDropDownRefresh=false;
   Future<String> getAashaListAPI() async {
     await EasyLoading.show(
       status: 'loading...',
@@ -456,7 +457,11 @@ class _EditHBYCFormState extends State<EditHBYCForm> {
         //_selectedDistrictUnitCode = custom_district_list[0].unitcode.toString();
         //print('_selectedDistrictUnitCode ${_selectedDistrictUnitCode}');
         //print('disctict.len ${custom_district_list.length}');
-
+       // print('_isDropDownRefresh ${_isDropDownRefresh}');
+        /*if(_isDropDownRefresh == true){
+          _selectedDistrictUnitCode = custom_district_list[0].unitcode.toString();
+          print('_selectedDistrictUnitCode ${_selectedDistrictUnitCode}');
+        }else{*/
         if(widget.ReferUnitcode.isNotEmpty){
           setState(() {
             print('widget.ReferUnitcode ${widget.ReferUnitcode}');
@@ -476,20 +481,24 @@ class _EditHBYCFormState extends State<EditHBYCForm> {
             }
           });
         }
-
+        //}
+        if(_isDropDownRefresh == true){
+          _isDropDownRefresh=false;
+          _selectedBlockUnitCode = custom_block_list[0].unitcode.toString();
+          _selectedDistrictUnitCode = custom_district_list[0].unitcode.toString();
+          _selectedSubUnitCode=custom_sub_list[0].UnitCode.toString();
+          print('_selectedDistrictUnitCode ${_selectedBlockUnitCode}');
+        }
       } else {
         custom_district_list.clear();
         print('disctict.len ${custom_district_list.length}');
       }
-
-
-
       EasyLoading.dismiss();
     });
     print('response:${apiResponse.message}');
     return GetDistrictListData.fromJson(resBody);
   }
-
+  bool _isBlockChanged=false;
   Future<GetBlockListData> getBlockListAPI(String refUnitType,String refUnitCode) async {
 
     await EasyLoading.show(
@@ -519,10 +528,7 @@ class _EditHBYCFormState extends State<EditHBYCForm> {
         for (int i = 0; i < response_block_list.length; i++) {
           custom_block_list.add(CustomBlockCodeList(unitcode: resBody['ResposeData'][i]['unitcode'],unitNameHindi: resBody['ResposeData'][i]['unitNameHindi']));
         }
-        _selectedBlockUnitCode = custom_block_list[0].unitcode.toString();
-        print('_selectedDistrictUnitCode ${_selectedBlockUnitCode}');
         print('block.len ${custom_block_list.length}');
-
         for(int i=0 ;i<custom_placesrefer_list.length; i++){
           if(_selectedPlacesReferCode == "10" || _selectedPlacesReferCode == "9" || _selectedPlacesReferCode == "8"){
             if(_selectedPlacesReferCode == custom_placesrefer_list[i].code.toString()){
@@ -535,21 +541,35 @@ class _EditHBYCFormState extends State<EditHBYCForm> {
           }
         }
         print('runicode ${widget.ReferUnitcode}');
-        if(widget.ReferUnitcode != "null"){
-          setState(() {
-            for (int i = 0; i < response_block_list.length; i++) {
-              if(widget.ReferUnitcode.substring(0, 6) == resBody['ResposeData'][i]['unitcode'].substring(0, 6)){
-                print('insideForLoop ${resBody['ResposeData'][i]['unitNameHindi']}');
-                _selectedBlockUnitCode = resBody['ResposeData'][i]['unitcode'].toString();
-                print('_selectedBlockUnitCodeater ${_selectedBlockUnitCode}');
-                _ReferUnitCode=_selectedBlockUnitCode;
-                getSubDataListAPI(_selectedPlacesReferCode,_ReferUnitCode);
-                break;
-              }
+        print('_isDropDownRefresh_runicode ${_isDropDownRefresh}');
+        print('_isBlockChanged ${_isBlockChanged}');
+        if(_isBlockChanged == true){
+          _isBlockChanged=false;
+          _selectedBlockUnitCode = custom_block_list[0].unitcode.toString();
+          print('_selectedDistrictUnitCode ${_selectedBlockUnitCode}');
+        }else {
+          if (_isDropDownRefresh == true) {
+            _selectedBlockUnitCode = custom_block_list[0].unitcode.toString();
+            print('_selectedDistrictUnitCode ${_selectedBlockUnitCode}');
+          } else {
+            if (widget.ReferUnitcode != "null") {
+              setState(() {
+                for (int i = 0; i < response_block_list.length; i++) {
+                  if (widget.ReferUnitcode.substring(0, 6) == resBody['ResposeData'][i]['unitcode'].substring(0, 6)) {
+                    print('insideForLoop ${resBody['ResposeData'][i]['unitNameHindi']}');
+                    _selectedBlockUnitCode = resBody['ResposeData'][i]['unitcode'].toString();
+                    print('_selectedBlockUnitCodeater ${_selectedBlockUnitCode}');
+                    _ReferUnitCode = _selectedBlockUnitCode;
+                    _isDropDownRefresh = true;
+                    _isBlockChanged=true;
+                    getSubDataListAPI(_selectedPlacesReferCode, _ReferUnitCode);
+                    break;
+                  }
+                }
+              });
             }
-          });
+          }
         }
-
       } else {
         custom_block_list.clear();
         print('block.len ${custom_block_list.length}');
@@ -658,8 +678,6 @@ class _EditHBYCFormState extends State<EditHBYCForm> {
       _showErrorPopup(Strings.choose_correct_visit_schedule,ColorConstants.AppColorPrimary);
     }*/else if(_hbycPostDate.isEmpty){
       _showErrorPopup(Strings.choose_visit_date,ColorConstants.AppColorPrimary);
-    }else if(_shishuKadController.text.toString().isEmpty){
-      _showErrorPopup(Strings.enter_height_incm,ColorConstants.AppColorPrimary);
     }else if(_orsPostData == "0"){
       _showErrorPopup(Strings.choose_ors_packet,ColorConstants.AppColorPrimary);
     }else if(_ifaPostData == "0"){
@@ -674,8 +692,14 @@ class _EditHBYCFormState extends State<EditHBYCForm> {
       _showErrorPopup(Strings.choose_refer_type,ColorConstants.AppColorPrimary);
     }else if((_selectedPlacesReferCode == "10" || _selectedPlacesReferCode == "9" || _selectedPlacesReferCode == "8") && (sub_heading == "" || sub_heading == "चुनें" || _selectedSubUnitCode == "0")){
       _showErrorPopup("कृपया "+sub_heading +" चुनें!",ColorConstants.AppColorPrimary);
-    }else if(_shishuWeightController.text.toString() == "0" ||  int.parse(_shishuWeightController.text.toString()) < 0){
+    }else if(_shishuWeightController.text.toString().isEmpty){
       _showErrorPopup(Strings.enter_correct_weight,ColorConstants.AppColorPrimary);
+    }else if(_shishuWeightController.text.toString() == "0" ||  double.parse(_shishuWeightController.text.toString()) < 0){
+      _showErrorPopup(Strings.enter_correct_weight,ColorConstants.AppColorPrimary);
+    }else if(_shishuKadController.text.toString().isEmpty){
+      _showErrorPopup(Strings.enter_height_incm,ColorConstants.AppColorPrimary);
+    }else if(_shishuKadController.text.toString() == "0" ||  double.parse(_shishuKadController.text.toString()) < 0){
+      _showErrorPopup(Strings.enter_height_incm,ColorConstants.AppColorPrimary);
     }else{
       if(_shishuWeightController.text.toString().trim().isEmpty){
         _weightPostData="0";
@@ -2189,8 +2213,8 @@ class _EditHBYCFormState extends State<EditHBYCForm> {
                                              setState(() {
                                                _selectedPlacesReferCode = newVal!;
                                                print('refercode:$_selectedPlacesReferCode');
-
-
+                                               _isDropDownRefresh=true;
+                                               _isBlockChanged=true;
                                                if(_selectedPlacesReferCode == "13" ||_selectedPlacesReferCode == "6" ||_selectedPlacesReferCode == "15" ||_selectedPlacesReferCode == "7" || _selectedPlacesReferCode == "5"){
                                                  _changeBlockTitle=Strings.sanstha_type;
                                                }else{
@@ -2209,6 +2233,7 @@ class _EditHBYCFormState extends State<EditHBYCForm> {
                                                  }
                                                }
                                                getDistrictListAPI("3");
+
                                              });
                                            },
                                            value: _selectedPlacesReferCode, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
@@ -2397,12 +2422,13 @@ class _EditHBYCFormState extends State<EditHBYCForm> {
                                              setState(() {
                                                _selectedBlockUnitCode = newVal!;
                                                print('blockcode:$_selectedBlockUnitCode');
+                                               _isBlockChanged=true;
+                                               _isDropDownRefresh=true;//that mean first time block value selected,now value will be reset if refer jila value changed
                                                _ReferUnitCode=_selectedBlockUnitCode;
                                                getSubDataListAPI(_selectedPlacesReferCode,_ReferUnitCode);
                                              });
                                            },
-                                           value:
-                                           _selectedBlockUnitCode, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
+                                           value: _selectedBlockUnitCode, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
                                          ),
                                        ),
                                      )
@@ -2495,7 +2521,7 @@ class _EditHBYCFormState extends State<EditHBYCForm> {
                                                  _selectedSubUnitCode = newVal!;
                                                  _ReferUnitCode=_selectedSubUnitCode;
                                                  print('_selectedSubUnitCode:$_selectedSubUnitCode');
-
+                                                 _isDropDownRefresh=true;
                                                });
                                              },
                                              value: _selectedSubUnitCode, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)

@@ -1379,6 +1379,7 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
     getAashaListAPI();
     addPlacesReferList();
     getHelpDesk();
+    getTreatmentListAPI();
   }
   var _latitude="0.0";
   var _longitude="0.0";

@@ -402,8 +402,6 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
       _showErrorPopup(Strings.choose_correct_visit_schedule,ColorConstants.AppColorPrimary);
     }else if(_hbycPostDate.isEmpty){
       _showErrorPopup(Strings.choose_visit_date,ColorConstants.AppColorPrimary);
-    }else if(_shishuKadController.text.toString().isEmpty){
-      _showErrorPopup(Strings.enter_height_incm,ColorConstants.AppColorPrimary);
     }else if(_orsPostData == "0"){
       _showErrorPopup(Strings.choose_ors_packet,ColorConstants.AppColorPrimary);
     }else if(_ifaPostData == "0"){
@@ -426,8 +424,14 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
       _showErrorPopup(Strings.choose_refer_type,ColorConstants.AppColorPrimary);
     }else if((_selectedPlacesReferCode == "10" || _selectedPlacesReferCode == "9" || _selectedPlacesReferCode == "8") && (sub_heading == "" || sub_heading =="चुनें" || _selectedSubUnitCode == "0")){
       _showErrorPopup("कृपया "+sub_heading +" चुनें!",ColorConstants.AppColorPrimary);
-    }else if(_shishuWeightController.text.toString() == "0" ||  int.parse(_shishuWeightController.text.toString()) < 0){
+    }else if(_shishuWeightController.text.toString().isEmpty){
       _showErrorPopup(Strings.enter_correct_weight,ColorConstants.AppColorPrimary);
+    }else if(_shishuWeightController.text.toString() == "0" ||  double.parse(_shishuWeightController.text.toString()) < 0){
+      _showErrorPopup(Strings.enter_correct_weight,ColorConstants.AppColorPrimary);
+    }else if(_shishuKadController.text.toString().isEmpty){
+      _showErrorPopup(Strings.enter_height_incm,ColorConstants.AppColorPrimary);
+    }else if(_shishuKadController.text.toString() == "0" ||  double.parse(_shishuKadController.text.toString()) < 0){
+      _showErrorPopup(Strings.enter_height_incm,ColorConstants.AppColorPrimary);
     }else{
       if(_shishuWeightController.text.toString().trim().isEmpty){
         _weightPostData="0";
@@ -2009,6 +2013,8 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
                                                if(_isDropDownRefresh == true){
                                                  _isDropDownRefresh=false;
                                                  _selectedBlockUnitCode = custom_block_list[0].unitcode.toString();
+                                                 _selectedDistrictUnitCode = custom_district_list[0].unitcode.toString();
+                                                 _selectedSubUnitCode=custom_sub_list[0].UnitCode.toString();
                                                  print('_selectedDistrictUnitCode ${_selectedBlockUnitCode}');
                                                }
                                              });

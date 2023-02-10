@@ -516,57 +516,6 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
               InfantID:response_list5[i]['InfantID'].toString(),
               Status:response_list5[i]['Status'].toString()));
         }
-
-        print('custom_childnam.len ${custom_childname_list.length}');
-        if(custom_childname_list.length > 0){
-          if (custom_childname_list[0].ChildName.toString().isNotEmpty == "" || custom_childname_list[0].ChildName.toString() != "null") {
-            _shishuNameController.text = custom_childname_list[0].ChildName.toString();
-            _shishuEnDisable=false;
-          }else if(custom_childname_list[1].ChildName.toString().isNotEmpty == "" || custom_childname_list[1].ChildName.toString() != "null"){
-            _shishuNameController.text = custom_childname_list[0].ChildName.toString();
-            _shishuEnDisable=false;
-
-            _shishu2NameController.text = custom_childname_list[1].ChildName.toString();
-            _shishu2EnDisable=false;
-          }else if(custom_childname_list[2].ChildName.toString().isNotEmpty == "" || custom_childname_list[2].ChildName.toString() != "null"){
-            _shishuNameController.text = custom_childname_list[0].ChildName.toString();
-            _shishuEnDisable=false;
-
-            _shishu2NameController.text = custom_childname_list[1].ChildName.toString();
-            _shishu2EnDisable=false;
-
-            _shishu3NameController.text = custom_childname_list[2].ChildName.toString();
-            _shishu3EnDisable=false;
-          }else if(custom_childname_list[3].ChildName.toString().isNotEmpty == "" || custom_childname_list[3].ChildName.toString() != "null"){
-            _shishuNameController.text = custom_childname_list[0].ChildName.toString();
-            _shishuEnDisable=false;
-
-            _shishu2NameController.text = custom_childname_list[1].ChildName.toString();
-            _shishu2EnDisable=false;
-
-            _shishu3NameController.text = custom_childname_list[2].ChildName.toString();
-            _shishu3EnDisable=false;
-
-            _shishu4NameController.text = custom_childname_list[3].ChildName.toString();
-            _shishu4EnDisable=false;
-          }else if(custom_childname_list[4].ChildName.toString().isNotEmpty == "" || custom_childname_list[4].ChildName.toString() != "null"){
-            _shishuNameController.text = custom_childname_list[0].ChildName.toString();
-            _shishuEnDisable=false;
-
-            _shishu2NameController.text = custom_childname_list[1].ChildName.toString();
-            _shishu2EnDisable=false;
-
-            _shishu3NameController.text = custom_childname_list[2].ChildName.toString();
-            _shishu3EnDisable=false;
-
-            _shishu4NameController.text = custom_childname_list[3].ChildName.toString();
-            _shishu4EnDisable=false;
-
-            _shishu5NameController.text = custom_childname_list[4].ChildName.toString();
-            _shishu5EnDisable=false;
-          }
-        }
-
         if(custom_childname_list.length == 1) {
           if (custom_childname_list[0].InfantID
               .toString()
@@ -874,6 +823,68 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
           _ShowHideShishuEntryView4=true;
           _ShowHideShishuEntryView5=true;
         }
+
+
+        /*
+        * Enable Disable Child Name Fields
+        * */
+        if(custom_childname_list.length == 1) {
+          if (custom_childname_list[0].ChildName.toString().isNotEmpty) {
+            _shishuEnDisable=false;
+
+            _shishuNameController.text = custom_childname_list[0].ChildName.toString();
+          }else{
+            _shishuEnDisable=true;
+          }
+        }
+        if(custom_childname_list.length == 2) {
+          if (custom_childname_list[1].ChildName.toString().isNotEmpty) {
+            _shishu2EnDisable=false;
+
+            _shishuNameController.text = custom_childname_list[0].ChildName.toString();
+            _shishu2NameController.text = custom_childname_list[1].ChildName.toString();
+          }else{
+            _shishu2EnDisable=true;
+          }
+        }
+
+        if(custom_childname_list.length == 3) {
+          if (custom_childname_list[2].ChildName.toString().isNotEmpty) {
+            _shishu3EnDisable=false;
+
+            _shishuNameController.text = custom_childname_list[0].ChildName.toString();
+            _shishu2NameController.text = custom_childname_list[1].ChildName.toString();
+            _shishu3NameController.text = custom_childname_list[2].ChildName.toString();
+          }else{
+            _shishu3EnDisable=true;
+          }
+        }
+
+        if(custom_childname_list.length == 4) {
+          if (custom_childname_list[3].ChildName.toString().isNotEmpty) {
+            _shishu4EnDisable=false;
+
+            _shishuNameController.text = custom_childname_list[0].ChildName.toString();
+            _shishu2NameController.text = custom_childname_list[1].ChildName.toString();
+            _shishu3NameController.text = custom_childname_list[2].ChildName.toString();
+            _shishu4NameController.text = custom_childname_list[3].ChildName.toString();
+          }else{
+            _shishu4EnDisable=true;
+          }
+        }
+        if(custom_childname_list.length == 5) {
+          if (custom_childname_list[4].ChildName.toString().isNotEmpty) {
+            _shishu5EnDisable=false;
+
+            _shishuNameController.text = custom_childname_list[0].ChildName.toString();
+            _shishu2NameController.text = custom_childname_list[1].ChildName.toString();
+            _shishu3NameController.text = custom_childname_list[2].ChildName.toString();
+            _shishu4NameController.text = custom_childname_list[3].ChildName.toString();
+            _shishu5NameController.text = custom_childname_list[4].ChildName.toString();
+          }else{
+            _shishu5EnDisable=true;
+          }
+        }
       }
     });
     print('response:${apiResponse.message}');
@@ -1048,26 +1059,37 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
        // _shishuWgtEnDisable=true;
         //_shishuCompEnDisable=true;
         _shishuWeightController.text=widget.Child1_Weight;
+      }else{
+        _shishuWgtEnDisable=true;
       }
       if(widget.Child2_Weight.isNotEmpty){
         //_shishuWgt2EnDisable=true;
         //_shishuComp2EnDisable=true;
         _shishuWeight2Controller.text=widget.Child2_Weight;
+      }else{
+        _shishuWgt2EnDisable=true;
+
       }
       if(widget.Child3_Weight.isNotEmpty){
        // _shishuWgt3EnDisable=true;
         //_shishuComp3EnDisable=true;
         _shishuWeight3Controller.text=widget.Child3_Weight;
+      }else{
+        _shishuWgt3EnDisable=true;
       }
       if(widget.Child4_Weight.isNotEmpty){
        // _shishuWgt4EnDisable=true;
         //_shishuComp4EnDisable=true;
         _shishuWeight4Controller.text=widget.Child4_Weight;
+      }else{
+        _shishuWgt4EnDisable=true;
       }
       if(widget.Child5_Weight.isNotEmpty){
         //_shishuWgt5EnDisable=true;
         //_shishuComp5EnDisable=true;
         _shishuWeight5Controller.text=widget.Child5_Weight;
+      }else{
+        _shishuWgt5EnDisable=true;
       }
       setState(() {
         if(widget.Child1_Comp.isNotEmpty){
@@ -2130,7 +2152,12 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                                                   setState(() {
                                                                     _shishuislive = value ?? _shishuislive;
                                                                     rdChildIsLive1="1";
-                                                                    _shishuWgtEnDisable=true;
+                                                                    if(widget.Child1_Weight.isNotEmpty){
+                                                                      _shishuWgtEnDisable=false;
+                                                                    }else{
+                                                                      _shishuWgtEnDisable=true;
+                                                                    }
+                                                                    _shishuWeightController.text=widget.Child1_Weight;
                                                                     if(rdChildIsLive1 == "0"){
                                                                       _ShowHideReferPlacesView=false;
                                                                     }else{
@@ -2173,7 +2200,6 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                                                     }else{
                                                                       _ShowHideReferPlacesView=true;
                                                                     }*/
-
                                                                     FocusScopeNode currentFocus = FocusScope.of(context);
                                                                     if (!currentFocus.hasPrimaryFocus) {
                                                                       currentFocus.focusedChild!.unfocus();
@@ -4910,23 +4936,33 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
       _showErrorPopup(Strings.kya_shishu_is_live,Colors.black);
     }else if(_shishuWeightController.text.toString().isEmpty && _shishuWgtEnDisable == true){
       _showErrorPopup(Strings.enter_shishu_weight,Colors.black);
-    }else if((_shishuWeightController.text.toString() == "0" && _shishuWgtEnDisable == true) || int.parse(_shishuWeightController.text.toString()) < 0 && _shishuWgtEnDisable == true){
+    }else if(_shishuWeightController.text.toString() == "0" && _shishuWgtEnDisable == true){
+      _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
+    }else if(_shishuWeightController.text.toString().isNotEmpty && (double.parse(_shishuWeightController.text.toString()) < 0 && _shishuWgtEnDisable == true)){
       _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
     }else if(_shishuWeight2Controller.text.toString().isEmpty && _shishuWgt2EnDisable == true){
       _showErrorPopup(Strings.enter_shishu_weight,Colors.black);
-    }else if((_shishuWeight2Controller.text.toString() == "0" && _shishuWgt2EnDisable == true) || int.parse(_shishuWeight2Controller.text.toString()) < 0 && _shishuWgt2EnDisable == true){
+    }else if((_shishuWeight2Controller.text.toString() == "0" && _shishuWgt2EnDisable == true)){
+      _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
+    }else if(_shishuWeight2Controller.text.toString().isNotEmpty && (double.parse(_shishuWeight2Controller.text.toString()) < 0 && _shishuWgt2EnDisable == true)){
       _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
     }else if(_shishuWeight3Controller.text.toString().isEmpty && _shishuWgt3EnDisable == true){
       _showErrorPopup(Strings.enter_shishu_weight,Colors.black);
-    }else if((_shishuWeight3Controller.text.toString() == "0" && _shishuWgt3EnDisable == true) || int.parse(_shishuWeight3Controller.text.toString()) < 0 && _shishuWgt3EnDisable == true){
+    }else if(_shishuWeight3Controller.text.toString() == "0" && _shishuWgt3EnDisable == true){
+      _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
+    }else if(_shishuWeight3Controller.text.toString().isNotEmpty && (double.parse(_shishuWeight3Controller.text.toString()) < 0 && _shishuWgt3EnDisable == true)){
       _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
     }else if(_shishuWeight4Controller.text.toString().isEmpty && _shishuWgt4EnDisable == true){
       _showErrorPopup(Strings.enter_shishu_weight,Colors.black);
-    }else if((_shishuWeight4Controller.text.toString() == "0" && _shishuWgt4EnDisable == true) || int.parse(_shishuWeight4Controller.text.toString()) < 0 && _shishuWgt4EnDisable == true){
+    }else if(_shishuWeight4Controller.text.toString() == "0" && _shishuWgt4EnDisable == true){
+      _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
+    }else if(_shishuWeight4Controller.text.toString().isNotEmpty && (double.parse(_shishuWeight4Controller.text.toString()) < 0 && _shishuWgt4EnDisable == true)){
       _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
     }else if(_shishuWeight5Controller.text.toString().isEmpty && _shishuWgt5EnDisable == true){
       _showErrorPopup(Strings.enter_shishu_weight,Colors.black);
-    }else if((_shishuWeight5Controller.text.toString() == "0" && _shishuWgt5EnDisable == true) || int.parse(_shishuWeight5Controller.text.toString()) < 0 && _shishuWgt5EnDisable == true){
+    }else if(_shishuWeight5Controller.text.toString() == "0" && _shishuWgt5EnDisable == true){
+      _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
+    }else if(_shishuWeight5Controller.text.toString().isNotEmpty && (double.parse(_shishuWeight5Controller.text.toString()) < 0 && _shishuWgt5EnDisable == true)){
       _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
     }else if(_ShowHideShishuEntryView1 == true && rdChildIsLive1 == "0" && rdChildIsLiveEntry1 == true){
       _showErrorPopup(Strings.pncDetailUpdate,Colors.black);
@@ -5212,8 +5248,16 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
   void checkifAnyChildLive(String rdChildIsLive1, String rdChildIsLive2, String rdChildIsLive3, String rdChildIsLive4, String rdChildIsLive5) {
     if(rdChildIsLive1 == "1" || rdChildIsLive2 == "1" || rdChildIsLive3 == "1" ||rdChildIsLive4 == "1" ||rdChildIsLive5 == "1"){
       _ShowHideReferPlacesView=true;
+      _ShowHideErrorView=false;
     }else{
+      _ShowHideErrorView=true;
       _ShowHideReferPlacesView=false;
+
+      /*If any child is Dead , Update Button will not be show */
+      if((rdChildIsLive1 == "0" && _ShowHideShishuEntryView1 == true) || (rdChildIsLive2 == "0" && _ShowHideShishuEntryView2== true) || (rdChildIsLive3 == "0" &&
+          _ShowHideShishuEntryView3== true) || (rdChildIsLive4 == "0" && _ShowHideShishuEntryView4== true) || (rdChildIsLive5 == "0" && _ShowHideShishuEntryView5== true)){
+          _ShowHideADDNewVivranView=false;
+      }
     }
   }
 

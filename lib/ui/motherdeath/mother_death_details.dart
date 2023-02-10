@@ -1173,485 +1173,706 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
           )
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 5,right: 5),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Text(
-                          Strings.pcts_id,
-                          style: TextStyle(
-                              fontSize: 13,
-                              color: Colors.black,
-                              fontWeight: FontWeight.normal),
-                        ),
-                      )),
-                  Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Text(//${_mahila_vivaran_response.length == 0 ? "": getFormattedDate(_mahila_vivaran_response[index]['RegDate'].toString())}
-                          widget.pctsID,
-                          style: TextStyle(
-                              fontSize: 13,
-                              color: Colors.black,
-                              fontWeight: FontWeight.normal),
-                        ),
-                      )),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 5,right: 5),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Text(
-                          Strings.village,
-                          style: TextStyle(
-                              fontSize: 13,
-                              color: Colors.black,
-                              fontWeight: FontWeight.normal),
-                        ),
-                      )),
-                  Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Text(//${_mahila_vivaran_response.length == 0 ? "": getFormattedDate(_mahila_vivaran_response[index]['RegDate'].toString())}
-                          response_list.length == 0 ? "" :  response_list[0]['Address'].toString(),
-                          style: TextStyle(
-                              fontSize: 13,
-                              color: Colors.black,
-                              fontWeight: FontWeight.normal),
-                        ),
-                      )),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 5,right: 5),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Text(
-                          Strings.mahila_ka_naam,
-                          style: TextStyle(
-                              fontSize: 13,
-                              color: Colors.black,
-                              fontWeight: FontWeight.normal),
-                        ),
-                      )),
-                  Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Text(//${_mahila_vivaran_response.length == 0 ? "": getFormattedDate(_mahila_vivaran_response[index]['RegDate'].toString())}
-                          response_list.length == 0 ? "" :  response_list[0]['Name'].toString(),
-                          style: TextStyle(
-                              fontSize: 13,
-                              color: Colors.black,
-                              fontWeight: FontWeight.normal),
-                        ),
-                      )),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 5,right: 5),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Text(
-                          Strings.patiKaName,
-                          style: TextStyle(
-                              fontSize: 13,
-                              color: Colors.black,
-                              fontWeight: FontWeight.normal),
-                        ),
-                      )),
-                  Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Text(//${_mahila_vivaran_response.length == 0 ? "": getFormattedDate(_mahila_vivaran_response[index]['RegDate'].toString())}
-                          response_list.length == 0 ? "" :  response_list[0]['Husbname'].toString(),
-                          style: TextStyle(
-                              fontSize: 13,
-                              color: Colors.black,
-                              fontWeight: FontWeight.normal),
-                        ),
-                      )),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 5,right: 5),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Text(
-                          Strings.MobileNumber,
-                          style: TextStyle(
-                              fontSize: 13,
-                              color: Colors.black,
-                              fontWeight: FontWeight.normal),
-                        ),
-                      )),
-                  Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Text(//${_mahila_vivaran_response.length == 0 ? "": getFormattedDate(_mahila_vivaran_response[index]['RegDate'].toString())}
-                          response_list.length == 0 ? "" :  response_list[0]['Mobileno'].toString(),
-                          style: TextStyle(
-                              fontSize: 13,
-                              color: Colors.black,
-                              fontWeight: FontWeight.normal),
-                        ),
-                      )),
-                ],
-              ),
-            ),
-            const Divider(color: ColorConstants.dark_yellow_color,height: 1,),
-            SizedBox(
-              height: 20,
-            ),
+      body: Container(
+        width: double.infinity,
+        color: Colors.white,
+        child: Stack(
+          children:<Widget>[
             Container(
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Text(
-                    Strings.aasha_chunai,
-                    style: TextStyle(color: Colors.black, fontSize: 13),
+              padding: EdgeInsets.all(5),
+              child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children:<Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(left: 5,right: 5),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Text(
+                                Strings.pcts_id,
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.normal),
+                              ),
+                            )),
+                        Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Text(//${_mahila_vivaran_response.length == 0 ? "": getFormattedDate(_mahila_vivaran_response[index]['RegDate'].toString())}
+                                widget.pctsID,
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.normal),
+                              ),
+                            )),
+                      ],
+                    ),
                   ),
-                ),
-              ),
-            ),
-            Container(
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(color: Colors.black)),
-              padding: EdgeInsets.all(1),
-              margin: EdgeInsets.all(3),
-              height: 30,
-              child: Row(
-                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 5,right: 5),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Text(
+                                Strings.village,
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.normal),
+                              ),
+                            )),
+                        Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Text(//${_mahila_vivaran_response.length == 0 ? "": getFormattedDate(_mahila_vivaran_response[index]['RegDate'].toString())}
+                                response_list.length == 0 ? "" :  response_list[0]['Address'].toString(),
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.normal),
+                              ),
+                            )),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 5,right: 5),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Text(
+                                Strings.mahila_ka_naam,
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.normal),
+                              ),
+                            )),
+                        Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Text(//${_mahila_vivaran_response.length == 0 ? "": getFormattedDate(_mahila_vivaran_response[index]['RegDate'].toString())}
+                                response_list.length == 0 ? "" :  response_list[0]['Name'].toString(),
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.normal),
+                              ),
+                            )),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 5,right: 5),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Text(
+                                Strings.patiKaName,
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.normal),
+                              ),
+                            )),
+                        Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Text(//${_mahila_vivaran_response.length == 0 ? "": getFormattedDate(_mahila_vivaran_response[index]['RegDate'].toString())}
+                                response_list.length == 0 ? "" :  response_list[0]['Husbname'].toString(),
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.normal),
+                              ),
+                            )),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 5,right: 5),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Text(
+                                Strings.MobileNumber,
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.normal),
+                              ),
+                            )),
+                        Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Text(//${_mahila_vivaran_response.length == 0 ? "": getFormattedDate(_mahila_vivaran_response[index]['RegDate'].toString())}
+                                response_list.length == 0 ? "" :  response_list[0]['Mobileno'].toString(),
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.normal),
+                              ),
+                            )),
+                      ],
+                    ),
+                  ),
+                  const Divider(color: ColorConstants.dark_yellow_color,height: 1,),
+                  SizedBox(
+                    height: 20,
+                  ),
                   Container(
-                    width: (MediaQuery.of(context).size.width - 10),
-                    // width: 411.42857142857144-10,
-                    height: 40,
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton(
-                        icon: Padding(
-                          padding: const EdgeInsets.only(right: 10),
-                          child: Image.asset(
-                            'Images/ic_dropdown.png',
-                            height: 12,
-                            alignment: Alignment.centerRight,
-                          ),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Text(
+                          Strings.aasha_chunai,
+                          style: TextStyle(color: Colors.black, fontSize: 13),
                         ),
-                        iconSize: 15,
-                        elevation: 11,
-                        //style: TextStyle(color: Colors.black),
-                        //style: Theme.of(context).textTheme.bodyText1,
-                        isExpanded: true,
-                        // hint: new Text("Select State"),
-                        items: custom_aasha_list.map((item) {
-                          return DropdownMenuItem(
+                      ),
+                    ),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(color: Colors.black)),
+                    padding: EdgeInsets.all(1),
+                    margin: EdgeInsets.all(3),
+                    height: 30,
+                    child: Row(
+                      children: [
+                        Container(
+                          width: (MediaQuery.of(context).size.width - 20),
+                          // width: 411.42857142857144-10,
+                          height: 40,
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton(
+                              icon: Padding(
+                                padding: const EdgeInsets.only(right: 10),
+                                child: Image.asset(
+                                  'Images/ic_dropdown.png',
+                                  height: 12,
+                                  alignment: Alignment.centerRight,
+                                ),
+                              ),
+                              iconSize: 15,
+                              elevation: 11,
+                              //style: TextStyle(color: Colors.black),
+                              //style: Theme.of(context).textTheme.bodyText1,
+                              isExpanded: true,
+                              // hint: new Text("Select State"),
+                              items: custom_aasha_list.map((item) {
+                                return DropdownMenuItem(
+                                    child: Row(
+                                      children: [
+                                        new Flexible(
+                                            child: Text(
+                                              item.ASHAName.toString(),
+                                              //Names that the api dropdown contains
+                                              style: TextStyle(
+                                                fontSize: 14.0,
+                                              ),
+                                            )),
+                                      ],
+                                    ),
+                                    value: item.ASHAAutoid
+                                        .toString() //Id that has to be passed that the dropdown has.....
+                                );
+                              }).toList(),
+                              onChanged:_isItAsha == true ? null : (String? newVal) {
+                                setState(() {
+                                  aashaId = newVal!;
+                                  print('aashaId:$aashaId');
+                                });
+                              },
+                              value: aashaId, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Row(
+                      children: [
+                        Expanded(
+                            child: Container(
+                              color: Colors.white,
+                              child: RichText(
+                                text: TextSpan(
+                                    text: Strings.prasav_ki_tithi,
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 13),
+                                    children: [
+                                      TextSpan(
+                                          text: '',
+                                          style: TextStyle(
+                                              color: Colors.red,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 10))
+                                    ]),
+                                textAlign: TextAlign.left,
+                              ),
+                            )),
+                        Expanded(
+                            child:Container(
+                              color: Colors.white,
+                              child: RichText(
+                                text: TextSpan(
+                                    text: '${response_list.length == 0 ? "" : getFormattedDate(response_list[0]['Prasav_date'].toString())}',
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 13),
+                                    children: [
+                                      TextSpan(
+                                          text: '',
+                                          style: TextStyle(
+                                              color: Colors.red,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 10))
+                                    ]),
+                                textAlign: TextAlign.left,
+                              ),
+                            ))
+                      ],
+                    ),
+                  ),
+                  Container(
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                            child:  Container(
+                              color: Colors.white,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 5),
+                                child: RichText(
+                                  text: TextSpan(
+                                      text: Strings.owner_name,
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 13),
+                                      children: [
+                                        TextSpan(
+                                            text: '*',
+                                            style: TextStyle(
+                                                color: Colors.red,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 10))
+                                      ]),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                            )),
+                        Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  border: Border.all(color: Colors.black)),
+                              margin: EdgeInsets.all(3),
+                              height: 30,
+                              child: Container(
+                                  height: 36,
+                                  child:TextField(
+
+                                    keyboardType: TextInputType.text,
+                                    maxLength: 20,
+                                    maxLines: 1,
+                                    controller: _mukhiyaNameController,
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        contentPadding:
+                                        new EdgeInsets.symmetric(vertical: 5.0, horizontal: 8.0),
+                                        filled: true,
+                                        fillColor: ColorConstants.transparent,
+                                        hintText: Strings.owner_name,
+                                        counterText: ''
+                                    ),
+                                    onChanged: (text) {
+                                      //_hbCount=text.trim();
+                                      print('diastolic $text');
+                                    },
+                                  )),
+                            ))
+                      ],
+                    ),
+                  ),
+                  Container(
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                            child:  Container(
+                              color: Colors.white,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 5),
+                                child: RichText(
+                                  text: TextSpan(
+                                      text: Strings.owner_mo_num,
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 13),
+                                      children: [
+                                        TextSpan(
+                                            text: '*',
+                                            style: TextStyle(
+                                                color: Colors.red,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 10))
+                                      ]),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                            )),
+                        Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  border: Border.all(color: Colors.black)),
+                              margin: EdgeInsets.all(3),
+                              height: 30,
+                              child: Container(
+                                  height: 36,
+                                  child:TextField(
+                                    keyboardType: TextInputType.number,
+                                    maxLength: 10,
+                                    controller: _mukhiyaMobNoController,
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        contentPadding:
+                                        new EdgeInsets.symmetric(vertical: 5.0, horizontal: 8.0),
+                                        filled: true,
+                                        fillColor: ColorConstants.transparent,
+                                        hintText: Strings.owner_mo_num,
+                                        counterText: ''
+                                    ),
+                                    onChanged: (text) {
+                                      //_hbCount=text.trim();
+                                      print('diastolic $text');
+                                    },
+                                  )),
+                            ))
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Container(
+                    height: 40,
+                    child: Row(
+                      children:<Widget> [
+                        Expanded(child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 5.0),
+                            child: Text(
+                              Strings.age,
+                              style: TextStyle(
+                                  color: Colors.black, fontSize: 13),
+                            ),
+                          ),
+                        )),
+                        Expanded(
+                            child: Container(
+                              margin: EdgeInsets.only(left: 2),
                               child: Row(
                                 children: [
-                                  new Flexible(
-                                      child: Text(
-                                        item.ASHAName.toString(),
-                                        //Names that the api dropdown contains
-                                        style: TextStyle(
-                                          fontSize: 14.0,
+                                  Expanded(child: Container(
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        border: Border.all(color: Colors.black)),
+                                    padding: EdgeInsets.all(1),
+                                    child: Form(
+                                      key: _formKey2,
+                                      child: TextFormField(
+                                        keyboardType: TextInputType.number,
+                                        maxLength: 3,
+                                        controller: ageController,
+                                        decoration: InputDecoration(
+                                            hintText: Strings.age,
+                                            contentPadding: EdgeInsets.zero,
+                                            counterText: ''
                                         ),
-                                      )),
+                                        textAlign: TextAlign.start,
+                                        validator: (text) {
+                                          if (text == null || text.isEmpty) {
+                                            return 'Value Can\'t Be Empty';
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                    ),
+                                  )),
+                                  Expanded(child: Container())
                                 ],
                               ),
-                              value: item.ASHAAutoid
-                                  .toString() //Id that has to be passed that the dropdown has.....
-                          );
-                        }).toList(),
-                        onChanged:_isItAsha == true ? null : (String? newVal) {
-                          setState(() {
-                            aashaId = newVal!;
-                            print('aashaId:$aashaId');
-                          });
-                        },
-                        value: aashaId, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-
-
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Row(
-                children: [
-                  Expanded(
-                      child: Container(
-                        color: Colors.white,
-                        child: RichText(
-                          text: TextSpan(
-                              text: Strings.prasav_ki_tithi,
-                              style: TextStyle(
-                                  color: Colors.black, fontSize: 13),
-                              children: [
-                                TextSpan(
-                                    text: '',
-                                    style: TextStyle(
-                                        color: Colors.red,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 10))
-                              ]),
-                          textAlign: TextAlign.left,
-                        ),
-                      )),
-                  Expanded(
-                      child:Container(
-                        color: Colors.white,
-                        child: RichText(
-                          text: TextSpan(
-                              text: '${response_list.length == 0 ? "" : getFormattedDate(response_list[0]['Prasav_date'].toString())}',
-                              style: TextStyle(
-                                  color: Colors.black, fontSize: 13),
-                              children: [
-                                TextSpan(
-                                    text: '',
-                                    style: TextStyle(
-                                        color: Colors.red,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 10))
-                              ]),
-                          textAlign: TextAlign.left,
-                        ),
-                      ))
-                ],
-              ),
-            ),
-
-
-
-            Container(
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                      child:  Container(
-                        color: Colors.white,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 5),
-                          child: RichText(
-                            text: TextSpan(
-                                text: Strings.owner_name,
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 13),
-                                children: [
-                                  TextSpan(
-                                      text: '*',
-                                      style: TextStyle(
-                                          color: Colors.red,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 10))
-                                ]),
-                            textAlign: TextAlign.left,
-                          ),
-                        ),
-                      )),
-                  Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: Border.all(color: Colors.black)),
-                        margin: EdgeInsets.all(3),
-                        height: 30,
-                        child: Container(
-                            height: 36,
-                            child:TextField(
-
-                              keyboardType: TextInputType.text,
-                              maxLength: 20,
-                              maxLines: 1,
-                              controller: _mukhiyaNameController,
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                contentPadding:
-                                new EdgeInsets.symmetric(vertical: 5.0, horizontal: 8.0),
-                                filled: true,
-                                fillColor: ColorConstants.transparent,
-                                hintText: Strings.owner_name,
-                                counterText: ''
-                              ),
-                              onChanged: (text) {
-                                //_hbCount=text.trim();
-                                print('diastolic $text');
-                              },
                             )),
-                      ))
-                ],
-              ),
-            ),
-            Container(
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                      child:  Container(
-                        color: Colors.white,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 5),
-                          child: RichText(
-                            text: TextSpan(
-                                text: Strings.owner_mo_num,
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 13),
-                                children: [
-                                  TextSpan(
-                                      text: '*',
-                                      style: TextStyle(
-                                          color: Colors.red,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 10))
-                                ]),
-                            textAlign: TextAlign.left,
-                          ),
-                        ),
-                      )),
-                  Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: Border.all(color: Colors.black)),
-                        margin: EdgeInsets.all(3),
-                        height: 30,
-                        child: Container(
-                            height: 36,
-                            child:TextField(
-                              keyboardType: TextInputType.number,
-                              maxLength: 10,
-                              controller: _mukhiyaMobNoController,
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                contentPadding:
-                                new EdgeInsets.symmetric(vertical: 5.0, horizontal: 8.0),
-                                filled: true,
-                                fillColor: ColorConstants.transparent,
-                                hintText: Strings.owner_mo_num,
-                                counterText: ''
-                              ),
-                              onChanged: (text) {
-                                //_hbCount=text.trim();
-                                print('diastolic $text');
-                              },
-                            )),
-                      ))
-                ],
-              ),
-            ),
-
-            SizedBox(
-              height: 5,
-            ),
-            Container(
-              height: 40,
-              child: Row(
-                children:<Widget> [
-                  Expanded(child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 5.0),
-                      child: Text(
-                        Strings.age,
-                        style: TextStyle(
-                            color: Colors.black, fontSize: 13),
-                      ),
+                      ],
                     ),
-                  )),
-                  Expanded(
-                      child: Container(
-                        margin: EdgeInsets.only(left: 2),
-                        child: Row(
-                    children: [
-                        Expanded(child: Container(
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Row(
+                      children: [
+                        Expanded(
+                            child: RichText(
+                              text: TextSpan(
+                                  text: Strings.death_date,
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 13),
+                                  children: [
+                                    TextSpan(
+                                        text: '',
+                                        style: TextStyle(
+                                            color: Colors.red,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14))
+                                  ]),
+                              //textScaleFactor: labelTextScale,
+                              //maxLines: labelMaxLines,
+                              // overflow: overflow,
+                              textAlign: TextAlign.left,
+                            )),
+                        Container(
+                          width: 150,
                           decoration: BoxDecoration(
                               color: Colors.white,
                               border: Border.all(color: Colors.black)),
                           padding: EdgeInsets.all(1),
-                          child: Form(
-                            key: _formKey2,
-                            child: TextFormField(
-                              keyboardType: TextInputType.number,
-                              maxLength: 3,
-                              controller: ageController,
-                              decoration: InputDecoration(
-                                  hintText: Strings.age,
-                                  contentPadding: EdgeInsets.zero,
-                                  counterText: ''
+                          margin: EdgeInsets.all(3),
+                          height: 30,
+                          child: Row(
+                            children: <Widget>[
+                              Expanded(
+                                  child: Container(
+                                    height: 36,
+                                    child: TextField(
+                                        textAlign: TextAlign.center,
+                                        maxLength: 2,
+                                        keyboardType: TextInputType.number,
+                                        controller: _tikaDDdateController,
+                                        maxLines: 1,
+                                        style: TextStyle(fontSize: 13),
+                                        textAlignVertical: TextAlignVertical.center,
+                                        decoration: InputDecoration(
+                                            filled: true,
+                                            border: OutlineInputBorder(
+                                                borderSide: BorderSide.none,
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(0))),
+                                            fillColor:Colors.transparent,
+                                            contentPadding: EdgeInsets.zero,
+                                            hintText: ' dd',
+                                            counterText: ''),
+                                        onChanged: (value){
+                                          print('value $value');
+                                          if(_tikaDDdateController.text.toString().length == 2 && _tikaMMdateController.text.toString().length == 2 && _tikaYYYYdateController.text.toString().length == 4){
+                                            _selectANCDatePopupCustom(_tikaYYYYdateController.text.toString()+"-"+_tikaMMdateController.text.toString()+"-"+_tikaDDdateController.text.toString()+" 00:00:00.000");
+                                          }
+                                        }
+                                    ),
+                                  )),
+                              Text("/"),
+                              Expanded(
+                                  child: Container(
+                                    height: 36,
+                                    padding: EdgeInsets.only(left: 5),
+                                    child: TextField(
+                                        textAlign: TextAlign.center,
+                                        maxLength: 2,
+                                        keyboardType: TextInputType.number,
+                                        controller: _tikaMMdateController,
+                                        maxLines: 1,
+                                        style: TextStyle(fontSize: 13),
+                                        textAlignVertical: TextAlignVertical.center,
+                                        decoration: InputDecoration(
+                                            filled: true,
+                                            border: OutlineInputBorder(
+                                                borderSide: BorderSide.none,
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(0))),
+                                            fillColor: Colors.transparent,
+                                            contentPadding: EdgeInsets.zero,
+                                            hintText: ' mm',
+                                            counterText: ''),
+                                        onChanged: (value){
+                                          print('value $value');
+                                          if(_tikaDDdateController.text.toString().length == 2 && _tikaMMdateController.text.toString().length == 2 && _tikaYYYYdateController.text.toString().length == 4){
+                                            _selectANCDatePopupCustom(_tikaYYYYdateController.text.toString()+"-"+_tikaMMdateController.text.toString()+"-"+_tikaDDdateController.text.toString()+" 00:00:00.000");
+                                          }
+                                        }
+                                    ),
+                                  )),
+                              Text("/"),
+                              Expanded(
+                                  child: Container(
+                                    height: 36,
+                                    child: TextField(
+                                        textAlign: TextAlign.center,
+                                        maxLength: 4,
+                                        keyboardType: TextInputType.number,
+                                        controller: _tikaYYYYdateController,
+                                        maxLines: 1,
+                                        style: TextStyle(fontSize: 13),
+                                        textAlignVertical: TextAlignVertical.center,
+                                        decoration: InputDecoration(
+                                            filled: true,
+                                            border: OutlineInputBorder(
+                                                borderSide: BorderSide.none,
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(0))),
+                                            fillColor: Colors.transparent,
+                                            contentPadding: EdgeInsets.zero,
+                                            hintText: ' yyyy',
+                                            counterText: ''),
+                                        onChanged: (value){
+                                          print('value $value');
+                                          if(_tikaDDdateController.text.toString().length == 2 && _tikaMMdateController.text.toString().length == 2 && _tikaYYYYdateController.text.toString().length == 4){
+                                            _selectANCDatePopupCustom(_tikaYYYYdateController.text.toString()+"-"+_tikaMMdateController.text.toString()+"-"+_tikaDDdateController.text.toString()+" 00:00:00.000");
+                                          }
+                                        }
+                                    ),
+                                  ))
+                            ],
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            _selectANCDatePopup();
+                          },
+                          child: Container(
+                              margin: EdgeInsets.only(right: 20, left: 10),
+                              child: Image.asset(
+                                "Images/calendar_icon.png",
+                                width: 20,
+                                height: 20,
+                              )),
+                        )
+                      ],
+                    ),
+                  ),
+                  Container(
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Text(
+                          Strings.death_reason,
+                          style: TextStyle(color: Colors.black, fontSize: 13),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(color: Colors.black)),
+                    padding: EdgeInsets.all(1),
+                    margin: EdgeInsets.all(3),
+                    height: 30,
+                    child: Row(
+                      children: [
+                        Container(
+                          width: (MediaQuery.of(context).size.width - 20),
+                          // width: 411.42857142857144-10,
+                          height: 40,
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton(
+                              icon: Padding(
+                                padding: const EdgeInsets.only(right: 10),
+                                child: Image.asset(
+                                  'Images/ic_dropdown.png',
+                                  height: 12,
+                                  alignment: Alignment.centerRight,
+                                ),
                               ),
-                              textAlign: TextAlign.start,
-                              validator: (text) {
-                                if (text == null || text.isEmpty) {
-                                  return 'Value Can\'t Be Empty';
-                                }
-                                return null;
-                              },
+                              iconSize: 15,
+                              elevation: 11,
+                              //style: TextStyle(color: Colors.black),
+                              //style: Theme.of(context).textTheme.bodyText1,
+                              isExpanded: true,
+                              // hint: new Text("Select State"),
+                              items: custom_reason_list.map((item) {
+                                return DropdownMenuItem(
+
+                                    child: Row(
+                                      children: [
+                                        new Flexible(
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(2.0),
+                                              child: Text(
+                                                item.ReasonName.toString(),
+                                                //Names that the api dropdown contains
+                                                style: TextStyle(
+                                                  fontSize: 14.0,
+                                                ),
+                                              ),
+                                            )),
+                                      ],
+                                    ),
+                                    value: item.ReasonID
+                                        .toString() //Id that has to be passed that the dropdown has.....
+                                );
+                              }).toList(),
+                              onChanged: _ReasonListEnableDisable ? (String? newVal) {
+                                setState(() {
+                                  dreasonId = newVal!;
+                                  print('dreasonId:$dreasonId');
+                                  print('_EntryDeath:$_EntryDeath');
+                                  if(_EntryDeath == "null"){
+                                    getDeathSubReasonListAPI(dreasonId,"post");
+                                    _Flag="1";
+                                    finalButtonText=Strings.vivran_save_krai;
+                                  }else{
+                                    _Flag="2";
+                                    getDeathSubReasonListAPI(dreasonId,"update");
+                                  }
+                                  if(isChanged == true){
+                                    //isChanged=false;
+                                    dsubreasonId = custom_subreason_list[0].ReasonID.toString();
+                                  }
+                                });
+                              } : null,
+                              value:
+                              dreasonId, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
                             ),
                           ),
-                        )),
-                        Expanded(child: Container())
-                    ],
+                        )
+                      ],
+                    ),
                   ),
-                      )),
-                ],
-              ),
-            ),
-
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Row(
-                children: [
-                  Expanded(
-                      child: RichText(
-                        text: TextSpan(
-                            text: Strings.death_date,
-                            style: TextStyle(
-                                color: Colors.black, fontSize: 13),
-                            children: [
-                              TextSpan(
-                                  text: '',
-                                  style: TextStyle(
-                                      color: Colors.red,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14))
-                            ]),
-                        //textScaleFactor: labelTextScale,
-                        //maxLines: labelMaxLines,
-                        // overflow: overflow,
-                        textAlign: TextAlign.left,
-                      )),
                   Container(
-                    width: 150,
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Text(
+                          Strings.death_subreason,
+                          style: TextStyle(color: Colors.black, fontSize: 13),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
                     decoration: BoxDecoration(
                         color: Colors.white,
                         border: Border.all(color: Colors.black)),
@@ -1659,543 +1880,531 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
                     margin: EdgeInsets.all(3),
                     height: 30,
                     child: Row(
-                      children: <Widget>[
-                        Expanded(
-                            child: Container(
-                              height: 36,
-                              child: TextField(
-                                textAlign: TextAlign.center,
-                                maxLength: 2,
-                                keyboardType: TextInputType.number,
-                                controller: _tikaDDdateController,
-                                maxLines: 1,
-                                style: TextStyle(fontSize: 13),
-                                textAlignVertical: TextAlignVertical.center,
-                                decoration: InputDecoration(
-                                    filled: true,
-                                    border: OutlineInputBorder(
-                                        borderSide: BorderSide.none,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(0))),
-                                    fillColor:Colors.transparent,
-                                    contentPadding: EdgeInsets.zero,
-                                    hintText: ' dd',
-                                    counterText: ''),
-                                onChanged: (value){
-                                  print('value $value');
-                                  if(_tikaDDdateController.text.toString().length == 2 && _tikaMMdateController.text.toString().length == 2 && _tikaYYYYdateController.text.toString().length == 4){
-                                    _selectANCDatePopupCustom(_tikaYYYYdateController.text.toString()+"-"+_tikaMMdateController.text.toString()+"-"+_tikaDDdateController.text.toString()+" 00:00:00.000");
-                                  }
-                                }
+                      children: [
+                        Container(
+                          width: (MediaQuery.of(context).size.width - 20),
+                          // width: 411.42857142857144-10,
+                          height: 40,
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton(
+                              icon: Padding(
+                                padding: const EdgeInsets.only(right: 10),
+                                child: Image.asset(
+                                  'Images/ic_dropdown.png',
+                                  height: 12,
+                                  alignment: Alignment.centerRight,
+                                ),
                               ),
-                            )),
-                        Text("/"),
-                        Expanded(
-                            child: Container(
-                              height: 36,
-                              padding: EdgeInsets.only(left: 5),
-                              child: TextField(
-                                textAlign: TextAlign.center,
-                                maxLength: 2,
-                                keyboardType: TextInputType.number,
-                                controller: _tikaMMdateController,
-                                maxLines: 1,
-                                style: TextStyle(fontSize: 13),
-                                textAlignVertical: TextAlignVertical.center,
-                                decoration: InputDecoration(
-                                    filled: true,
-                                    border: OutlineInputBorder(
-                                        borderSide: BorderSide.none,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(0))),
-                                    fillColor: Colors.transparent,
-                                    contentPadding: EdgeInsets.zero,
-                                    hintText: ' mm',
-                                    counterText: ''),
-                                onChanged: (value){
-                                  print('value $value');
-                                  if(_tikaDDdateController.text.toString().length == 2 && _tikaMMdateController.text.toString().length == 2 && _tikaYYYYdateController.text.toString().length == 4){
-                                    _selectANCDatePopupCustom(_tikaYYYYdateController.text.toString()+"-"+_tikaMMdateController.text.toString()+"-"+_tikaDDdateController.text.toString()+" 00:00:00.000");
-                                  }
-                                }
-                              ),
-                            )),
-                        Text("/"),
-                        Expanded(
-                            child: Container(
-                              height: 36,
-                              child: TextField(
-                                textAlign: TextAlign.center,
-                                maxLength: 4,
-                                keyboardType: TextInputType.number,
-                                controller: _tikaYYYYdateController,
-                                maxLines: 1,
-                                style: TextStyle(fontSize: 13),
-                                textAlignVertical: TextAlignVertical.center,
-                                decoration: InputDecoration(
-                                    filled: true,
-                                    border: OutlineInputBorder(
-                                        borderSide: BorderSide.none,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(0))),
-                                    fillColor: Colors.transparent,
-                                    contentPadding: EdgeInsets.zero,
-                                    hintText: ' yyyy',
-                                    counterText: ''),
-                                onChanged: (value){
-                                  print('value $value');
-                                  if(_tikaDDdateController.text.toString().length == 2 && _tikaMMdateController.text.toString().length == 2 && _tikaYYYYdateController.text.toString().length == 4){
-                                    _selectANCDatePopupCustom(_tikaYYYYdateController.text.toString()+"-"+_tikaMMdateController.text.toString()+"-"+_tikaDDdateController.text.toString()+" 00:00:00.000");
-                                  }
-                                }
-                              ),
-                            ))
+                              iconSize: 15,
+                              elevation: 11,
+                              //style: TextStyle(color: Colors.black),
+                              //style: Theme.of(context).textTheme.bodyText1,
+                              isExpanded: true,
+                              // hint: new Text("Select State"),
+                              items: custom_subreason_list.map((item) {
+                                return DropdownMenuItem(
+                                    child: Row(
+                                      children: [
+                                        new Flexible(
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(2.0),
+                                              child: Text(
+                                                item.ReasonName.toString(),
+                                                //Names that the api dropdown contains
+                                                style: TextStyle(
+                                                  fontSize: 14.0,
+                                                ),
+                                              ),
+                                            )),
+                                      ],
+                                    ),
+                                    value: item.ReasonID
+                                        .toString() //Id that has to be passed that the dropdown has.....
+                                );
+                              }).toList(),
+                              onChanged: _SubReasonListEnableDisable ? (String? newVal) {
+                                setState(() {
+                                  dsubreasonId = newVal!;
+                                  print('dsubreasonId:$dsubreasonId');
+                                  isChanged=true;
+                                });
+                              } : null,
+                              value:
+                              dsubreasonId, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
+                            ),
+                          ),
+                        )
                       ],
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      _selectANCDatePopup();
-                    },
-                    child: Container(
-                        margin: EdgeInsets.only(right: 20, left: 10),
-                        child: Image.asset(
-                          "Images/calendar_icon.png",
-                          width: 20,
-                          height: 20,
-                        )),
-                  )
-                ],
-              ),
-            ),
-
-            Container(
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Text(
-                    Strings.death_reason,
-                    style: TextStyle(color: Colors.black, fontSize: 13),
-                  ),
-                ),
-              ),
-            ),
-
-            Container(
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(color: Colors.black)),
-              padding: EdgeInsets.all(1),
-              margin: EdgeInsets.all(3),
-              height: 30,
-              child: Row(
-                children: [
-                  Container(
-                    width: (MediaQuery.of(context).size.width - 10),
-                    // width: 411.42857142857144-10,
-                    height: 40,
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton(
-                        icon: Padding(
-                          padding: const EdgeInsets.only(right: 10),
-                          child: Image.asset(
-                            'Images/ic_dropdown.png',
-                            height: 12,
-                            alignment: Alignment.centerRight,
-                          ),
-                        ),
-                        iconSize: 15,
-                        elevation: 11,
-                        //style: TextStyle(color: Colors.black),
-                        //style: Theme.of(context).textTheme.bodyText1,
-                        isExpanded: true,
-                        // hint: new Text("Select State"),
-                        items: custom_reason_list.map((item) {
-                          return DropdownMenuItem(
-
-                              child: Row(
-                                children: [
-                                  new Flexible(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(2.0),
-                                        child: Text(
-                                          item.ReasonName.toString(),
-                                          //Names that the api dropdown contains
-                                          style: TextStyle(
-                                            fontSize: 14.0,
-                                          ),
-                                        ),
-                                      )),
-                                ],
-                              ),
-                              value: item.ReasonID
-                                  .toString() //Id that has to be passed that the dropdown has.....
-                          );
-                        }).toList(),
-                        onChanged: _ReasonListEnableDisable ? (String? newVal) {
-                          setState(() {
-                            dreasonId = newVal!;
-                            print('dreasonId:$dreasonId');
-                            print('_EntryDeath:$_EntryDeath');
-                            if(_EntryDeath == "null"){
-                              getDeathSubReasonListAPI(dreasonId,"post");
-                              _Flag="1";
-                              finalButtonText=Strings.vivran_save_krai;
-                            }else{
-                              _Flag="2";
-                              getDeathSubReasonListAPI(dreasonId,"update");
-                            }
-                            if(isChanged == true){
-                              //isChanged=false;
-                              dsubreasonId = custom_subreason_list[0].ReasonID.toString();
-                            }
-                          });
-                        } : null,
-                        value:
-                        dreasonId, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-
-            Container(
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Text(
-                    Strings.death_subreason,
-                    style: TextStyle(color: Colors.black, fontSize: 13),
-                  ),
-                ),
-              ),
-            ),
-
-            Container(
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(color: Colors.black)),
-              padding: EdgeInsets.all(1),
-              margin: EdgeInsets.all(3),
-              height: 30,
-              child: Row(
-                children: [
-                  Container(
-                    width: (MediaQuery.of(context).size.width - 10),
-                    // width: 411.42857142857144-10,
-                    height: 40,
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton(
-                        icon: Padding(
-                          padding: const EdgeInsets.only(right: 10),
-                          child: Image.asset(
-                            'Images/ic_dropdown.png',
-                            height: 12,
-                            alignment: Alignment.centerRight,
-                          ),
-                        ),
-                        iconSize: 15,
-                        elevation: 11,
-                        //style: TextStyle(color: Colors.black),
-                        //style: Theme.of(context).textTheme.bodyText1,
-                        isExpanded: true,
-                        // hint: new Text("Select State"),
-                        items: custom_subreason_list.map((item) {
-                          return DropdownMenuItem(
-                              child: Row(
-                                children: [
-                                  new Flexible(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(2.0),
-                                        child: Text(
-                                          item.ReasonName.toString(),
-                                          //Names that the api dropdown contains
-                                          style: TextStyle(
-                                            fontSize: 14.0,
-                                          ),
-                                        ),
-                                      )),
-                                ],
-                              ),
-                              value: item.ReasonID
-                                  .toString() //Id that has to be passed that the dropdown has.....
-                          );
-                        }).toList(),
-                        onChanged: _SubReasonListEnableDisable ? (String? newVal) {
-                          setState(() {
-                            dsubreasonId = newVal!;
-                            print('dsubreasonId:$dsubreasonId');
-                            isChanged=true;
-                          });
-                        } : null,
-                        value:
-                        dsubreasonId, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-
-
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Row(
-                children: [
-                  Expanded(
-                      child: RichText(
-                        text: TextSpan(
-                            text: Strings.report_date,
-                            style: TextStyle(
-                                color: Colors.black, fontSize: 13),
-                            children: [
-                              TextSpan(
-                                  text: '',
-                                  style: TextStyle(
-                                      color: Colors.red,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14))
-                            ]),
-                        //textScaleFactor: labelTextScale,
-                        //maxLines: labelMaxLines,
-                        // overflow: overflow,
-                        textAlign: TextAlign.left,
-                      )),
-                  Container(
-                    width: 150,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(color: Colors.black)),
-                    padding: EdgeInsets.all(1),
-                    margin: EdgeInsets.all(3),
-                    height: 30,
+                  Padding(
+                    padding: const EdgeInsets.all(5.0),
                     child: Row(
-                      children: <Widget>[
+                      children: [
                         Expanded(
-                            child: Container(
-                              height: 36,
-                              child: TextField(
-                                textAlign: TextAlign.center,
-                                maxLength: 2,
-                                keyboardType: TextInputType.number,
-                                controller: _reportDDdateController,
-                                maxLines: 1,
-                                style: TextStyle(fontSize: 13),
-                                textAlignVertical: TextAlignVertical.center,
-                                decoration: InputDecoration(
-                                    filled: true,
-                                    border: OutlineInputBorder(
-                                        borderSide: BorderSide.none,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(0))),
-                                    fillColor:Colors.transparent,
-                                    contentPadding: EdgeInsets.zero,
-                                    hintText: ' dd',
-                                    counterText: ''),
-                                onChanged: (value){
-                                  print('value $value');
-                                  if(_reportDDdateController.text.toString().length == 2 && _reportMMdateController.text.toString().length == 2 && _reportYYYYdateController.text.toString().length == 4){
-                                    _selectReportDatePopupCustom(_reportYYYYdateController.text.toString()+"-"+_reportMMdateController.text.toString()+"-"+_reportDDdateController.text.toString()+" 00:00:00.000");
-                                  }
-                                }
-                              ),
+                            child: RichText(
+                              text: TextSpan(
+                                  text: Strings.report_date,
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 13),
+                                  children: [
+                                    TextSpan(
+                                        text: '',
+                                        style: TextStyle(
+                                            color: Colors.red,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14))
+                                  ]),
+                              //textScaleFactor: labelTextScale,
+                              //maxLines: labelMaxLines,
+                              // overflow: overflow,
+                              textAlign: TextAlign.left,
                             )),
-                        Text("/"),
-                        Expanded(
-                            child: Container(
-                              height: 36,
-                              padding: EdgeInsets.only(left: 5),
-                              child: TextField(
-                                textAlign: TextAlign.center,
-                                maxLength: 2,
-                                keyboardType: TextInputType.number,
-                                controller: _reportMMdateController,
-                                maxLines: 1,
-                                style: TextStyle(fontSize: 13),
-                                textAlignVertical: TextAlignVertical.center,
-                                decoration: InputDecoration(
-                                    filled: true,
-                                    border: OutlineInputBorder(
-                                        borderSide: BorderSide.none,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(0))),
-                                    fillColor: Colors.transparent,
-                                    contentPadding: EdgeInsets.zero,
-                                    hintText: ' mm',
-                                    counterText: ''),
-                                onChanged: (value){
-                                  print('value $value');
-                                  if(_reportDDdateController.text.toString().length == 2 && _reportMMdateController.text.toString().length == 2 && _reportYYYYdateController.text.toString().length == 4){
-                                    _selectReportDatePopupCustom(_reportYYYYdateController.text.toString()+"-"+_reportMMdateController.text.toString()+"-"+_reportDDdateController.text.toString()+" 00:00:00.000");
-                                  }
-                                }
-                              ),
-                            )),
-                        Text("/"),
-                        Expanded(
-                            child: Container(
-                              height: 36,
-                              child: TextField(
-                                textAlign: TextAlign.center,
-                                maxLength: 4,
-                                keyboardType: TextInputType.number,
-                                controller: _reportYYYYdateController,
-                                maxLines: 1,
-                                style: TextStyle(fontSize: 13),
-                                textAlignVertical: TextAlignVertical.center,
-                                decoration: InputDecoration(
-                                    filled: true,
-                                    border: OutlineInputBorder(
-                                        borderSide: BorderSide.none,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(0))),
-                                    fillColor: Colors.transparent,
-                                    contentPadding: EdgeInsets.zero,
-                                    hintText: ' yyyy',
-                                    counterText: ''),
-                                onChanged: (value){
-                                  print('value $value');
-                                  if(_reportDDdateController.text.toString().length == 2 && _reportMMdateController.text.toString().length == 2 && _reportYYYYdateController.text.toString().length == 4){
-                                    _selectReportDatePopupCustom(_reportYYYYdateController.text.toString()+"-"+_reportMMdateController.text.toString()+"-"+_reportDDdateController.text.toString()+" 00:00:00.000");
-                                  }
-                                }
-                              ),
-                            ))
+                        Container(
+                          width: 150,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(color: Colors.black)),
+                          padding: EdgeInsets.all(1),
+                          margin: EdgeInsets.all(3),
+                          height: 30,
+                          child: Row(
+                            children: <Widget>[
+                              Expanded(
+                                  child: Container(
+                                    height: 36,
+                                    child: TextField(
+                                        textAlign: TextAlign.center,
+                                        maxLength: 2,
+                                        keyboardType: TextInputType.number,
+                                        controller: _reportDDdateController,
+                                        maxLines: 1,
+                                        style: TextStyle(fontSize: 13),
+                                        textAlignVertical: TextAlignVertical.center,
+                                        decoration: InputDecoration(
+                                            filled: true,
+                                            border: OutlineInputBorder(
+                                                borderSide: BorderSide.none,
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(0))),
+                                            fillColor:Colors.transparent,
+                                            contentPadding: EdgeInsets.zero,
+                                            hintText: ' dd',
+                                            counterText: ''),
+                                        onChanged: (value){
+                                          print('value $value');
+                                          if(_reportDDdateController.text.toString().length == 2 && _reportMMdateController.text.toString().length == 2 && _reportYYYYdateController.text.toString().length == 4){
+                                            _selectReportDatePopupCustom(_reportYYYYdateController.text.toString()+"-"+_reportMMdateController.text.toString()+"-"+_reportDDdateController.text.toString()+" 00:00:00.000");
+                                          }
+                                        }
+                                    ),
+                                  )),
+                              Text("/"),
+                              Expanded(
+                                  child: Container(
+                                    height: 36,
+                                    padding: EdgeInsets.only(left: 5),
+                                    child: TextField(
+                                        textAlign: TextAlign.center,
+                                        maxLength: 2,
+                                        keyboardType: TextInputType.number,
+                                        controller: _reportMMdateController,
+                                        maxLines: 1,
+                                        style: TextStyle(fontSize: 13),
+                                        textAlignVertical: TextAlignVertical.center,
+                                        decoration: InputDecoration(
+                                            filled: true,
+                                            border: OutlineInputBorder(
+                                                borderSide: BorderSide.none,
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(0))),
+                                            fillColor: Colors.transparent,
+                                            contentPadding: EdgeInsets.zero,
+                                            hintText: ' mm',
+                                            counterText: ''),
+                                        onChanged: (value){
+                                          print('value $value');
+                                          if(_reportDDdateController.text.toString().length == 2 && _reportMMdateController.text.toString().length == 2 && _reportYYYYdateController.text.toString().length == 4){
+                                            _selectReportDatePopupCustom(_reportYYYYdateController.text.toString()+"-"+_reportMMdateController.text.toString()+"-"+_reportDDdateController.text.toString()+" 00:00:00.000");
+                                          }
+                                        }
+                                    ),
+                                  )),
+                              Text("/"),
+                              Expanded(
+                                  child: Container(
+                                    height: 36,
+                                    child: TextField(
+                                        textAlign: TextAlign.center,
+                                        maxLength: 4,
+                                        keyboardType: TextInputType.number,
+                                        controller: _reportYYYYdateController,
+                                        maxLines: 1,
+                                        style: TextStyle(fontSize: 13),
+                                        textAlignVertical: TextAlignVertical.center,
+                                        decoration: InputDecoration(
+                                            filled: true,
+                                            border: OutlineInputBorder(
+                                                borderSide: BorderSide.none,
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(0))),
+                                            fillColor: Colors.transparent,
+                                            contentPadding: EdgeInsets.zero,
+                                            hintText: ' yyyy',
+                                            counterText: ''),
+                                        onChanged: (value){
+                                          print('value $value');
+                                          if(_reportDDdateController.text.toString().length == 2 && _reportMMdateController.text.toString().length == 2 && _reportYYYYdateController.text.toString().length == 4){
+                                            _selectReportDatePopupCustom(_reportYYYYdateController.text.toString()+"-"+_reportMMdateController.text.toString()+"-"+_reportDDdateController.text.toString()+" 00:00:00.000");
+                                          }
+                                        }
+                                    ),
+                                  ))
+                            ],
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            _selectReportDatePopup();
+                          },
+                          child: Container(
+                              margin: EdgeInsets.only(right: 20, left: 10),
+                              child: Image.asset(
+                                "Images/calendar_icon.png",
+                                width: 20,
+                                height: 20,
+                              )),
+                        )
                       ],
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      _selectReportDatePopup();
-                    },
-                    child: Container(
-                        margin: EdgeInsets.only(right: 20, left: 10),
-                        child: Image.asset(
-                          "Images/calendar_icon.png",
-                          width: 20,
-                          height: 20,
-                        )),
-                  )
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-
-            Container(
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Text(
-                    Strings.death_place,
-                    style: TextStyle(color: Colors.black, fontSize: 13),
+                  SizedBox(
+                    height: 5,
                   ),
-                ),
-              ),
-            ),
-
-            Visibility(
-              visible: deathPlaceView,
-                child: Container(
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(color: Colors.black)),
-              padding: EdgeInsets.all(1),
-              margin: EdgeInsets.all(3),
-              height: 30,
-              child: Row(
-                children: [
                   Container(
-                    width: (MediaQuery.of(context).size.width - 10),
-                    // width: 411.42857142857144-10,
-                    height: 40,
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton(
-                        icon: Padding(
-                          padding: const EdgeInsets.only(right: 10),
-                          child: Image.asset(
-                            'Images/ic_dropdown.png',
-                            height: 12,
-                            alignment: Alignment.centerRight,
-                          ),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Text(
+                          Strings.death_place,
+                          style: TextStyle(color: Colors.black, fontSize: 13),
                         ),
-                        iconSize: 15,
-                        elevation: 11,
-                        //style: TextStyle(color: Colors.black),
-                       // style: Theme.of(context).textTheme.bodyText1,
-                        isExpanded: true,
-                        // hint: new Text("Select State"),
-                        items: death_place_list.map((item) {
-                          return DropdownMenuItem(
-
-                              child: Row(
-                                children: [
-                                  new Flexible(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(2.0),
-                                        child: Text(
-                                          item.title.toString(),
-                                          //Names that the api dropdown contains
-                                          style: TextStyle(
-                                            fontSize: 14.0,
-                                          ),
-                                        ),
-                                      )),
-                                ],
-                              ),
-                              value: item.code
-                                  .toString() //Id that has to be passed that the dropdown has.....
-                          );
-                        }).toList(),
-                        onChanged: (String? newVal) {
-                          setState(() {
-                            _selectedDeathPlace = newVal!;
-                            print('_selectedDeathPlace:$_selectedDeathPlace');
-                            if(_selectedDeathPlace == "0"){
-                              referSansthaView=false;
-                              referJilaView=false;
-                              referBlockView=false;
-                            }else if(_selectedDeathPlace == "1"){
-                              referSansthaView=false;
-                              referJilaView=false;
-                              referBlockView=false;
-                              sapraView=false;
-                              upSwasthyaKendraView=false;
-                              _postDeathUnitID=preferences.getString("UnitCode").toString();
-                            }else if(_selectedDeathPlace == "2"){
-                              referSansthaView=true;
-                              referJilaView=true;
-                              referBlockView=true;
-                            }else if(_selectedDeathPlace == "3"){
-                              referSansthaView=false;
-                              referJilaView=false;
-                              referBlockView=false;
-                              _postDeathUnitID=preferences.getString("UnitCode").toString();
-                            }else if(_selectedDeathPlace == "4"){
-                              referSansthaView=false;
-                              referJilaView=false;
-                              referBlockView=false;
-                              _postDeathUnitID=preferences.getString("UnitCode").toString();
-                            }
-                          });
-                        },
-                        value: _selectedDeathPlace,
                       ),
                     ),
-                  )
-                ],
-              ),
-            )),
+                  ),
 
-            Visibility(
-                visible: referSansthaView,
-                child: Container(
-                      child: Column(
+                  Visibility(
+                      visible: deathPlaceView,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(color: Colors.black)),
+                        padding: EdgeInsets.all(1),
+                        margin: EdgeInsets.all(3),
+                        height: 30,
+                        child: Row(
+                          children: [
+                            Container(
+                              width: (MediaQuery.of(context).size.width - 20),
+                              // width: 411.42857142857144-10,
+                              height: 40,
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButton(
+                                  icon: Padding(
+                                    padding: const EdgeInsets.only(right: 10),
+                                    child: Image.asset(
+                                      'Images/ic_dropdown.png',
+                                      height: 12,
+                                      alignment: Alignment.centerRight,
+                                    ),
+                                  ),
+                                  iconSize: 15,
+                                  elevation: 11,
+                                  //style: TextStyle(color: Colors.black),
+                                  // style: Theme.of(context).textTheme.bodyText1,
+                                  isExpanded: true,
+                                  // hint: new Text("Select State"),
+                                  items: death_place_list.map((item) {
+                                    return DropdownMenuItem(
+
+                                        child: Row(
+                                          children: [
+                                            new Flexible(
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(2.0),
+                                                  child: Text(
+                                                    item.title.toString(),
+                                                    //Names that the api dropdown contains
+                                                    style: TextStyle(
+                                                      fontSize: 14.0,
+                                                    ),
+                                                  ),
+                                                )),
+                                          ],
+                                        ),
+                                        value: item.code
+                                            .toString() //Id that has to be passed that the dropdown has.....
+                                    );
+                                  }).toList(),
+                                  onChanged: (String? newVal) {
+                                    setState(() {
+                                      _selectedDeathPlace = newVal!;
+                                      print('_selectedDeathPlace:$_selectedDeathPlace');
+                                      if(_selectedDeathPlace == "0"){
+                                        referSansthaView=false;
+                                        referJilaView=false;
+                                        referBlockView=false;
+                                      }else if(_selectedDeathPlace == "1"){
+                                        referSansthaView=false;
+                                        referJilaView=false;
+                                        referBlockView=false;
+                                        sapraView=false;
+                                        upSwasthyaKendraView=false;
+                                        _postDeathUnitID=preferences.getString("UnitCode").toString();
+                                      }else if(_selectedDeathPlace == "2"){
+                                        referSansthaView=true;
+                                        referJilaView=true;
+                                        referBlockView=true;
+                                      }else if(_selectedDeathPlace == "3"){
+                                        referSansthaView=false;
+                                        referJilaView=false;
+                                        referBlockView=false;
+                                        _postDeathUnitID=preferences.getString("UnitCode").toString();
+                                      }else if(_selectedDeathPlace == "4"){
+                                        referSansthaView=false;
+                                        referJilaView=false;
+                                        referBlockView=false;
+                                        _postDeathUnitID=preferences.getString("UnitCode").toString();
+                                      }
+                                    });
+                                  },
+                                  value: _selectedDeathPlace,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      )),
+
+                  Visibility(
+                      visible: referSansthaView,
+                      child: Container(
+                        child: Column(
+                          children: [
+                            Container(
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Text(
+                                    Strings.sanstha_type,
+                                    style: TextStyle(color: Colors.black, fontSize: 13),
+                                  ),
+                                ),
+                              ),
+                            ),
+
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  border: Border.all(color: Colors.black)),
+                              padding: EdgeInsets.all(1),
+                              margin: EdgeInsets.all(3),
+                              height: 30,
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: (MediaQuery.of(context).size.width - 20),
+                                    // width: 411.42857142857144-10,
+                                    height: 40,
+                                    child: DropdownButtonHideUnderline(
+                                      child: DropdownButton(
+                                        icon: Padding(
+                                          padding: const EdgeInsets.only(right: 10),
+                                          child: Image.asset(
+                                            'Images/ic_dropdown.png',
+                                            height: 12,
+                                            alignment: Alignment.centerRight,
+                                          ),
+                                        ),
+                                        iconSize: 15,
+                                        elevation: 11,
+                                        //style: TextStyle(color: Colors.black),
+                                        //style: Theme.of(context).textTheme.bodyText1,
+                                        isExpanded: true,
+                                        // hint: new Text("Select State"),
+                                        items: refer_sanstha_list.map((item) {
+                                          return DropdownMenuItem(
+
+                                              child: Row(
+                                                children: [
+                                                  new Flexible(
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.all(2.0),
+                                                        child: Text(
+                                                          item.title.toString(),
+                                                          //Names that the api dropdown contains
+                                                          style: TextStyle(
+                                                            fontSize: 14.0,
+                                                          ),
+                                                        ),
+                                                      )),
+                                                ],
+                                              ),
+                                              value: item.code.toString() //Id that has to be passed that the dropdown has.....
+                                          );
+                                        }).toList(),
+                                        onChanged: (String? newVal) {
+                                          setState(() {
+                                            _selectedReferSanstha = newVal!;
+                                            print('_selectedReferSanstha:$_selectedReferSanstha');
+                                            getDistrictListAPIChanged("3");
+                                            if(_selectedReferSanstha == "0" || _selectedReferSanstha == "17"){
+                                              referJilaView=false;
+                                              referBlockView=false;
+                                              sapraView=false;
+                                              upSwasthyaKendraView=false;
+                                              _postDeathUnitID=preferences.getString("UnitCode").toString();
+                                            }else if(_selectedReferSanstha == "11"){
+                                              change_title=Strings.block;
+                                              change_title2=Strings.sa_pra_dispensary;
+                                              referJilaView=true;
+                                              referBlockView=true;
+                                              sapraView=true;
+                                              upSwasthyaKendraView=true;
+                                            }else if(_selectedReferSanstha == "8" || _selectedReferSanstha == "9" || _selectedReferSanstha == "10" || _selectedReferSanstha == "16"){
+                                              for(int i=0 ;i<refer_sanstha_list.length; i++) {
+                                                if(_selectedReferSanstha == refer_sanstha_list[i].code.toString()){
+                                                  change_title2=refer_sanstha_list[i].title.toString();
+                                                }
+                                              }
+                                              change_title=Strings.block;
+                                              referJilaView=true;
+                                              referBlockView=true;
+                                              sapraView=true;
+                                              upSwasthyaKendraView=false;
+                                            }else{
+                                              for(int i=0 ;i<refer_sanstha_list.length; i++) {
+                                                if(_selectedReferSanstha == refer_sanstha_list[i].code.toString()){
+                                                  change_title=refer_sanstha_list[i].title.toString();
+                                                }
+                                              }
+                                              referJilaView=true;
+                                              referBlockView=true;
+                                              sapraView=false;
+                                              upSwasthyaKendraView=false;
+                                            }
+                                          });
+                                        },
+                                        value: _selectedReferSanstha,
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      )),
+
+                  Visibility(
+                      visible: referJilaView,
+                      child: Container(
+                        child: Column(
+                          children: [
+                            Container(
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Text(
+                                    Strings.refer_jila,
+                                    style: TextStyle(color: Colors.black, fontSize: 13),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  border: Border.all(color: Colors.black)),
+                              padding: EdgeInsets.all(1),
+                              margin: EdgeInsets.all(3),
+                              height: 30,
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width:
+                                    (MediaQuery.of(context).size.width - 20),
+                                    height: 40,
+                                    child: DropdownButtonHideUnderline(
+                                      child: DropdownButton(
+                                        icon: Padding(
+                                          padding:
+                                          const EdgeInsets.only(right: 10),
+                                          child: Image.asset(
+                                            'Images/ic_dropdown.png',
+                                            height: 12,
+                                            alignment: Alignment.centerRight,
+                                          ),
+                                        ),
+                                        iconSize: 15,
+                                        elevation: 11,
+                                        //style: TextStyle(color: Colors.black),
+                                        // style: Theme.of(context).textTheme.bodyText1,
+                                        isExpanded: true,
+                                        // hint: new Text("Select State"),
+                                        items: custom_district_list.map((item) {
+                                          return DropdownMenuItem(
+                                              child: Row(
+                                                children: [
+                                                  new Flexible(
+                                                      child: Padding(
+                                                        padding:
+                                                        const EdgeInsets.all(2.0),
+                                                        child: Text(item.unitNameHindi.toString(),
+                                                          //Names that the api dropdown contains
+                                                          style: TextStyle(
+                                                            fontSize: 14,
+                                                          ),
+                                                        ),
+                                                      )),
+                                                ],
+                                              ),
+                                              value: item.unitcode.toString() //Id that has to be passed that the dropdown has.....
+                                            //value: "चुनें"     //Id that has to be passed that the dropdown has.....
+                                          );
+                                        }).toList(),
+                                        onChanged: (String? newVal) {
+                                          setState(() {
+                                            _selectedDistrictUnitCode = newVal!;
+                                            print('distrcode:$_selectedDistrictUnitCode');
+
+                                            if(_selectedReferSanstha == "8" || _selectedReferSanstha == "9" ||
+                                                _selectedReferSanstha == "10" ||_selectedReferSanstha == "11" ||
+                                                _selectedReferSanstha == "16"){
+                                              getBlockListAPI("4",_selectedDistrictUnitCode.substring(0, 4));
+                                            }else{
+                                              getBlockListAPI(_selectedReferSanstha,_selectedDistrictUnitCode.substring(0, 4));
+                                            }
+                                          });
+                                        },
+                                        value: _selectedDistrictUnitCode, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+
+                          ],
+                        ),
+                      )),
+
+                  Visibility(
+                      visible:referBlockView ,
+                      child: Container(child: Column(
                         children: [
                           Container(
                             child: Align(
@@ -2203,13 +2412,12 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
                               child: Padding(
                                 padding: const EdgeInsets.all(5.0),
                                 child: Text(
-                                  Strings.sanstha_type,
+                                  '$change_title',
                                   style: TextStyle(color: Colors.black, fontSize: 13),
                                 ),
                               ),
                             ),
                           ),
-
                           Container(
                             decoration: BoxDecoration(
                                 color: Colors.white,
@@ -2220,13 +2428,15 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
                             child: Row(
                               children: [
                                 Container(
-                                  width: (MediaQuery.of(context).size.width - 10),
+                                  width:
+                                  (MediaQuery.of(context).size.width - 20),
                                   // width: 411.42857142857144-10,
                                   height: 40,
                                   child: DropdownButtonHideUnderline(
                                     child: DropdownButton(
                                       icon: Padding(
-                                        padding: const EdgeInsets.only(right: 10),
+                                        padding:
+                                        const EdgeInsets.only(right: 10),
                                         child: Image.asset(
                                           'Images/ic_dropdown.png',
                                           height: 12,
@@ -2236,19 +2446,19 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
                                       iconSize: 15,
                                       elevation: 11,
                                       //style: TextStyle(color: Colors.black),
-                                      //style: Theme.of(context).textTheme.bodyText1,
+                                      // style: Theme.of(context).textTheme.bodyText1,
                                       isExpanded: true,
                                       // hint: new Text("Select State"),
-                                      items: refer_sanstha_list.map((item) {
+                                      items: custom_block_list.map((item) {
                                         return DropdownMenuItem(
-
                                             child: Row(
                                               children: [
                                                 new Flexible(
                                                     child: Padding(
-                                                      padding: const EdgeInsets.all(2.0),
+                                                      padding:
+                                                      const EdgeInsets.all(2.0),
                                                       child: Text(
-                                                        item.title.toString(),
+                                                        item.UnitName.toString(),
                                                         //Names that the api dropdown contains
                                                         style: TextStyle(
                                                           fontSize: 14.0,
@@ -2257,52 +2467,63 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
                                                     )),
                                               ],
                                             ),
-                                            value: item.code.toString() //Id that has to be passed that the dropdown has.....
+                                            value: item.UnitCode.toString() //Id that has to be passed that the dropdown has.....
+                                          //value: "चुनें"     //Id that has to be passed that the dropdown has.....
                                         );
                                       }).toList(),
                                       onChanged: (String? newVal) {
                                         setState(() {
-                                          _selectedReferSanstha = newVal!;
-                                          print('_selectedReferSanstha:$_selectedReferSanstha');
-                                          getDistrictListAPIChanged("3");
-                                          if(_selectedReferSanstha == "0" || _selectedReferSanstha == "17"){
-                                          referJilaView=false;
-                                          referBlockView=false;
-                                          sapraView=false;
-                                          upSwasthyaKendraView=false;
-                                          _postDeathUnitID=preferences.getString("UnitCode").toString();
-                                          }else if(_selectedReferSanstha == "11"){
-                                            change_title=Strings.block;
-                                            change_title2=Strings.sa_pra_dispensary;
-                                            referJilaView=true;
-                                            referBlockView=true;
-                                            sapraView=true;
-                                            upSwasthyaKendraView=true;
-                                          }else if(_selectedReferSanstha == "8" || _selectedReferSanstha == "9" || _selectedReferSanstha == "10" || _selectedReferSanstha == "16"){
-                                            for(int i=0 ;i<refer_sanstha_list.length; i++) {
-                                              if(_selectedReferSanstha == refer_sanstha_list[i].code.toString()){
-                                                change_title2=refer_sanstha_list[i].title.toString();
-                                              }
-                                            }
-                                            change_title=Strings.block;
-                                            referJilaView=true;
-                                            referBlockView=true;
-                                            sapraView=true;
-                                            upSwasthyaKendraView=false;
+                                          _selectedBlockUnitCode = newVal!;
+                                          print('blockcode:$_selectedBlockUnitCode');
+                                          _postDeathUnitID=_selectedBlockUnitCode;
+                                          //_selectedCHPhcCode="000000000";
+                                          if(_selectedBlockUnitCode == "000000"){
+
                                           }else{
-                                            for(int i=0 ;i<refer_sanstha_list.length; i++) {
-                                               if(_selectedReferSanstha == refer_sanstha_list[i].code.toString()){
-                                                 change_title=refer_sanstha_list[i].title.toString();
-                                               }
+
+                                          }
+                                          // _ReferUnitCode=_selectedBlockUnitCode;
+
+                                          for (int pos = 0; pos < custom_block_list.length; pos++) {
+                                            if(_selectedBlockUnitCode == custom_block_list[pos].UnitCode){
+                                              print('selected position ${pos}');
+                                              blockValue=pos;
+                                              break;
                                             }
-                                            referJilaView=true;
-                                            referBlockView=true;
-                                            sapraView=false;
-                                            upSwasthyaKendraView=false;
+                                          }
+                                          for (int pos = 0; pos < custom_block_list.length; pos++) {
+                                            if(_selectedBlockUnitCode == custom_block_list[pos].UnitCode){
+                                              //print('selected position ${pos}');
+                                              blockValue=pos;
+                                              break;
+                                            }
+                                          }
+                                          print('prev_refer_sanstha $_selectedReferSanstha');
+                                          print('blockValue $blockValue');
+                                          if(blockValue == 0){
+                                            _Action="2";
+                                            getCHPHCListAPI(_selectedReferSanstha,_selectedBlockUnitCode.substring(0,4),_Action);
+                                          }else if(_selectedReferSanstha == "8" || _selectedReferSanstha == "9" || _selectedReferSanstha == "10" ||_selectedReferSanstha == "16"){
+                                            _isBlockChanged=true;
+                                            _Action="1";
+                                            getCHPHCListAPI(_selectedReferSanstha,_selectedBlockUnitCode.substring(0,4),_Action);
+                                          }else if(_selectedReferSanstha == "11"){
+                                            if(blockValue == 0){
+                                              _Action="2";
+                                              getCHPHCListAPI(_selectedReferSanstha,_selectedBlockUnitCode.substring(0,4), _Action);
+
+                                            }else{
+                                              _Action="3";
+                                              getCHPHCListAPI(_selectedReferSanstha,_selectedBlockUnitCode.substring(0,4),_Action);
+                                            }
+                                          }else{
+                                            _isBlockChanged=true;
+                                            _Action="1";
+                                            getCHPHCListAPI(_selectedReferSanstha,_selectedBlockUnitCode.substring(0,4),_Action);
                                           }
                                         });
                                       },
-                                      value: _selectedReferSanstha,
+                                      value: _selectedBlockUnitCode, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
                                     ),
                                   ),
                                 )
@@ -2310,445 +2531,234 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
                             ),
                           ),
                         ],
-                      ),
-            )),
-            Visibility(
-              visible: referJilaView,
-              child: Container(
-              child: Column(
-                children: [
-                  Container(
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Text(
-                          Strings.refer_jila,
-                          style: TextStyle(color: Colors.black, fontSize: 13),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(color: Colors.black)),
-                    padding: EdgeInsets.all(1),
-                    margin: EdgeInsets.all(3),
-                    height: 30,
-                    child: Row(
-                      children: [
-                        Container(
-                          width:
-                          (MediaQuery.of(context).size.width - 10),
-                          height: 40,
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton(
-                              icon: Padding(
-                                padding:
-                                const EdgeInsets.only(right: 10),
-                                child: Image.asset(
-                                  'Images/ic_dropdown.png',
-                                  height: 12,
-                                  alignment: Alignment.centerRight,
-                                ),
-                              ),
-                              iconSize: 15,
-                              elevation: 11,
-                              //style: TextStyle(color: Colors.black),
-                             // style: Theme.of(context).textTheme.bodyText1,
-                              isExpanded: true,
-                              // hint: new Text("Select State"),
-                              items: custom_district_list.map((item) {
-                                return DropdownMenuItem(
-                                    child: Row(
-                                      children: [
-                                        new Flexible(
-                                            child: Padding(
-                                              padding:
-                                              const EdgeInsets.all(2.0),
-                                              child: Text(item.unitNameHindi.toString(),
-                                                //Names that the api dropdown contains
-                                                style: TextStyle(
-                                                  fontSize: 140,
-                                                ),
-                                              ),
-                                            )),
-                                      ],
-                                    ),
-                                    value: item.unitcode.toString() //Id that has to be passed that the dropdown has.....
-                                  //value: "चुनें"     //Id that has to be passed that the dropdown has.....
-                                );
-                              }).toList(),
-                              onChanged: (String? newVal) {
-                                setState(() {
-                                  _selectedDistrictUnitCode = newVal!;
-                                  print('distrcode:$_selectedDistrictUnitCode');
+                      ),)),
 
-                                  if(_selectedReferSanstha == "8" || _selectedReferSanstha == "9" ||
-                                      _selectedReferSanstha == "10" ||_selectedReferSanstha == "11" ||
-                                      _selectedReferSanstha == "16"){
-                                    getBlockListAPI("4",_selectedDistrictUnitCode.substring(0, 4));
-                                  }else{
-                                    getBlockListAPI(_selectedReferSanstha,_selectedDistrictUnitCode.substring(0, 4));
-                                  }
-                                });
-                              },
-                              value: _selectedDistrictUnitCode, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-
-                ],
-              ),
-            )),
-            Visibility(
-                visible:referBlockView ,
-                child: Container(child: Column(
-                children: [
-                  Container(
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Text(
-                          '$change_title',
-                          style: TextStyle(color: Colors.black, fontSize: 13),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(color: Colors.black)),
-                    padding: EdgeInsets.all(1),
-                    margin: EdgeInsets.all(3),
-                    height: 30,
-                    child: Row(
-                      children: [
-                        Container(
-                          width:
-                          (MediaQuery.of(context).size.width - 10),
-                          // width: 411.42857142857144-10,
-                          height: 40,
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton(
-                              icon: Padding(
-                                padding:
-                                const EdgeInsets.only(right: 10),
-                                child: Image.asset(
-                                  'Images/ic_dropdown.png',
-                                  height: 12,
-                                  alignment: Alignment.centerRight,
-                                ),
-                              ),
-                              iconSize: 15,
-                              elevation: 11,
-                              //style: TextStyle(color: Colors.black),
-                             // style: Theme.of(context).textTheme.bodyText1,
-                              isExpanded: true,
-                              // hint: new Text("Select State"),
-                              items: custom_block_list.map((item) {
-                                return DropdownMenuItem(
-                                    child: Row(
-                                      children: [
-                                        new Flexible(
-                                            child: Padding(
-                                              padding:
-                                              const EdgeInsets.all(2.0),
-                                              child: Text(
-                                                item.UnitName.toString(),
-                                                //Names that the api dropdown contains
-                                                style: TextStyle(
-                                                  fontSize: 14.0,
-                                                ),
-                                              ),
-                                            )),
-                                      ],
-                                    ),
-                                    value: item.UnitCode.toString() //Id that has to be passed that the dropdown has.....
-                                  //value: "चुनें"     //Id that has to be passed that the dropdown has.....
-                                );
-                              }).toList(),
-                              onChanged: (String? newVal) {
-                                setState(() {
-                                  _selectedBlockUnitCode = newVal!;
-                                  print('blockcode:$_selectedBlockUnitCode');
-                                  _postDeathUnitID=_selectedBlockUnitCode;
-                                  //_selectedCHPhcCode="000000000";
-                                  if(_selectedBlockUnitCode == "000000"){
-
-                                  }else{
-
-                                  }
-                                  // _ReferUnitCode=_selectedBlockUnitCode;
-
-                                  for (int pos = 0; pos < custom_block_list.length; pos++) {
-                                    if(_selectedBlockUnitCode == custom_block_list[pos].UnitCode){
-                                      print('selected position ${pos}');
-                                      blockValue=pos;
-                                      break;
-                                    }
-                                  }
-                                  for (int pos = 0; pos < custom_block_list.length; pos++) {
-                                    if(_selectedBlockUnitCode == custom_block_list[pos].UnitCode){
-                                      //print('selected position ${pos}');
-                                      blockValue=pos;
-                                      break;
-                                    }
-                                  }
-                                  print('prev_refer_sanstha $_selectedReferSanstha');
-                                  print('blockValue $blockValue');
-                                  if(blockValue == 0){
-                                    _Action="2";
-                                    getCHPHCListAPI(_selectedReferSanstha,_selectedBlockUnitCode.substring(0,4),_Action);
-                                  }else if(_selectedReferSanstha == "8" || _selectedReferSanstha == "9" || _selectedReferSanstha == "10" ||_selectedReferSanstha == "16"){
-                                    _isBlockChanged=true;
-                                    _Action="1";
-                                    getCHPHCListAPI(_selectedReferSanstha,_selectedBlockUnitCode.substring(0,4),_Action);
-                                  }else if(_selectedReferSanstha == "11"){
-                                    if(blockValue == 0){
-                                      _Action="2";
-                                      getCHPHCListAPI(_selectedReferSanstha,_selectedBlockUnitCode.substring(0,4), _Action);
-
-                                    }else{
-                                      _Action="3";
-                                      getCHPHCListAPI(_selectedReferSanstha,_selectedBlockUnitCode.substring(0,4),_Action);
-                                    }
-                                  }else{
-                                    _isBlockChanged=true;
-                                    _Action="1";
-                                    getCHPHCListAPI(_selectedReferSanstha,_selectedBlockUnitCode.substring(0,4),_Action);
-                                  }
-                                });
-                              },
-                              value: _selectedBlockUnitCode, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-            ),)),
-            Visibility(
-                visible:sapraView ,
-                child: Container(
-                child: Column(
-                  children: [
-                    Container(
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Text(
-                            '$change_title2',
-                            style: TextStyle(color: Colors.black, fontSize: 13),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(color: Colors.black)),
-                      padding: EdgeInsets.all(1),
-                      margin: EdgeInsets.all(3),
-                      height: 30,
-                      child: Row(
-                        children: [
-                          Container(
-                            width:
-                            (MediaQuery.of(context).size.width - 10),
-                            // width: 411.42857142857144-10,
-                            height: 40,
-                            child: DropdownButtonHideUnderline(
-                              child: DropdownButton(
-                                icon: Padding(
-                                  padding:
-                                  const EdgeInsets.only(right: 10),
-                                  child: Image.asset(
-                                    'Images/ic_dropdown.png',
-                                    height: 12,
-                                    alignment: Alignment.centerRight,
+                  Visibility(
+                      visible:sapraView ,
+                      child: Container(
+                        child: Column(
+                          children: [
+                            Container(
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Text(
+                                    '$change_title2',
+                                    style: TextStyle(color: Colors.black, fontSize: 13),
                                   ),
                                 ),
-                                iconSize: 15,
-                                elevation: 11,
-                                //style: TextStyle(color: Colors.black),
-                               // style: Theme.of(context).textTheme.bodyText1,
-                                isExpanded: true,
-                                // hint: new Text("Select State"),
-                                items: custom_chcph_list.map((item) {
-                                  return DropdownMenuItem(
-                                      child: Row(
-                                        children: [
-                                          new Flexible(
-                                              child: Padding(
-                                                padding:
-                                                const EdgeInsets.all(2.0),
-                                                child: Text(
-                                                  item.UnitName.toString(),
-                                                  //Names that the api dropdown contains
-                                                  style: TextStyle(
-                                                    fontSize: 14.0,
-                                                  ),
-                                                ),
-                                              )),
-                                        ],
-                                      ),
-                                      value: item.UnitCode.toString() //Id that has to be passed that the dropdown has.....
-                                    //value: "चुनें"     //Id that has to be passed that the dropdown has.....
-                                  );
-                                }).toList(),
-                                onChanged: (String? newVal) {
-                                  setState(() {
-                                    _selectedCHPhcCode = newVal!;
-                                    print('_selectedCHPhcCode:$_selectedCHPhcCode');
-                                    _postDeathUnitID=_selectedCHPhcCode;
-                                    getUpSwasthyaListAPI(_selectedReferSanstha,_selectedCHPhcCode.substring(0,9));
-                                  });
-                                },
-                                value: _selectedCHPhcCode, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
                               ),
                             ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-            )),
-            Visibility(
-                visible:upSwasthyaKendraView,
-                child: Container(child: Column(children: [
-                  Container(
-                    child: Align(
-                      alignment: Alignment.centerLeft,
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  border: Border.all(color: Colors.black)),
+                              padding: EdgeInsets.all(1),
+                              margin: EdgeInsets.all(3),
+                              height: 30,
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width:
+                                    (MediaQuery.of(context).size.width - 20),
+                                    // width: 411.42857142857144-10,
+                                    height: 40,
+                                    child: DropdownButtonHideUnderline(
+                                      child: DropdownButton(
+                                        icon: Padding(
+                                          padding:
+                                          const EdgeInsets.only(right: 10),
+                                          child: Image.asset(
+                                            'Images/ic_dropdown.png',
+                                            height: 12,
+                                            alignment: Alignment.centerRight,
+                                          ),
+                                        ),
+                                        iconSize: 15,
+                                        elevation: 11,
+                                        //style: TextStyle(color: Colors.black),
+                                        // style: Theme.of(context).textTheme.bodyText1,
+                                        isExpanded: true,
+                                        // hint: new Text("Select State"),
+                                        items: custom_chcph_list.map((item) {
+                                          return DropdownMenuItem(
+                                              child: Row(
+                                                children: [
+                                                  new Flexible(
+                                                      child: Padding(
+                                                        padding:
+                                                        const EdgeInsets.all(2.0),
+                                                        child: Text(
+                                                          item.UnitName.toString(),
+                                                          //Names that the api dropdown contains
+                                                          style: TextStyle(
+                                                            fontSize: 14.0,
+                                                          ),
+                                                        ),
+                                                      )),
+                                                ],
+                                              ),
+                                              value: item.UnitCode.toString() //Id that has to be passed that the dropdown has.....
+                                            //value: "चुनें"     //Id that has to be passed that the dropdown has.....
+                                          );
+                                        }).toList(),
+                                        onChanged: (String? newVal) {
+                                          setState(() {
+                                            _selectedCHPhcCode = newVal!;
+                                            print('_selectedCHPhcCode:$_selectedCHPhcCode');
+                                            _postDeathUnitID=_selectedCHPhcCode;
+                                            getUpSwasthyaListAPI(_selectedReferSanstha,_selectedCHPhcCode.substring(0,9));
+                                          });
+                                        },
+                                        value: _selectedCHPhcCode, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      )),
+
+                  Visibility(
+                      visible:upSwasthyaKendraView,
+                      child: Container(child: Column(children: [
+                        Container(
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Text(
+                                Strings.up_swasthya,
+                                style: TextStyle(color: Colors.black, fontSize: 13),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(color: Colors.black)),
+                          padding: EdgeInsets.all(1),
+                          margin: EdgeInsets.all(3),
+                          height: 30,
+                          child: Row(
+                            children: [
+                              Container(
+                                width:
+                                (MediaQuery.of(context).size.width - 20),
+                                // width: 411.42857142857144-10,
+                                height: 40,
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton(
+                                    icon: Padding(
+                                      padding:
+                                      const EdgeInsets.only(right: 10),
+                                      child: Image.asset(
+                                        'Images/ic_dropdown.png',
+                                        height: 12,
+                                        alignment: Alignment.centerRight,
+                                      ),
+                                    ),
+                                    iconSize: 15,
+                                    elevation: 11,
+                                    //style: TextStyle(color: Colors.black),
+                                    // style: Theme.of(context).textTheme.bodyText1,
+                                    isExpanded: true,
+                                    // hint: new Text("Select State"),
+                                    items: custom_upswasthya_list.map((item) {
+                                      return DropdownMenuItem(
+                                          child: Row(
+                                            children: [
+                                              new Flexible(
+                                                  child: Padding(
+                                                    padding:
+                                                    const EdgeInsets.all(2.0),
+                                                    child: Text(
+                                                      item.UnitName.toString(),
+                                                      //Names that the api dropdown contains
+                                                      style: TextStyle(
+                                                        fontSize: 14.0,
+                                                      ),
+                                                    ),
+                                                  )),
+                                            ],
+                                          ),
+                                          value: item.UnitCode.toString() //Id that has to be passed that the dropdown has.....
+                                        //value: "चुनें"     //Id that has to be passed that the dropdown has.....
+                                      );
+                                    }).toList(),
+                                    onChanged:(String? newVal) {
+                                      setState(() {
+                                        _selectedUpSwasthyaCode = newVal!;
+                                        print('_selectedUpSwasthyaCode:$_selectedUpSwasthyaCode');
+                                        _postDeathUnitID=_selectedUpSwasthyaCode;
+                                      });
+                                    },
+                                    value: _selectedUpSwasthyaCode, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+
+
+                      ]),)),
+
+                  SizedBox(
+                    height: 50,
+                  ),
+                ],
+              ),
+            ),),
+
+
+            _ShowHideADDNewVivranView == true
+                ?
+            Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                top: 0,
+                child: Visibility(
+                visible: finalButtonView,
+                child: GestureDetector(
+                  onTap: (){
+
+                    postValidateData();
+                  },
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      height: 40,
+                      color: ColorConstants.AppColorPrimary,
                       child: Padding(
                         padding: const EdgeInsets.all(5.0),
-                        child: Text(
-                          Strings.up_swasthya,
-                          style: TextStyle(color: Colors.black, fontSize: 13),
+                        child: Center(
+                          child: RichText(
+                            text: TextSpan(
+                                text: finalButtonText,
+                                style: TextStyle(color: Colors.white, fontSize: 13),
+                                children: [
+                                  TextSpan(
+                                      text: '',
+                                      style: TextStyle(
+                                          color: Colors.red,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12))
+                                ]),
+                            textAlign: TextAlign.left,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(color: Colors.black)),
-                    padding: EdgeInsets.all(1),
-                    margin: EdgeInsets.all(3),
-                    height: 30,
-                    child: Row(
-                      children: [
-                        Container(
-                          width:
-                          (MediaQuery.of(context).size.width - 10),
-                          // width: 411.42857142857144-10,
-                          height: 40,
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton(
-                              icon: Padding(
-                                padding:
-                                const EdgeInsets.only(right: 10),
-                                child: Image.asset(
-                                  'Images/ic_dropdown.png',
-                                  height: 12,
-                                  alignment: Alignment.centerRight,
-                                ),
-                              ),
-                              iconSize: 15,
-                              elevation: 11,
-                              //style: TextStyle(color: Colors.black),
-                             // style: Theme.of(context).textTheme.bodyText1,
-                              isExpanded: true,
-                              // hint: new Text("Select State"),
-                              items: custom_upswasthya_list.map((item) {
-                                return DropdownMenuItem(
-                                    child: Row(
-                                      children: [
-                                        new Flexible(
-                                            child: Padding(
-                                              padding:
-                                              const EdgeInsets.all(2.0),
-                                              child: Text(
-                                                item.UnitName.toString(),
-                                                //Names that the api dropdown contains
-                                                style: TextStyle(
-                                                  fontSize: 14.0,
-                                                ),
-                                              ),
-                                            )),
-                                      ],
-                                    ),
-                                    value: item.UnitCode.toString() //Id that has to be passed that the dropdown has.....
-                                  //value: "चुनें"     //Id that has to be passed that the dropdown has.....
-                                );
-                              }).toList(),
-                              onChanged:(String? newVal) {
-                                setState(() {
-                                  _selectedUpSwasthyaCode = newVal!;
-                                  print('_selectedUpSwasthyaCode:$_selectedUpSwasthyaCode');
-                                  _postDeathUnitID=_selectedUpSwasthyaCode;
-                                });
-                              },
-                              value: _selectedUpSwasthyaCode, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-
-
-            ]),)),
-            SizedBox(
-              height: 20,
-            ),
-            _ShowHideADDNewVivranView == true
-                ?
-            Visibility(
-                visible: finalButtonView,
-                child: GestureDetector(
-              onTap: (){
-
-                postValidateData();
-              },
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  height: 40,
-                  color: ColorConstants.AppColorPrimary,
-                  child: Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Center(
-                      child: RichText(
-                        text: TextSpan(
-                            text: finalButtonText,
-                            style: TextStyle(color: Colors.white, fontSize: 13),
-                            children: [
-                              TextSpan(
-                                  text: '',
-                                  style: TextStyle(
-                                      color: Colors.red,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12))
-                            ]),
-                        textAlign: TextAlign.left,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ))
-              :
-            Container(),
+                )))
+                :
+            Container()
           ],
         ),
       ),

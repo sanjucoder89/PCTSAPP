@@ -1859,9 +1859,7 @@ class _FindPCTSDetails extends State<FindPCTSDetails> {
                       Expanded(
                           child: GestureDetector(
                         onTap: () {
-                          getChildInfantVivranAPI(_child_vivaran_response[index]
-                                  ['infantid']
-                              .toString());
+                          getChildInfantVivranAPI(_child_vivaran_response[index]['infantid'].toString());
                         },
                         child: Container(
                             margin: EdgeInsets.all(3),
@@ -2193,7 +2191,7 @@ class _FindPCTSDetails extends State<FindPCTSDetails> {
             ),
           ),
           Container(
-            height: 300,
+            //height: 300,
             //height: MediaQuery.of(context).size.height / 2,
             child: MediaQuery.removePadding(
                 context: context,
@@ -2204,6 +2202,7 @@ class _FindPCTSDetails extends State<FindPCTSDetails> {
                   crossAxisSpacing: 0,
                   mainAxisSpacing: 0,
                   reverse: true,
+                  shrinkWrap: true,
                   children: List.generate(getChildInfantResLength(), (index) {
                     return GestureDetector(
                       onTap: () {},

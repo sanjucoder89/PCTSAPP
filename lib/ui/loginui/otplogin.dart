@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:pcts/Model/CheckOtpmodel.dart';
@@ -69,6 +70,7 @@ class _OtpLoginPage extends State<OtpLoginPage> {
   void dispose() {
     errorController!.close();
     super.dispose();
+    EasyLoading.dismiss();
   }
 
   snackBar(String? message) {
@@ -81,6 +83,10 @@ class _OtpLoginPage extends State<OtpLoginPage> {
   }
 
   Future<String> getCheckOtp(String otp) async {
+    await EasyLoading.show(
+      status: 'loading...',
+      maskType: EasyLoadingMaskType.black,
+    );
     preferences = await SharedPreferences.getInstance();
 
     var response = await post(Uri.parse(urlcheckotp), body: {
@@ -131,6 +137,7 @@ class _OtpLoginPage extends State<OtpLoginPage> {
           backgroundColor: Colors.red,
           textColor: Colors.white);
     }
+    EasyLoading.dismiss();
     return "Success";
   }
 

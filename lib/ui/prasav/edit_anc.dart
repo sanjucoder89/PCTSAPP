@@ -9526,9 +9526,6 @@ class _EditANCScreen extends State<EditANCScreen> {
 
     _weightKiloGramController.text=widget.weight.toString().trim();
     print('TT1Date ${widget.TT1}');
-    print('PreviousTT1Date ${widget.PreviousTT1Date}');
-
-
 
 
     if(widget.TT1.isNotEmpty){

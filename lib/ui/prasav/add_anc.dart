@@ -9517,8 +9517,6 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
         _highAnaimiyaCheckb=false;
         custom_high_pragnancy_cvslist.removeWhere((item) => item.rishId == 0);//remove 7 from csv ids
       }else if(double.parse(_hb) < 10.0){
-
-
               if(double.parse(_hb) <= 7.0){
                 _highAnaimiyaCheckb=true;
                 custom_high_pragnancy_cvslist.add(CustomHighRiskPragnancyList(rishId: 0,rishValue: "7"));//add 7 in csv

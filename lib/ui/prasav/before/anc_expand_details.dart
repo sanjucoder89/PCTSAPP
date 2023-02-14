@@ -1157,7 +1157,7 @@ class _AncExpandDetails extends State<AncExpandDetails> {
                           ),
                           Visibility(
                             //visible: last_pos == list_index ? preferences.getString("AppRoleID") == "32" ? custom_anc_list[list_index].ANMVerify.toString() == "0" ? true : preferences.getString("AppRoleID") == "33" && custom_anc_list[list_index].ashaAutoID.toString() == preferences.getString('ANMAutoID') ? true : false : preferences.getString("AppRoleID") == "33" && custom_anc_list[list_index].ashaAutoID.toString() == preferences.getString('ANMAutoID') ? true : false  : false,
-                            visible: last_pos == list_index ? preferences.getString("AppRoleID") == "32" ? custom_anc_list[list_index].ANMVerify.toString() == "0" ?  true : false : preferences.getString("AppRoleID") == "33" && custom_anc_list[list_index].ashaAutoID.toString() == preferences.getString('ANMAutoID') ? true : false : false,
+                            visible: last_pos == list_index ? preferences.getString("AppRoleID") == "32" ? custom_anc_list[list_index].ANMVerify.toString() == "0" ?  true : false : preferences.getString("AppRoleID") == "33" && ((custom_anc_list[list_index].ashaAutoID.toString() == preferences.getString('ANMAutoID')) && custom_anc_list[list_index].Media.toString() == "2" ) ? true : false : false,
                             //visible: preferences.getString("AppRoleID") == "33" ? false : preferences.getString("AppRoleID") == "32" && custom_anc_list[list_index].ANMVerify.toString() == "0" ? true : false,
                               child: GestureDetector(
                                 onTap: (){

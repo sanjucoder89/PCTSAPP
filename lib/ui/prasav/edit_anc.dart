@@ -87,7 +87,8 @@ class EditANCScreen extends StatefulWidget {
       required this.ANC4Date,
       required this.PreviousTT1Date,
       required this.PreviousTT2Date,
-      required this.PreviousTTBDate
+      required this.PreviousTTBDate,
+      required this.HighRisk
       })
       : super(key: key);
   final String pctsID;
@@ -146,6 +147,7 @@ class EditANCScreen extends StatefulWidget {
   final String PreviousTT1Date;
   final String PreviousTT2Date;
   final String PreviousTTBDate;
+  final String HighRisk;
 
   @override
   State<StatefulWidget> createState() => _EditANCScreen();
@@ -536,6 +538,12 @@ class _EditANCScreen extends State<EditANCScreen> {
         _highRiskEnDisableCB=false;//enable or disable highrisk checkbox
         _purvJatilPrastutiCheckb=true;
         _PurvJatilEnDisableCB=false;
+      }
+      if(widget.HighRisk == "1"){//if case is highrisk thn purvjatil checkbox will be enabled
+        _purvJatilPrastutiCheckb=true;
+        _PurvJatilEnDisableCB=false;
+        _highRiskChecked=true;//checked highrisk chkbox
+        _highRiskEnDisableCB=false;//enable or disable highrisk checkbox
       }
 
     }
@@ -2017,7 +2025,7 @@ class _EditANCScreen extends State<EditANCScreen> {
                                   height: 36,
                                   child: Focus(
                                       onFocusChange: (hasFocus) {
-                                        if(hasFocus) {
+                                        /*if(hasFocus) {
                                           // do stuff
                                         }else{
                                           //print('enter value: $text');
@@ -2028,7 +2036,7 @@ class _EditANCScreen extends State<EditANCScreen> {
                                           }else if(double.parse(_hbCount) > 11.0){
                                             _showErrorPopup(Strings.hb_error3,ColorConstants.success_color);
                                           }
-                                        }
+                                        }*/
                                       },child: TextField(
                                     style: TextStyle(color: Colors.black),
                                     maxLength: 4,
@@ -2042,7 +2050,18 @@ class _EditANCScreen extends State<EditANCScreen> {
                                     onChanged: (text) {
                                       _hbCount=text.trim();
                                       print('_hbCount $text');
-                                      getHBHeightCheck(text,_mahilaHeightController.text.toString().trim());
+                                      if(text.length > 0){
+                                        if(double.parse(_hbCount) <= 7.0){
+                                          _showErrorPopup(Strings.hb_error,ColorConstants.error_color);
+                                        }else if(double.parse(_hbCount) > 7.0 && double.parse(_hbCount) <= 11.0){
+                                          _showErrorPopup(Strings.hb_error2,ColorConstants.warning_color);
+                                        }else if(double.parse(_hbCount) > 11.0){
+                                          _showErrorPopup(Strings.hb_error3,ColorConstants.success_color);
+                                        }else{
+
+                                        }
+                                        getHBHeightCheck(text,_mahilaHeightController.text.toString().trim());
+                                      }
                                     },
                                   ))))
                         ],
@@ -9515,7 +9534,6 @@ class _EditANCScreen extends State<EditANCScreen> {
     if(widget.TT1.isNotEmpty){
       _TT1DatePost=widget.TT1;
       _isTT1SelectedToggle(true);
-
       _isTTBSelectedToggle(false);
       var parseToDate = DateTime.parse(getConvertRegDateFormat(widget.TT1));
       String formattedDate4 = DateFormat('yyyy-MM-dd').format(parseToDate);
@@ -9557,7 +9575,7 @@ class _EditANCScreen extends State<EditANCScreen> {
     }
 
 
-    print('PreviousTT1Date ${widget.PreviousTT1Date}');
+    /*print('PreviousTT1Date ${widget.PreviousTT1Date}');
     print('PreviousTT2Date ${widget.PreviousTT2Date}');
     print('PreviousTTBDate ${widget.PreviousTTBDate}');
     if(widget.PreviousTT1Date.isNotEmpty){
@@ -9569,7 +9587,7 @@ class _EditANCScreen extends State<EditANCScreen> {
     if(widget.PreviousTTBDate.isNotEmpty){
       _isTT1SelectedToggle(false);
       _isTT2SelectedToggle(false);
-    }
+    }*/
 
 
 

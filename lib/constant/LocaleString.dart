@@ -258,6 +258,7 @@ class Strings {
   static const String pncsix_pncdate_new = "षष्ठम एचबीएनसी की प्रविष्टि हेतु क्लिक करें ";
   static const String pncseven_pncdate_new = "सप्तम एचबीएनसी की प्रविष्टि हेतु क्लिक करें ";
 
+  static const String prathm_anc_ki_pravsti_default = "एएनसी की प्रविष्टि हेतु क्लिक करें ";
   static const String prathm_anc_ki_pravsti = "प्रथम एएनसी की प्रविष्टि हेतु क्लिक करें ";
   static const String second_anc_ki_pravsti = "द्वितीय एएनसी की प्रविष्टि हेतु क्लिक करें ";
   static const String third_anc_ki_pravsti = "तृतीय एएनसी की प्रविष्टि हेतु क्लिक करें ";
@@ -688,8 +689,10 @@ class Strings {
   static const String verify_anc = "डाटा सत्यापन";
   static const String edit_anc = "प्रविष्टि सुधारें";
 
-  static const String anc_41_days_validation = "दो एएनसी के बीच 41 दिन का अन्तर जरूरी है !";
-  static const String anc_28_days_validation = "दो एएनसी के बीच 28 दिन का अन्तर जरूरी है !";
+  //static const String anc_41_days_validation = "दो एएनसी के बीच 41 दिन का अन्तर जरूरी है !";
+  static const String anc_41_days_validation = "कृपया एएनसी की तिथि जाँचे|\nदो एएनसी जाँच के बीच में 41 दिन से अधिक का अंतर होना चाहिए|";
+  //static const String anc_28_days_validation = "दो एएनसी के बीच 28 दिन का अन्तर जरूरी है !";
+  static const String anc_28_days_validation = "कृपया एएनसी की तिथि जाँचे|\nदो एएनसी जाँच के बीच में 28 दिन से अधिक का अंतर होना चाहिए|";
 
 
 

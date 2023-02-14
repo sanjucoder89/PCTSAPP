@@ -105,6 +105,8 @@ class _AncExpandDetails extends State<AncExpandDetails> {
   bool _showHideExpandableListView=false; //for enable disable covid date
   bool _showHideAddANCButtonView=false;
   bool _showEditButtonView=false;
+
+  bool _showDeleteButtonView=false;
   /*
   * API FOR Get ANC Details
   * */
@@ -198,6 +200,28 @@ class _AncExpandDetails extends State<AncExpandDetails> {
             _showHideAddANCButtonView=true;
           }
 
+
+
+          /*for (int list_index = 0; list_index < custom_anc_list.length; list_index++) {
+            if (last_pos == list_index) {
+              if (preferences.getString("AppRoleID") == "32") { //anm
+                if (custom_anc_list[list_index].ANMVerify.toString() == "0") {
+                  _showDeleteButtonView = true;
+                } else {
+                  _showDeleteButtonView = false;
+                }
+              } else if (preferences.getString("AppRoleID") == "33") {
+                if (custom_anc_list[list_index].ashaAutoID.toString() ==
+                    preferences.getString('ANMAutoID')) {
+                  _showDeleteButtonView = true;
+                } else {
+                  _showDeleteButtonView = false;
+                }
+              }
+            }else{
+              _showDeleteButtonView = false;
+            }
+          }*/
           /*if(preferences.getString("AppRoleID") == "33" && ){
             setState(() {
               _showEditButtonView=false;
@@ -875,7 +899,7 @@ class _AncExpandDetails extends State<AncExpandDetails> {
                                       Strings.fourth_anc_ki_pravsti : second_tab_msg == "2" ?
                                       Strings.third_anc_ki_pravsti : second_tab_msg == "1" ?
                                       Strings.second_anc_ki_pravsti : second_tab_msg == "0" ?
-                                      Strings.prathm_anc_ki_pravsti : second_tab_msg == "4" ? "" : ""}',
+                                      Strings.prathm_anc_ki_pravsti : second_tab_msg == "4" ? "" : Strings.prathm_anc_ki_pravsti_default}',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                           color:Colors.white,
@@ -1132,7 +1156,8 @@ class _AncExpandDetails extends State<AncExpandDetails> {
                               )
                           ),
                           Visibility(
-                            visible: last_pos == list_index ?  preferences.getString("AppRoleID") == "32" ? custom_anc_list[list_index].ANMVerify.toString() == "0" ? true : false : false  : false,
+                            //visible: last_pos == list_index ? preferences.getString("AppRoleID") == "32" ? custom_anc_list[list_index].ANMVerify.toString() == "0" ? true : preferences.getString("AppRoleID") == "33" && custom_anc_list[list_index].ashaAutoID.toString() == preferences.getString('ANMAutoID') ? true : false : preferences.getString("AppRoleID") == "33" && custom_anc_list[list_index].ashaAutoID.toString() == preferences.getString('ANMAutoID') ? true : false  : false,
+                            visible: last_pos == list_index ? preferences.getString("AppRoleID") == "32" ? custom_anc_list[list_index].ANMVerify.toString() == "0" ?  true : false : preferences.getString("AppRoleID") == "33" && custom_anc_list[list_index].ashaAutoID.toString() == preferences.getString('ANMAutoID') ? true : false : false,
                             //visible: preferences.getString("AppRoleID") == "33" ? false : preferences.getString("AppRoleID") == "32" && custom_anc_list[list_index].ANMVerify.toString() == "0" ? true : false,
                               child: GestureDetector(
                                 onTap: (){
@@ -1260,7 +1285,8 @@ class _AncExpandDetails extends State<AncExpandDetails> {
                                         ANC4Date: response_listing[list_index]['ANC4Date'].toString() == "null" ? "" :response_listing[list_index]['ANC4Date'].toString(),
                                         PreviousTT1Date: response_listing[list_index]['PreviousTT1Date'].toString() == "null" ? "" :response_listing[list_index]['PreviousTT1Date'].toString(),
                                         PreviousTT2Date: response_listing[list_index]['PreviousTT2Date'].toString() == "null" ? "" :response_listing[list_index]['PreviousTT2Date'].toString(),
-                                        PreviousTTBDate: response_listing[list_index]['PreviousTTBDate'].toString() == "null" ? "" :response_listing[list_index]['PreviousTTBDate'].toString()
+                                        PreviousTTBDate: response_listing[list_index]['PreviousTTBDate'].toString() == "null" ? "" :response_listing[list_index]['PreviousTTBDate'].toString(),
+                                        HighRisk: response_listing[list_index]['HighRisk'].toString() == "null" ? "" :response_listing[list_index]['HighRisk'].toString()
                                     )
                                 ),
                               ).then((value){setState(() {

@@ -397,17 +397,23 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
       _ShowHideADDNewVivranView=false;
     }
 
-    print('WTT1 ${widget.TT1}');
-    print('WTT2 ${widget.TT2}');
-    print('WTTB ${widget.TTB}');
-    if(widget.TT1.isNotEmpty){
-      /*
-         * when TT1 tika executed
-       */
+    print('WTT1 ${widget.PreviousTT1Date}');
+    print('WTT2 ${widget.PreviousTT2Date}');
+    print('WTTB ${widget.PreviousTTBDate}');
+    if(widget.PreviousTT1Date.isNotEmpty){
+      /*when TT1 tika executed*/
       _isTT1SelectedToggle(false);
       _isTT2SelectedToggle(true);
       _isTTBSelectedToggle(false);
-    }else if(widget.TT2.isNotEmpty){// mean TT1 is already executed
+    }
+
+    if(widget.PreviousTT2Date.isNotEmpty){// mean TT1 is already executed
+      _isTT1SelectedToggle(false);
+      _isTT2SelectedToggle(false);
+      _isTTBSelectedToggle(false);
+    }
+
+    if(widget.PreviousTTBDate.isNotEmpty){//if TTB found then all view will be hide
       _isTT1SelectedToggle(false);
       _isTT2SelectedToggle(false);
       _isTTBSelectedToggle(false);
@@ -484,10 +490,12 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
         _purvJatilPrastutiCheckb=true;
         _PurvJatilEnDisableCB=false;
       }
-
+      print('LastHighRisk ${widget.HighRisk}');
       if(widget.HighRisk == "1"){//if case is highrisk thn purvjatil checkbox will be enabled
         _purvJatilPrastutiCheckb=true;
         _PurvJatilEnDisableCB=false;
+        _highRiskChecked=true;//checked highrisk chkbox
+        _highRiskEnDisableCB=false;//enable or disable highrisk checkbox
       }
 
     }
@@ -577,6 +585,7 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
       _AncDatePost=_ancYYYYdateController.text.toString()+"/"+_ancMMdateController.text.toString()+"/"+_ancDDdateController.text.toString();
     }
 
+
     if(_bloodpreshourSController.text.isNotEmpty){
       edtBP_S=int.parse(_bloodpreshourSController.text.toString());
     }
@@ -636,8 +645,18 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
         else{
           print('inside with risk ${widget.HighRisk }');
          // if(checkANCDatesWithHighRisk() == true && widget.HighRisk == "0"){
-          if(checkANCDatesWithHighRisk() == true){
-            postRequestWithRisk();
+          if(widget.HighRisk == "0"){
+            if(checkANCDatesWithoutHighRisk() == true){
+              if(_highRiskChecked == true){
+                postRequestWithRisk();
+              }else{
+                postRequestWithoutRisk();
+              }
+            }
+          }else{
+            if(checkANCDatesWithHighRisk() == true){
+              postRequestWithRisk();
+            }
           }
         }
     }else{
@@ -681,26 +700,40 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
       print('anc 2: ${parseLastANCDate}');
 
 
-      final parseLastANCDate_41 = parseLastANCDate.add(const Duration(days: 41));
+      final parseLastANCDate_41 = parseLastANCDate.add(const Duration(days: 40));
       print('parseLastANCDate_41: ${parseLastANCDate_41}');
 
-      if(selectedParsedDate.compareTo(parseLastANCDate_41) < 0){
+
+      var parseCalenderSelectedAncDate = DateTime.parse(formattedDate4.toString());
+      //var intentAncDate = DateTime.parse(getConvertRegDateFormat(widget.Birth_date));
+      print('anc_choose_date  ${parseCalenderSelectedAncDate}');
+      print('last_anc_date ${parseLastANCDate}');
+      final diff_lmp_ancdate = parseCalenderSelectedAncDate.difference(parseLastANCDate).inDays;
+      print('ANC_DAYS_DIFF ${diff_lmp_ancdate}');
+
+      if(diff_lmp_ancdate < 41){
+        _showErrorPopup(Strings.anc_41_days_validation,ColorConstants.AppColorPrimary);
+      }else{
+        print('API WILL C CALLED>>>>>');
+        return true;
+      }
+      /*if(selectedParsedDate.compareTo(parseLastANCDate_41) < 0){
         _showErrorPopup(Strings.anc_41_days_validation,Colors.black);
       }else{
         print('API WILL B CALLED>>>>>');
         return true;
-      }
+      }*/
 
     }else if(widget.AncFlag == "3"){
       var parseLastANCDate = DateTime.parse(getConvertRegDateFormat(widget.ANC2Date));
       print('anc 3: ${parseLastANCDate}');
 
 
-      final parseLastANCDate_41 = parseLastANCDate.add(const Duration(days: 41));
+      final parseLastANCDate_41 = parseLastANCDate.add(const Duration(days: 40));
       print('parseLastANCDate_41: ${parseLastANCDate_41}');
 
       if(selectedParsedDate.compareTo(parseLastANCDate_41) < 0){
-        _showErrorPopup(Strings.anc_41_days_validation,Colors.black);
+        _showErrorPopup(Strings.anc_41_days_validation,ColorConstants.AppColorPrimary);
       }else{
         print('API WILL B CALLED>>>>>');
         return true;
@@ -750,6 +783,16 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
 
       final parseLastANCDate_28 = parseLastANCDate.add(const Duration(days: 28));
       print('parseLastANCDate_28: ${parseLastANCDate_28}');
+
+
+
+      var parseCalenderSelectedAncDate = DateTime.parse(formattedDate4.toString());
+      //var intentAncDate = DateTime.parse(getConvertRegDateFormat(widget.Birth_date));
+      print('anc_choose_date  ${parseCalenderSelectedAncDate}');
+      print('last_anc_date ${parseLastANCDate}');
+      final diff_lmp_ancdate = parseCalenderSelectedAncDate.difference(parseLastANCDate).inDays;
+      print('ANC_WHR_DAYS_DIFF ${diff_lmp_ancdate}');
+
 
       if(selectedParsedDate.compareTo(parseLastANCDate_28) < 0){
         _showErrorPopup(Strings.anc_28_days_validation,Colors.black);
@@ -1244,11 +1287,9 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
         _selectedTreatmentCode = custom_treatment_list[0].code.toString();
         print('_selectedTreatmentCode ${_selectedTreatmentCode}');
         print('treat.len ${custom_treatment_list.length}');
-        _showHideHighRiskView = true;
       } else {
         custom_treatment_list.clear();
         print('treat.len ${custom_treatment_list.length}');
-        _showHideHighRiskView = false;
       }
      // EasyLoading.dismiss();
     });
@@ -2497,6 +2538,16 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
                                                         _customTT1Date=_TT1YYYYController.text.toString()+"-"+_TT1MMController.text.toString()+"-"+_TT1DDController.text.toString()+" 00:00:00.000";
                                                         print('_customTT1Date $_customTT1Date');
                                                         _selectCustomTT1DatePopup(_customTT1Date);
+
+                                                        //if TT1 entered than TTB view will be hide and value will be clear
+                                                        ///_isTT1SelectedToggle(false);
+                                                        //_isTT2SelectedToggle(true);
+                                                        _isTTBSelectedToggle(false);
+                                                        _TTBDDController.text="";
+                                                        _TTBMMController.text="";
+                                                        _TTBYYYYController.text="";
+                                                      }else{
+                                                        _isTTBSelectedToggle(true);
                                                       }
                                                     }
                                                   ),
@@ -2652,6 +2703,7 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
                                                         contentPadding: EdgeInsets.zero,
                                                         hintText: ' yyyy',
                                                         counterText: ''),
+
                                                   ),
                                                 ))
                                           ],
@@ -2805,6 +2857,29 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
                                                         contentPadding: EdgeInsets.zero,
                                                         hintText: ' yyyy',
                                                         counterText: ''),
+                                                      onChanged: (value){
+                                                        print('value $value');
+                                                        if(_TTBDDController.text.toString().length == 2 && _TTBMMController.text.toString().length == 2 && _TTBYYYYController.text.toString().length == 4){
+                                                          //if TT1 entered than TTB view will be hide and value will be clear
+                                                          _isTT1SelectedToggle(false);
+                                                          _TT1DDController.text="";
+                                                          _TT1MMController.text="";
+                                                          _TT1YYYYController.text="";
+
+                                                          _isTT2SelectedToggle(false);
+                                                          _TT2DDController.text="";
+                                                          _TT2MMController.text="";
+                                                          _TT2YYYYController.text="";
+                                                          //_isTTBSelectedToggle(false);
+                                                          //_TTBDDController.text="";
+                                                         // _TTBMMController.text="";
+                                                          //_TTBYYYYController.text="";
+                                                        }else{
+                                                          _isTT1SelectedToggle(true);
+                                                          _isTT2SelectedToggle(true);
+
+                                                        }
+                                                      }
                                                   ),
                                                 ))
                                           ],
@@ -4337,6 +4412,7 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
                                         _highRiskChecked = value ?? false;
                                         if (_highRiskChecked == true) {
                                           getTreatmentListAPI();
+                                          _showHideHighRiskView = true;
                                         } else {
                                           _showHideHighRiskView = false;
                                         }
@@ -7205,7 +7281,22 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
               right: 0,
               child: GestureDetector(
                 onTap: (){
-                  validatePostRequest();
+                  /*
+                  * Check if ANC Date before Register Date
+                  * */
+                  if(_ancYYYYdateController.text.isNotEmpty && _ancMMdateController.text.isNotEmpty && _ancDDdateController.text.isNotEmpty){
+                    var parsedDate1 = DateTime.parse(_ancYYYYdateController.text.toString()+"-"+_ancMMdateController.text.toString()+"-"+_ancDDdateController.text.toString()+" 00:00:00.000");
+                    var parsedDate2 = DateTime.parse(getConvertRegDateFormat(widget.registered_date2));
+                    // print('parsedDate1 $parsedDate1');
+                    //  print('parsedDate2 $parsedDate2');
+                    if(parsedDate2.compareTo(parsedDate1) > 0) {
+                      _showErrorPopup(Strings.panjikaran_kai_baad_ka,Colors.black);
+                    }else{
+                      validatePostRequest();
+                    }
+                  }else{
+                    validatePostRequest();
+                  }
                 },
                 child: Align(
                   alignment: Alignment.bottomCenter,
@@ -7852,7 +7943,7 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
                 }
               } else {
                 //print('lessthan date');
-                _showErrorPopup(Strings.anc_41_days_validation,Colors.black);
+                _showErrorPopup(Strings.anc_41_days_validation,ColorConstants.AppColorPrimary);
               }
             }else {
               print('if first anc submited');
@@ -9231,7 +9322,7 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
                 print('after anc date: ${ancDate_41}');//2021-10-25 00:00:00.000
                 var _ancAPIDate= DateTime.parse(getConvertRegDateFormat(_ancYYYYdateController.text.toString()+"-"+_ancMMdateController.text.toString()+"-"+_ancDDdateController.text.toString()));;
                 if(widget.anc_date.isNotEmpty && ancDate_41.compareTo(_ancAPIDate) < 0){
-                  _showErrorPopup(Strings.anc_41_days_validation,Colors.black);
+                  _showErrorPopup(Strings.anc_41_days_validation,ColorConstants.AppColorPrimary);
                 }else{
                   /*
                         * When COVID Start
@@ -9405,8 +9496,6 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
     print('HB $_hb');
     print('Height $_height');
     setState(() {
-
-
       if(_hb.isEmpty){
         _isIronSukrojViewToggle(false);//hide sukroj view on empty
         _highAnaimiyaCheckb=false;
@@ -9419,6 +9508,16 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
                 custom_high_pragnancy_cvslist.add(CustomHighRiskPragnancyList(rishId: 0,rishValue: "7"));//add 7 in csv
                 _isIFA180View=false;
                 _isIFA360View=true;
+
+                //CLEAR IFA180 OR IFA360
+                _IFA180DDController.text = "";
+                _IFA180MMController.text = "";
+                _IFA180YYYYController.text = "";
+
+                _IFA360YYYYController.text ="";
+                _IFA360MMController.text = "";
+                _IFA360DDController.text = "";
+
 
                 if(widget.Age != "null"){
                   if (int.parse(widget.Age) < 18 || int.parse(widget.Age) > 35) {
@@ -9458,6 +9557,15 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
                 custom_high_pragnancy_cvslist.removeWhere((item) => item.rishId == 0);//remove 7 from csv ids
                 _isIFA180View=true;
                 _isIFA360View=false;
+
+                //CLEAR IFA180 OR IFA360
+                _IFA180DDController.text = "";
+                _IFA180MMController.text = "";
+                _IFA180YYYYController.text = "";
+
+                _IFA360YYYYController.text ="";
+                _IFA360MMController.text = "";
+                _IFA360DDController.text = "";
                 _isIronSukrojViewToggle(true);
                 if(widget.Age != "null"){
                   if (int.parse(widget.Age) < 18 || int.parse(widget.Age) > 35) {
@@ -9483,6 +9591,16 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
       }else{
         _isIFA180View=true;
         _isIFA360View=false;
+
+        //CLEAR IFA180 OR IFA360
+        _IFA180DDController.text = "";
+        _IFA180MMController.text = "";
+        _IFA180YYYYController.text = "";
+
+        _IFA360YYYYController.text ="";
+        _IFA360MMController.text = "";
+        _IFA360DDController.text = "";
+
         _isIronSukrojViewToggle(false);
 
         _sukroj1DDController.text="";

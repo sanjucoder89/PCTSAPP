@@ -124,6 +124,7 @@ class _PurvPrasavScreenList extends State<PurvPrasavScreenList> {
       maskType: EasyLoadingMaskType.black,
     );
     preferences = await SharedPreferences.getInstance();
+
     var response = await post(Uri.parse(_get_village_list_asha), body: {
       "LoginUnitid": _id,
       "TokenNo": preferences.getString('Token'),
@@ -153,10 +154,10 @@ class _PurvPrasavScreenList extends State<PurvPrasavScreenList> {
   * */
   Future<String> getPrasavLisingAPI(String village_id) async {
     preferences = await SharedPreferences.getInstance();
-   /* print('LoginUnitid ${preferences.getString('UnitID')}');
+    print('LoginUnitid ${preferences.getString('UnitID')}');
     print('VillageAutoid $village_id');
     print('TokenNo ${preferences.getString('Token')}');
-    print('UserID ${preferences.getString('UserId')}');*/
+    print('UserID ${preferences.getString('UserId')}');
     var response = await post(Uri.parse(_get_prasav_list), body: {
       "LoginUnitid": preferences.getString('UnitID'),
       "VillageAutoid":village_id,

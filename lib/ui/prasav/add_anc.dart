@@ -1915,6 +1915,7 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
                                           }else{
                                             _showCovid19View(false);
                                           }
+                                          _yourSelectedANCDate=_ancYYYYdateController.text.toString()+"-"+_ancMMdateController.text.toString()+"-"+_ancDDdateController.text.toString()+" 00:00:00.000";
                                         }
                                       }
                                   ),
@@ -1954,6 +1955,7 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
                                           }else{
                                             _showCovid19View(false);
                                           }
+                                          _yourSelectedANCDate=_ancYYYYdateController.text.toString()+"-"+_ancMMdateController.text.toString()+"-"+_ancDDdateController.text.toString()+" 00:00:00.000";
                                         }
                                       }
                                   ),
@@ -1992,6 +1994,7 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
                                        }else{
                                          _showCovid19View(false);
                                        }
+                                       _yourSelectedANCDate=_ancYYYYdateController.text.toString()+"-"+_ancMMdateController.text.toString()+"-"+_ancDDdateController.text.toString()+" 00:00:00.000";
                                      }
                                     }
                                   ),
@@ -7975,6 +7978,7 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
       }
     });
   }
+
   void _selectANCDatePopup(int yyyy,int mm ,int dd) {
     showDatePicker(
             context: context,
@@ -8775,6 +8779,7 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
     });
 
   }
+
   void _selectTT1DatePopup(){
     showDatePicker(
         context: context,
@@ -8793,7 +8798,7 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
       String formattedDate4 = DateFormat('yyyy-MM-dd').format(_selectedDate);
       String formattedDate2 = DateFormat('yyyy/MM/dd').format(_selectedDate);
       _selectedANCDate = formattedDate2.toString();
-
+      print('formattedDate4 $formattedDate4');
       if(_ancDDdateController.text.isEmpty){
         _showErrorPopup(Strings.please_select_Anc_date, Colors.black);
       }else if(_ancMMdateController.text.isEmpty){

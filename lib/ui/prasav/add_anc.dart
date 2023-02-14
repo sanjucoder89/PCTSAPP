@@ -496,6 +496,7 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
         _PurvJatilEnDisableCB=false;
         _highRiskChecked=true;//checked highrisk chkbox
         _highRiskEnDisableCB=false;//enable or disable highrisk checkbox
+        _showHideHighRiskView=true;
       }
 
     }

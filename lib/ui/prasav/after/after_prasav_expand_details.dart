@@ -1362,6 +1362,7 @@ class _AfterPrasavExpandDetails extends State<AfterPrasavExpandDetails> {
                           ),
                           Visibility(
                               visible: preferences.getString("AppRoleID") == "32" ? custom_anc_list[list_index].ANMVerify.toString() == "0" ? custom_anc_list[list_index].Freeze.toString() == "0" ? true :false : false :false,
+                              //visible: preferences.getString("AppRoleID") == "32" ? custom_anc_list[list_index].ANMVerify.toString() == "0" ?  true : false : preferences.getString("AppRoleID") == "33" && ((custom_anc_list[list_index].Ashaautoid.toString() == preferences.getString('ANMAutoID')) && custom_anc_list[list_index].Media.toString() == "2" ) ? true : false,
                               child: GestureDetector(
                                 onTap: (){
                                   if(custom_anc_list[list_index].PNCFlag.toString() == "1"){

@@ -3717,7 +3717,11 @@ class _EditANCScreen extends State<EditANCScreen> {
                                   ),
                                   GestureDetector(
                                     onTap: (){
-                                      _selectSukrojDatePopup(int.parse(_sukroj1YYYYController.text.toString()),int.parse(_sukroj1MMController.text.toString()) ,int.parse(_sukroj1DDController.text.toString()));
+                                      if(_sukroj1YYYYController.text.toString().isEmpty && _sukroj1MMController.text.toString().isEmpty && _sukroj1DDController.text.toString().isEmpty){
+                                        _selectSukrojDatePopup(0,0,0);
+                                      }else{
+                                        _selectSukrojDatePopup(int.parse(_sukroj1YYYYController.text.toString()),int.parse(_sukroj1MMController.text.toString()) ,int.parse(_sukroj1DDController.text.toString()));
+                                      }
                                     },
                                     child: Container(
                                         margin:
@@ -3961,7 +3965,12 @@ class _EditANCScreen extends State<EditANCScreen> {
                                   ),
                                   GestureDetector(
                                     onTap: (){
-                                      _selectSukrojDatePopup2(int.parse(_sukroj2YYYYController.text.toString()),int.parse(_sukroj2MMController.text.toString()) ,int.parse(_sukroj2DDController.text.toString()));
+                                      if(_sukroj2YYYYController.text.toString().isEmpty && _sukroj2MMController.text.toString().isEmpty && _sukroj2DDController.text.toString().isEmpty){
+                                        _selectSukrojDatePopup2(0,0,0);
+                                      }else{
+                                        _selectSukrojDatePopup2(int.parse(_sukroj2YYYYController.text.toString()),int.parse(_sukroj2MMController.text.toString()) ,int.parse(_sukroj2DDController.text.toString()));
+                                      }
+
                                     },
                                     child: Container(
                                         margin:
@@ -4126,8 +4135,12 @@ class _EditANCScreen extends State<EditANCScreen> {
                                   ),
                                   GestureDetector(
                                     onTap: (){
-                                      _selectSukrojDatePopup3(int.parse(_sukroj3YYYYController.text.toString()),int.parse(_sukroj3MMController.text.toString()) ,int.parse(_sukroj3DDController.text.toString()));
 
+                                      if(_sukroj3YYYYController.text.toString().isEmpty && _sukroj3MMController.text.toString().isEmpty && _sukroj3DDController.text.toString().isEmpty){
+                                        _selectSukrojDatePopup3(0,0,0);
+                                      }else{
+                                        _selectSukrojDatePopup3(int.parse(_sukroj3YYYYController.text.toString()),int.parse(_sukroj3MMController.text.toString()) ,int.parse(_sukroj3DDController.text.toString()));
+                                      }
                                     },
                                     child: Container(
                                         margin:
@@ -4292,7 +4305,12 @@ class _EditANCScreen extends State<EditANCScreen> {
                                   ),
                                   GestureDetector(
                                       onTap: (){
-                                        _selectSukrojDatePopup4(int.parse(_sukroj4YYYYController.text.toString()),int.parse(_sukroj4MMController.text.toString()) ,int.parse(_sukroj4DDController.text.toString()));
+                                        if(_sukroj4YYYYController.text.toString().isEmpty && _sukroj4MMController.text.toString().isEmpty && _sukroj4DDController.text.toString().isEmpty){
+                                          _selectSukrojDatePopup4(0,0,0);
+                                        }else{
+                                          _selectSukrojDatePopup4(int.parse(_sukroj4YYYYController.text.toString()),int.parse(_sukroj4MMController.text.toString()) ,int.parse(_sukroj4DDController.text.toString()));
+                                        }
+
                                       },
                                       child: Container(
                                           margin:
@@ -8221,7 +8239,7 @@ class _EditANCScreen extends State<EditANCScreen> {
   void _selectSukrojDatePopup(int yyyy,int mm ,int dd){
     showDatePicker(
         context: context,
-        initialDate: DateTime(yyyy, mm , dd ),
+        initialDate: (yyyy == 0 && mm == 0 && dd == 0) ? DateTime.now() : DateTime(yyyy, mm , dd ),
         firstDate: DateTime(2015),
         lastDate: DateTime(2050))
         .then((pickedDate) {
@@ -8251,7 +8269,7 @@ class _EditANCScreen extends State<EditANCScreen> {
 
         final diff_lmp_ancdate = parseCalenderSelectedAncDate.difference(intentAncDate).inDays;
         print('sukroj diff if ${diff_lmp_ancdate}');
-
+        _checkDifference=diff_lmp_ancdate;
       }else{
         var parseCalenderSelectedAncDate = DateTime.parse(formattedDate4.toString());
 
@@ -8263,18 +8281,18 @@ class _EditANCScreen extends State<EditANCScreen> {
         print('sukroj diff else ${diff_lmp_ancdate}');
         _checkDifference=diff_lmp_ancdate;
 
-        if(_checkDifference > 0){
-          _showErrorPopup("Date cant be less than ANC date",Colors.black);
-        }else{
-          _sukroj1DDController.text = getDate(formattedDate4);
-          _sukroj1MMController.text = getMonth(formattedDate4);
-          _sukroj1YYYYController.text = getYear(formattedDate4);
-          _Iron_sukroj_Post1=_sukroj1YYYYController.text.toString()+"/"+_sukroj1MMController.text.toString()+"/"+_sukroj1DDController.text.toString();
-          print('final sukroj 1 ${_Iron_sukroj_Post1}');
-        }
+
       }
 
-
+      if(_checkDifference < 0){
+        _showErrorPopup("Date cant be less than ANC date",Colors.black);
+      }else{
+        _sukroj1DDController.text = getDate(formattedDate4);
+        _sukroj1MMController.text = getMonth(formattedDate4);
+        _sukroj1YYYYController.text = getYear(formattedDate4);
+        _Iron_sukroj_Post1=_sukroj1YYYYController.text.toString()+"/"+_sukroj1MMController.text.toString()+"/"+_sukroj1DDController.text.toString();
+        print('final sukroj 1 ${_Iron_sukroj_Post1}');
+      }
       /*if(!_checkIfANCSelected){
         var parseSukroj1Date = DateTime.parse(formattedDate4.toString());
         var parseLastANCDate = DateTime.parse(getAPIResponseFormattedDate2(widget.anc_date));
@@ -8349,7 +8367,7 @@ class _EditANCScreen extends State<EditANCScreen> {
   void _selectSukrojDatePopup2(int yyyy,int mm ,int dd){
     showDatePicker(
         context: context,
-        initialDate: DateTime(yyyy, mm , dd ),
+        initialDate: (yyyy == 0 && mm == 0 && dd == 0) ? DateTime.now() : DateTime(yyyy, mm , dd ),
         firstDate: DateTime(2015),
         lastDate: DateTime(2050))
         .then((pickedDate) {
@@ -8492,7 +8510,7 @@ class _EditANCScreen extends State<EditANCScreen> {
   void _selectSukrojDatePopup3(int yyyy,int mm ,int dd){
     showDatePicker(
         context: context,
-        initialDate: DateTime(yyyy, mm , dd ),
+        initialDate: (yyyy == 0 && mm == 0 && dd == 0) ? DateTime.now() : DateTime(yyyy, mm , dd ),
         firstDate: DateTime(2015),
         lastDate: DateTime(2050))
         .then((pickedDate) {

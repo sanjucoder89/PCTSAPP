@@ -9452,7 +9452,11 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
                 //}
               }
             }
-          } else {
+          }else if(parsedDate1.compareTo(parsedDate2) == 0){
+            _CalciumVitaminD3DDController.text = getDate(formattedDate4);
+            _CalciumVitaminD3MMController.text = getMonth(formattedDate4);
+            _CalciumVitaminD3YYYYController.text = getYear(formattedDate4);
+          }else {
             _showErrorPopup(Strings.calciumvitamin_cant_before_reg_date,Colors.black);
           }
         }

@@ -9303,10 +9303,13 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
         }else{
           var parsedDate1 = DateTime.parse(formattedDate4.toString());
           var parsedDate2 = DateTime.parse(getConvertRegDateFormat(widget.registered_date2));
+          print('_parsedDate1 ${parsedDate1}');//2021-03-12 00:00:00.000
+          print('_parsedDate2 ${parsedDate2}');//2021-03-12 00:00:00.000
           if (parsedDate1.compareTo(parsedDate2) > 0) {
              print('greater date YYYYYYYYY');
             var _ancAPIDate= DateTime.parse(getConvertRegDateFormat(_ancYYYYdateController.text.toString()+"-"+_ancMMdateController.text.toString()+"-"+_ancDDdateController.text.toString()));;
-            //print('_ancAPIDate ${_ancAPIDate}');//2021-03-12 00:00:00.000
+            print('_ancAPIDate ${_ancAPIDate}');//2021-03-12 00:00:00.000
+            print('_parsedDate1 ${parsedDate1}');//2021-03-12 00:00:00.000
             if (parsedDate1.compareTo(_ancAPIDate) > 0) {
               print('greater date SSSSSS');
               _showErrorPopup(Strings.tab_albedazole_cant_after_anc_date,Colors.black);
@@ -9352,7 +9355,14 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
                 }
               }
             }
-          } else {
+          }else if(parsedDate1.compareTo(parsedDate2) == 0) {
+
+
+
+            _AlbadoseDDController.text = getDate(formattedDate4);
+            _AlbadoseMMController.text = getMonth(formattedDate4);
+            _AlbadoseYYYYController.text = getYear(formattedDate4);
+          }else{
             _showErrorPopup(Strings.tab_albedazole_cant_before_reg_date,Colors.black);
           }
 

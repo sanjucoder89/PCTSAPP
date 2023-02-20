@@ -116,7 +116,7 @@ class _ShishuTikaKaranList extends State<ShishuTikaKaranList> {
     });
 
     getLisingAPI(villageId);
-    print('response:${apiResponse.message}');
+    //print('response:${apiResponse.message}');
     return "Success";
   }
 
@@ -148,7 +148,7 @@ class _ShishuTikaKaranList extends State<ShishuTikaKaranList> {
     });
 
     getLisingAPI(villageId);
-    print('response:${apiResponse.message}');
+  //  print('response:${apiResponse.message}');
     return "Success";
   }
 
@@ -540,7 +540,7 @@ class _ShishuTikaKaranList extends State<ShishuTikaKaranList> {
                                   onChanged: (String? newVal) {
                                     setState((){
                                       villageId = newVal!;
-                                      print('villageId:$villageId');
+                                     // print('villageId:$villageId');
                                       getLisingAPI(villageId);
                                     });
                                   },

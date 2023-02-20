@@ -42,9 +42,9 @@ String getConvertRegDateFormat(String date) {
 String getCustomAddDaysDate(String date) {
   if(date != "null"){
     var expectedParsedDate = DateTime.parse(getConvertRegDateFormat(date));
-    print('current exptd date: ${expectedParsedDate}');//2021-01-17 00:00:00.000
+    //print('current exptd date: ${expectedParsedDate}');//2021-01-17 00:00:00.000
     final exptedDate_281 = expectedParsedDate.add(const Duration(days: 281));
-    print('after exptd date: ${exptedDate_281}');//2021-10-25 00:00:00.000
+    //print('after exptd date: ${exptedDate_281}');//2021-10-25 00:00:00.000
 
     var localDate = DateTime.parse(exptedDate_281.toString()).toLocal();
     var inputFormat = DateFormat("yyyy-MM-dd");

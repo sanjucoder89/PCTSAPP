@@ -1526,8 +1526,8 @@ class _EditANCScreen extends State<EditANCScreen> {
     if(_pos.longitude != null){
       _longitude=_pos.longitude.toString();
     }
-    print('live loc lat $_latitude');
-    print('live loc lng $_longitude');
+    //print('live loc lat $_latitude');
+   // print('live loc lng $_longitude');
 
     setState(() {
       prefs.setString("latitude", _latitude);
@@ -7947,18 +7947,18 @@ class _EditANCScreen extends State<EditANCScreen> {
             var selectedParsedDate = DateTime.parse(formattedDate4.toString());
             var expectedParsedDate = DateTime.parse(getConvertRegDateFormat(widget.expected_date));
 
-            print('current exptd date: ${expectedParsedDate}');//2021-01-17 00:00:00.000
+            //print('current exptd date: ${expectedParsedDate}');//2021-01-17 00:00:00.000
             final exptedDate_281 = expectedParsedDate.add(const Duration(days: 281));
-            print('after exptd date: ${exptedDate_281}');//2021-10-25 00:00:00.000
+           // print('after exptd date: ${exptedDate_281}');//2021-10-25 00:00:00.000
             if (selectedParsedDate.compareTo(exptedDate_281) > 0) {
               // print('greater date');
               _showErrorPopup(Strings.please_select_before_date,Colors.black);
             }else if(widget.anc_date.toString().isNotEmpty){
               // print('lessthan date');
-              print('checkANCDate ${widget.anc_date}');
+           //   print('checkANCDate ${widget.anc_date}');
               var selectedParsedDate = DateTime.parse(formattedDate4.toString());
               var ancParsedDate = DateTime.parse(getConvertRegDateFormat(widget.anc_date));
-              print('current anc date: ${ancParsedDate}');//2021-01-17 00:00:00.000
+           //   print('current anc date: ${ancParsedDate}');//2021-01-17 00:00:00.000
               final ancDate_41 = ancParsedDate.add(const Duration(days: 41));
               print('after anc date: ${ancDate_41}');//2021-10-25 00:00:00.000
               if (selectedParsedDate.compareTo(ancDate_41) > 0) //2021-04-22 00:00:00.000
@@ -8075,9 +8075,9 @@ class _EditANCScreen extends State<EditANCScreen> {
             var selectedParsedDate = DateTime.parse(formattedDate4.toString());
             var expectedParsedDate = DateTime.parse(getConvertRegDateFormat(widget.expected_date));
 
-            print('current exptd date: ${expectedParsedDate}');//2021-01-17 00:00:00.000
+          //  print('current exptd date: ${expectedParsedDate}');//2021-01-17 00:00:00.000
             final exptedDate_281 = expectedParsedDate.add(const Duration(days: 281));
-            print('after exptd date: ${exptedDate_281}');//2021-10-25 00:00:00.000
+           // print('after exptd date: ${exptedDate_281}');//2021-10-25 00:00:00.000
             if (selectedParsedDate.compareTo(exptedDate_281) > 0) {
               // print('greater date');
               _showErrorPopup(Strings.please_select_before_date,Colors.black);
@@ -8779,15 +8779,15 @@ class _EditANCScreen extends State<EditANCScreen> {
         }else{
 
           var expectedParsedDate = DateTime.parse(getConvertRegDateFormat(widget.expected_date));
-          print('current exptd date: ${expectedParsedDate}');//2021-01-17 00:00:00.000
+         // print('current exptd date: ${expectedParsedDate}');//2021-01-17 00:00:00.000
           final exptedDate_281 = expectedParsedDate.add(const Duration(days: 281));
-          print('after exptd date: ${exptedDate_281}');//2021-10-25 00:00:00.000
+        //  print('after exptd date: ${exptedDate_281}');//2021-10-25 00:00:00.000
 
           if(selectedParsedDate.compareTo(exptedDate_281) > 0){
             _showErrorPopup(Strings.please_select_before_date,Colors.black);
           }else{
             var registerDate = DateTime.parse(getConvertRegDateFormat(widget.registered_date2));
-            print('registerDate ${registerDate}');//2021-03-12 00:00:00.000
+          //  print('registerDate ${registerDate}');//2021-03-12 00:00:00.000
             if(selectedParsedDate.compareTo(registerDate) >= 0){
               if(diff_lmp_ancdate > 0) {
                 _showErrorPopup("TT date not grater then anc date", Colors.black);
@@ -8855,15 +8855,15 @@ class _EditANCScreen extends State<EditANCScreen> {
         }else{
 
           var expectedParsedDate = DateTime.parse(getConvertRegDateFormat(widget.expected_date));
-          print('current exptd date: ${expectedParsedDate}');//2021-01-17 00:00:00.000
+        //  print('current exptd date: ${expectedParsedDate}');//2021-01-17 00:00:00.000
           final exptedDate_281 = expectedParsedDate.add(const Duration(days: 281));
-          print('after exptd date: ${exptedDate_281}');
+        //  print('after exptd date: ${exptedDate_281}');
 
           if(selectedParsedDate.compareTo(exptedDate_281) > 0){
             _showErrorPopup(Strings.please_select_before_date,Colors.black);
           }else{
             var registerDate = DateTime.parse(getConvertRegDateFormat(widget.registered_date2));
-            print('registerDate ${registerDate}');//2021-03-12 00:00:00.000
+         //   print('registerDate ${registerDate}');//2021-03-12 00:00:00.000
             if(selectedParsedDate.compareTo(registerDate) >= 0){
               if(diff_lmp_ancdate > 0) {
                 _showErrorPopup("TT date not grater then anc date", Colors.black);
@@ -8954,9 +8954,9 @@ class _EditANCScreen extends State<EditANCScreen> {
           if(selectedParsedDate.compareTo(registerDate) >= 0){
 
             var expectedParsedDate = DateTime.parse(getConvertRegDateFormat(widget.expected_date));
-            print('current exptd date: ${expectedParsedDate}');//2021-01-17 00:00:00.000
+          //  print('current exptd date: ${expectedParsedDate}');//2021-01-17 00:00:00.000
             final exptedDate_281 = expectedParsedDate.add(const Duration(days: 281));
-            print('after exptd date: ${exptedDate_281}');
+         //   print('after exptd date: ${exptedDate_281}');
 
             if(selectedParsedDate.compareTo(exptedDate_281) > 0){
               _showErrorPopup(Strings.please_select_before_date,Colors.black);
@@ -8965,9 +8965,9 @@ class _EditANCScreen extends State<EditANCScreen> {
                 _showErrorPopup("TT date not grater then anc date", Colors.black);
               }else{
                 var parseLastANCDate = DateTime.parse(getConvertRegDateFormat(widget.anc_date));
-                print('last anc date: ${parseLastANCDate}');
+            //    print('last anc date: ${parseLastANCDate}');
                 final parseLastANCDate_28 = parseLastANCDate.add(const Duration(days: 28));
-                print('parseLastANCDate_28: ${parseLastANCDate_28}');
+            //    print('parseLastANCDate_28: ${parseLastANCDate_28}');
                 if (selectedParsedDate.compareTo(parseLastANCDate_28) < 0) {
                   // print('greater date');
                   _showErrorPopup(Strings.tt_and_last_anc_date_greater_28days, Colors.black);
@@ -9039,13 +9039,13 @@ class _EditANCScreen extends State<EditANCScreen> {
             }else{
 
               var registerDate = DateTime.parse(getConvertRegDateFormat(widget.registered_date2));
-              print('registerDate ${registerDate}');//2021-03-12 00:00:00.000
+            //  print('registerDate ${registerDate}');//2021-03-12 00:00:00.000
               if(selectedParsedDate.compareTo(registerDate) >= 0){
 
                 var expectedParsedDate = DateTime.parse(getConvertRegDateFormat(widget.expected_date));
-                print('current exptd date: ${expectedParsedDate}');//2021-01-17 00:00:00.000
+              //  print('current exptd date: ${expectedParsedDate}');//2021-01-17 00:00:00.000
                 final exptedDate_281 = expectedParsedDate.add(const Duration(days: 281));
-                print('after exptd date: ${exptedDate_281}');
+              //  print('after exptd date: ${exptedDate_281}');
 
                 if(selectedParsedDate.compareTo(exptedDate_281) > 0){
                   _showErrorPopup(Strings.please_select_before_date,Colors.black);
@@ -9054,7 +9054,7 @@ class _EditANCScreen extends State<EditANCScreen> {
                     _showErrorPopup("TT date not grater then anc date", Colors.black);
                   }else{
                     var parseLastANCDate = DateTime.parse(getConvertRegDateFormat(widget.anc_date));
-                    print('last anc date: ${parseLastANCDate}');
+              //      print('last anc date: ${parseLastANCDate}');
                     final parseLastANCDate_28 = parseLastANCDate.add(const Duration(days: 28));
                     print('parseLastANCDate_28: ${parseLastANCDate_28}');
                     if (selectedParsedDate.compareTo(parseLastANCDate_28) < 0) {
@@ -9174,21 +9174,21 @@ class _EditANCScreen extends State<EditANCScreen> {
               print('greater date SSSSSS');
               _showErrorPopup(Strings.tab_albedazole_cant_after_anc_date,Colors.black);
             }else{
-              print('lssthan dateFFFFFFFF');
+           //   print('lssthan dateFFFFFFFF');
 
               var selectedParsedDate = DateTime.parse(formattedDate4.toString());
               var expectedParsedDate = DateTime.parse(getConvertRegDateFormat(widget.expected_date));
 
-              print('current exptd date: ${expectedParsedDate}');//2021-01-17 00:00:00.000
+            //  print('current exptd date: ${expectedParsedDate}');//2021-01-17 00:00:00.000
               final exptedDate_281 = expectedParsedDate.add(const Duration(days: 281));
-              print('after exptd date: ${exptedDate_281}');//2021-10-25 00:00:00.000
+             // print('after exptd date: ${exptedDate_281}');//2021-10-25 00:00:00.000
               if (selectedParsedDate.compareTo(exptedDate_281) > 0) {
                 // print('greater date');
                 _showErrorPopup(Strings.please_select_before_date,Colors.black);
               }else{
                 var ancParsedDate = DateTime.parse(getConvertRegDateFormat(_ancYYYYdateController.text.toString()+"-"+_ancMMdateController.text.toString()+"-"+_ancDDdateController.text.toString()));
                 final ancDate_41 = ancParsedDate.add(const Duration(days: 41));
-                print('after anc date: ${ancDate_41}');//2021-10-25 00:00:00.000
+            //    print('after anc date: ${ancDate_41}');//2021-10-25 00:00:00.000
                 var _ancAPIDate= DateTime.parse(getConvertRegDateFormat(_ancYYYYdateController.text.toString()+"-"+_ancMMdateController.text.toString()+"-"+_ancDDdateController.text.toString()));;
                 if(widget.anc_date.isNotEmpty && ancDate_41.compareTo(_ancAPIDate) < 0){
                   _showErrorPopup(Strings.anc_41_days_validation,Colors.black);
@@ -9264,21 +9264,21 @@ class _EditANCScreen extends State<EditANCScreen> {
               print('greater date SSSSSS');
               _showErrorPopup(Strings.calciumvitamin_cant_after_anc_date,Colors.black);
             }else{
-              print('lssthan dateFFFFFFFF');
+           //   print('lssthan dateFFFFFFFF');
 
               var selectedParsedDate = DateTime.parse(formattedDate4.toString());
               var expectedParsedDate = DateTime.parse(getConvertRegDateFormat(widget.expected_date));
 
-              print('current exptd date: ${expectedParsedDate}');//2021-01-17 00:00:00.000
+            //  print('current exptd date: ${expectedParsedDate}');//2021-01-17 00:00:00.000
               final exptedDate_281 = expectedParsedDate.add(const Duration(days: 281));
-              print('after exptd date: ${exptedDate_281}');//2021-10-25 00:00:00.000
+             // print('after exptd date: ${exptedDate_281}');//2021-10-25 00:00:00.000
               if (selectedParsedDate.compareTo(exptedDate_281) > 0) {
                 // print('greater date');
                 _showErrorPopup(Strings.please_select_before_date,Colors.black);
               }else{
                 var ancParsedDate = DateTime.parse(getConvertRegDateFormat(_ancYYYYdateController.text.toString()+"-"+_ancMMdateController.text.toString()+"-"+_ancDDdateController.text.toString()));
                 final ancDate_41 = ancParsedDate.add(const Duration(days: 41));
-                print('after anc date: ${ancDate_41}');//2021-10-25 00:00:00.000
+             //   print('after anc date: ${ancDate_41}');//2021-10-25 00:00:00.000
                 /*var _ancAPIDate= DateTime.parse(getConvertRegDateFormat(_ancYYYYdateController.text.toString()+"-"+_ancMMdateController.text.toString()+"-"+_ancDDdateController.text.toString()));;
                 if(widget.anc_date.isNotEmpty && ancDate_41.compareTo(_ancAPIDate) < 0){
                   _showErrorPopup(Strings.do_anc_kai_bich,Colors.black);

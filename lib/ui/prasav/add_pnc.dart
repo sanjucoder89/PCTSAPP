@@ -316,8 +316,8 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
     if(_pos.longitude != null){
       _longitude=_pos.longitude.toString();
     }
-    print('live loc lat $_latitude');
-    print('live loc lng $_longitude');
+    //print('live loc lat $_latitude');
+   // print('live loc lng $_longitude');
 
     setState(() {
       prefs.setString("latitude", _latitude);
@@ -488,7 +488,7 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
             _shishu5EnDisable=false;
           }
         }
-
+        print('check_length ${custom_childname_list.length}');
         if(custom_childname_list.length == 1) {
           if (custom_childname_list[0].InfantID
               .toString()
@@ -503,6 +503,9 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
             //Lock First Child View Lock , if status is == 2 , else 0= live
             _shishuEnDisable=false;
             _shishuWgtEnDisable=false;
+            _shishuislive = ShihuIsLive.no;
+            rdChildIsLive1="0";
+            rdChildIsLiveEntry1=false;
           }
         }//one child
         if(custom_childname_list.length == 2) {
@@ -947,9 +950,9 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
           aashaId = custom_aasha_list[0].ASHAAutoid.toString();
           _isItAsha=false;
         }
-        print('aashaId ${aashaId}');
-        print('res.len  ${response_list.length}');
-        print('custom_aasha_list.len ${custom_aasha_list.length}');
+       // print('aashaId ${aashaId}');
+       // print('res.len  ${response_list.length}');
+       // print('custom_aasha_list.len ${custom_aasha_list.length}');
       } else {}
       EasyLoading.dismiss();
       if (aashaId != "0") getANMListAPI(aashaId);
@@ -987,9 +990,9 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
               LastUpdated: response_list2[i]['LastUpdated'].toString()));
         }
         aanganBadiId = custom_aanganbadi_list[0].AnganwariNo.toString();
-        print('aanganBadiId ${aanganBadiId}');
-        print('res.len  ${response_list2.length}');
-        print('custom_aasha_list.len ${custom_aanganbadi_list.length}');
+      //  print('aanganBadiId ${aanganBadiId}');
+     //   print('res.len  ${response_list2.length}');
+      //  print('custom_aasha_list.len ${custom_aanganbadi_list.length}');
       } else {}
       EasyLoading.dismiss();
     });
@@ -1505,8 +1508,35 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                     setState(() {
                                       motherComplId = newVal!;
                                       print('motherComplId:$motherComplId');
-                                      if((motherComplId == "5" || motherComplId == "0") && (childComplId_1 == "12" ||
-                                          childComplId_2 == "12" || childComplId_3 == "12" || childComplId_4 == "12" || childComplId_5 == "12")){
+                                      if((motherComplId == "5" || motherComplId == "0") && (rdChildIsLive1 != "0" || rdChildIsLive2 != "0" || rdChildIsLive3 != "0" || rdChildIsLive4 != "0" || rdChildIsLive5 != "0")){
+                                        _ShowHideReferPlacesView=false;
+                                        _ShowHideErrorView=false;
+                                        _ShowHideADDNewVivranView=true;
+                                      }else if(motherComplId == "3"){
+                                        _ShowHideReferPlacesView=false;
+                                        _ShowHideErrorView=true;
+                                        _ShowHideADDNewVivranView=false;
+                                      }else{
+                                        if(rdChildIsLive1 == "0" || rdChildIsLive2 == "0" || rdChildIsLive3 == "0" || rdChildIsLive4 == "0" || rdChildIsLive5 == "0"){
+                                          _ShowHideReferPlacesView=false;
+                                          _ShowHideErrorView=true;
+                                          _ShowHideADDNewVivranView=false;
+                                        }else{
+                                          _ShowHideReferPlacesView=true;
+                                          _ShowHideErrorView=false;
+                                          _ShowHideADDNewVivranView=true;
+                                        }
+                                      }/*else if(rdChildIsLive1 != "0" || rdChildIsLive2 != "0" || rdChildIsLive3 != "0" || rdChildIsLive4 != "0" || rdChildIsLive5 != "0"){
+                                        _ShowHideReferPlacesView=false;
+                                        _ShowHideErrorView=true;
+                                        _ShowHideADDNewVivranView=true;
+                                      }*//*else{
+                                        _ShowHideReferPlacesView=true;
+                                        _ShowHideErrorView=false;
+                                        _ShowHideADDNewVivranView=true;
+                                      }*/
+
+                                      /*if((motherComplId == "5" || motherComplId == "0") && (childComplId_1 == "12" || childComplId_2 == "12" || childComplId_3 == "12" || childComplId_4 == "12" || childComplId_5 == "12")){
                                         _ShowHideReferPlacesView=false;
                                         _ShowHideErrorView=false;
                                         _ShowHideADDNewVivranView=true;
@@ -1518,7 +1548,7 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                         _ShowHideReferPlacesView=true;
                                         _ShowHideErrorView=false;
                                         _ShowHideADDNewVivranView=true;
-                                      }
+                                      }*/
                                     });
                                   },
                                   value: motherComplId, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
@@ -1738,6 +1768,7 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                                                   setState(() {
                                                                     _shishuislive = value ?? _shishuislive;
                                                                     rdChildIsLive1="1";
+
                                                                     _shishuEnDisable=true;
                                                                     _shishuWgtEnDisable=true;
                                                                     _ShowHideReferPlacesView=true;
@@ -1778,7 +1809,7 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                                                 activeColor:rdChildIsLiveEntry1 == false ? Colors.grey : Colors.black,
                                                                 value: ShihuIsLive.no,
                                                                 groupValue: _shishuislive,
-                                                                onChanged:(ShihuIsLive? value) {
+                                                                onChanged:rdChildIsLiveEntry1 == false ? null :(ShihuIsLive? value) {
                                                                   setState(() {
                                                                     _shishuislive = value ?? _shishuislive;
                                                                     rdChildIsLive1="0";
@@ -2148,7 +2179,7 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                                                 activeColor:rdChildIsLiveEntry2 == false ? Colors.grey : Colors.black,
                                                                 value: ShihuIsLive2.no,
                                                                 groupValue: _shishuislive2,
-                                                                onChanged:(ShihuIsLive2? value) {
+                                                                onChanged:rdChildIsLiveEntry2 == false ? null :(ShihuIsLive2? value) {
                                                                   setState(() {
                                                                     _shishuislive2 = value ?? _shishuislive2;
                                                                     rdChildIsLive2="0";
@@ -2525,7 +2556,7 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                                                 activeColor:rdChildIsLiveEntry3 == false ? Colors.grey : Colors.black,
                                                                 value: ShihuIsLive3.no,
                                                                 groupValue: _shishuislive3,
-                                                                onChanged:(ShihuIsLive3? value) {
+                                                                onChanged:rdChildIsLiveEntry3 == false ? null : (ShihuIsLive3? value) {
                                                                   setState(() {
                                                                     _shishuislive3 = value ?? _shishuislive3;
                                                                     rdChildIsLive3="0";
@@ -2901,7 +2932,7 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                                                 activeColor:rdChildIsLiveEntry4 == false ? Colors.grey : Colors.black,
                                                                 value: ShihuIsLive4.no,
                                                                 groupValue: _shishuislive4,
-                                                                onChanged:(ShihuIsLive4? value) {
+                                                                onChanged:rdChildIsLiveEntry4 == false ? null :(ShihuIsLive4? value) {
                                                                   setState(() {
                                                                     _shishuislive4 = value ?? _shishuislive4;
                                                                     rdChildIsLive4="0";
@@ -3276,7 +3307,7 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                                                 activeColor:rdChildIsLiveEntry5 == false ? Colors.grey : Colors.black,
                                                                 value: ShihuIsLive5.no,
                                                                 groupValue: _shishuislive5,
-                                                                onChanged:(ShihuIsLive5? value) {
+                                                                onChanged:rdChildIsLiveEntry5 == false ? null : (ShihuIsLive5? value) {
                                                                   setState(() {
                                                                     _shishuislive5 = value ?? _shishuislive5;
                                                                     rdChildIsLive5="0";
@@ -3295,7 +3326,6 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                                                     if (!currentFocus.hasPrimaryFocus) {
                                                                       currentFocus.focusedChild!.unfocus();
                                                                     }
-
                                                                     /*
                                                                     * Check if any child is live refer listing will be show
                                                                     */
@@ -5202,7 +5232,7 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
       _showErrorPopup(Strings.aasha_chunai,ColorConstants.AppColorPrimary);
     }else if(anmId == "0"){
       _showErrorPopup(Strings.anm_chunai,ColorConstants.AppColorPrimary);
-    }if(motherComplId.isEmpty){
+    }else if(motherComplId.isEmpty){
         _showErrorPopup(Strings.choose_mata_prasav_prob, ColorConstants.AppColorPrimary);
     }else if(motherComplId == "0"){
       _showErrorPopup(Strings.choose_mata_prasav_prob, ColorConstants.AppColorPrimary);
@@ -5228,30 +5258,40 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
       _showErrorPopup(Strings.enter_shishu_weight,Colors.black);
     }else if(_shishuWeightController.text.toString() == "0" && _shishuWgtEnDisable == true){
       _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
+    }else if(_shishuWeightController.text.toString().isNotEmpty && (double.parse(_shishuWeightController.text.toString()) > 9 && _shishuWgtEnDisable == true)){
+      _showErrorPopup(Strings.enter_correct_shishu_weight_child,Colors.black);
     }else if(_shishuWeightController.text.toString().isNotEmpty && (double.parse(_shishuWeightController.text.toString()) < 0 && _shishuWgtEnDisable == true)){
       _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
     }else if(_shishuWeight2Controller.text.toString().isEmpty && _shishuWgt2EnDisable == true){
       _showErrorPopup(Strings.enter_shishu_weight,Colors.black);
     }else if((_shishuWeight2Controller.text.toString() == "0" && _shishuWgt2EnDisable == true)){
       _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
+    }else if(_shishuWeight2Controller.text.toString().isNotEmpty && (double.parse(_shishuWeight2Controller.text.toString()) > 9 && _shishuWgt2EnDisable == true)){
+      _showErrorPopup(Strings.enter_correct_shishu_weight_child,Colors.black);
     }else if(_shishuWeight2Controller.text.toString().isNotEmpty && (double.parse(_shishuWeight2Controller.text.toString()) < 0 && _shishuWgt2EnDisable == true)){
       _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
     }else if(_shishuWeight3Controller.text.toString().isEmpty && _shishuWgt3EnDisable == true){
       _showErrorPopup(Strings.enter_shishu_weight,Colors.black);
     }else if(_shishuWeight3Controller.text.toString() == "0" && _shishuWgt3EnDisable == true){
       _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
+    }else if(_shishuWeight3Controller.text.toString().isNotEmpty && (double.parse(_shishuWeight3Controller.text.toString()) > 9 && _shishuWgt3EnDisable == true)){
+      _showErrorPopup(Strings.enter_correct_shishu_weight_child,Colors.black);
     }else if(_shishuWeight3Controller.text.toString().isNotEmpty && (double.parse(_shishuWeight3Controller.text.toString()) < 0 && _shishuWgt3EnDisable == true)){
       _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
     }else if(_shishuWeight4Controller.text.toString().isEmpty && _shishuWgt4EnDisable == true){
       _showErrorPopup(Strings.enter_shishu_weight,Colors.black);
     }else if(_shishuWeight4Controller.text.toString() == "0" && _shishuWgt4EnDisable == true){
       _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
+    }else if(_shishuWeight4Controller.text.toString().isNotEmpty && (double.parse(_shishuWeight4Controller.text.toString()) > 9 && _shishuWgt4EnDisable == true)){
+      _showErrorPopup(Strings.enter_correct_shishu_weight_child,Colors.black);
     }else if(_shishuWeight4Controller.text.toString().isNotEmpty && (double.parse(_shishuWeight4Controller.text.toString()) < 0 && _shishuWgt4EnDisable == true)){
       _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
     }else if(_shishuWeight5Controller.text.toString().isEmpty && _shishuWgt5EnDisable == true){
       _showErrorPopup(Strings.enter_shishu_weight,Colors.black);
     }else if(_shishuWeight5Controller.text.toString() == "0" && _shishuWgt5EnDisable == true){
       _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
+    }else if(_shishuWeight5Controller.text.toString().isNotEmpty && (double.parse(_shishuWeight5Controller.text.toString()) > 9 && _shishuWgt5EnDisable == true)){
+      _showErrorPopup(Strings.enter_correct_shishu_weight_child,Colors.black);
     }else if(_shishuWeight5Controller.text.toString().isNotEmpty && (double.parse(_shishuWeight5Controller.text.toString()) < 0 && _shishuWgt5EnDisable == true)){
       _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
     }else if(_ShowHideShishuEntryView1 == true && rdChildIsLive1 == "0" && rdChildIsLiveEntry1 == true){
@@ -5286,7 +5326,8 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
       _showErrorPopup(Strings.pncDetailUpdate,Colors.black);
     }else if(rdChildIsLive5 == "0" && _ShowHideShishuEntryView5== true){
       _showErrorPopup(Strings.pncDetailUpdate,Colors.black);
-    }*/else if(_selectedPlacesReferCode == "0" && _ShowHideReferPlacesView == true){
+    }*/
+    else if(_selectedPlacesReferCode == "0" && _ShowHideReferPlacesView == true){
       _showErrorPopup(Strings.refer_sanstha_type,Colors.black);
     }else if(_selectedDistrictUnitCode == "0000" && _ShowHideReferPlacesView == true){
       _showErrorPopup(Strings.choose_refer_jila,Colors.black);
@@ -5568,7 +5609,11 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
       _ShowHideErrorView=true;
       _ShowHideReferPlacesView=false;
     }
-    if(_ShowHideShishuEntryView1 == true && rdChildIsLive1 == "0"){
+    if( _ShowHideShishuEntryView1 == true && rdChildIsLive1 == "0"  ||
+        _ShowHideShishuEntryView2 == true && rdChildIsLive2 == "0"  ||
+        _ShowHideShishuEntryView3 == true && rdChildIsLive3 == "0"  ||
+        _ShowHideShishuEntryView4 == true && rdChildIsLive4 == "0"  ||
+        _ShowHideShishuEntryView5 == true && rdChildIsLive5 == "0"){
         setState(() {
           _ShowHideADDNewVivranView=false;
         });
@@ -5586,10 +5631,21 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
         _ShowHideShishuEntryView5 == true && rdChildIsLive5 == "0"){
         setState(() {
           _ShowHideADDNewVivranView=false;
+          _ShowHideErrorView=true;
+          _ShowHideReferPlacesView=false;
         });
     }else{
         setState(() {
-          _ShowHideADDNewVivranView=true;
+          if(motherComplId == "3"){//check if mother is not selected as Dead
+            _ShowHideADDNewVivranView=false;
+            _ShowHideErrorView=true;
+            _ShowHideReferPlacesView=false;
+
+          }else{
+            _ShowHideReferPlacesView=true;
+            _ShowHideErrorView=false;
+            _ShowHideADDNewVivranView=true;
+          }
         });
     }
   }

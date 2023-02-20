@@ -1289,9 +1289,9 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
               LastUpdated: response_list2[i]['LastUpdated'].toString()));
         }
         aanganBadiId = custom_aanganbadi_list[0].AnganwariNo.toString();
-        print('aanganBadiId ${aanganBadiId}');
-        print('res.len  ${response_list2.length}');
-        print('custom_aasha_list.len ${custom_aanganbadi_list.length}');
+        //print('aanganBadiId ${aanganBadiId}');
+        //print('res.len  ${response_list2.length}');
+        //print('custom_aasha_list.len ${custom_aanganbadi_list.length}');
       } else {}
       EasyLoading.dismiss();
     });
@@ -1920,7 +1920,26 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                     setState(() {
                                       motherComplId = newVal!;
                                       print('motherComplId:$motherComplId');
-                                      if(motherComplId == "5" || motherComplId == "0"){
+                                      if((motherComplId == "5" || motherComplId == "0") && (rdChildIsLive1 != "0" || rdChildIsLive2 != "0" || rdChildIsLive3 != "0" || rdChildIsLive4 != "0" || rdChildIsLive5 != "0")){
+                                        _ShowHideReferPlacesView=false;
+                                        _ShowHideErrorView=false;
+                                        _ShowHideADDNewVivranView=true;
+                                      }else if(motherComplId == "3"){
+                                        _ShowHideReferPlacesView=false;
+                                        _ShowHideErrorView=true;
+                                        _ShowHideADDNewVivranView=false;
+                                      }else{
+                                        if(rdChildIsLive1 == "0" || rdChildIsLive2 == "0" || rdChildIsLive3 == "0" || rdChildIsLive4 == "0" || rdChildIsLive5 == "0"){
+                                          _ShowHideReferPlacesView=false;
+                                          _ShowHideErrorView=true;
+                                          _ShowHideADDNewVivranView=false;
+                                        }else{
+                                          _ShowHideReferPlacesView=true;
+                                          _ShowHideErrorView=false;
+                                          _ShowHideADDNewVivranView=true;
+                                        }
+                                      }
+                                      /*if(motherComplId == "5" || motherComplId == "0"){
                                         _ShowHideReferPlacesView=false;
                                         _ShowHideErrorView=false;
                                         _ShowHideADDNewVivranView=true;
@@ -1932,7 +1951,7 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                         _ShowHideReferPlacesView=true;
                                         _ShowHideErrorView=false;
                                         _ShowHideADDNewVivranView=true;
-                                      }
+                                      }*/
                                       checkifNoneCompl(childComplId_1,childComplId_2,childComplId_3,childComplId_4,childComplId_5);
                                     });
                                   },
@@ -2188,7 +2207,7 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                                                 activeColor:Colors.black,
                                                                 value: ShihuIsLive.no,
                                                                 groupValue: _shishuislive,
-                                                                onChanged:(ShihuIsLive? value) {
+                                                                onChanged:rdChildIsLiveEntry1 == false ? null :(ShihuIsLive? value) {
                                                                   setState(() {
                                                                     _shishuislive = value ?? _shishuislive;
                                                                     rdChildIsLive1="0";
@@ -2549,7 +2568,7 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                                                 activeColor:rdChildIsLiveEntry2 == false ? Colors.grey : Colors.black,
                                                                 value: ShihuIsLive2.no,
                                                                 groupValue: _shishuislive2,
-                                                                onChanged:(ShihuIsLive2? value) {
+                                                                onChanged:rdChildIsLiveEntry2 == false ? null : (ShihuIsLive2? value) {
                                                                   setState(() {
                                                                     _shishuislive2 = value ?? _shishuislive2;
                                                                     rdChildIsLive2="0";
@@ -2879,7 +2898,7 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                                                 activeColor:rdChildIsLiveEntry3 == false ? Colors.grey : Colors.black,
                                                                 value: ShihuIsLive3.yes,
                                                                 groupValue: _shishuislive3,
-                                                                onChanged: (ShihuIsLive3? value) {
+                                                                onChanged:rdChildIsLiveEntry3 == false ? null : (ShihuIsLive3? value) {
                                                                   setState(() {
                                                                     _shishuislive3 = value ?? _shishuislive3;
                                                                     rdChildIsLive3="1";
@@ -2914,7 +2933,7 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                                                 activeColor:rdChildIsLiveEntry3 == false ? Colors.grey : Colors.black,
                                                                 value: ShihuIsLive3.no,
                                                                 groupValue: _shishuislive3,
-                                                                onChanged:(ShihuIsLive3? value) {
+                                                                onChanged:rdChildIsLiveEntry3 == false ? null :(ShihuIsLive3? value) {
                                                                   setState(() {
                                                                     _shishuislive3 = value ?? _shishuislive3;
                                                                     rdChildIsLive3="0";
@@ -3279,7 +3298,7 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                                                 activeColor:rdChildIsLiveEntry4 == false ? Colors.grey : Colors.black,
                                                                 value: ShihuIsLive4.no,
                                                                 groupValue: _shishuislive4,
-                                                                onChanged:(ShihuIsLive4? value) {
+                                                                onChanged:rdChildIsLiveEntry4 == false ? null : (ShihuIsLive4? value) {
                                                                   setState(() {
                                                                     _shishuislive4 = value ?? _shishuislive4;
                                                                     rdChildIsLive4="1";
@@ -3644,7 +3663,7 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                                                 activeColor:rdChildIsLiveEntry5 == false ? Colors.grey : Colors.black,
                                                                 value: ShihuIsLive5.no,
                                                                 groupValue: _shishuislive5,
-                                                                onChanged:(ShihuIsLive5? value) {
+                                                                onChanged:rdChildIsLiveEntry5 == false ? null : (ShihuIsLive5? value) {
                                                                   setState(() {
                                                                     _shishuislive5 = value ?? _shishuislive5;
                                                                     rdChildIsLive5="0";
@@ -4938,30 +4957,40 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
       _showErrorPopup(Strings.enter_shishu_weight,Colors.black);
     }else if(_shishuWeightController.text.toString() == "0" && _shishuWgtEnDisable == true){
       _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
+    }else if(_shishuWeightController.text.toString().isNotEmpty && (double.parse(_shishuWeightController.text.toString()) > 9 && _shishuWgtEnDisable == true)){
+      _showErrorPopup(Strings.enter_correct_shishu_weight_child,Colors.black);
     }else if(_shishuWeightController.text.toString().isNotEmpty && (double.parse(_shishuWeightController.text.toString()) < 0 && _shishuWgtEnDisable == true)){
       _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
     }else if(_shishuWeight2Controller.text.toString().isEmpty && _shishuWgt2EnDisable == true){
       _showErrorPopup(Strings.enter_shishu_weight,Colors.black);
     }else if((_shishuWeight2Controller.text.toString() == "0" && _shishuWgt2EnDisable == true)){
       _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
+    }else if(_shishuWeight2Controller.text.toString().isNotEmpty && (double.parse(_shishuWeight2Controller.text.toString()) > 9 && _shishuWgt2EnDisable == true)){
+      _showErrorPopup(Strings.enter_correct_shishu_weight_child,Colors.black);
     }else if(_shishuWeight2Controller.text.toString().isNotEmpty && (double.parse(_shishuWeight2Controller.text.toString()) < 0 && _shishuWgt2EnDisable == true)){
       _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
     }else if(_shishuWeight3Controller.text.toString().isEmpty && _shishuWgt3EnDisable == true){
       _showErrorPopup(Strings.enter_shishu_weight,Colors.black);
     }else if(_shishuWeight3Controller.text.toString() == "0" && _shishuWgt3EnDisable == true){
       _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
+    }else if(_shishuWeight3Controller.text.toString().isNotEmpty && (double.parse(_shishuWeight3Controller.text.toString()) > 9 && _shishuWgt3EnDisable == true)){
+      _showErrorPopup(Strings.enter_correct_shishu_weight_child,Colors.black);
     }else if(_shishuWeight3Controller.text.toString().isNotEmpty && (double.parse(_shishuWeight3Controller.text.toString()) < 0 && _shishuWgt3EnDisable == true)){
       _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
     }else if(_shishuWeight4Controller.text.toString().isEmpty && _shishuWgt4EnDisable == true){
       _showErrorPopup(Strings.enter_shishu_weight,Colors.black);
     }else if(_shishuWeight4Controller.text.toString() == "0" && _shishuWgt4EnDisable == true){
       _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
+    }else if(_shishuWeight4Controller.text.toString().isNotEmpty && (double.parse(_shishuWeight4Controller.text.toString()) > 9 && _shishuWgt4EnDisable == true)){
+      _showErrorPopup(Strings.enter_correct_shishu_weight_child,Colors.black);
     }else if(_shishuWeight4Controller.text.toString().isNotEmpty && (double.parse(_shishuWeight4Controller.text.toString()) < 0 && _shishuWgt4EnDisable == true)){
       _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
     }else if(_shishuWeight5Controller.text.toString().isEmpty && _shishuWgt5EnDisable == true){
       _showErrorPopup(Strings.enter_shishu_weight,Colors.black);
     }else if(_shishuWeight5Controller.text.toString() == "0" && _shishuWgt5EnDisable == true){
       _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
+    }else if(_shishuWeight5Controller.text.toString().isNotEmpty && (double.parse(_shishuWeight5Controller.text.toString()) > 9 && _shishuWgt5EnDisable == true)){
+      _showErrorPopup(Strings.enter_correct_shishu_weight_child,Colors.black);
     }else if(_shishuWeight5Controller.text.toString().isNotEmpty && (double.parse(_shishuWeight5Controller.text.toString()) < 0 && _shishuWgt5EnDisable == true)){
       _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
     }else if(_ShowHideShishuEntryView1 == true && rdChildIsLive1 == "0" && rdChildIsLiveEntry1 == true){
@@ -5244,7 +5273,6 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
     );
   }
 
-
   void checkifAnyChildLive(String rdChildIsLive1, String rdChildIsLive2, String rdChildIsLive3, String rdChildIsLive4, String rdChildIsLive5) {
     if(rdChildIsLive1 == "1" || rdChildIsLive2 == "1" || rdChildIsLive3 == "1" ||rdChildIsLive4 == "1" ||rdChildIsLive5 == "1"){
       _ShowHideReferPlacesView=true;
@@ -5252,14 +5280,36 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
     }else{
       _ShowHideErrorView=true;
       _ShowHideReferPlacesView=false;
+    }
+    if( _ShowHideShishuEntryView1 == true && rdChildIsLive1 == "0"  ||
+        _ShowHideShishuEntryView2 == true && rdChildIsLive2 == "0"  ||
+        _ShowHideShishuEntryView3 == true && rdChildIsLive3 == "0"  ||
+        _ShowHideShishuEntryView4 == true && rdChildIsLive4 == "0"  ||
+        _ShowHideShishuEntryView5 == true && rdChildIsLive5 == "0"){
+      setState(() {
+        _ShowHideADDNewVivranView=false;
+      });
+    }else{
+      setState(() {
+        _ShowHideADDNewVivranView=true;
+      });
+    }
+  }
+  /*void checkifAnyChildLive(String rdChildIsLive1, String rdChildIsLive2, String rdChildIsLive3, String rdChildIsLive4, String rdChildIsLive5) {
+    if(rdChildIsLive1 == "1" || rdChildIsLive2 == "1" || rdChildIsLive3 == "1" ||rdChildIsLive4 == "1" ||rdChildIsLive5 == "1"){
+      _ShowHideReferPlacesView=true;
+      _ShowHideErrorView=false;
+    }else{
+      _ShowHideErrorView=true;
+      _ShowHideReferPlacesView=false;
 
-      /*If any child is Dead , Update Button will not be show */
+      *//*If any child is Dead , Update Button will not be show *//*
       if((rdChildIsLive1 == "0" && _ShowHideShishuEntryView1 == true) || (rdChildIsLive2 == "0" && _ShowHideShishuEntryView2== true) || (rdChildIsLive3 == "0" &&
           _ShowHideShishuEntryView3== true) || (rdChildIsLive4 == "0" && _ShowHideShishuEntryView4== true) || (rdChildIsLive5 == "0" && _ShowHideShishuEntryView5== true)){
           _ShowHideADDNewVivranView=false;
       }
     }
-  }
+  }*/
 
   void checkifNoneCompl(String childCompl1,String childCompl2,String childCompl3,String childCompl4,String childCompl5) {
     if((motherComplId == "5" || motherComplId == "0") && ((childCompl1 == "12" || childCompl1 == "0")

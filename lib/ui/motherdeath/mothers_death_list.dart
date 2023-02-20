@@ -115,7 +115,7 @@ class _MothersDeathList extends State<MothersDeathList> {
     });
 
     getLisingAPI(villageId);
-    print('response:${apiResponse.message}');
+    //print('response:${apiResponse.message}');
     return "Success";
   }
 
@@ -147,7 +147,7 @@ class _MothersDeathList extends State<MothersDeathList> {
     });
 
     getLisingAPI(villageId);
-    print('response:${apiResponse.message}');
+    //print('response:${apiResponse.message}');
     return "Success";
   }
 
@@ -573,7 +573,7 @@ class _MothersDeathList extends State<MothersDeathList> {
                                   onChanged: (String? newVal) {
                                     setState((){
                                       villageId = newVal!;
-                                      print('villageId:$villageId');
+                                     // print('villageId:$villageId');
                                       getLisingAPI(villageId);
                                     });
                                   },

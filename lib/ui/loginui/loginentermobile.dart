@@ -3,6 +3,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
+import '../../constant/LocaleString.dart';
+
 void main() => runApp(VerifyOtp());
 
 class VerifyOtp extends StatelessWidget {
@@ -135,7 +137,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                       animationType: AnimationType.fade,
                       validator: (v) {
                         if (v!.length < 3) {
-                          return "I'm from validator";
+                          return "${Strings.enter_otp_error}";
                         } else {
                           return null;
                         }
@@ -161,7 +163,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                         )
                       ],
                       onCompleted: (v) {
-                        print("Completed");
+                        //print("Completed");
                       },
                       // onTap: () {
                       //   print("Pressed");
@@ -173,7 +175,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                         });
                       },
                       beforeTextPaste: (text) {
-                        print("Allowing to paste $text");
+                        //print("Allowing to paste $text");
                         //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
                         //but you can show anything you want here, like your pop up saying wrong paste format or etc
                         return true;

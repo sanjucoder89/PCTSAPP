@@ -819,8 +819,8 @@ class _MotherDeathDetailsScreenNew extends State<MotherDeathDetailsScreenNew> {
     if(_pos.longitude != null){
       _longitude=_pos.longitude.toString();
     }
-    print('live loc lat $_latitude');
-    print('live loc lng $_longitude');
+    //print('live loc lat $_latitude');
+    //print('live loc lng $_longitude');
 
     setState(() {
       prefs.setString("latitude", _latitude);

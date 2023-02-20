@@ -41,7 +41,7 @@ class _AashaRecordsState extends State<AashaRecords> {
   Future<String> getANCAshaRecordsAPI() async {
 
     preferences = await SharedPreferences.getInstance();
-    //print('LoginUnitid ${preferences.getString('UnitID')}');
+    print('LoginUnitid ${preferences.getString('UnitID')}');
     var response = await post(Uri.parse(_get_asha_records_url), body: {
       "LoginUnitid": preferences.getString('UnitID'),
       "type": "1",
@@ -1735,7 +1735,7 @@ class _AashaRecordsState extends State<AashaRecords> {
                             context,
                             MaterialPageRoute(
                               builder: (BuildContext context) =>
-                                  TotalCasesList(ashaAutoID:hbyc_list[index]['ashaAutoID'].toString(),type: "4"), //TabViewScreen ,VideoScreen
+                                  TotalCasesList(ashaAutoID:motherDeath_list[index]['ashaAutoID'].toString(),type: "4"), //TabViewScreen ,VideoScreen
                             ));
                       }
                     },

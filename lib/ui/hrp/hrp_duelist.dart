@@ -99,8 +99,8 @@ class _HrpDueScreenList extends State<HrpDueScreenList> {
       if (apiResponse.status == true) {
         villages_list = resBody['ResposeData'];
         villageId = resBody['ResposeData'][0]['VillageautoID'].toString();
-        print('villages_list.len ${villages_list.length}');
-        print('villageId ${villageId}');
+        //print('villages_list.len ${villages_list.length}');
+        //print('villageId ${villageId}');
 
       } else {
         Fluttertoast.showToast(
@@ -113,7 +113,7 @@ class _HrpDueScreenList extends State<HrpDueScreenList> {
     });
 
     getPrasavLisingAPI(villageId);
-    print('response:${apiResponse.message}');
+    //print('response:${apiResponse.message}');
     return "Success";
   }
 

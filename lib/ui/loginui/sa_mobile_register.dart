@@ -273,7 +273,7 @@ class _SaMobileRegister extends State<SaMobileRegister> {
                                       animationType: AnimationType.fade,
                                       validator: (v) {
                                         if (v!.length < 3) {
-                                          return "I'm from validator";
+                                          return "${Strings.enter_otp_error}";
                                         } else {
                                           return null;
                                         }
@@ -300,7 +300,7 @@ class _SaMobileRegister extends State<SaMobileRegister> {
                                         )
                                       ],
                                       onCompleted: (v) {
-                                        print("Completed");
+                                       // print("Completed");
                                       },
                                       // onTap: () {
                                       //   print("Pressed");
@@ -313,7 +313,7 @@ class _SaMobileRegister extends State<SaMobileRegister> {
                                         });
                                       },
                                       beforeTextPaste: (text) {
-                                        print("Allowing to paste $text");
+                                       // print("Allowing to paste $text");
                                         //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
                                         //but you can show anything you want here, like your pop up saying wrong paste format or etc
                                         return true;

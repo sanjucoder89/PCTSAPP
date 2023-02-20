@@ -206,7 +206,7 @@ class _ChangePasswordscreen extends State<ChangePasswordscreen> {
                         )
                       ],
                       onCompleted: (v) {
-                        print("Completed$v");
+                        //print("Completed$v");
                         otpvalue = v;
                       },
                       // onTap: () {

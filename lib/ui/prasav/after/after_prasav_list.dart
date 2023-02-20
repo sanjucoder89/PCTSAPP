@@ -102,8 +102,8 @@ class _AfterPrasavScreenList extends State<AfterPrasavScreenList> {
       if (apiResponse.status == true) {
         villages_list = resBody['ResposeData'];
         villageId = resBody['ResposeData'][0]['VillageautoID'].toString();
-        print('villages_list.len ${villages_list.length}');
-        print('villageId ${villageId}');
+        //print('villages_list.len ${villages_list.length}');
+        //print('villageId ${villageId}');
 
       } else {
         Fluttertoast.showToast(
@@ -540,7 +540,7 @@ class _AfterPrasavScreenList extends State<AfterPrasavScreenList> {
                                   onChanged: (String? newVal) {
                                     setState((){
                                       villageId = newVal!;
-                                      print('villageId:$villageId');
+                                     // print('villageId:$villageId');
                                       getPrasavLisingAPI(villageId);
                                     });
                                   },

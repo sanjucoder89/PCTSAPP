@@ -289,9 +289,9 @@ class _AddNewTikakarnScreenState extends State<AddNewTikakarnScreen> {
 
 
 
-        print('aashaId ${aashaId}');
-        print('res.len  ${response_list.length}');
-        print('custom_aasha_list.len ${custom_aasha_list.length}');
+        //print('aashaId ${aashaId}');
+        //print('res.len  ${response_list.length}');
+        //print('custom_aasha_list.len ${custom_aasha_list.length}');
       } else {}
       getImmuCodeListAPI();
       EasyLoading.dismiss();
@@ -377,8 +377,8 @@ class _AddNewTikakarnScreenState extends State<AddNewTikakarnScreen> {
     if(_pos.longitude != null){
       _longitude=_pos.longitude.toString();
     }
-    print('live loc lat $_latitude');
-    print('live loc lng $_longitude');
+    //print('live loc lat $_latitude');
+    //print('live loc lng $_longitude');
 
     setState(() {
       prefs.setString("latitude", _latitude);

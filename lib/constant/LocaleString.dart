@@ -530,11 +530,12 @@ class Strings {
   static const String loading_mg = "लोडिंग(200 mg से ज्यादा)";
   static const String choose_normal_loading_error = "कृपया सुक्रोज नार्मल/लोडिंग चुनें";
 
-  static const String choose_refer_type = "रैफर संस्था का प्रकार चुनें ";
+  static const String choose_refer_type = "रेफेर करने की इस्थी का प्रकार चुने ";
+  static const String choose_refer_type_sub = "रैफर संस्था का प्रकार चुनें ";
   static const String choose_refer_district = "रैफर जिला चुनें  ";
   static const String choose_refer_sanstha = "रैफर संस्था चुनें ";
   static const String sanstha_type = "संस्था का प्रकार";
-  static const String enter_correct_weight = "सही वेट(कि. ग्रा) एंटर करे";
+  static const String enter_correct_weight = "सही वजन (कि. ग्रा) एंटर करे";
 
 
   static const String weight_msg_green = "महिला का वजन LMP से आज तक #.##1 किग्रा ही बढा है, जबकि #.##2 किग्रा बढना था। यह सामान्‍य से थोडा कम है। दिन में कम से कम दो घण्‍टे एवं रात में आठ घण्‍टे का आराम अवश्‍य करें, दिन में कम से कम तीन बार भोजन करें एवं भोजन में हरे पत्‍तेदार सब्जियां ज्‍यादा देवें। समय-समय पर महिला की जांच चिकित्‍सक से करवाये, टी.टी. के टीके लगवाये।";
@@ -670,7 +671,10 @@ class Strings {
   static const String choose_visit_schedule = "कृपया विजिट शैड्यूल चुनें";
   static const String choose_visit_date = "कृपया विजिट की तारीख डालें";
   static const String enter_height_incm = "कृपया कद (सेमी. में) लिखें";
+  static const String enter_height_more_than_30_semi = "कद (सेमी. में) 30 से ज्यादा दर्ज करें ";
+  static const String enter_height_less_than_90_semi = "कद (सेमी. में) 99 से कम दर्ज करें ";
   static const String choose_mamta_packet = "कृपया ममता कार्ड से वृद्धि निगरानी चार्ट भरा गया चुनें";
+  static const String choose_child_color_packet = "किस रंग में वर्गीकृत किया गया चुनें";
   static const String choose_child_dieses = "कृपया बच्चे में विकासात्मक देरी के लक्षण पाये गए चुनें";
   static const String choose_child_ahar = "कृपया बच्चे को उम्र के अनुसार पूरक आहार दिया जा रहा है चुनें";
   static const String choose_ors_packet = "कृपया ओआरएस का पैकेट दिया गया चुनें";
@@ -684,6 +688,7 @@ class Strings {
   static const String child_age_ahar = "बच्चे को उम्र के अनुसार पूरक आहार दिया जा रहा है";
   static const String child_any_disease = "बच्चे में विकासात्मक देरी के लक्षण पाये गए";
   static const String child_any_rbsk_refer = "क्या बच्चे को RBSK अथवा उच्च संस्थान में रेफर किया गया";
+  static const String child_any_rbsk_refer_choose = "बच्चे को RBSK अथवा उच्च संस्थान में रेफर किया गया चुनें";
   static const String green_title = "हरा";
   static const String yellow_title = "पीला";
   static const String red_title = "लाल";

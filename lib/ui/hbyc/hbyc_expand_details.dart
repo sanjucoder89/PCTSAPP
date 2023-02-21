@@ -206,7 +206,7 @@ class _HBYCExpandDetails extends State<HBYCExpandDetails> {
           * IF ALL 4 ANC FILLED THEN HIDE FOURTH BUTTON LAYOUT , NO OTHER ANC FORM WILL BE FILED
          */
         print('last_pos ${last_pos}');
-        if(last_pos == 5){
+        if(last_pos == 4){
           _showHideAddANCButtonView=false;
         }else{
           _showHideAddANCButtonView=true;

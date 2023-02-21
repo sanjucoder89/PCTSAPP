@@ -670,28 +670,14 @@ class _EditHBYCFormState extends State<EditHBYCForm> {
       _showErrorPopup(Strings.aasha_chunai,ColorConstants.AppColorPrimary);
     }/*else if(widget.motherid){
       _showErrorPopup(Strings.try_again,ColorConstants.AppColorPrimary);
-    }*/else if(HBYCFlag.isEmpty){
-      _showErrorPopup(Strings.hbyc_choose_date,ColorConstants.AppColorPrimary);
-    }else if(HBYCFlag == "0"){
+    }*/else if(HBYCFlag == "0"){
+      _showErrorPopup(Strings.choose_visit_schedule,ColorConstants.AppColorPrimary);
+    }else if(HBYCFlag.isEmpty){
       _showErrorPopup(Strings.choose_visit_schedule,ColorConstants.AppColorPrimary);
     }/*else if(widget.HBYCFlag == HBYCFlag){
       _showErrorPopup(Strings.choose_correct_visit_schedule,ColorConstants.AppColorPrimary);
     }*/else if(_hbycPostDate.isEmpty){
       _showErrorPopup(Strings.choose_visit_date,ColorConstants.AppColorPrimary);
-    }else if(_orsPostData == "0"){
-      _showErrorPopup(Strings.choose_ors_packet,ColorConstants.AppColorPrimary);
-    }else if(_ifaPostData == "0"){
-      _showErrorPopup(Strings.ifa_srip_choose,ColorConstants.AppColorPrimary);
-    }else if(_mamtaPostData == "0"){
-      _showErrorPopup(Strings.choose_mamta_packet,ColorConstants.AppColorPrimary);
-    }else if(_dietPostData == "0"){
-      _showErrorPopup(Strings.choose_child_ahar,ColorConstants.AppColorPrimary);
-    }else if(_diabiliyPostData == "0"){
-      _showErrorPopup(Strings.choose_child_dieses,ColorConstants.AppColorPrimary);
-    }else if(_referView == true && _ReferUnitCode == "0"){
-      _showErrorPopup(Strings.choose_refer_type,ColorConstants.AppColorPrimary);
-    }else if((_selectedPlacesReferCode == "10" || _selectedPlacesReferCode == "9" || _selectedPlacesReferCode == "8") && (sub_heading == "" || sub_heading == "चुनें" || _selectedSubUnitCode == "0")){
-      _showErrorPopup("कृपया "+sub_heading +" चुनें!",ColorConstants.AppColorPrimary);
     }else if(_shishuWeightController.text.toString().isEmpty){
       _showErrorPopup(Strings.enter_correct_weight,ColorConstants.AppColorPrimary);
     }else if(_shishuWeightController.text.toString() == "0" ||  double.parse(_shishuWeightController.text.toString()) < 0){
@@ -700,6 +686,26 @@ class _EditHBYCFormState extends State<EditHBYCForm> {
       _showErrorPopup(Strings.enter_height_incm,ColorConstants.AppColorPrimary);
     }else if(_shishuKadController.text.toString() == "0" ||  double.parse(_shishuKadController.text.toString()) < 0){
       _showErrorPopup(Strings.enter_height_incm,ColorConstants.AppColorPrimary);
+    }else if(double.parse(_shishuKadController.text.toString()) < 30){
+      _showErrorPopup(Strings.enter_height_more_than_30_semi,ColorConstants.AppColorPrimary);
+    }else if(double.parse(_shishuKadController.text.toString()) > 90 ){
+      _showErrorPopup(Strings.enter_height_less_than_90_semi,ColorConstants.AppColorPrimary);
+    }else if(_orsPostData == "0"){
+      _showErrorPopup(Strings.choose_ors_packet,ColorConstants.AppColorPrimary);
+    }else if(_ifaPostData == "0"){
+      _showErrorPopup(Strings.ifa_srip_choose,ColorConstants.AppColorPrimary);
+    }else if(_mamtaPostData == "0"){
+      _showErrorPopup(Strings.choose_mamta_packet,ColorConstants.AppColorPrimary);
+    }else if(_chooseMamtaCard == true && _childColorPostData == "0"){
+      _showErrorPopup(Strings.choose_child_color_packet,ColorConstants.AppColorPrimary);
+    }else if(_dietPostData == "0"){
+      _showErrorPopup(Strings.choose_child_ahar,ColorConstants.AppColorPrimary);
+    }else if(_diabiliyPostData == "0"){
+      _showErrorPopup(Strings.choose_child_dieses,ColorConstants.AppColorPrimary);
+    }else if(_referView == true && _ReferUnitCode == "0"){
+      _showErrorPopup(Strings.choose_refer_type,ColorConstants.AppColorPrimary);
+    }else if((_selectedPlacesReferCode == "10" || _selectedPlacesReferCode == "9" || _selectedPlacesReferCode == "8") && (sub_heading == "" || sub_heading == "चुनें" || _selectedSubUnitCode == "0")){
+      _showErrorPopup("कृपया "+sub_heading +" चुनें!",ColorConstants.AppColorPrimary);
     }else{
       if(_shishuWeightController.text.toString().trim().isEmpty){
         _weightPostData="0";

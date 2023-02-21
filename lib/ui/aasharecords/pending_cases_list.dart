@@ -392,7 +392,7 @@ class _PendingCasesListState extends State<PendingCasesList> {
                   Expanded(child: Container(child:Padding(
                     padding: const EdgeInsets.all(3.0),
                     child: Text(
-                      '${response_list == null ? "" : response_list[index]['Name']+" W/o "+response_list[index]['HusbName']}',
+                      '${response_list == null ? "" :response_list[index]['ChildID']}',
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                           fontSize: 11,

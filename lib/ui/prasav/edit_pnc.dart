@@ -512,7 +512,7 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
 
         for (int i = 0; i < response_list5.length; i++) {
           custom_childname_list.add(CustomChildNameList(
-              ChildName:response_list5[i]['Name'].toString() == "null" ? "" : response_list5[i]['Name'].toString().trim(),
+              ChildName:response_list5[i]['ChildName'].toString() == "null" ? "" : response_list5[i]['ChildName'].toString().trim(),
               InfantID:response_list5[i]['InfantID'].toString(),
               Status:response_list5[i]['Status'].toString()));
         }
@@ -801,6 +801,37 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
           }
         }//five child
 
+        /*if(custom_childname_list.length > 5){
+          if(custom_childname_list[0].Status.toString() == "2"){
+            _isFirstChildLive=false;
+          }else{
+            _isFifthChildLive=true;
+          }
+          if(custom_childname_list[1].Status.toString() == "2"){
+            _isSecondChildLive=false;
+          }else{
+            _isSecondChildLive=true;
+          }
+
+          if(custom_childname_list[2].Status.toString() == "2"){
+            _isThirdChildLive=false;
+          }else{
+            _isThirdChildLive=true;
+          }
+
+          if(custom_childname_list[3].Status.toString() == "2"){
+            _isFourthChildLive=false;
+          }else{
+            _isFourthChildLive=true;
+          }
+
+          if(custom_childname_list[4].Status.toString() == "2"){
+            _isFifthChildLive=false;
+          }else{
+            _isFifthChildLive=true;
+          }
+        }*/
+
 
         if(custom_childname_list.length == 1) {
           _ShowHideShishuEntryView1=true;
@@ -824,7 +855,6 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
           _ShowHideShishuEntryView5=true;
         }
 
-
         /*
         * Enable Disable Child Name Fields
         * */
@@ -847,7 +877,6 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
             _shishu2EnDisable=true;
           }
         }
-
         if(custom_childname_list.length == 3) {
           if (custom_childname_list[2].ChildName.toString().isNotEmpty) {
             _shishu3EnDisable=false;
@@ -859,7 +888,6 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
             _shishu3EnDisable=true;
           }
         }
-
         if(custom_childname_list.length == 4) {
           if (custom_childname_list[3].ChildName.toString().isNotEmpty) {
             _shishu4EnDisable=false;
@@ -884,6 +912,14 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
           }else{
             _shishu5EnDisable=true;
           }
+        }
+
+        if(custom_childname_list.length > 5){
+          _ShowHideShishuEntryView1=true;
+          _ShowHideShishuEntryView2=true;
+          _ShowHideShishuEntryView3=true;
+          _ShowHideShishuEntryView4=true;
+          _ShowHideShishuEntryView5=true;
         }
       }
     });

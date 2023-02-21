@@ -440,7 +440,7 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
 
         for (int i = 0; i < response_list5.length; i++) {
           custom_childname_list.add(CustomChildNameList(
-              ChildName:response_list5[i]['Name'].toString() == "null" ? "" : response_list5[i]['Name'].toString().trim(),
+              ChildName:response_list5[i]['ChildName'].toString() == "null" ? "" : response_list5[i]['ChildName'].toString().trim(),
               InfantID:response_list5[i]['InfantID'].toString(),
           Status:response_list5[i]['Status'].toString()));
         }
@@ -521,7 +521,6 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
             _isFourthChildLive=true;
           }
         }
-
         if(custom_childname_list.length == 5) {
 
           if(custom_childname_list[0].Status.toString() == "2"){
@@ -555,18 +554,55 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
           }
         }
 
+        if(custom_childname_list.length > 5){
+            if(custom_childname_list[0].Status.toString() == "2"){
+              _isFirstChildLive=false;
+            }else{
+              _isFifthChildLive=true;
+            }
+            if(custom_childname_list[1].Status.toString() == "2"){
+              _isSecondChildLive=false;
+            }else{
+              _isSecondChildLive=true;
+            }
+
+            if(custom_childname_list[2].Status.toString() == "2"){
+              _isThirdChildLive=false;
+            }else{
+              _isThirdChildLive=true;
+            }
+
+            if(custom_childname_list[3].Status.toString() == "2"){
+              _isFourthChildLive=false;
+            }else{
+              _isFourthChildLive=true;
+            }
+
+            if(custom_childname_list[4].Status.toString() == "2"){
+              _isFifthChildLive=false;
+            }else{
+              _isFifthChildLive=true;
+            }
+        }
+
+
         print('custom_childnam.len ${custom_childname_list.length}');
         if(custom_childname_list.length > 0){
           if (custom_childname_list[0].ChildName.toString().isNotEmpty == "" || custom_childname_list[0].ChildName.toString() != "null") {
+
+
             _shishuNameController.text = custom_childname_list[0].ChildName.toString();
+            print('first_child_name ${custom_childname_list[0].ChildName.toString()}');
             _shishuEnDisable=false;
-          }else if(custom_childname_list[1].ChildName.toString().isNotEmpty == "" || custom_childname_list[1].ChildName.toString() != "null"){
+          }
+          if(custom_childname_list[1].ChildName.toString().isNotEmpty == "" || custom_childname_list[1].ChildName.toString() != "null"){
             _shishuNameController.text = custom_childname_list[0].ChildName.toString();
             _shishuEnDisable=false;
 
             _shishu2NameController.text = custom_childname_list[1].ChildName.toString();
             _shishu2EnDisable=false;
-          }else if(custom_childname_list[2].ChildName.toString().isNotEmpty == "" || custom_childname_list[2].ChildName.toString() != "null"){
+          }
+          if(custom_childname_list[2].ChildName.toString().isNotEmpty == "" || custom_childname_list[2].ChildName.toString() != "null"){
             _shishuNameController.text = custom_childname_list[0].ChildName.toString();
             _shishuEnDisable=false;
 
@@ -575,7 +611,8 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
 
             _shishu3NameController.text = custom_childname_list[2].ChildName.toString();
             _shishu3EnDisable=false;
-          }else if(custom_childname_list[3].ChildName.toString().isNotEmpty == "" || custom_childname_list[3].ChildName.toString() != "null"){
+          }
+          if(custom_childname_list[3].ChildName.toString().isNotEmpty == "" || custom_childname_list[3].ChildName.toString() != "null"){
             _shishuNameController.text = custom_childname_list[0].ChildName.toString();
             _shishuEnDisable=false;
 
@@ -587,7 +624,8 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
 
             _shishu4NameController.text = custom_childname_list[3].ChildName.toString();
             _shishu4EnDisable=false;
-          }else if(custom_childname_list[4].ChildName.toString().isNotEmpty == "" || custom_childname_list[4].ChildName.toString() != "null"){
+          }
+          if(custom_childname_list[4].ChildName.toString().isNotEmpty == "" || custom_childname_list[4].ChildName.toString() != "null"){
             _shishuNameController.text = custom_childname_list[0].ChildName.toString();
             _shishuEnDisable=false;
 
@@ -893,6 +931,14 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
           _ShowHideShishuEntryView3=true;
           _ShowHideShishuEntryView4=true;
         }else if(custom_childname_list.length == 5){
+          _ShowHideShishuEntryView1=true;
+          _ShowHideShishuEntryView2=true;
+          _ShowHideShishuEntryView3=true;
+          _ShowHideShishuEntryView4=true;
+          _ShowHideShishuEntryView5=true;
+        }
+
+        if(custom_childname_list.length > 5){
           _ShowHideShishuEntryView1=true;
           _ShowHideShishuEntryView2=true;
           _ShowHideShishuEntryView3=true;

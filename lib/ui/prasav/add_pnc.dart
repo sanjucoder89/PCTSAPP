@@ -1626,7 +1626,17 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                         _ShowHideADDNewVivranView=false;
                                       }else{
                                         print('_isSecondChildLive $_isSecondChildLive');
-                                        if((rdChildIsLive1 == "0" && _isFirstChildLive == false) ||
+                                        if(_isFirstChildLive == true || _isSecondChildLive == true || _isThirdChildLive == true ||_isFourthChildLive == true || _isFifthChildLive == true) { //false=dead, true=live
+                                          _ShowHideReferPlacesView=true;
+                                          _ShowHideErrorView=false;
+                                          _ShowHideADDNewVivranView=true;
+
+                                        }else{
+                                          _ShowHideReferPlacesView=false;
+                                          _ShowHideErrorView=true;
+                                          _ShowHideADDNewVivranView=false;
+                                        }
+                                        /*if((rdChildIsLive1 == "0" && _isFirstChildLive == false) ||
                                             (rdChildIsLive2 == "0" && _isSecondChildLive == false) ||
                                             (rdChildIsLive3 == "0" && _isThirdChildLive == false) ||
                                             (rdChildIsLive4 == "0" && _isFourthChildLive == false) ||
@@ -1644,7 +1654,7 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                             _ShowHideErrorView=false;
                                             _ShowHideADDNewVivranView=true;
                                           }
-                                        }
+                                        }*/
 
                                       }
 
@@ -5772,9 +5782,15 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
         _ShowHideShishuEntryView4 == true && rdChildIsLive4 == "0"  ||
         _ShowHideShishuEntryView5 == true && rdChildIsLive5 == "0"){
         setState(() {
-          _ShowHideADDNewVivranView=false;
-          _ShowHideErrorView=true;
-          _ShowHideReferPlacesView=false;
+          if(_isFirstChildLive == true || _isSecondChildLive == true || _isThirdChildLive == true ||_isFourthChildLive == true || _isFifthChildLive == true){ //false=dead, true=live
+            _ShowHideReferPlacesView=true;
+            _ShowHideErrorView=false;
+            _ShowHideADDNewVivranView=true;
+          }else{
+            _ShowHideADDNewVivranView=false;
+            _ShowHideErrorView=true;
+            _ShowHideReferPlacesView=false;
+          }
         });
     }else{
         setState(() {

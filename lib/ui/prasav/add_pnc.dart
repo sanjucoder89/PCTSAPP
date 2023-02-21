@@ -409,6 +409,12 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
   TextEditingController _shishuWeight5Controller = TextEditingController();
 
 
+  bool _isFirstChildLive=true;//false= dead, true=live
+  bool _isSecondChildLive=true;//false= dead, true=live
+  bool _isThirdChildLive=true;//false= dead, true=live
+  bool _isFourthChildLive=true;//false= dead, true=live
+  bool _isFifthChildLive=true;//false= dead, true=live
+
   Future<String> getChildNameListAPI() async {
     preferences = await SharedPreferences.getInstance();
 
@@ -437,6 +443,106 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
               ChildName:response_list5[i]['Name'].toString() == "null" ? "" : response_list5[i]['Name'].toString().trim(),
               InfantID:response_list5[i]['InfantID'].toString(),
           Status:response_list5[i]['Status'].toString()));
+        }
+
+        if(custom_childname_list.length == 1) {
+          if(custom_childname_list[0].Status.toString() == "2"){
+            _isFirstChildLive=false;
+          }else{
+            _isFifthChildLive=true;
+          }
+        }
+        if(custom_childname_list.length == 2) {
+          if(custom_childname_list[0].Status.toString() == "2"){
+            _isFirstChildLive=false;
+          }else{
+            _isFifthChildLive=true;
+          }
+
+          if(custom_childname_list[1].Status.toString() == "2"){
+            _isSecondChildLive=false;
+          }else{
+            _isSecondChildLive=true;
+          }
+        }
+        if(custom_childname_list.length == 3) {
+
+          if(custom_childname_list[0].Status.toString() == "2"){
+            _isFirstChildLive=false;
+          }else{
+            _isFifthChildLive=true;
+          }
+
+          if(custom_childname_list[1].Status.toString() == "2"){
+            _isSecondChildLive=false;
+          }else{
+            _isSecondChildLive=true;
+          }
+
+          if(custom_childname_list[2].Status.toString() == "2"){
+            _isThirdChildLive=false;
+          }else{
+            _isThirdChildLive=true;
+          }
+        }
+        if(custom_childname_list.length == 4) {
+
+          if(custom_childname_list[0].Status.toString() == "2"){
+            _isFirstChildLive=false;
+          }else{
+            _isFifthChildLive=true;
+          }
+
+          if(custom_childname_list[1].Status.toString() == "2"){
+            _isSecondChildLive=false;
+          }else{
+            _isSecondChildLive=true;
+          }
+
+          if(custom_childname_list[2].Status.toString() == "2"){
+            _isThirdChildLive=false;
+          }else{
+            _isThirdChildLive=true;
+          }
+
+          if(custom_childname_list[3].Status.toString() == "2"){
+            _isFourthChildLive=false;
+          }else{
+            _isFourthChildLive=true;
+          }
+        }
+
+        if(custom_childname_list.length == 5) {
+
+          if(custom_childname_list[0].Status.toString() == "2"){
+            _isFirstChildLive=false;
+          }else{
+            _isFifthChildLive=true;
+          }
+
+          if(custom_childname_list[1].Status.toString() == "2"){
+            _isSecondChildLive=false;
+          }else{
+            _isSecondChildLive=true;
+          }
+
+          if(custom_childname_list[2].Status.toString() == "2"){
+            _isThirdChildLive=false;
+          }else{
+            _isThirdChildLive=true;
+          }
+
+          if(custom_childname_list[3].Status.toString() == "2"){
+            _isFourthChildLive=false;
+          }else{
+            _isFourthChildLive=true;
+          }
+
+          if(custom_childname_list[4].Status.toString() == "2"){
+            _isFifthChildLive=false;
+          }else{
+            _isFifthChildLive=true;
+          }
         }
 
         print('custom_childnam.len ${custom_childname_list.length}');
@@ -783,6 +889,8 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
           _ShowHideShishuEntryView4=true;
           _ShowHideShishuEntryView5=true;
         }
+
+
       }
     });
     print('response:${apiResponse.message}');
@@ -1517,16 +1625,30 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                         _ShowHideErrorView=true;
                                         _ShowHideADDNewVivranView=false;
                                       }else{
-                                        if(rdChildIsLive1 == "0" || rdChildIsLive2 == "0" || rdChildIsLive3 == "0" || rdChildIsLive4 == "0" || rdChildIsLive5 == "0"){
-                                          _ShowHideReferPlacesView=false;
-                                          _ShowHideErrorView=true;
-                                          _ShowHideADDNewVivranView=false;
-                                        }else{
+                                        print('_isSecondChildLive $_isSecondChildLive');
+                                        if((rdChildIsLive1 == "0" && _isFirstChildLive == false) ||
+                                            (rdChildIsLive2 == "0" && _isSecondChildLive == false) ||
+                                            (rdChildIsLive3 == "0" && _isThirdChildLive == false) ||
+                                            (rdChildIsLive4 == "0" && _isFourthChildLive == false) ||
+                                            (rdChildIsLive5 == "0" && _isFifthChildLive == false)){
                                           _ShowHideReferPlacesView=true;
                                           _ShowHideErrorView=false;
                                           _ShowHideADDNewVivranView=true;
+                                        }else{
+                                          if(rdChildIsLive1 == "0" || rdChildIsLive2 == "0" || rdChildIsLive3 == "0" || rdChildIsLive4 == "0" || rdChildIsLive5 == "0"){
+                                            _ShowHideReferPlacesView=false;
+                                            _ShowHideErrorView=true;
+                                            _ShowHideADDNewVivranView=false;
+                                          }else{
+                                            _ShowHideReferPlacesView=true;
+                                            _ShowHideErrorView=false;
+                                            _ShowHideADDNewVivranView=true;
+                                          }
                                         }
-                                      }/*else if(rdChildIsLive1 != "0" || rdChildIsLive2 != "0" || rdChildIsLive3 != "0" || rdChildIsLive4 != "0" || rdChildIsLive5 != "0"){
+
+                                      }
+
+                                      /*else if(rdChildIsLive1 != "0" || rdChildIsLive2 != "0" || rdChildIsLive3 != "0" || rdChildIsLive4 != "0" || rdChildIsLive5 != "0"){
                                         _ShowHideReferPlacesView=false;
                                         _ShowHideErrorView=true;
                                         _ShowHideADDNewVivranView=true;

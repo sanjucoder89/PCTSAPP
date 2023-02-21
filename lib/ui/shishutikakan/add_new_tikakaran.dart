@@ -379,11 +379,13 @@ class _AddNewTikakarnScreenState extends State<AddNewTikakarnScreen> {
     }
     //print('live loc lat $_latitude');
     //print('live loc lng $_longitude');
+    if(mounted == true){
+      setState(() {
+        prefs.setString("latitude", _latitude);
+        prefs.setString("longitude", _longitude);
+      });
+    }
 
-    setState(() {
-      prefs.setString("latitude", _latitude);
-      prefs.setString("longitude", _longitude);
-    });
   }
 
   @override
@@ -713,7 +715,8 @@ class _AddNewTikakarnScreenState extends State<AddNewTikakarnScreen> {
                     height: 100,
                     child:Scrollbar(
                       controller: _controller,
-                      isAlwaysShown: true,
+                      thumbVisibility: true,
+                      trackVisibility: true,
                       //physics: ScrollPhysics(),
                       child:  _tikaiListView(),
                     ),

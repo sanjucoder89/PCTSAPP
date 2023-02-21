@@ -333,44 +333,43 @@ class _ChildInfantListState extends State<ChildInfantList> {
           )
         ],
       ),
-      body: Column(
-        children:<Widget>[
-          Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: Row(
-              children: <Widget>[
-                Expanded(child: Text('${Strings.mahila_ka_naam}',style: TextStyle(fontSize: 13,color: Colors.black,fontWeight: FontWeight.normal),)),
-                Expanded(child: Text('${_mahilaName}',style: TextStyle(fontSize: 13,color: Colors.black,fontWeight: FontWeight.normal),))
-              ],
+      body: SingleChildScrollView(
+        child: Column(
+          children:<Widget>[
+            Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Row(
+                children: <Widget>[
+                  Expanded(child: Text('${Strings.mahila_ka_naam}',style: TextStyle(fontSize: 13,color: Colors.black,fontWeight: FontWeight.normal),)),
+                  Expanded(child: Text('${_mahilaName}',style: TextStyle(fontSize: 13,color: Colors.black,fontWeight: FontWeight.normal),))
+                ],
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: Row(
-              children: <Widget>[
-                Expanded(child: Text('${Strings.pita_ka_naam}',style: TextStyle(fontSize: 13,color: Colors.black,fontWeight: FontWeight.normal),)),
-                Expanded(child: Text('${_fatherName}',style: TextStyle(fontSize: 13,color: Colors.black,fontWeight: FontWeight.normal),))
-              ],
+            Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Row(
+                children: <Widget>[
+                  Expanded(child: Text('${Strings.pita_ka_naam}',style: TextStyle(fontSize: 13,color: Colors.black,fontWeight: FontWeight.normal),)),
+                  Expanded(child: Text('${_fatherName}',style: TextStyle(fontSize: 13,color: Colors.black,fontWeight: FontWeight.normal),))
+                ],
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: Row(
-              children: <Widget>[
-                Expanded(child: Text('${Strings.mobile_num}',style: TextStyle(fontSize: 13,color: Colors.black,fontWeight: FontWeight.normal),)),
-                Expanded(child: Text('${_mobileNo}',style: TextStyle(fontSize: 13,color: Colors.black,fontWeight: FontWeight.normal),))
-              ],
+            Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Row(
+                children: <Widget>[
+                  Expanded(child: Text('${Strings.mobile_num}',style: TextStyle(fontSize: 13,color: Colors.black,fontWeight: FontWeight.normal),)),
+                  Expanded(child: Text('${_mobileNo}',style: TextStyle(fontSize: 13,color: Colors.black,fontWeight: FontWeight.normal),))
+                ],
+              ),
             ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: _myListView(),
-          )
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: _myListView(),
+            )
 
-        ],
+          ],
+        ),
       ),
 
     );
@@ -506,7 +505,6 @@ class _ChildInfantListState extends State<ChildInfantList> {
                       ),
                     ),
 
-
                     Padding(
                       padding: const EdgeInsets.only(left: 5,right: 5),
                       child: Row(
@@ -537,6 +535,7 @@ class _ChildInfantListState extends State<ChildInfantList> {
                         ],
                       ),
                     ),
+
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Divider(

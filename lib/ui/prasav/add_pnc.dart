@@ -445,6 +445,16 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
           Status:response_list5[i]['Status'].toString()));
         }
 
+    //first time reset all radio
+        setState(() {
+          _shishuislive = ShihuIsLive.none;
+          _shishuislive2 = ShihuIsLive2.none;
+          _shishuislive3 = ShihuIsLive3.none;
+          _shishuislive4 = ShihuIsLive4.none;
+          _shishuislive5 = ShihuIsLive5.none;
+        });
+
+
         if(custom_childname_list.length == 1) {
           if(custom_childname_list[0].Status.toString() == "2"){
             _isFirstChildLive=false;
@@ -1021,9 +1031,7 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
 
     });
 
-    setState(() {
-      _shishuislive = ShihuIsLive.none;
-    });
+
     var response = await post(Uri.parse(_aasha_list_url), body: {
       /*"LoginUnitid":"18",
       "DelplaceUnitid":"0",

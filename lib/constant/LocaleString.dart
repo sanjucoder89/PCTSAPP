@@ -171,7 +171,7 @@ class Strings {
 
   static const String PNCComp = "माता में प्रसव पश्चात जटिलता";
   static const String pncDate = "एचबीएनसी की तिथि ";
-  static const String choosepncDate = "पीएनसी की तिथि चुनें ";
+  static const String choosepncDate = "एचबीएनसी की तिथि चुनें ";
   static const String kya_shishu_is_live = "क्या शिशु जीवित है चुनें";
   static const String enter_shishu_weight = "शिशु का वजन डालें ";
   static const String enter_correct_shishu_weight = "शिशु का सही वजन डालें ";

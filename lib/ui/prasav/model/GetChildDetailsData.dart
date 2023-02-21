@@ -32,7 +32,7 @@ class GetChildDetailsData {
 }
 
 class ResposeData {
-  Null? childName;
+  String? childName;
   int? infantID;
   int? status;
 

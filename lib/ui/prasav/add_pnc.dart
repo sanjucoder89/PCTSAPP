@@ -5244,15 +5244,10 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
       _showErrorPopup(Strings.choosepncDate,Colors.black);
     }else if(_pncYYYYdateController.text.toString().isEmpty){
       _showErrorPopup(Strings.choosepncDate,Colors.black);
-    }else if(rdChildIsLive1.isEmpty && _ShowHideShishuEntryView1 == true){
-      _showErrorPopup(Strings.kya_shishu_is_live,Colors.black);
-    }else if(rdChildIsLive2.isEmpty && _ShowHideShishuEntryView2 == true){
-      _showErrorPopup(Strings.kya_shishu_is_live,Colors.black);
-    }else if(rdChildIsLive3.isEmpty && _ShowHideShishuEntryView3 == true){
-      _showErrorPopup(Strings.kya_shishu_is_live,Colors.black);
-    }else if(rdChildIsLive4.isEmpty && _ShowHideShishuEntryView4 == true){
-      _showErrorPopup(Strings.kya_shishu_is_live,Colors.black);
-    }else if(rdChildIsLive5.isEmpty && _ShowHideShishuEntryView5 == true){
+    }
+
+    //child 1 validation conditions
+    else if(rdChildIsLive1.isEmpty && _ShowHideShishuEntryView1 == true){
       _showErrorPopup(Strings.kya_shishu_is_live,Colors.black);
     }else if(_shishuWeightController.text.toString().isEmpty && _shishuWgtEnDisable == true){
       _showErrorPopup(Strings.enter_shishu_weight,Colors.black);
@@ -5262,6 +5257,10 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
       _showErrorPopup(Strings.enter_correct_shishu_weight_child,Colors.black);
     }else if(_shishuWeightController.text.toString().isNotEmpty && (double.parse(_shishuWeightController.text.toString()) < 0 && _shishuWgtEnDisable == true)){
       _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
+    }
+    //child 2 validation conditions
+    else if(rdChildIsLive2.isEmpty && _ShowHideShishuEntryView2 == true){
+      _showErrorPopup(Strings.kya_shishu_is_live,Colors.black);
     }else if(_shishuWeight2Controller.text.toString().isEmpty && _shishuWgt2EnDisable == true){
       _showErrorPopup(Strings.enter_shishu_weight,Colors.black);
     }else if((_shishuWeight2Controller.text.toString() == "0" && _shishuWgt2EnDisable == true)){
@@ -5270,6 +5269,10 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
       _showErrorPopup(Strings.enter_correct_shishu_weight_child,Colors.black);
     }else if(_shishuWeight2Controller.text.toString().isNotEmpty && (double.parse(_shishuWeight2Controller.text.toString()) < 0 && _shishuWgt2EnDisable == true)){
       _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
+    }
+    //child 3 validation conditions
+    else if(rdChildIsLive3.isEmpty && _ShowHideShishuEntryView3 == true){
+      _showErrorPopup(Strings.kya_shishu_is_live,Colors.black);
     }else if(_shishuWeight3Controller.text.toString().isEmpty && _shishuWgt3EnDisable == true){
       _showErrorPopup(Strings.enter_shishu_weight,Colors.black);
     }else if(_shishuWeight3Controller.text.toString() == "0" && _shishuWgt3EnDisable == true){
@@ -5278,6 +5281,10 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
       _showErrorPopup(Strings.enter_correct_shishu_weight_child,Colors.black);
     }else if(_shishuWeight3Controller.text.toString().isNotEmpty && (double.parse(_shishuWeight3Controller.text.toString()) < 0 && _shishuWgt3EnDisable == true)){
       _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
+    }
+    //child 4 validation conditions
+    else if(rdChildIsLive4.isEmpty && _ShowHideShishuEntryView4 == true){
+      _showErrorPopup(Strings.kya_shishu_is_live,Colors.black);
     }else if(_shishuWeight4Controller.text.toString().isEmpty && _shishuWgt4EnDisable == true){
       _showErrorPopup(Strings.enter_shishu_weight,Colors.black);
     }else if(_shishuWeight4Controller.text.toString() == "0" && _shishuWgt4EnDisable == true){
@@ -5286,6 +5293,11 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
       _showErrorPopup(Strings.enter_correct_shishu_weight_child,Colors.black);
     }else if(_shishuWeight4Controller.text.toString().isNotEmpty && (double.parse(_shishuWeight4Controller.text.toString()) < 0 && _shishuWgt4EnDisable == true)){
       _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
+    }
+
+    //child 5 validation conditions
+    else if(rdChildIsLive5.isEmpty && _ShowHideShishuEntryView5 == true){
+      _showErrorPopup(Strings.kya_shishu_is_live,Colors.black);
     }else if(_shishuWeight5Controller.text.toString().isEmpty && _shishuWgt5EnDisable == true){
       _showErrorPopup(Strings.enter_shishu_weight,Colors.black);
     }else if(_shishuWeight5Controller.text.toString() == "0" && _shishuWgt5EnDisable == true){
@@ -5294,7 +5306,13 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
       _showErrorPopup(Strings.enter_correct_shishu_weight_child,Colors.black);
     }else if(_shishuWeight5Controller.text.toString().isNotEmpty && (double.parse(_shishuWeight5Controller.text.toString()) < 0 && _shishuWgt5EnDisable == true)){
       _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
-    }else if(_ShowHideShishuEntryView1 == true && rdChildIsLive1 == "0" && rdChildIsLiveEntry1 == true){
+    }
+
+
+
+
+
+    else if(_ShowHideShishuEntryView1 == true && rdChildIsLive1 == "0" && rdChildIsLiveEntry1 == true){
       _showErrorPopup(Strings.pncDetailUpdate,Colors.black);
     }else if(_ShowHideShishuEntryView2 == true && rdChildIsLive2 == "0" && rdChildIsLiveEntry2 == true){
       _showErrorPopup(Strings.pncDetailUpdate,Colors.black);
@@ -5304,7 +5322,9 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
       _showErrorPopup(Strings.pncDetailUpdate,Colors.black);
     }else if(_ShowHideShishuEntryView5 == true && childComplId_5 == "0" && rdChildIsLiveEntry5 == true){
       _showErrorPopup(Strings.pncDetailUpdate,Colors.black);
-    }/*else if(_ShowHideShishuEntryView1== true && childComplId_1 == "0"){
+    }
+
+    /*else if(_ShowHideShishuEntryView1== true && childComplId_1 == "0"){
       _showErrorPopup(Strings.choose_danger_symp_in_shishu,Colors.black);
     }else if(_ShowHideShishuEntryView2== true && childComplId_2 == "0"){
       _showErrorPopup(Strings.choose_danger_symp_in_shishu,Colors.black);

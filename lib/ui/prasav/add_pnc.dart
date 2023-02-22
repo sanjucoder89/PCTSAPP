@@ -417,8 +417,6 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
 
   Future<String> getChildNameListAPI() async {
     preferences = await SharedPreferences.getInstance();
-
-
     print('req ancrgid=> ${widget.AncRegId}');
     print('req token=> ${preferences.getString('Token')}');
     print('req userid=> ${preferences.getString('UserId')}');

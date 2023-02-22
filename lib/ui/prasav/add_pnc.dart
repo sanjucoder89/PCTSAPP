@@ -586,59 +586,89 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
 
         print('custom_childnam.len ${custom_childname_list.length}');
         if(custom_childname_list.length > 0){
-          if (custom_childname_list[0].ChildName.toString().isNotEmpty == "" || custom_childname_list[0].ChildName.toString() != "null") {
 
+          if(custom_childname_list.length == 1) {
+            if (custom_childname_list[0].ChildName.toString().isNotEmpty == "" || custom_childname_list[0].ChildName.toString() != "null") {
+              _shishuNameController.text = custom_childname_list[0].ChildName.toString();
+              _shishuEnDisable=false;
+            }
 
-            _shishuNameController.text = custom_childname_list[0].ChildName.toString();
-            print('first_child_name ${custom_childname_list[0].ChildName.toString()}');
-            _shishuEnDisable=false;
           }
-          if(custom_childname_list[1].ChildName.toString().isNotEmpty == "" || custom_childname_list[1].ChildName.toString() != "null"){
-            _shishuNameController.text = custom_childname_list[0].ChildName.toString();
-            _shishuEnDisable=false;
+          if(custom_childname_list.length == 2) {
+            if (custom_childname_list[0].ChildName.toString().isNotEmpty == "" || custom_childname_list[0].ChildName.toString() != "null") {
+              _shishuNameController.text = custom_childname_list[0].ChildName.toString();
+              _shishuEnDisable=false;
+            }
 
-            _shishu2NameController.text = custom_childname_list[1].ChildName.toString();
-            _shishu2EnDisable=false;
+            if(custom_childname_list[1].ChildName.toString().isNotEmpty == "" || custom_childname_list[1].ChildName.toString() != "null"){
+              _shishu2NameController.text = custom_childname_list[1].ChildName.toString();
+              _shishu2EnDisable=false;
+            }
           }
-          if(custom_childname_list[2].ChildName.toString().isNotEmpty == "" || custom_childname_list[2].ChildName.toString() != "null"){
-            _shishuNameController.text = custom_childname_list[0].ChildName.toString();
-            _shishuEnDisable=false;
+          if(custom_childname_list.length == 3) {
+            if (custom_childname_list[0].ChildName.toString().isNotEmpty == "" || custom_childname_list[0].ChildName.toString() != "null") {
+              _shishuNameController.text = custom_childname_list[0].ChildName.toString();
+              _shishuEnDisable=false;
+            }
 
-            _shishu2NameController.text = custom_childname_list[1].ChildName.toString();
-            _shishu2EnDisable=false;
+            if(custom_childname_list[1].ChildName.toString().isNotEmpty == "" || custom_childname_list[1].ChildName.toString() != "null"){
+              _shishu2NameController.text = custom_childname_list[1].ChildName.toString();
+              _shishu2EnDisable=false;
+            }
 
-            _shishu3NameController.text = custom_childname_list[2].ChildName.toString();
-            _shishu3EnDisable=false;
+            if(custom_childname_list[2].ChildName.toString().isNotEmpty == "" || custom_childname_list[2].ChildName.toString() != "null"){
+              _shishu3NameController.text = custom_childname_list[2].ChildName.toString();
+              _shishu3EnDisable=false;
+            }
           }
-          if(custom_childname_list[3].ChildName.toString().isNotEmpty == "" || custom_childname_list[3].ChildName.toString() != "null"){
-            _shishuNameController.text = custom_childname_list[0].ChildName.toString();
-            _shishuEnDisable=false;
+          if(custom_childname_list.length == 4) {
+            if (custom_childname_list[0].ChildName.toString().isNotEmpty == "" || custom_childname_list[0].ChildName.toString() != "null") {
+              _shishuNameController.text = custom_childname_list[0].ChildName.toString();
+              _shishuEnDisable=false;
+            }
 
-            _shishu2NameController.text = custom_childname_list[1].ChildName.toString();
-            _shishu2EnDisable=false;
+            if(custom_childname_list[1].ChildName.toString().isNotEmpty == "" || custom_childname_list[1].ChildName.toString() != "null"){
+              _shishu2NameController.text = custom_childname_list[1].ChildName.toString();
+              _shishu2EnDisable=false;
+            }
 
-            _shishu3NameController.text = custom_childname_list[2].ChildName.toString();
-            _shishu3EnDisable=false;
+            if(custom_childname_list[2].ChildName.toString().isNotEmpty == "" || custom_childname_list[2].ChildName.toString() != "null"){
+              _shishu3NameController.text = custom_childname_list[2].ChildName.toString();
+              _shishu3EnDisable=false;
+            }
 
-            _shishu4NameController.text = custom_childname_list[3].ChildName.toString();
-            _shishu4EnDisable=false;
+            if(custom_childname_list[3].ChildName.toString().isNotEmpty == "" || custom_childname_list[3].ChildName.toString() != "null"){
+              _shishu4NameController.text = custom_childname_list[3].ChildName.toString();
+              _shishu4EnDisable=false;
+            }
           }
-          if(custom_childname_list[4].ChildName.toString().isNotEmpty == "" || custom_childname_list[4].ChildName.toString() != "null"){
-            _shishuNameController.text = custom_childname_list[0].ChildName.toString();
-            _shishuEnDisable=false;
+          if(custom_childname_list.length == 5) {
+            if (custom_childname_list[0].ChildName.toString().isNotEmpty == "" || custom_childname_list[0].ChildName.toString() != "null") {
+              _shishuNameController.text = custom_childname_list[0].ChildName.toString();
+              _shishuEnDisable=false;
+            }
 
-            _shishu2NameController.text = custom_childname_list[1].ChildName.toString();
-            _shishu2EnDisable=false;
+            if(custom_childname_list[1].ChildName.toString().isNotEmpty == "" || custom_childname_list[1].ChildName.toString() != "null"){
+              _shishu2NameController.text = custom_childname_list[1].ChildName.toString();
+              _shishu2EnDisable=false;
+            }
 
-            _shishu3NameController.text = custom_childname_list[2].ChildName.toString();
-            _shishu3EnDisable=false;
+            if(custom_childname_list[2].ChildName.toString().isNotEmpty == "" || custom_childname_list[2].ChildName.toString() != "null"){
+              _shishu3NameController.text = custom_childname_list[2].ChildName.toString();
+              _shishu3EnDisable=false;
+            }
 
-            _shishu4NameController.text = custom_childname_list[3].ChildName.toString();
-            _shishu4EnDisable=false;
+            if(custom_childname_list[3].ChildName.toString().isNotEmpty == "" || custom_childname_list[3].ChildName.toString() != "null"){
+              _shishu4NameController.text = custom_childname_list[3].ChildName.toString();
+              _shishu4EnDisable=false;
+            }
 
-            _shishu5NameController.text = custom_childname_list[4].ChildName.toString();
-            _shishu5EnDisable=false;
+            if(custom_childname_list[4].ChildName.toString().isNotEmpty == "" || custom_childname_list[4].ChildName.toString() != "null"){
+              _shishu5NameController.text = custom_childname_list[4].ChildName.toString();
+              _shishu5EnDisable=false;
+            }
           }
+
         }
         print('check_length ${custom_childname_list.length}');
         if(custom_childname_list.length == 1) {

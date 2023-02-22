@@ -145,12 +145,11 @@ class _OtpLoginPage extends State<OtpLoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(),
-      body: SingleChildScrollView(
-        child: Container(
-          color: ColorConstants.white,
-          child: Column(
-            children:<Widget>[
-              Expanded(child: Column(
+      body: Column(
+        children:<Widget>[
+          Expanded(child:Center(
+            child: SingleChildScrollView(
+              child:  Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Padding(
@@ -342,15 +341,15 @@ class _OtpLoginPage extends State<OtpLoginPage> {
 
                     ),
                   )
-                ],)),
-              Image.asset(
-                "Images/footerpcts.jpg",
-                fit: BoxFit.fitWidth,
-                alignment: Alignment.bottomLeft,
-              ),
-            ],
+                ],),
+            ),
+          )),
+          Image.asset(
+            "Images/footerpcts.jpg",
+            fit: BoxFit.fitWidth,
+            alignment: Alignment.bottomLeft,
           ),
-        ),
+        ],
       ),
     );
   }

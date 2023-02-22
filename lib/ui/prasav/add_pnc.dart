@@ -1668,7 +1668,22 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                     setState(() {
                                       motherComplId = newVal!;
                                       print('motherComplId:$motherComplId');
-                                      if((motherComplId == "5" || motherComplId == "0") && (rdChildIsLive1 != "0" || rdChildIsLive2 != "0" || rdChildIsLive3 != "0" || rdChildIsLive4 != "0" || rdChildIsLive5 != "0")){
+                                      if(motherComplId == "3"){//if mother dead ,submit button & refer view will be hide
+                                        _ShowHideReferPlacesView=false;
+                                        _ShowHideErrorView=true;
+                                        _ShowHideADDNewVivranView=false;
+                                      }else{
+                                          if(rdChildIsLive1 == "0" || rdChildIsLive2 == "0" || rdChildIsLive3 == "0" || rdChildIsLive4 == "0" || rdChildIsLive4 == "0"){
+                                            _ShowHideReferPlacesView=false;
+                                            _ShowHideErrorView=true;
+                                            _ShowHideADDNewVivranView=false;
+                                          }else{
+                                            _ShowHideReferPlacesView=true;
+                                            _ShowHideErrorView=false;
+                                            _ShowHideADDNewVivranView=true;
+                                          }
+                                      }
+                                      /*if((motherComplId == "5" || motherComplId == "0") && (rdChildIsLive1 != "0" || rdChildIsLive2 != "0" || rdChildIsLive3 != "0" || rdChildIsLive4 != "0" || rdChildIsLive5 != "0")){
                                         _ShowHideReferPlacesView=false;
                                         _ShowHideErrorView=false;
                                         _ShowHideADDNewVivranView=true;
@@ -1688,27 +1703,7 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                           _ShowHideErrorView=true;
                                           _ShowHideADDNewVivranView=false;
                                         }
-                                        /*if((rdChildIsLive1 == "0" && _isFirstChildLive == false) ||
-                                            (rdChildIsLive2 == "0" && _isSecondChildLive == false) ||
-                                            (rdChildIsLive3 == "0" && _isThirdChildLive == false) ||
-                                            (rdChildIsLive4 == "0" && _isFourthChildLive == false) ||
-                                            (rdChildIsLive5 == "0" && _isFifthChildLive == false)){
-                                          _ShowHideReferPlacesView=true;
-                                          _ShowHideErrorView=false;
-                                          _ShowHideADDNewVivranView=true;
-                                        }else{
-                                          if(rdChildIsLive1 == "0" || rdChildIsLive2 == "0" || rdChildIsLive3 == "0" || rdChildIsLive4 == "0" || rdChildIsLive5 == "0"){
-                                            _ShowHideReferPlacesView=false;
-                                            _ShowHideErrorView=true;
-                                            _ShowHideADDNewVivranView=false;
-                                          }else{
-                                            _ShowHideReferPlacesView=true;
-                                            _ShowHideErrorView=false;
-                                            _ShowHideADDNewVivranView=true;
-                                          }
-                                        }*/
-
-                                      }
+                                      }*/
 
                                       /*else if(rdChildIsLive1 != "0" || rdChildIsLive2 != "0" || rdChildIsLive3 != "0" || rdChildIsLive4 != "0" || rdChildIsLive5 != "0"){
                                         _ShowHideReferPlacesView=false;
@@ -2076,7 +2071,8 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                                           }
                                                         },
                                                         child: TextField(
-                                                          enabled: _shishuEnDisable,
+                                                         // enabled: _shishuEnDisable,//uncomment for active/inactive
+                                                          enabled: false,
                                                           style: TextStyle(color: Colors.black),
                                                           maxLength: 10,
                                                           keyboardType: TextInputType.text,
@@ -2448,7 +2444,8 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                                           }
                                                         },
                                                         child: TextField(
-                                                          enabled: _shishu2EnDisable,
+                                                         // enabled: _shishu2EnDisable,//uncomment for active/inactive
+                                                          enabled: false,
                                                           style: TextStyle(color: Colors.black),
                                                           maxLength: 10,
                                                           keyboardType: TextInputType.text,
@@ -2825,7 +2822,8 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                                           }
                                                         },
                                                         child: TextField(
-                                                          enabled: _shishu3EnDisable,
+                                                          //enabled: _shishu3EnDisable,//uncomment for active/inactive
+                                                          enabled: false,
                                                           style: TextStyle(color: Colors.black),
                                                           maxLength: 10,
                                                           keyboardType: TextInputType.text,
@@ -3200,7 +3198,8 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                                           }
                                                         },
                                                         child: TextField(
-                                                          enabled: _shishu4EnDisable,
+                                                          //enabled: _shishu4EnDisable,//uncomment for active/inactive
+                                                          enabled: false,
                                                           style: TextStyle(color: Colors.black),
                                                           maxLength: 10,
                                                           keyboardType: TextInputType.text,
@@ -3573,7 +3572,8 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                                           }
                                                         },
                                                         child: TextField(
-                                                          enabled: _shishu5EnDisable,
+                                                        //  enabled: _shishu5EnDisable,//uncomment for active/inactive
+                                                          enabled: false,
                                                           style: TextStyle(color: Colors.black),
                                                           maxLength: 10,
                                                           keyboardType: TextInputType.text,
@@ -5806,26 +5806,69 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
   }
 
   void checkifAnyChildLive(String rdChildIsLive1, String rdChildIsLive2, String rdChildIsLive3, String rdChildIsLive4, String rdChildIsLive5) {
-    if(rdChildIsLive1 == "1" || rdChildIsLive2 == "1" || rdChildIsLive3 == "1" ||rdChildIsLive4 == "1" ||rdChildIsLive5 == "1"){
+    if(motherComplId == "3"){//if mother dead ,submit button & refer view will be hide
+      _ShowHideReferPlacesView=false;
+      _ShowHideErrorView=true;
+      _ShowHideADDNewVivranView=false;
+    }else{
+      if(rdChildIsLive1 == "0" || rdChildIsLive2 == "0" || rdChildIsLive3 == "0" || rdChildIsLive4 == "0" || rdChildIsLive4 == "0"){
+        _ShowHideReferPlacesView=false;
+        _ShowHideErrorView=true;
+        _ShowHideADDNewVivranView=false;
+      }else{
+        _ShowHideReferPlacesView=true;
+        _ShowHideErrorView=false;
+        _ShowHideADDNewVivranView=true;
+      }
+    }
+    /*if(_ShowHideShishuEntryView1 == true && rdChildIsLive1 == "1"  ||
+        _ShowHideShishuEntryView2 == true && rdChildIsLive2 == "1"  ||
+        _ShowHideShishuEntryView3 == true && rdChildIsLive3 == "1"  ||
+        _ShowHideShishuEntryView4 == true && rdChildIsLive4 == "1"  ||
+        _ShowHideShishuEntryView5 == true && rdChildIsLive5 == "1"){//1=live,0=dead
       _ShowHideReferPlacesView=true;
       _ShowHideErrorView=false;
+      _ShowHideADDNewVivranView=true;
     }else{
+      if(motherComplId == "3" && (rdChildIsLive1 == "0" || rdChildIsLive2 == "0" || rdChildIsLive3 == "0" || rdChildIsLive4 == "0" || rdChildIsLive5 == "0" )){
+        _ShowHideErrorView=true;
+        _ShowHideReferPlacesView=false;
+        _ShowHideADDNewVivranView=false;
+      }else{
+        if((motherComplId != "3" || motherComplId != "0" || motherComplId != "5") && (rdChildIsLive1 == "0" || rdChildIsLive2 == "0" || rdChildIsLive3 == "0" || rdChildIsLive4 == "0" || rdChildIsLive5 == "0" )){
+          _ShowHideErrorView=true;
+          _ShowHideReferPlacesView=false;
+          _ShowHideADDNewVivranView=false;
+        }else{
+          _ShowHideReferPlacesView=true;
+          _ShowHideErrorView=false;
+          _ShowHideADDNewVivranView=true;
+        }
+      }
+    }*/
+    /*if(rdChildIsLive1 == "1" || rdChildIsLive2 == "1" || rdChildIsLive3 == "1" ||rdChildIsLive4 == "1" ||rdChildIsLive5 == "1"){//show
+      _ShowHideReferPlacesView=true;
+      _ShowHideErrorView=false;
+      _ShowHideADDNewVivranView=false;
+      _ShowHideADDNewVivranView=true;
+    }else{//hide
       _ShowHideErrorView=true;
       _ShowHideReferPlacesView=false;
-    }
-    if( _ShowHideShishuEntryView1 == true && rdChildIsLive1 == "0"  ||
+      _ShowHideADDNewVivranView=false;
+    }*/
+    /*if( _ShowHideShishuEntryView1 == true && rdChildIsLive1 == "0"  ||
         _ShowHideShishuEntryView2 == true && rdChildIsLive2 == "0"  ||
         _ShowHideShishuEntryView3 == true && rdChildIsLive3 == "0"  ||
         _ShowHideShishuEntryView4 == true && rdChildIsLive4 == "0"  ||
         _ShowHideShishuEntryView5 == true && rdChildIsLive5 == "0"){
         setState(() {
-          _ShowHideADDNewVivranView=false;
+
         });
     }else{
         setState(() {
-          _ShowHideADDNewVivranView=true;
+
         });
-    }
+    }*/
   }
   void checkShowHideSaveButton(String rdChildIsLive1, String rdChildIsLive2, String rdChildIsLive3, String rdChildIsLive4, String rdChildIsLive5) {
     if( _ShowHideShishuEntryView1 == true && rdChildIsLive1 == "0"  ||

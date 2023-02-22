@@ -116,60 +116,62 @@ class _AfterPrasavExpandDetails extends State<AfterPrasavExpandDetails> {
     });
     var resBody = json.decode(response.body);
     final apiResponse = GetPNCDetailsData.fromJson(resBody);
-    setState(() {
-      if (apiResponse.status == true) {
-        custom_anc_list.clear();
-        response_listing = resBody['ResposeData'];
-        print('anc-resp-.len ${response_listing.length}');
-        _showHideExpandableListView=false;
-        if(response_listing[0]['PNCFlag'].toString() != "null"){
-          _showHideExpandableListView=true;
-          for (int i = 0; i < response_listing.length; i++){
-            custom_anc_list.add(
-              CustomManageANCList(
-                  ancregid:response_listing[i]['ancregid'].toString(),
-                  pctsid:response_listing[i]['pctsid'].toString(),
-                  Mobileno:response_listing[i]['Mobileno'].toString() == "null" ? "" :response_listing[i]['Mobileno'].toString(),
-                  Name:response_listing[i]['Name'].toString() == "null" ? "" :response_listing[i]['Name'].toString(),
-                  Husbname:response_listing[i]['Husbname'].toString()  == "null" ? "" :response_listing[i]['Husbname'].toString(),
-                  Address:response_listing[i]['Address'].toString(),
-                  Age:response_listing[i]['Age'].toString() == "null" ? "" :response_listing[i]['Age'].toString(),
-                  RegDate:response_listing[i]['RegDate'].toString(),
-                  PNCDate:response_listing[i]['PNCDate'].toString(),
-                  PNCFlag:response_listing[i]['PNCFlag'].toString(),
-                  weight:response_listing[i]['weight'].toString(),
-                  PNCComp: response_listing[i]['PNCComp'].toString(),
-                  anmname: response_listing[i]['anmname'].toString() == "null" ? "" :response_listing[i]['anmname'].toString(),
-                  AshaName:response_listing[i]['AshaName'].toString() == "null" ? "" :response_listing[i]['AshaName'].toString(),
-                  expand_flag:"false",
-                  RegUnitID:response_listing[i]['RegUnitID'].toString(),
-                  RegUnittype:response_listing[i]['RegUnittype'].toString(),
-                  DischargeDT:response_listing[i]['DischargeDT'].toString(),
-                  DelplaceCode:response_listing[i]['DelplaceCode'].toString(),
-                  DeliveryAbortionDate:response_listing[i]['DeliveryAbortionDate'].toString(),
-                  ANMVerify:response_listing[i]['ANMVerify'].toString(),
-                  Freeze:response_listing[i]['ANMVerify'].toString(),
-                  Ashaautoid:response_listing[i]['Ashaautoid'].toString(),
-                  Media:response_listing[i]['Media'].toString()
-              ),
-            );
-            last_pos=custom_anc_list.length-1;
-            print('last_pos=> ${last_pos}');
-            print('Freeze=> ${response_listing[i]['Freeze'].toString()}');
+
+    if(mounted ==true){
+      setState(() {
+        if (apiResponse.status == true) {
+          custom_anc_list.clear();
+          response_listing = resBody['ResposeData'];
+          print('anc-resp-.len ${response_listing.length}');
+          _showHideExpandableListView=false;
+          if(response_listing[0]['PNCFlag'].toString() != "null"){
+            _showHideExpandableListView=true;
+            for (int i = 0; i < response_listing.length; i++){
+              custom_anc_list.add(
+                CustomManageANCList(
+                    ancregid:response_listing[i]['ancregid'].toString(),
+                    pctsid:response_listing[i]['pctsid'].toString(),
+                    Mobileno:response_listing[i]['Mobileno'].toString() == "null" ? "" :response_listing[i]['Mobileno'].toString(),
+                    Name:response_listing[i]['Name'].toString() == "null" ? "" :response_listing[i]['Name'].toString(),
+                    Husbname:response_listing[i]['Husbname'].toString()  == "null" ? "" :response_listing[i]['Husbname'].toString(),
+                    Address:response_listing[i]['Address'].toString(),
+                    Age:response_listing[i]['Age'].toString() == "null" ? "" :response_listing[i]['Age'].toString(),
+                    RegDate:response_listing[i]['RegDate'].toString(),
+                    PNCDate:response_listing[i]['PNCDate'].toString(),
+                    PNCFlag:response_listing[i]['PNCFlag'].toString(),
+                    weight:response_listing[i]['weight'].toString(),
+                    PNCComp: response_listing[i]['PNCComp'].toString(),
+                    anmname: response_listing[i]['anmname'].toString() == "null" ? "" :response_listing[i]['anmname'].toString(),
+                    AshaName:response_listing[i]['AshaName'].toString() == "null" ? "" :response_listing[i]['AshaName'].toString(),
+                    expand_flag:"false",
+                    RegUnitID:response_listing[i]['RegUnitID'].toString(),
+                    RegUnittype:response_listing[i]['RegUnittype'].toString(),
+                    DischargeDT:response_listing[i]['DischargeDT'].toString(),
+                    DelplaceCode:response_listing[i]['DelplaceCode'].toString(),
+                    DeliveryAbortionDate:response_listing[i]['DeliveryAbortionDate'].toString(),
+                    ANMVerify:response_listing[i]['ANMVerify'].toString(),
+                    Freeze:response_listing[i]['ANMVerify'].toString(),
+                    Ashaautoid:response_listing[i]['Ashaautoid'].toString(),
+                    Media:response_listing[i]['Media'].toString()
+                ),
+              );
+              last_pos=custom_anc_list.length-1;
+              print('last_pos=> ${last_pos}');
+              print('Freeze=> ${response_listing[i]['Freeze'].toString()}');
 
 
-            //Show Hide Edit Button Functionality
-            if(response_listing[i]['Freeze'].toString() == "0" && last_pos == i){
-              setState(() {
-                _showHideEditButtonView=true;
-              });
-            }else{
-              setState(() {
-                _showHideEditButtonView=false;
-              });
-            }
+              //Show Hide Edit Button Functionality
+              if(response_listing[i]['Freeze'].toString() == "0" && last_pos == i){
+                setState(() {
+                  _showHideEditButtonView=true;
+                });
+              }else{
+                setState(() {
+                  _showHideEditButtonView=false;
+                });
+              }
 
-            /*if(preferences.getString("AppRoleID") == "33"){
+              /*if(preferences.getString("AppRoleID") == "33"){
                 if(int.parse(response_listing[i]['Ashaautoid']) == 0 || response_listing[i]['Ashaautoid'].toString() == preferences.getString("ANMAutoID")){
                   setState(() {
                     _showHideEditButtonView=true;
@@ -180,39 +182,40 @@ class _AfterPrasavExpandDetails extends State<AfterPrasavExpandDetails> {
                 _showHideEditButtonView=false;
               });
             }*/
+            }
           }
+          second_tab_msg=response_listing[response_listing.length -1]['PNCFlag'].toString() == "null" ? "0" : response_listing[response_listing.length -1]['PNCFlag'].toString();//get last position value
+          print('last position flag: ${second_tab_msg}');
+
+
+          // PNCFlag: second_tab_msg == "0" ?
+          //                                         "1" : second_tab_msg == "1" ?
+          //                                         "1" : second_tab_msg == "2" ?
+          //                                         "3" : second_tab_msg == "3" ?
+          //                                         "4":second_tab_msg == "4" ?
+          //                                         "5":second_tab_msg == "5" ?
+          //                                         "6":second_tab_msg == "6" ?
+          //                                         "7":second_tab_msg == "7" ?
+
+
+          //if(second_tab_msg == "7"){
+          if(response_listing.length  == 6){
+            //  _checkLoginType=false;
+            _showHideAddANCButtonView=false;
+          }else{
+            // _checkLoginType=true;
+            _showHideAddANCButtonView=true;
+          }
+        } else {
+          Fluttertoast.showToast(
+              msg:apiResponse.message.toString(),
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              backgroundColor: Colors.red,
+              textColor: Colors.white);
         }
-        second_tab_msg=response_listing[response_listing.length -1]['PNCFlag'].toString() == "null" ? "0" : response_listing[response_listing.length -1]['PNCFlag'].toString();//get last position value
-        print('last position flag: ${second_tab_msg}');
-
-
-        // PNCFlag: second_tab_msg == "0" ?
-        //                                         "1" : second_tab_msg == "1" ?
-        //                                         "1" : second_tab_msg == "2" ?
-        //                                         "3" : second_tab_msg == "3" ?
-        //                                         "4":second_tab_msg == "4" ?
-        //                                         "5":second_tab_msg == "5" ?
-        //                                         "6":second_tab_msg == "6" ?
-        //                                         "7":second_tab_msg == "7" ?
-
-
-        //if(second_tab_msg == "7"){
-        if(response_listing.length  == 6){
-        //  _checkLoginType=false;
-          _showHideAddANCButtonView=false;
-        }else{
-         // _checkLoginType=true;
-          _showHideAddANCButtonView=true;
-        }
-      } else {
-        Fluttertoast.showToast(
-            msg:apiResponse.message.toString(),
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            backgroundColor: Colors.red,
-            textColor: Colors.white);
-      }
-    });
+      });
+    }
     EasyLoading.dismiss();
     print('response:${apiResponse.message}');
     return "Success";

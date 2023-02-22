@@ -1956,7 +1956,22 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                     setState(() {
                                       motherComplId = newVal!;
                                       print('motherComplId:$motherComplId');
-                                      if((motherComplId == "5" || motherComplId == "0") && (rdChildIsLive1 != "0" || rdChildIsLive2 != "0" || rdChildIsLive3 != "0" || rdChildIsLive4 != "0" || rdChildIsLive5 != "0")){
+                                      if(motherComplId == "3"){//if mother dead ,submit button & refer view will be hide
+                                        _ShowHideReferPlacesView=false;
+                                        _ShowHideErrorView=true;
+                                        _ShowHideADDNewVivranView=false;
+                                      }else{
+                                        if(rdChildIsLive1 == "0" || rdChildIsLive2 == "0" || rdChildIsLive3 == "0" || rdChildIsLive4 == "0" || rdChildIsLive4 == "0"){
+                                          _ShowHideReferPlacesView=false;
+                                          _ShowHideErrorView=true;
+                                          _ShowHideADDNewVivranView=false;
+                                        }else{
+                                          _ShowHideReferPlacesView=true;
+                                          _ShowHideErrorView=false;
+                                          _ShowHideADDNewVivranView=true;
+                                        }
+                                      }
+                                      /*if((motherComplId == "5" || motherComplId == "0") && (rdChildIsLive1 != "0" || rdChildIsLive2 != "0" || rdChildIsLive3 != "0" || rdChildIsLive4 != "0" || rdChildIsLive5 != "0")){
                                         _ShowHideReferPlacesView=false;
                                         _ShowHideErrorView=false;
                                         _ShowHideADDNewVivranView=true;
@@ -1974,7 +1989,7 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                           _ShowHideErrorView=false;
                                           _ShowHideADDNewVivranView=true;
                                         }
-                                      }
+                                      }*/
                                       /*if(motherComplId == "5" || motherComplId == "0"){
                                         _ShowHideReferPlacesView=false;
                                         _ShowHideErrorView=false;
@@ -2326,7 +2341,8 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                                           }
                                                         },
                                                         child: TextField(
-                                                          enabled: _shishuEnDisable,
+                                                          //enabled: _shishuEnDisable,//uncomment for active/inactive
+                                                          enabled: false,
                                                           style: TextStyle(color: Colors.black),
                                                           maxLength: 10,
                                                           keyboardType: TextInputType.text,
@@ -2686,7 +2702,8 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                                           }
                                                         },
                                                         child: TextField(
-                                                          enabled: _shishu2EnDisable,
+                                                         // enabled: _shishu2EnDisable,//uncomment for active/inactive
+                                                          enabled: false,
                                                           style: TextStyle(color: Colors.black),
                                                           maxLength: 10,
                                                           keyboardType: TextInputType.text,
@@ -3051,7 +3068,8 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                                           }
                                                         },
                                                         child: TextField(
-                                                          enabled: _shishu3EnDisable,
+                                                          //enabled: _shishu3EnDisable,//uncomment for active/inactive
+                                                          enabled: false,
                                                           style: TextStyle(color: Colors.black),
                                                           maxLength: 10,
                                                           keyboardType: TextInputType.text,
@@ -3416,7 +3434,8 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                                           }
                                                         },
                                                         child: TextField(
-                                                          enabled: _shishu4EnDisable,
+                                                          //enabled: _shishu4EnDisable,//uncomment for active/inactive
+                                                          enabled: false,
                                                           style: TextStyle(color: Colors.black),
                                                           maxLength: 10,
                                                           keyboardType: TextInputType.text,
@@ -3780,7 +3799,8 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
                                                           }
                                                         },
                                                         child: TextField(
-                                                          enabled: _shishu5EnDisable,
+                                                          //enabled: _shishu5EnDisable,//uncomment for active/inactive
+                                                          enabled: false,
                                                           style: TextStyle(color: Colors.black),
                                                           maxLength: 10,
                                                           keyboardType: TextInputType.text,
@@ -5310,7 +5330,22 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
   }
 
   void checkifAnyChildLive(String rdChildIsLive1, String rdChildIsLive2, String rdChildIsLive3, String rdChildIsLive4, String rdChildIsLive5) {
-    if(rdChildIsLive1 == "1" || rdChildIsLive2 == "1" || rdChildIsLive3 == "1" ||rdChildIsLive4 == "1" ||rdChildIsLive5 == "1"){
+    if(motherComplId == "3"){//if mother dead ,submit button & refer view will be hide
+      _ShowHideReferPlacesView=false;
+      _ShowHideErrorView=true;
+      _ShowHideADDNewVivranView=false;
+    }else{
+      if(rdChildIsLive1 == "0" || rdChildIsLive2 == "0" || rdChildIsLive3 == "0" || rdChildIsLive4 == "0" || rdChildIsLive4 == "0"){
+        _ShowHideReferPlacesView=false;
+        _ShowHideErrorView=true;
+        _ShowHideADDNewVivranView=false;
+      }else{
+        _ShowHideReferPlacesView=true;
+        _ShowHideErrorView=false;
+        _ShowHideADDNewVivranView=true;
+      }
+    }
+    /*if(rdChildIsLive1 == "1" || rdChildIsLive2 == "1" || rdChildIsLive3 == "1" ||rdChildIsLive4 == "1" ||rdChildIsLive5 == "1"){
       _ShowHideReferPlacesView=true;
       _ShowHideErrorView=false;
     }else{
@@ -5329,7 +5364,7 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
       setState(() {
         _ShowHideADDNewVivranView=true;
       });
-    }
+    }*/
   }
   /*void checkifAnyChildLive(String rdChildIsLive1, String rdChildIsLive2, String rdChildIsLive3, String rdChildIsLive4, String rdChildIsLive5) {
     if(rdChildIsLive1 == "1" || rdChildIsLive2 == "1" || rdChildIsLive3 == "1" ||rdChildIsLive4 == "1" ||rdChildIsLive5 == "1"){

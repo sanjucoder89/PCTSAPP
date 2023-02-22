@@ -693,29 +693,29 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
 
 
     if(widget.AncFlag == "1"){//if ANC FLAG == 1 , CALL Direct API
-      print('API WILL B CALLED>>>>>');
+      //print('API WILL B CALLED>>>>>');
       return true;
 
     }else if(widget.AncFlag == "2"){
       var parseLastANCDate = DateTime.parse(getConvertRegDateFormat(widget.ANC1Date));
-      print('anc 2: ${parseLastANCDate}');
+      //print('anc 2: ${parseLastANCDate}');
 
 
       final parseLastANCDate_41 = parseLastANCDate.add(const Duration(days: 40));
-      print('parseLastANCDate_41: ${parseLastANCDate_41}');
+      //print('parseLastANCDate_41: ${parseLastANCDate_41}');
 
 
       var parseCalenderSelectedAncDate = DateTime.parse(formattedDate4.toString());
       //var intentAncDate = DateTime.parse(getConvertRegDateFormat(widget.Birth_date));
-      print('anc_choose_date  ${parseCalenderSelectedAncDate}');
-      print('last_anc_date ${parseLastANCDate}');
+     // print('anc_choose_date  ${parseCalenderSelectedAncDate}');
+     // print('last_anc_date ${parseLastANCDate}');
       final diff_lmp_ancdate = parseCalenderSelectedAncDate.difference(parseLastANCDate).inDays;
-      print('ANC_DAYS_DIFF ${diff_lmp_ancdate}');
+     // print('ANC_DAYS_DIFF ${diff_lmp_ancdate}');
 
       if(diff_lmp_ancdate < 41){
         _showErrorPopup(Strings.anc_41_days_validation,ColorConstants.AppColorPrimary);
       }else{
-        print('API WILL C CALLED>>>>>');
+      //  print('API WILL C CALLED>>>>>');
         return true;
       }
       /*if(selectedParsedDate.compareTo(parseLastANCDate_41) < 0){
@@ -731,27 +731,27 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
 
 
       final parseLastANCDate_41 = parseLastANCDate.add(const Duration(days: 40));
-      print('parseLastANCDate_41: ${parseLastANCDate_41}');
+     // print('parseLastANCDate_41: ${parseLastANCDate_41}');
 
       if(selectedParsedDate.compareTo(parseLastANCDate_41) < 0){
         _showErrorPopup(Strings.anc_41_days_validation,ColorConstants.AppColorPrimary);
       }else{
-        print('API WILL B CALLED>>>>>');
+       // print('API WILL B CALLED>>>>>');
         return true;
       }
 
     }else if(widget.AncFlag == "4"){
       var parseLastANCDate = DateTime.parse(getConvertRegDateFormat(widget.ANC3Date));
-      print('anc 4: ${parseLastANCDate}');
+     // print('anc 4: ${parseLastANCDate}');
 
 
       final parseLastANCDate_28 = parseLastANCDate.add(const Duration(days: 28));
-      print('parseLastANCDate_28: ${parseLastANCDate_28}');
+      //print('parseLastANCDate_28: ${parseLastANCDate_28}');
 
       if(selectedParsedDate.compareTo(parseLastANCDate_28) < 0){
         _showErrorPopup(Strings.anc_28_days_validation,Colors.black);
       }else{
-        print('API WILL B CALLED>>>>>');
+       // print('API WILL B CALLED>>>>>');
         return true;
       }
     }
@@ -760,7 +760,7 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
   bool checkANCDatesWithHighRisk() {
 
     final finalANCDate=_ancYYYYdateController.text.toString()+"-"+_ancMMdateController.text.toString()+"-"+_ancDDdateController.text.toString()+" 00:00:00.000";
-    print('finalANCDate $finalANCDate');
+    //print('finalANCDate $finalANCDate');
 
     var finalParseCustomANCDate = DateTime.parse(getAPIResponseFormattedDate2(finalANCDate));
     print('finalParseCustomANCDate ${finalParseCustomANCDate}');
@@ -769,21 +769,21 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
     String formattedDate4 = DateFormat('yyyy-MM-dd').format(finalParseCustomANCDate);
     String formattedANCDate = DateFormat('yyyy/MM/dd').format(finalParseCustomANCDate);
     _selectedANCDate = formattedANCDate.toString();
-    print('Calendra selected date=>: ${formattedANCDate.toString()}');
+   // print('Calendra selected date=>: ${formattedANCDate.toString()}');
     var selectedParsedDate = DateTime.parse(formattedDate4.toString());
 
 
     if(widget.AncFlag == "1"){//if ANC FLAG == 1 , CALL Direct API
-      print('API WILL B CALLED>>>>>');
+     // print('API WILL B CALLED>>>>>');
       return true;
 
     }else if(widget.AncFlag == "2"){
       var parseLastANCDate = DateTime.parse(getConvertRegDateFormat(widget.ANC1Date));
-      print('last anc date: ${parseLastANCDate}');
+     // print('last anc date: ${parseLastANCDate}');
 
 
       final parseLastANCDate_28 = parseLastANCDate.add(const Duration(days: 28));
-      print('parseLastANCDate_28: ${parseLastANCDate_28}');
+    //  print('parseLastANCDate_28: ${parseLastANCDate_28}');
 
 
 
@@ -798,37 +798,37 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
       if(selectedParsedDate.compareTo(parseLastANCDate_28) < 0){
         _showErrorPopup(Strings.anc_28_days_validation,Colors.black);
       }else{
-        print('API WILL B CALLED>>>>>');
+       // print('API WILL B CALLED>>>>>');
         return true;
       }
 
     }else if(widget.AncFlag == "3"){
       var parseLastANCDate = DateTime.parse(getConvertRegDateFormat(widget.ANC2Date));
-      print('last anc date: ${parseLastANCDate}');
+     // print('last anc date: ${parseLastANCDate}');
 
 
       final parseLastANCDate_28 = parseLastANCDate.add(const Duration(days: 28));
-      print('parseLastANCDate_28: ${parseLastANCDate_28}');
+     // print('parseLastANCDate_28: ${parseLastANCDate_28}');
 
       if(selectedParsedDate.compareTo(parseLastANCDate_28) < 0){
         _showErrorPopup(Strings.anc_28_days_validation,Colors.black);
       }else{
-        print('API WILL B CALLED>>>>>');
+     //   print('API WILL B CALLED>>>>>');
         return true;
       }
 
     }else if(widget.AncFlag == "4"){
       var parseLastANCDate = DateTime.parse(getConvertRegDateFormat(widget.ANC3Date));
-      print('last anc date: ${parseLastANCDate}');
+    //  print('last anc date: ${parseLastANCDate}');
 
 
       final parseLastANCDate_28 = parseLastANCDate.add(const Duration(days: 28));
-      print('parseLastANCDate_28: ${parseLastANCDate_28}');
+    //  print('parseLastANCDate_28: ${parseLastANCDate_28}');
 
       if(selectedParsedDate.compareTo(parseLastANCDate_28) < 0){
         _showErrorPopup(Strings.anc_28_days_validation,Colors.black);
       }else{
-        print('API WILL B CALLED>>>>>');
+      //  print('API WILL B CALLED>>>>>');
         return true;
       }
     }
@@ -2188,9 +2188,9 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
                                       onFocusChange: (hasFocus) {
                                         if(hasFocus) {
                                           // do stuff
-                                          print('on focus');
+                                      //    print('on focus');
                                         }else{
-                                          print('out focus');
+                                        //  print('out focus');
                                           //print('out focus rrrr ${_weightKiloGramController.text.toString()}');
                                           //print('out focus hhhh ${widget.weight}');
                                         }

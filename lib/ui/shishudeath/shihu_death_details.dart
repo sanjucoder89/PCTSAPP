@@ -580,22 +580,7 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
         _ShowHideADDNewVivranView=false;
       }
 
-      if(response_list[0]['DeathDate'].toString() != "null"){
-        if(response_list[0]['Status'].toString() == "2"){
-          if(response_list[0]['flag'].toString() == "0"){
-            _showErrorPopup(Strings.show_if_after_30_days, ColorConstants.AppColorPrimary);
-            finalButtonView=false;
 
-          }else if(response_list[0]['Freeze'].toString() == "1"){
-            _showErrorPopup(Strings.show_cannot_update, ColorConstants.AppColorPrimary);
-            finalButtonView=false;
-          }
-          submit_title=Strings.vivran_update_krai;
-        }else{
-          submit_title=Strings.vivran_save_krai;
-          finalButtonView=true;
-        }
-      }
 
       if(response_list[0]['Weight'].toString() != "null"){
         _enterChildWeight.text=response_list[0]['Weight'].toString();
@@ -884,6 +869,22 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
         finalButtonView=false;
       }
 
+      if(response_list[0]['DeathDate'].toString() != "null"){
+        if(response_list[0]['Status'].toString() == "2"){
+          if(response_list[0]['flag'].toString() == "0"){
+            _showErrorPopup(Strings.show_if_after_30_days, ColorConstants.AppColorPrimary);
+            finalButtonView=false;
+
+          }else if(response_list[0]['Freeze'].toString() == "1"){
+            _showErrorPopup(Strings.show_cannot_update, ColorConstants.AppColorPrimary);
+            finalButtonView=false;
+          }
+          submit_title=Strings.vivran_update_krai;
+        }else{
+          submit_title=Strings.vivran_save_krai;
+          finalButtonView=true;
+        }
+      }
 
     });
   }

@@ -747,51 +747,51 @@ class _EditANCScreen extends State<EditANCScreen> {
 
 
     if(widget.AncFlag == "1"){//if ANC FLAG == 1 , CALL Direct API
-      print('API WILL B CALLED>>>>>');
+     // print('API WILL B CALLED>>>>>');
       return true;
 
     }else if(widget.AncFlag == "2"){
       var parseLastANCDate = DateTime.parse(getConvertRegDateFormat(widget.ANC1Date));
-      print('anc 2: ${parseLastANCDate}');
+     // print('anc 2: ${parseLastANCDate}');
 
 
       final parseLastANCDate_41 = parseLastANCDate.add(const Duration(days: 41));
-      print('parseLastANCDate_41: ${parseLastANCDate_41}');
+     // print('parseLastANCDate_41: ${parseLastANCDate_41}');
 
       if(selectedParsedDate.compareTo(parseLastANCDate_41) < 0){
         _showErrorPopup(Strings.anc_41_days_validation,Colors.black);
       }else{
-        print('API WILL B CALLED>>>>>');
+     //   print('API WILL B CALLED>>>>>');
         return true;
       }
 
     }else if(widget.AncFlag == "3"){
       var parseLastANCDate = DateTime.parse(getConvertRegDateFormat(widget.ANC2Date));
-      print('anc 3: ${parseLastANCDate}');
+     // print('anc 3: ${parseLastANCDate}');
 
 
       final parseLastANCDate_41 = parseLastANCDate.add(const Duration(days: 41));
-      print('parseLastANCDate_41: ${parseLastANCDate_41}');
+    //  print('parseLastANCDate_41: ${parseLastANCDate_41}');
 
       if(selectedParsedDate.compareTo(parseLastANCDate_41) < 0){
         _showErrorPopup(Strings.anc_41_days_validation,Colors.black);
       }else{
-        print('API WILL B CALLED>>>>>');
+    //    print('API WILL B CALLED>>>>>');
         return true;
       }
 
     }else if(widget.AncFlag == "4"){
       var parseLastANCDate = DateTime.parse(getConvertRegDateFormat(widget.ANC3Date));
-      print('anc 4: ${parseLastANCDate}');
+    //  print('anc 4: ${parseLastANCDate}');
 
 
       final parseLastANCDate_28 = parseLastANCDate.add(const Duration(days: 28));
-      print('parseLastANCDate_28: ${parseLastANCDate_28}');
+     // print('parseLastANCDate_28: ${parseLastANCDate_28}');
 
       if(selectedParsedDate.compareTo(parseLastANCDate_28) < 0){
         _showErrorPopup(Strings.anc_28_days_validation,Colors.black);
       }else{
-        print('API WILL B CALLED>>>>>');
+     //   print('API WILL B CALLED>>>>>');
         return true;
       }
     }
@@ -809,41 +809,41 @@ class _EditANCScreen extends State<EditANCScreen> {
     String formattedDate4 = DateFormat('yyyy-MM-dd').format(finalParseCustomANCDate);
     String formattedANCDate = DateFormat('yyyy/MM/dd').format(finalParseCustomANCDate);
     _selectedANCDate = formattedANCDate.toString();
-    print('Calendra selected date=>: ${formattedANCDate.toString()}');
+   // print('Calendra selected date=>: ${formattedANCDate.toString()}');
     var selectedParsedDate = DateTime.parse(formattedDate4.toString());
 
 
     if(widget.AncFlag == "1"){//if ANC FLAG == 1 , CALL Direct API
-      print('API WILL B CALLED>>>>>');
+     // print('API WILL B CALLED>>>>>');
       return true;
 
     }else if(widget.AncFlag == "2"){
       var parseLastANCDate = DateTime.parse(getConvertRegDateFormat(widget.ANC1Date));
-      print('last anc date: ${parseLastANCDate}');
+    //  print('last anc date: ${parseLastANCDate}');
 
 
       final parseLastANCDate_28 = parseLastANCDate.add(const Duration(days: 28));
-      print('parseLastANCDate_28: ${parseLastANCDate_28}');
+     // print('parseLastANCDate_28: ${parseLastANCDate_28}');
 
       if(selectedParsedDate.compareTo(parseLastANCDate_28) < 0){
         _showErrorPopup(Strings.anc_28_days_validation,Colors.black);
       }else{
-        print('API WILL B CALLED>>>>>');
+     //   print('API WILL B CALLED>>>>>');
         return true;
       }
 
     }else if(widget.AncFlag == "3"){
       var parseLastANCDate = DateTime.parse(getConvertRegDateFormat(widget.ANC2Date));
-      print('last anc date: ${parseLastANCDate}');
+    //  print('last anc date: ${parseLastANCDate}');
 
 
       final parseLastANCDate_28 = parseLastANCDate.add(const Duration(days: 28));
-      print('parseLastANCDate_28: ${parseLastANCDate_28}');
+    //  print('parseLastANCDate_28: ${parseLastANCDate_28}');
 
       if(selectedParsedDate.compareTo(parseLastANCDate_28) < 0){
         _showErrorPopup(Strings.anc_28_days_validation,Colors.black);
       }else{
-        print('API WILL B CALLED>>>>>');
+    //    print('API WILL B CALLED>>>>>');
         return true;
       }
 
@@ -853,12 +853,12 @@ class _EditANCScreen extends State<EditANCScreen> {
 
 
       final parseLastANCDate_28 = parseLastANCDate.add(const Duration(days: 28));
-      print('parseLastANCDate_28: ${parseLastANCDate_28}');
+    //  print('parseLastANCDate_28: ${parseLastANCDate_28}');
 
       if(selectedParsedDate.compareTo(parseLastANCDate_28) < 0){
         _showErrorPopup(Strings.anc_28_days_validation,Colors.black);
       }else{
-        print('API WILL B CALLED>>>>>');
+   //     print('API WILL B CALLED>>>>>');
         return true;
       }
     }
@@ -2094,17 +2094,17 @@ class _EditANCScreen extends State<EditANCScreen> {
                                       onFocusChange: (hasFocus) {
                                         if(hasFocus) {
                                           // do stuff
-                                          print('on focus');
+                                         // print('on focus');
                                         }else{
-                                          print('out focus');
+                                         // print('out focus');
                                           final final_weight=double.parse(_weightKiloGramController.text.toString()) - double.parse(widget.weight);
-                                          print('last weight : ${widget.weight}');//45
-                                          print('final_weight ${final_weight}');//60-45=15
+                                         // print('last weight : ${widget.weight}');//45
+                                         // print('final_weight ${final_weight}');//60-45=15
                                           if(double.parse(widget.weight).toString() != "0.0"){
-                                            print('final_diff_dates ${final_diff_dates}');//60-45=15
+                                         //   print('final_diff_dates ${final_diff_dates}');//60-45=15
                                             if(final_diff_dates <= 14){
                                               double grouthWeight = final_weight + double.parse("0.14");
-                                              print('grouthWeight ${grouthWeight}');
+                                           //   print('grouthWeight ${grouthWeight}');
                                               if (final_weight < 0.14) {
 
                                                 _showWeightPopup(Strings.weight_msg_green,ColorConstants.error_color,final_weight.toString(),grouthWeight.toString());

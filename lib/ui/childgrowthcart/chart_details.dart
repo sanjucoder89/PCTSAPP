@@ -20,7 +20,7 @@ String getFormattedDate(String date) {
     var inputFormat = DateFormat("yyyy-MM-dd");
     var inputDate = inputFormat.parse(localDate.toString());
     /// outputFormat - convert into format you want to show.
-    var outputFormat = DateFormat('yyyy-MM-dd');
+    var outputFormat = DateFormat('dd-MM-yyyy');
     var outputDate = outputFormat.format(inputDate);
     return outputDate.toString();
   }else{
@@ -159,17 +159,22 @@ class _ChartDetails extends State<ChartDetails> {
               //height: 50,
               child: Column(
                 children: [
-                  Center(child: Text('${widget.Mahilaname}',textAlign: TextAlign.center,style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 13),)),
+                  Center(child: Text('${widget.Mahilaname}',
+                    softWrap: false,textAlign: TextAlign.center,style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 13),)),
                   Center(child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text('${Strings.sishu_ka_naam} ${widget.childname} ${Strings.shishu_ki_ling} : ${widget.childsex == "1" ? Strings.boy_title_with_bracket : widget.childsex == "2" ? Strings.girl_title_with_bracket : widget.childsex == "3" ? Strings.transgender_with_bracket : widget.childsex == "" ? "" : widget.childsex}',textAlign: TextAlign.center,style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 13),),
                       SizedBox(
-                        width: 10,
+                        width: 0,
                       ),
-                      Text('${Strings.janm_tithi} ${getFormattedDate(widget.dob)}',textAlign: TextAlign.center,style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 13),),
                     ],
                   )),
+                  Text('${Strings.janm_tithi} ${getFormattedDate(widget.dob)}',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: false,textAlign: TextAlign.center,style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 13),)
+
                 ],
               ),
             ),

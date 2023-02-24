@@ -449,7 +449,7 @@ class _BirthCertificateListScreen extends State<BirthCertificateListScreen> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         centerTitle: true,
-        title: Text('',style: TextStyle(color: Colors.white, fontSize: 18)),
+        title: Text('जन्म प्रमाण पत्र',style: TextStyle(color: Colors.white, fontSize: 16)),
         backgroundColor: ColorConstants.AppColorPrimary,
         actions: [
           PopupMenuButton(

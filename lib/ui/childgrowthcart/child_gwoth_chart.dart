@@ -32,7 +32,7 @@ String getFormattedDate(String date) {
     var inputFormat = DateFormat("yyyy-MM-dd");
     var inputDate = inputFormat.parse(localDate.toString());
     /// outputFormat - convert into format you want to show.
-    var outputFormat = DateFormat('yyyy-MM-dd');
+    var outputFormat = DateFormat('dd-MM-yyyy');
     var outputDate = outputFormat.format(inputDate);
     return outputDate.toString();
   }else{
@@ -250,6 +250,8 @@ class _ChildGrowthChartScreen extends State<ChildGrowthChartScreen> {
   * */
   Future<String> getChildGrowthListAPI(String _yrmnth) async {
     preferences = await SharedPreferences.getInstance();
+    print('LoginUnitcode ${preferences.getString('UnitCode')}');
+    print('FromDate ${_yrmnth}');
     var response = await post(Uri.parse(_child_growth_list_url), body: {
       "LoginUnitcode": preferences.getString('UnitCode'),
       "FromDate": _yrmnth,
@@ -331,7 +333,7 @@ class _ChildGrowthChartScreen extends State<ChildGrowthChartScreen> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         centerTitle: true,
-        title: Text('',style: TextStyle(color: Colors.white, fontSize: 18)),
+        title: Text('बच्चे का ग्रोथ चार्ट',style: TextStyle(color: Colors.white, fontSize: 16)),
         backgroundColor: ColorConstants.AppColorPrimary,
         actions: [
           PopupMenuButton(
@@ -957,7 +959,8 @@ class _ChildGrowthChartScreen extends State<ChildGrowthChartScreen> {
                                       Expanded(
                                           child: Padding(
                                             padding: const EdgeInsets.all(5.0),
-                                            child: Text('${child_growth_list.length == 0 ? "" : child_growth_list[index]['infantList'][childindex]['Sex'].toString() == "1" ? Strings.boy_title : child_growth_list[index]['infantList'][childindex]['Sex'].toString() == "2" ? Strings.girl_title : child_growth_list[index]['infantList'][childindex]['Sex'].toString() == "3" ? Strings.transgender : ""}',
+                                            child: Text('${child_growth_list.length == 0 ? "" : child_growth_list[index]['infantList'][childindex]['Sex'].toString()}',
+                                           // child: Text('${child_growth_list.length == 0 ? "" : child_growth_list[index]['infantList'][childindex]['Sex'].toString() == "1" ? Strings.boy_title : child_growth_list[index]['infantList'][childindex]['Sex'].toString() == "2" ? Strings.girl_title : child_growth_list[index]['infantList'][childindex]['Sex'].toString() == "3" ? Strings.transgender : ""}',
                                             style: TextStyle(
                                                 fontSize: 13,
                                                 color: Colors.black,

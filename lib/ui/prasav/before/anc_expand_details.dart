@@ -1113,7 +1113,8 @@ class _AncExpandDetails extends State<AncExpandDetails> {
                         children: <Widget>[
                           Visibility(
                             //visible: last_pos == list_index ? true : false,
-                              visible: preferences.getString("AppRoleID") == "32" ? custom_anc_list[list_index].ANMVerify.toString() == "0" && custom_anc_list[list_index].MinANCFlagUnVerify.toString() == (list_index+1).toString() ? true :false :false,
+                         //last working   //  visible: preferences.getString("AppRoleID") == "32" ? custom_anc_list[list_index].ANMVerify.toString() == "0" && custom_anc_list[list_index].MinANCFlagUnVerify.toString() == (list_index+1).toString() ? true :false :false,
+                              visible: preferences.getString("AppRoleID") == "32" ? custom_anc_list[list_index].ANMVerify.toString() == "0" && custom_anc_list[list_index].MinANCFlagUnVerify.toString() == (list_index+1).toString() ? custom_anc_list[list_index].Freeze_ANC3Checkup.toString() == "0" ? true :false :false :false,
                               child: GestureDetector(
                                 onTap: (){
                                   if(custom_anc_list[list_index].ANCFlag.toString() == "1"){
@@ -1155,7 +1156,8 @@ class _AncExpandDetails extends State<AncExpandDetails> {
                           ),
                           Visibility(
                             //visible: last_pos == list_index ? preferences.getString("AppRoleID") == "32" ? custom_anc_list[list_index].ANMVerify.toString() == "0" ? true : preferences.getString("AppRoleID") == "33" && custom_anc_list[list_index].ashaAutoID.toString() == preferences.getString('ANMAutoID') ? true : false : preferences.getString("AppRoleID") == "33" && custom_anc_list[list_index].ashaAutoID.toString() == preferences.getString('ANMAutoID') ? true : false  : false,
-                            visible: last_pos == list_index ? preferences.getString("AppRoleID") == "32" ? custom_anc_list[list_index].ANMVerify.toString() == "0" ?  true : false : preferences.getString("AppRoleID") == "33" && ((custom_anc_list[list_index].ashaAutoID.toString() == preferences.getString('ANMAutoID')) && custom_anc_list[list_index].Media.toString() == "2" ) ? true : false : false,
+                        //last working    //visible: last_pos == list_index ? preferences.getString("AppRoleID") == "32" ? custom_anc_list[list_index].ANMVerify.toString() == "0" ?  true : false : preferences.getString("AppRoleID") == "33" && ((custom_anc_list[list_index].ashaAutoID.toString() == preferences.getString('ANMAutoID')) && custom_anc_list[list_index].Media.toString() == "2" ) ? true : false : false,
+                            visible: last_pos == list_index ? preferences.getString("AppRoleID") == "32" ? custom_anc_list[list_index].ANMVerify.toString() == "0" && custom_anc_list[list_index].Freeze_ANC3Checkup.toString() == "0"?  true : false : preferences.getString("AppRoleID") == "33" && ((custom_anc_list[list_index].ashaAutoID.toString() == preferences.getString('ANMAutoID')) && custom_anc_list[list_index].Media.toString() == "2" ) ? true : false : false,
                             //visible: preferences.getString("AppRoleID") == "33" ? false : preferences.getString("AppRoleID") == "32" && custom_anc_list[list_index].ANMVerify.toString() == "0" ? true : false,
                               child: GestureDetector(
                                 onTap: (){

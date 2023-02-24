@@ -381,7 +381,8 @@ class _VerifyCasesListState extends State<VerifyCasesList> {
                   Expanded(child: Container(child:Padding(
                     padding: const EdgeInsets.all(3.0),
                     child: Text(
-                      '${response_list == null ? "" : response_list[index]['Name']+" W/o "+response_list[index]['HusbName']}',
+                      '${response_list.length == 0 ? "" :widget.type == "5" || widget.type == "3" ?
+                      response_list[index]['ChildID'] : response_list[index]['Name']+" W/o "+response_list[index]['HusbName']}',
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                           fontSize: 11,

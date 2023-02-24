@@ -1062,8 +1062,6 @@ class _AncExpandDetails extends State<AncExpandDetails> {
   }
 
   bool _editable=false;
-  var _lastTT1Date="";
-  var _lastTT2Date="";
   Widget expandableListView(int list_index,bool isExpanded) {
     //debugPrint('List item build $list_index $isExpanded');
     return Container(
@@ -1200,7 +1198,10 @@ class _AncExpandDetails extends State<AncExpandDetails> {
                           ),
                           Visibility(
                              // visible: custom_anc_list[list_index].ANMVerify.toString() != "null" ? custom_anc_list[list_index].ANMVerify.toString() == "1" ? false : true : true,
-                            visible: preferences.getString("AppRoleID") == "33" && custom_anc_list[list_index].ANMVerify.toString() == "1" ? false :preferences.getString("AppRoleID") == "33" && custom_anc_list[list_index].ANMVerify.toString() == "0" && custom_anc_list[list_index].Media.toString() == "2" ? true : custom_anc_list[list_index].Freeze_ANC3Checkup.toString() != "0" ? false : preferences.getString("AppRoleID") == "32" && custom_anc_list[list_index].ANMVerify.toString() == "0" ? true :false,
+                            visible: preferences.getString("AppRoleID") == "33" && custom_anc_list[list_index].ANMVerify.toString() == "1" ?
+                            false : preferences.getString("AppRoleID") == "33" && custom_anc_list[list_index].ANMVerify.toString() == "0" && custom_anc_list[list_index].Media.toString() == "2" ?
+                            true : custom_anc_list[list_index].Freeze_ANC3Checkup.toString() != "0" ?
+                            false : preferences.getString("AppRoleID") == "32" && custom_anc_list[list_index].ANMVerify.toString() == "0" ? true :false,
                             child: GestureDetector(
                             onTap: (){
                               /*if(last_pos > 0){
@@ -1209,20 +1210,6 @@ class _AncExpandDetails extends State<AncExpandDetails> {
                                 print('anc LastDate-else  ${response_listing[last_pos]['ANCDate'].toString()}');
                               }*/
                               print('on edit click last_pos>>>>>>>>>> ${list_index}');
-                                for(int i=0 ;i<=list_index; i++) {
-                                    if(response_listing[i]['TT1'].toString() != "null"){
-                                      _lastTT1Date=response_listing[i]['TT1'].toString();
-                                    }else{
-                                      _lastTT1Date="";
-                                    }
-                                    if(response_listing[i]['TT2'].toString() != "null"){
-                                      _lastTT2Date=response_listing[i]['TT2'].toString();
-                                    }else{
-                                      _lastTT2Date="";
-                                    }
-                                }
-                                print('_lastTT1Date ${_lastTT1Date}');
-                                print('_lastTT2Date ${_lastTT2Date}');
                                 Navigator.push(
                                 context,
                                 MaterialPageRoute(

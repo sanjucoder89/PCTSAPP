@@ -138,6 +138,7 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
   var _diabiliyPostData="0";
   var _childColorPostData="0";
   var _riskPostData="0";
+  var _chooseRbskPostData="";
   var _Media="";
   var _UpdateUserNo="";
   var _changeBlockTitle=Strings.block;
@@ -426,17 +427,9 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
       _showErrorPopup(Strings.choose_child_ahar,ColorConstants.AppColorPrimary);
     }else if(_diabiliyPostData == "0"){
       _showErrorPopup(Strings.choose_child_dieses,ColorConstants.AppColorPrimary);
-    }else if(_riskPostData == "0"){
+    }else if(_riskPostData == "0" && _diabiliyPostData == "1"){
       _showErrorPopup(Strings.child_any_rbsk_refer_choose,ColorConstants.AppColorPrimary);
-    }/*else if(_orsPostData.isEmpty){
-      _showErrorPopup(Strings.choose_ors_packet,ColorConstants.AppColorPrimary);
-    }else if(_mamtaPostData.isEmpty){
-      _showErrorPopup(Strings.choose_mamta_packet,ColorConstants.AppColorPrimary);
-    }else if(_dietPostData.isEmpty){
-      _showErrorPopup(Strings.choose_child_ahar,ColorConstants.AppColorPrimary);
-    }else if(_diabiliyPostData.isEmpty){
-      _showErrorPopup(Strings.choose_child_dieses,ColorConstants.AppColorPrimary);
-    }*/else if(_referView == true && _selectedPlacesReferCode == "0"){
+    }else if(_referView == true && _selectedPlacesReferCode == "0"){
       _showErrorPopup(Strings.choose_refer_type,ColorConstants.AppColorPrimary);
     }else if((_selectedDistrictUnitCode == "0000" || _selectedDistrictUnitCode == "0") && _diabiliyPostData != "2"){
       _showErrorPopup(Strings.choose_refer_jila,ColorConstants.AppColorPrimary);
@@ -1739,6 +1732,7 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
                                                              _childfounddisese = value ?? _childfounddisese;
                                                              _diabiliyPostData="1";
                                                              _chooseAharCard=true;
+                                                             _chooseRbskPostData="yes";
                                                            });
                                                          },
                                                        ),
@@ -1777,6 +1771,7 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
                                                            setState(() {
                                                              _childrefer=ChildRefer.none;
                                                              _riskPostData="0";
+                                                             _chooseRbskPostData="no";
                                                            });
                                                          },
                                                        ),

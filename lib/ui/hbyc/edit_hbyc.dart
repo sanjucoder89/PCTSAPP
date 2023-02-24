@@ -662,6 +662,8 @@ class _EditHBYCFormState extends State<EditHBYCForm> {
   /*
     *
   */
+
+  var _chooseRbskPostData="";
   void postHbycRequest() async {
 
     preferences = await SharedPreferences.getInstance();
@@ -702,6 +704,8 @@ class _EditHBYCFormState extends State<EditHBYCForm> {
       _showErrorPopup(Strings.choose_child_ahar,ColorConstants.AppColorPrimary);
     }else if(_diabiliyPostData == "0"){
       _showErrorPopup(Strings.choose_child_dieses,ColorConstants.AppColorPrimary);
+    }else if(_riskPostData == "0" && _diabiliyPostData == "1"){
+      _showErrorPopup(Strings.child_any_rbsk_refer_choose,ColorConstants.AppColorPrimary);
     }else if(_referView == true && _ReferUnitCode == "0"){
       _showErrorPopup(Strings.choose_refer_type,ColorConstants.AppColorPrimary);
     }else if((_selectedPlacesReferCode == "10" || _selectedPlacesReferCode == "9" || _selectedPlacesReferCode == "8") && (sub_heading == "" || sub_heading == "चुनें" || _selectedSubUnitCode == "0")){
@@ -1952,6 +1956,7 @@ class _EditHBYCFormState extends State<EditHBYCForm> {
                                                                _riskPostData="0";
                                                                _childrefer=ChildRefer.none;
                                                              }
+                                                             _chooseRbskPostData="yes";
                                                            });
                                                          },
                                                        ),
@@ -1990,6 +1995,7 @@ class _EditHBYCFormState extends State<EditHBYCForm> {
                                                            setState(() {
                                                              _childrefer=ChildRefer.none;
                                                              _riskPostData="0";
+                                                             _chooseRbskPostData="no";
                                                            });
                                                          },
                                                        ),

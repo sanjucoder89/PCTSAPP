@@ -308,24 +308,26 @@ class _HBYCExpandDetails extends State<HBYCExpandDetails> {
     });
     var resBody = json.decode(response.body);
     final apiResponse = ActionRecordsData.fromJson(resBody);
-    setState(() {
-      if (apiResponse.status == true) {
-        Fluttertoast.showToast(
-            msg: apiResponse.message.toString(),
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            backgroundColor: Colors.green,
-            textColor: Colors.white);
-        hbycDetailsAPI(widget.infantId);
-      } else {
-        Fluttertoast.showToast(
-            msg: apiResponse.message.toString(),
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            backgroundColor: Colors.red,
-            textColor: Colors.white);
-      }
-    });
+    if(mounted == true){
+      setState(() {
+        if (apiResponse.status == true) {
+          Fluttertoast.showToast(
+              msg: apiResponse.message.toString(),
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              backgroundColor: Colors.green,
+              textColor: Colors.white);
+          hbycDetailsAPI(widget.infantId);
+        } else {
+          Fluttertoast.showToast(
+              msg: apiResponse.message.toString(),
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              backgroundColor: Colors.red,
+              textColor: Colors.white);
+        }
+      });
+    }
     return "Success";
   }
 

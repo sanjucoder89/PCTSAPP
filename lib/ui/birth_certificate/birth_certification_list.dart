@@ -38,7 +38,7 @@ String getFormattedDate(String date) {
     var inputFormat = DateFormat("yyyy-MM-dd");
     var inputDate = inputFormat.parse(localDate.toString());
     /// outputFormat - convert into format you want to show.
-    var outputFormat = DateFormat('yyyy-MM-dd');
+    var outputFormat = DateFormat('dd-MM-yyyy');
     var outputDate = outputFormat.format(inputDate);
     return outputDate.toString();
   }else{

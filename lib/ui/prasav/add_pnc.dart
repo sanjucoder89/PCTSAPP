@@ -318,11 +318,13 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
     }
     //print('live loc lat $_latitude');
    // print('live loc lng $_longitude');
+    if(mounted == true){
+      setState(() {
+        prefs.setString("latitude", _latitude);
+        prefs.setString("longitude", _longitude);
+      });
+    }
 
-    setState(() {
-      prefs.setString("latitude", _latitude);
-      prefs.setString("longitude", _longitude);
-    });
   }
   List<CustomChildNameList> custom_childname_list = [];
   List<CustomAashaList> custom_aasha_list = [];

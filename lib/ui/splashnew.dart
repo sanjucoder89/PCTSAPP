@@ -27,7 +27,6 @@ import 'anmworkplan/anmworkplan_list.dart';
 import 'dashboard/dashboard.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:location/location.dart';
-
 class SplashNew extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _SplashState();
@@ -139,8 +138,12 @@ class _SplashState extends State<SplashNew> {
       saltvalue = apiResponse.resposeData![0].saltvalue.toString();
       //saltvalue = apiResponse.resposeData?.length;
       //print('StatusValue:....> $Status');
-       print('new saltdata:....> $saltvalue');
+      print('new saltdata:....> $saltvalue');
       print('Appversion:....> $AppVersion');
+      FocusScopeNode currentFocus = FocusScope.of(context);
+      if (!currentFocus.hasPrimaryFocus) {
+        currentFocus.focusedChild!.unfocus();
+      }
       if (AppVersion == 0) {
         if (Status == true) {
           setState(() {

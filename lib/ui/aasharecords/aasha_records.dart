@@ -142,6 +142,7 @@ class _AashaRecordsState extends State<AashaRecords> {
   Future<String> getMotherDeathWorkPlan() async {
 
     preferences = await SharedPreferences.getInstance();
+    print('LoginUnitid ${preferences.getString('UnitID')}');
     var response = await post(Uri.parse(_get_asha_records_url), body: {
       "LoginUnitid": preferences.getString('UnitID'),
       "type": "4",

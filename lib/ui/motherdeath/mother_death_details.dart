@@ -2967,7 +2967,7 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
       _selectedDeathPlace="17";
     }
     print('LoginUserId ${preferences.getString('UserId').toString()}');
-    print('PostRequest=>'
+    /*print('PostRequest=>'
         'LoginUserID:${preferences.getString('UserId').toString()+
         "DeathUnitCode:"+_selectedDeathPlace == "2" ? _postDeathUnitID : "0"+
         "motherid:"+widget.MotherID+
@@ -2991,7 +2991,7 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
         "DeliveryDate:"+Prasav_date+
         "TokenNo:"+preferences.getString('Token').toString()+
         "UserID:"+preferences.getString('UserId').toString()
-    }');
+    }');*/
     callPostAPI();
 
   }
@@ -3136,9 +3136,10 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
             'my-ip-address ${addr.address} ${addr.host} ${addr.isLoopback} ${addr.rawAddress} ${addr.type.name}');
       }
     }
-
+    var _loginUserId=preferences.getString('UserId').toString();
+    print('LoginUserID ${_loginUserId}');
     var response = await put(Uri.parse(_edit_mother_details_url), body: {
-      "LoginUserID":preferences.getString('UserId').toString(),
+      "LoginUserID":_loginUserId,
       "DeathUnitCode":_selectedDeathPlace == "2" ? _postDeathUnitID : "0",
       "motherid":widget.MotherID,
       "Name":response_list[0]['Name'].toString(),

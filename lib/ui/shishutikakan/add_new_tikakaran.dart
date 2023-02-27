@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
@@ -886,8 +887,12 @@ class _AddNewTikakarnScreenState extends State<AddNewTikakarnScreen> {
                       children: <Widget>[
                         Expanded(
                             child: TextField(
+                              keyboardType: TextInputType.numberWithOptions(decimal: true),
+                              inputFormatters: <TextInputFormatter>[
+                                FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d*')),
+                              ],
                               maxLength: 5,
-                              keyboardType: TextInputType.number,
+                              //keyboardType: TextInputType.number,
                               controller:  _enterChildWeight,
                               maxLines: 1,
                               style: TextStyle(fontSize: 13,color: Colors.black),

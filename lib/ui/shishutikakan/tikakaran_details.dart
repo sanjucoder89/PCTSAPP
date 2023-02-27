@@ -887,50 +887,98 @@ class _TikaKaranDetailsState extends State<TikaKaranDetails> {
               bottom: 0,
               left: 0,
               right: 0,
-              child: GestureDetector(
-                onTap: (){
-
-                  Navigator.push(context,MaterialPageRoute(builder: (context) => AddNewTikakarnScreen(
-                    pctsID: widget.pctsID,
-                    infantId: widget.infantId,
-                    birthdate:response_listing[0]['Birth_date'].toString() == "null" ? "" : response_listing[0]['Birth_date'].toString(),
-                    villageautoid:response_listing[0]['VillageAutoID'].toString() == "null" ? "" : response_listing[0]['VillageAutoID'].toString(),
-                    regunitid:response_listing[0]['RegUnitID'].toString() == "null" ? "" : response_listing[0]['RegUnitID'].toString(),
-                    immdate:response_listing[0]['immudate'].toString() == "null" ? "" : response_listing[0]['immudate'].toString(),
-                    childid:widget.pctsID,
-                  )
-                  )
-                  ).then((value) { setState(() {
-                    this.getShishuDetailsAPI();
-                  });});
-
-                },
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    height: 50,
-                    color: ColorConstants.AppColorPrimary,
+              child: Column(
+                children: [
+                  Container(
+                    height: 25,
+                    color: ColorConstants.grey_bg_anc,
                     child: Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Center(
-                        child: RichText(
-                          text: TextSpan(
-                              text: Strings.new_tikakaran,
-                              style: TextStyle(color: Colors.white, fontSize: 13),
-                              children: [
-                                TextSpan(
-                                    text: '',
-                                    style: TextStyle(
-                                        color: Colors.red,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 10))
-                              ]),
-                          textAlign: TextAlign.left,
+                      padding: const EdgeInsets.only(left: 5,right: 5),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Row(
+                            children: <Widget>[
+                              Expanded(child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                // crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    width: 15,
+                                    height: 15,
+                                    color: ColorConstants.hbyc_bg_green,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 5),
+                                    child: Text('${Strings.verify_by_anm}',style: TextStyle(fontSize: 13,color: ColorConstants.black),),
+                                  )
+                                ],)),
+                              Expanded(child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                //crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    width: 15,
+                                    height: 15,
+                                    color: ColorConstants.AppColorPrimary,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 5),
+                                    child: Text('${Strings.verify_pending_by_anm}',style: TextStyle(fontSize: 13,color: ColorConstants.black),),
+                                  )
+                                ],))
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: (){
+
+                      Navigator.push(context,MaterialPageRoute(builder: (context) => AddNewTikakarnScreen(
+                        pctsID: widget.pctsID,
+                        infantId: widget.infantId,
+                        birthdate:response_listing[0]['Birth_date'].toString() == "null" ? "" : response_listing[0]['Birth_date'].toString(),
+                        villageautoid:response_listing[0]['VillageAutoID'].toString() == "null" ? "" : response_listing[0]['VillageAutoID'].toString(),
+                        regunitid:response_listing[0]['RegUnitID'].toString() == "null" ? "" : response_listing[0]['RegUnitID'].toString(),
+                        immdate:response_listing[0]['immudate'].toString() == "null" ? "" : response_listing[0]['immudate'].toString(),
+                        childid:widget.pctsID,
+                      )
+                      )
+                      ).then((value) { setState(() {
+                        this.getShishuDetailsAPI();
+                      });});
+
+                    },
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        height: 50,
+                        color: ColorConstants.AppColorPrimary,
+                        child: Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Center(
+                            child: RichText(
+                              text: TextSpan(
+                                  text: Strings.new_tikakaran,
+                                  style: TextStyle(color: Colors.white, fontSize: 13),
+                                  children: [
+                                    TextSpan(
+                                        text: '',
+                                        style: TextStyle(
+                                            color: Colors.red,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 10))
+                                  ]),
+                              textAlign: TextAlign.left,
+                            ),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
+                ],
               ),
             )
           ],

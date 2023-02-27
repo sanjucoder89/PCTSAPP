@@ -216,7 +216,10 @@ class _AnmWorkPlanListScreen extends State<AnmWorkPlanListScreen> with TickerPro
     print('response:${apiResponse.message}');
     return "Success";
   }
-
+  var strNoDueMsg="";
+  var strPNCNoDueMsg="";
+  var strImmuNoDueMsg="";
+  var strNasBandiNoDueMsg="";
   Future<String> getAncWorkPlan(String _monthyear) async {
     print('UnitCode ${preferences.getString('UnitCode')}');
     print('_monthyear ${_monthyear}');
@@ -238,6 +241,7 @@ class _AnmWorkPlanListScreen extends State<AnmWorkPlanListScreen> with TickerPro
         if(Ancresponse_list.length > 0){
           isANCFound=true;
         }else{
+          strNoDueMsg=Strings.anc_no_due;
           isANCFound=false;
         }
       }
@@ -263,6 +267,7 @@ class _AnmWorkPlanListScreen extends State<AnmWorkPlanListScreen> with TickerPro
         if(Pncresponse_list.length > 0){
           isPNCFound=true;
         }else{
+          strPNCNoDueMsg=Strings.pnc_no_due;
           isPNCFound=false;
         }
       }
@@ -288,6 +293,7 @@ class _AnmWorkPlanListScreen extends State<AnmWorkPlanListScreen> with TickerPro
         if(Immresponse_list.length > 0){
           isImmuFound=true;
         }else{
+          strImmuNoDueMsg=Strings.tikai_no_due;
           isImmuFound=false;
         }
       }
@@ -314,6 +320,7 @@ class _AnmWorkPlanListScreen extends State<AnmWorkPlanListScreen> with TickerPro
         if(Staliresponse_list.length > 0){
           isSterilFound=true;
         }else{
+          strNasBandiNoDueMsg=Strings.seril_no_due;
           isSterilFound=false;
         }
       }
@@ -836,9 +843,16 @@ class _AnmWorkPlanListScreen extends State<AnmWorkPlanListScreen> with TickerPro
                                         top: BorderSide(
                                             color: Colors.grey, width: 0.5))),
                                 child: TabBarView(children: <Widget>[
-                                  isANCFound == false ? Container(
-                                    child: Center(child: Text(Strings.anc_no_due,style: TextStyle(color: ColorConstants.appNewBrowne,fontSize: 18,fontWeight: FontWeight.bold),)),
-                                  ) :SingleChildScrollView(
+                                  isANCFound == false
+                                      ?
+                                  strNoDueMsg == ""
+                                      ?
+                                  Center(child: Container(
+                                      child: CircularProgressIndicator()))
+                                      :
+                                  Container(child: Center(child: Text(strNoDueMsg,style: TextStyle(color: ColorConstants.appNewBrowne,fontSize: 18,fontWeight: FontWeight.bold),)),)
+                                      :
+                                  SingleChildScrollView(
                                     physics: ScrollPhysics(),
                                     child: Container(
                                         child: Column(
@@ -909,9 +923,18 @@ class _AnmWorkPlanListScreen extends State<AnmWorkPlanListScreen> with TickerPro
                                           ],
                                         )),
                                   ),
-                                  isPNCFound == false ? Container(
-                                    child: Center(child: Text(Strings.pnc_no_due,style: TextStyle(color: ColorConstants.appNewBrowne,fontSize: 18,fontWeight: FontWeight.bold),)),
-                                  ) :SingleChildScrollView(
+
+
+                                  isPNCFound == false
+                                      ?
+                                  strPNCNoDueMsg == ""
+                                      ?
+                                  Center(child: Container(
+                                      child: CircularProgressIndicator()))
+                                      :
+                                  Container(child: Center(child: Text(strPNCNoDueMsg,style: TextStyle(color: ColorConstants.appNewBrowne,fontSize: 18,fontWeight: FontWeight.bold),)),)
+                                      :
+                                  SingleChildScrollView(
                                     physics: ScrollPhysics(),
                                     child: Container(
                                         child: Column(
@@ -987,9 +1010,19 @@ class _AnmWorkPlanListScreen extends State<AnmWorkPlanListScreen> with TickerPro
                                           ],
                                         )),
                                   ),
-                                  isImmuFound == false ? Container(
-                                    child: Center(child: Text(Strings.tikai_no_due,style: TextStyle(color: ColorConstants.appNewBrowne,fontSize: 18,fontWeight: FontWeight.bold),)),
-                                  ) :SingleChildScrollView(
+
+
+
+                                  isImmuFound == false
+                                      ?
+                                  strImmuNoDueMsg == ""
+                                    ?
+                                  Center(child: Container(
+                                      child: CircularProgressIndicator()))
+                                    :
+                                  Container(child: Center(child: Text(strImmuNoDueMsg,style: TextStyle(color: ColorConstants.appNewBrowne,fontSize: 18,fontWeight: FontWeight.bold),)),)
+                                      :
+                                  SingleChildScrollView(
                                     physics: ScrollPhysics(),
                                     child: Container(
                                         child: Column(
@@ -1068,9 +1101,18 @@ class _AnmWorkPlanListScreen extends State<AnmWorkPlanListScreen> with TickerPro
                                           ],
                                         )),
                                   ),
-                                  isSterilFound == false ? Container(
-                                    child: Center(child: Text(Strings.seril_no_due,style: TextStyle(color: ColorConstants.appNewBrowne,fontSize: 18,fontWeight: FontWeight.bold),)),
-                                  ) :SingleChildScrollView(
+
+
+                                  isSterilFound == false
+                                      ?
+                                  strNasBandiNoDueMsg == ""
+                                      ?
+                                  Center(child: Container(
+                                      child: CircularProgressIndicator()))
+                                      :
+                                  Container(child: Center(child: Text(strNasBandiNoDueMsg,style: TextStyle(color: ColorConstants.appNewBrowne,fontSize: 18,fontWeight: FontWeight.bold),)),)
+                                      :
+                                  SingleChildScrollView(
                                     physics: ScrollPhysics(),
                                     child: Container(
                                         child: Column(

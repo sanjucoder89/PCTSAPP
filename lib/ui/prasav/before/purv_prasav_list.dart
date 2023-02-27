@@ -154,19 +154,15 @@ class _PurvPrasavScreenList extends State<PurvPrasavScreenList> {
   * */
   Future<String> getPrasavLisingAPI(String village_id) async {
     preferences = await SharedPreferences.getInstance();
-    print('LoginUnitid ${preferences.getString('UnitID')}');
+    /*print('LoginUnitid ${preferences.getString('UnitID')}');
     print('VillageAutoid $village_id');
     print('TokenNo ${preferences.getString('Token')}');
-    print('UserID ${preferences.getString('UserId')}');
+    print('UserID ${preferences.getString('UserId')}');*/
     var response = await post(Uri.parse(_get_prasav_list), body: {
       "LoginUnitid": preferences.getString('UnitID'),
       "VillageAutoid":village_id,
       "TokenNo": preferences.getString('Token'),
       "UserID": preferences.getString('UserId')
-      /*"LoginUnitid":"250",
-      "VillageAutoid":"623",
-      "TokenNo":"fc9b1a5a-2593-4bbe-ab40-b70b7785a041",
-      "UserID":"0101010020201"*/
     });
     var resBody = json.decode(response.body);
     final apiResponse = GetPrasavListData.fromJson(resBody);

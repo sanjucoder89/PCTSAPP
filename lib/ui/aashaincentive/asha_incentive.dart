@@ -76,6 +76,8 @@ class _AshaIncentiveState extends State<AshaIncentive> {
   var isParentExpand=false;
   Future<String> getIncentiveListData(String _mnthyr) async {
     preferences = await SharedPreferences.getInstance();
+    print('_mnthyr $_mnthyr');
+    print('ASHAAutoid ${preferences.getString('ANMAutoID')}');
     var response = await post(Uri.parse(_get_incentive_list), body: {
       // ASHAAutoid:85821
       //"MthYr": "202202",

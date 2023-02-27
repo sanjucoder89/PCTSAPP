@@ -401,6 +401,7 @@ class _EditHBYCFormState extends State<EditHBYCForm> {
             _childrefer=ChildRefer.no;
             _referView=false;
           }else{
+            print('sdasjdfasdfs dsfasf');
             _riskPostData="0";
             _childrefer=ChildRefer.none;
           }

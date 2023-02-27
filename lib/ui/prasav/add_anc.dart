@@ -240,6 +240,7 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
   var _selectedPlacesReferCode = "0";
   var _selectedDistrictUnitCode = "0";
   var _selectedBlockUnitCode = "0";
+  bool _isChanged=false;
   TextEditingController _covidDDdateController = TextEditingController();
   TextEditingController _covidMMdateController = TextEditingController();
   TextEditingController _covidYYYYdateController = TextEditingController();
@@ -5563,7 +5564,15 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
                                         setState(() {
                                           _selectedPlacesReferCode = newVal!;
                                           print('refercode:$_selectedPlacesReferCode');
-                                          getDistrictListAPI("3");
+                                          if(_isChanged == true){
+                                            _isChanged=false;
+                                            _selectedBlockUnitCode = custom_block_list[0].unitcode.toString();
+                                            print('_selectedDistrictUnitCode ${_selectedBlockUnitCode}');
+                                            _selectedDistrictUnitCode = custom_district_list[0].unitcode.toString();
+                                            print('_selectedDistrictUnitCode ${_selectedDistrictUnitCode}');
+                                          }else{
+                                            getDistrictListAPI("3");
+                                          }
                                         });
                                       },
                                       value: _selectedPlacesReferCode, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
@@ -5746,6 +5755,7 @@ class _AddNewANCScreen extends State<AddNewANCScreen> {
                                         setState(() {
                                           _selectedBlockUnitCode = newVal!;
                                           print('blockcode:$_selectedBlockUnitCode');
+                                          _isChanged=true;
                                           _ReferUnitCode=_selectedBlockUnitCode;
                                         });
                                       },

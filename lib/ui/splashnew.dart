@@ -115,17 +115,16 @@ class _SplashState extends State<SplashNew> {
     preferences = await SharedPreferences.getInstance();
     preferences.setString("CheckPlatform", _checkPlatform);
     //preferences.setString("Appversion", packageName); //uncomment line when app is going for live
-    //preferences.setString("Appversion", "5.5.5.22");
     preferences.setString("Appversion", "5.7.12.22");//play store version
     deviceId = await PlatformDeviceId.getDeviceId;
     preferences.setString("deviceId", deviceId);
     Token = uuid.v4();
-    var response = await post(Uri.parse(urlsaltdata), body: {
+    var response = await post(Uri.parse(urlsaltdata),
+        body: {
       "DeviceID": deviceId,
       "TokenNo": Token,
       "AppVersion": _checkPlatform == "0" ? preferences.getString("Appversion") : "",
-      "IOSAppVersion": _checkPlatform == "1" ? IosVersion.ios_version : "",
-      ///"AppVersion": '5.6.9.22',
+      "IOSAppVersion": _checkPlatform == "1" ? IosVersion.ios_version : ""
     });
     var resBody = json.decode(response.body);
     final apiResponse = PostSaltData.fromJson(resBody);

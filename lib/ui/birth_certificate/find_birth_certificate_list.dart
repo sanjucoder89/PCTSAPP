@@ -55,13 +55,16 @@ class _FindBirthCertificateList extends State<FindBirthCertificateList> {
   TextEditingController enterOTPController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   final _formKey2 = GlobalKey<FormState>();
-
+  var _resentMobileReq="";
+  var _resentInfantIdReq="";
   Future<String> getOTPAPI(_mobileno,_infantID) async {
     await EasyLoading.show(
       status: 'loading...',
       maskType: EasyLoadingMaskType.black,
     );
     preferences = await SharedPreferences.getInstance();
+    _resentMobileReq=_mobileno;
+    _resentInfantIdReq=_infantID;
     var response = await post(Uri.parse(_get_otp_url), body: {
       "MobileNo":_mobileno,
       "SmsFlag":"82",
@@ -79,6 +82,7 @@ class _FindBirthCertificateList extends State<FindBirthCertificateList> {
             backgroundColor: Colors.green,
             textColor: Colors.white);
         enterOTPController.text="";
+
         showSMSPopupDialog(_mobileno,_infantID);
       } else {
         Fluttertoast.showToast(
@@ -774,6 +778,7 @@ class _FindBirthCertificateList extends State<FindBirthCertificateList> {
                       GestureDetector(
                         onTap: (){
                           Navigator.pop(context);
+                          getOTPAPI(_resentMobileReq,_resentInfantIdReq);
                         },
                         child: Card(
                           shape: RoundedRectangleBorder(

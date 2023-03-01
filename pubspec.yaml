@@ -57,8 +57,10 @@ dependencies:
   google_maps_flutter: ^2.2.1
   dropdown_button2: ^1.9.1
   flutter_launcher_icons: ^0.11.0
-  device_info_plus: ^8.0.0
+  #device_info_plus: ^8.0.0
   flutter_tts: ^3.6.3
+  open_file: ^3.2.1
+  native_pdf_view: ^6.0.0+1
 dev_dependencies:
   flutter_test:
     sdk: flutter

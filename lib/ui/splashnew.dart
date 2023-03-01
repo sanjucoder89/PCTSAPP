@@ -22,6 +22,7 @@ import '../constant/ImageDialog.dart';
 import '../constant/MyAppColor.dart';
 import '../utils/ShowCustomDialoge.dart';
 import '../utils/ShowPlayStoreDialoge.dart';
+import 'TextToSpeech.dart';
 import 'admindashboard/admin_dashboard.dart';
 import 'anmworkplan/anmworkplan_list.dart';
 import 'dashboard/dashboard.dart';
@@ -228,7 +229,8 @@ class _SplashState extends State<SplashNew> {
                 children: [
                   //Image(image: AssetImage('Images/finalSplashScreen.jpg')),
                    Text(
-                    'Version :$packageName',
+                    //'Version :$packageName',
+                    'Version :5.7.12.22',
                     textAlign: TextAlign.center,
                     style: TextStyle(color: Colors.red, fontSize: 16),
                   ),
@@ -242,6 +244,12 @@ class _SplashState extends State<SplashNew> {
                         if(result == ConnectivityResult.mobile) {
                           if(AppVersion == 0){
                             _openMyPage();
+                            /*Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (BuildContext context) => TextToSpeech(),
+                              ),
+                            );*/
                           }else{
                             reLoginDialog();
                           }

@@ -140,6 +140,7 @@ class Strings {
   static const String payment_date= "भुगतान तिथि";
   static const String total_pai_amt= "कुल भुगतान राशि (₹) ";
   static const String in_process= "भुगतान प्रक्रिया में है ";
+  static const String child_pcts_id_title = "शिशु की आईडी";
   static const String pcts_id_title = "पीसीटीएस आईडी";
   static const String panjikaran_ki_tithi = "पंजीकरण की तिथि ";
   static const String akhri_mahaveer_ki_tareek = "आखिरी माहवारी की तारीक ";

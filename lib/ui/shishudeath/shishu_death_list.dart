@@ -72,7 +72,6 @@ class _ShishuDeathList extends State<ShishuDeathList> {
 
   List villages_list = [];
   List response_listing = [];
- // List response_listing = [];
   late String villageId="0";
   ScrollController? _controller;
   //bool isToggle=false;
@@ -82,6 +81,7 @@ class _ShishuDeathList extends State<ShishuDeathList> {
   Future<String> checkLoginSession() async {
     preferences = await SharedPreferences.getInstance();
     if(preferences.getString("AppRoleID").toString() == '33'){
+      print('dfdfdfdfd');
       getVillageListAshaAPI(preferences.getString('ANMAutoID'));
     }else{
       getVillageListAPI(preferences.getString('UnitID'));
@@ -155,6 +155,10 @@ class _ShishuDeathList extends State<ShishuDeathList> {
   * */
   Future<String> getLisingAPI(String village_id) async {
     preferences = await SharedPreferences.getInstance();
+    print('LoginUnitid ${ preferences.getString('UnitID')}');
+    print('VillageAutoid $village_id');
+    print('TokenNo ${preferences.getString('Token')}');
+    print('UserID ${preferences.getString('UserId')}');
     var response = await post(Uri.parse(_get_ShishuDeath_list), body: {
       "LoginUnitid": preferences.getString('UnitID'),
       "VillageAutoid":village_id,
@@ -601,234 +605,207 @@ class _ShishuDeathList extends State<ShishuDeathList> {
   }
 
   Widget _itemBuilder(BuildContext context, int index) {
-    return InkWell(
-      child: GestureDetector(
-        onTap: (){
+    return GestureDetector(
+      onTap: (){
+        Navigator.push(context, MaterialPageRoute(builder: (context) => ShishuDeathDetails(//ShishuDeathDetails , ShishuDeathDetailsNew
+            pctsID: response_listing[index]['pctsid'].toString(),
+            infantId:  response_listing[index]['InfantID'].toString(),
+            birthdate:response_listing[index]['Birth_date'].toString(),
+            DeathReportDate:response_listing[index]['DeathReportDate'].toString()
+        ),));
+        //   Navigator.push(context, MaterialPageRoute(builder: (context) => DemoChartApp(),));
+      },
+      child: Container(
+        child: Column(
+          children: [
 
-        },
-        child: Container(
-          child: Column(
-            children: [
-              Container(
-                child: MediaQuery.removePadding(
-                    context: context,
-                    removeTop: true,
-                    child: ListView.builder(
-                        controller: _controller,
-                        itemCount: getLength(),
-                        itemBuilder: (context, childindex) {
-                          return GestureDetector(
-                            onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => ShishuDeathDetails(//ShishuDeathDetails , ShishuDeathDetailsNew
-                                pctsID: response_listing[index]['pctsid'].toString(),
-                                infantId:  response_listing[index]['InfantID'].toString(),
-                                birthdate:response_listing[index]['Birth_date'].toString(),
-                                  DeathReportDate:response_listing[index]['DeathReportDate'].toString()
-                              ),));
-                              //   Navigator.push(context, MaterialPageRoute(builder: (context) => DemoChartApp(),));
-                            },
-                            child: Container(
-                              child: Column(
-                                children: [
-
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 5,right: 5),
-                                    child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Expanded(
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(5.0),
-                                              child: Text(
-                                                Strings.shishu_ki_id,
-                                                style: TextStyle(
-                                                    fontSize: 13,
-                                                    color: ColorConstants.AppColorPrimary,
-                                                    fontWeight: FontWeight.normal),
-                                              ),
-                                            )),
-                                        Expanded(
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(5.0),
-                                              child: Text(//${_mahila_vivaran_response.length == 0 ? "": getFormattedDate(_mahila_vivaran_response[index]['RegDate'].toString())}
-                                                response_listing[index]['childid'].toString(),
-                                                style: TextStyle(
-                                                    fontSize: 13,
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.normal),
-                                              ),
-                                            )),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 5,right: 5),
-                                    child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Expanded(
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(5.0),
-                                              child: Text(
-                                                Strings.shishu_ka_naam,
-                                                style: TextStyle(
-                                                    fontSize: 13,
-                                                    color: ColorConstants.AppColorPrimary,
-                                                    fontWeight: FontWeight.normal),
-                                              ),
-                                            )),
-                                        Expanded(
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(5.0),
-                                              child: Text(
-                                                response_listing[index]['ChildName'].toString(),
-                                                style: TextStyle(
-                                                    fontSize: 13,
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.normal),
-                                              ),
-                                            )),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 5,right: 5),
-                                    child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Expanded(
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(5.0),
-                                              child: Text(
-                                                Strings.death_date,
-                                                style: TextStyle(
-                                                    fontSize: 13,
-                                                    color: ColorConstants.AppColorPrimary,
-                                                    fontWeight: FontWeight.normal),
-                                              ),
-                                            )),
-                                        Expanded(
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(5.0),
-                                              child: Text(//${_mahila_vivaran_response.length == 0 ? "": getFormattedDate(_mahila_vivaran_response[index]['RegDate'].toString())}
-                                                getFormattedDate(response_listing[index]['Birth_date'].toString()),
-                                                style: TextStyle(
-                                                    fontSize: 13,
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.normal),
-                                              ),
-                                            )),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 5,right: 5),
-                                    child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Expanded(
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(5.0),
-                                              child: Text(
-                                                Strings.death_place,
-                                                style: TextStyle(
-                                                    fontSize: 13,
-                                                    color: ColorConstants.AppColorPrimary,
-                                                    fontWeight: FontWeight.normal),
-                                              ),
-                                            )),
-                                        Expanded(
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(5.0),
-                                              child: Text(//${_mahila_vivaran_response.length == 0 ? "": getFormattedDate(_mahila_vivaran_response[index]['RegDate'].toString())}
-                                                response_listing[index]['deathPlaces'].toString(),
-                                                style: TextStyle(
-                                                    fontSize: 13,
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.normal),
-                                              ),
-                                            )),
-                                      ],
-                                    ),
-                                  ),
-
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 5,right: 5),
-                                    child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Expanded(
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(5.0),
-                                              child: Text(
-                                                Strings.death_reason,
-                                                style: TextStyle(
-                                                    fontSize: 13,
-                                                    color: ColorConstants.AppColorPrimary,
-                                                    fontWeight: FontWeight.normal),
-                                              ),
-                                            )),
-                                        Expanded(
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(5.0),
-                                              child: Text(//${_mahila_vivaran_response.length == 0 ? "": getFormattedDate(_mahila_vivaran_response[index]['RegDate'].toString())}
-                                                response_listing[index]['ReasonName'].toString(),
-                                                style: TextStyle(
-                                                    fontSize: 13,
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.normal),
-                                              ),
-                                            )),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 5,right: 5),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center, //Center Row contents horizontally,
-                                      crossAxisAlignment: CrossAxisAlignment.center, //Center Row contents vertically,
-                                      children: [
-                                        Text(Strings.pcts_id_vivran,
-                                          style: TextStyle(
-                                              fontSize: 13,
-                                              color: ColorConstants.AppColorPrimary,
-                                              fontWeight: FontWeight.normal),),
-                                        Container(
-                                          width: 80,
-                                          alignment: Alignment.centerLeft,
-                                          child: Stack(
-                                            children: [
-                                              FlutterRipple(
-                                                radius: 10,
-                                                child: Image.asset('Images/cursor_click.png'),
-                                                rippleColor: ColorConstants.dark_yellow_color,
-                                                onTap: () {
-                                                  print("hello");
-                                                },
-                                              ),
-                                            ],
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  Divider(
-                                    height: 0,
-                                    color: ColorConstants.app_yellow_color,
-                                  ),
-
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true
-                    )
-                ),
+            Padding(
+              padding: const EdgeInsets.only(left: 5,right: 5),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Text(
+                          Strings.shishu_ki_id,
+                          style: TextStyle(
+                              fontSize: 13,
+                              color: ColorConstants.AppColorPrimary,
+                              fontWeight: FontWeight.normal),
+                        ),
+                      )),
+                  Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Text(//${_mahila_vivaran_response.length == 0 ? "": getFormattedDate(_mahila_vivaran_response[index]['RegDate'].toString())}
+                          response_listing[index]['childid'].toString(),
+                          style: TextStyle(
+                              fontSize: 13,
+                              color: Colors.black,
+                              fontWeight: FontWeight.normal),
+                        ),
+                      )),
+                ],
               ),
-            ],
-          ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 5,right: 5),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Text(
+                          Strings.shishu_ka_naam,
+                          style: TextStyle(
+                              fontSize: 13,
+                              color: ColorConstants.AppColorPrimary,
+                              fontWeight: FontWeight.normal),
+                        ),
+                      )),
+                  Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Text(
+                          response_listing[index]['ChildName'].toString(),
+                          style: TextStyle(
+                              fontSize: 13,
+                              color: Colors.black,
+                              fontWeight: FontWeight.normal),
+                        ),
+                      )),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 5,right: 5),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Text(
+                          Strings.death_date,
+                          style: TextStyle(
+                              fontSize: 13,
+                              color: ColorConstants.AppColorPrimary,
+                              fontWeight: FontWeight.normal),
+                        ),
+                      )),
+                  Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Text(//${_mahila_vivaran_response.length == 0 ? "": getFormattedDate(_mahila_vivaran_response[index]['RegDate'].toString())}
+                          getFormattedDate(response_listing[index]['Birth_date'].toString()),
+                          style: TextStyle(
+                              fontSize: 13,
+                              color: Colors.black,
+                              fontWeight: FontWeight.normal),
+                        ),
+                      )),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 5,right: 5),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Text(
+                          Strings.death_place,
+                          style: TextStyle(
+                              fontSize: 13,
+                              color: ColorConstants.AppColorPrimary,
+                              fontWeight: FontWeight.normal),
+                        ),
+                      )),
+                  Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Text(//${_mahila_vivaran_response.length == 0 ? "": getFormattedDate(_mahila_vivaran_response[index]['RegDate'].toString())}
+                          response_listing[index]['deathPlaces'].toString(),
+                          style: TextStyle(
+                              fontSize: 13,
+                              color: Colors.black,
+                              fontWeight: FontWeight.normal),
+                        ),
+                      )),
+                ],
+              ),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.only(left: 5,right: 5),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Text(
+                          Strings.death_reason,
+                          style: TextStyle(
+                              fontSize: 13,
+                              color: ColorConstants.AppColorPrimary,
+                              fontWeight: FontWeight.normal),
+                        ),
+                      )),
+                  Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Text(//${_mahila_vivaran_response.length == 0 ? "": getFormattedDate(_mahila_vivaran_response[index]['RegDate'].toString())}
+                          response_listing[index]['ReasonName'].toString(),
+                          style: TextStyle(
+                              fontSize: 13,
+                              color: Colors.black,
+                              fontWeight: FontWeight.normal),
+                        ),
+                      )),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 5,right: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center, //Center Row contents horizontally,
+                crossAxisAlignment: CrossAxisAlignment.center, //Center Row contents vertically,
+                children: [
+                  Text(Strings.pcts_id_vivran,
+                    style: TextStyle(
+                        fontSize: 13,
+                        color: ColorConstants.AppColorPrimary,
+                        fontWeight: FontWeight.normal),),
+                  Container(
+                    width: 80,
+                    alignment: Alignment.centerLeft,
+                    child: Stack(
+                      children: [
+                        FlutterRipple(
+                          radius: 10,
+                          child: Image.asset('Images/cursor_click.png'),
+                          rippleColor: ColorConstants.dark_yellow_color,
+                          onTap: () {
+                            print("hello");
+                          },
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Divider(
+              height: 0,
+              color: ColorConstants.app_yellow_color,
+            ),
+
+          ],
         ),
       ),
     );

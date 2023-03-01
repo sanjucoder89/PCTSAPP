@@ -26,16 +26,19 @@ class ChangePasswordscreen extends StatefulWidget {
     required this.Mobileno,
     required this.Deviceid,
     required this.Token,
+    required this.Userid,
   }) : super(key: key);
   final String Mobileno;
   final String Deviceid;
   final String Token;
+  final String Userid;
 
   void main() {
     runApp(ChangePasswordscreen(
       Mobileno: 'Mobileno',
       Deviceid: 'Deviceid',
       Token: 'Token',
+      Userid: 'Userid',
     ));
   }
 
@@ -285,6 +288,7 @@ class _ChangePasswordscreen extends State<ChangePasswordscreen> {
     print("OTP=> ${otp}");
     print("TokenNo=> ${preferences.get('Token')}");
     print("UserID=> ${widget.Mobileno}");
+    print("widget.Userid=> ${widget.Userid}");
 /* .setBodyParameter("DeviceID", DeviceID)
                     .setBodyParameter("Password", password)
                     .setBodyParameter("ConfirmPassword", confirmpassword)
@@ -297,7 +301,7 @@ class _ChangePasswordscreen extends State<ChangePasswordscreen> {
       "ConfirmPassword":digest2.toString(),
       "OTP": otp,
       "TokenNo": widget.Token,
-      "UserID": widget.Mobileno,
+      "UserID": widget.Userid == '' ? widget.Mobileno : widget.Userid,
     });
 
 
@@ -312,7 +316,7 @@ class _ChangePasswordscreen extends State<ChangePasswordscreen> {
           msg: message,
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.red,
+          backgroundColor: Colors.green,
           textColor: Colors.white);
         Navigator.pushReplacement(
           context,

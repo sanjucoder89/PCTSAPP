@@ -24,7 +24,7 @@ import 'chart_details.dart';
 import 'model/ChildGrowthList2Data.dart';
 import 'model/ChildGrowthListData.dart';
 import 'package:intl/intl.dart'; //for date format
-
+import 'package:flutter_tts/flutter_tts.dart';
 
 String getFormattedDate(String date) {
   if(date != "null"){

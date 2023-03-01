@@ -431,7 +431,8 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
       _showErrorPopup(Strings.child_any_rbsk_refer_choose,ColorConstants.AppColorPrimary);
     }else if(_referView == true && _selectedPlacesReferCode == "0"){
       _showErrorPopup(Strings.choose_refer_type,ColorConstants.AppColorPrimary);
-    }else if((_selectedDistrictUnitCode == "0000" || _selectedDistrictUnitCode == "0") && _diabiliyPostData != "2"){
+    //}else if( (_selectedDistrictUnitCode == "0000" || _selectedDistrictUnitCode == "0") && _diabiliyPostData == "2" ){
+    }else if((_referView == true && _selectedPlacesReferCode != "0") && (_selectedDistrictUnitCode == "0000" || _selectedDistrictUnitCode == "0")){
       _showErrorPopup(Strings.choose_refer_jila,ColorConstants.AppColorPrimary);
     }else if(_showSubDropDown == true && _selectedBlockUnitCode == "0"){
       _showErrorPopup(Strings.choose_block,ColorConstants.AppColorPrimary);
@@ -1733,6 +1734,7 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
                                                              _diabiliyPostData="1";
                                                              _chooseAharCard=true;
                                                              _chooseRbskPostData="yes";
+                                                             print('_diabiliyPostData $_diabiliyPostData');
                                                            });
                                                          },
                                                        ),
@@ -1767,6 +1769,7 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
                                                              _childfounddisese = value ?? _childfounddisese;
                                                              _diabiliyPostData="2";
                                                              _chooseAharCard=false;
+                                                             print('_diabiliyPostData $_diabiliyPostData');
                                                            });
                                                            setState(() {
                                                              _childrefer=ChildRefer.none;
@@ -1857,6 +1860,7 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
                                                                _riskPostData="0";
                                                              });
                                                            }
+                                                           print('_riskPostData $_riskPostData');
                                                          },
                                                        ),
                                                        Text(
@@ -1897,6 +1901,7 @@ class _AddHBYCFormState extends State<AddHBYCForm> {
                                                               _riskPostData="0";
                                                             });
                                                           }
+                                                          print('_riskPostData $_riskPostData');
                                                          },
                                                        ),
                                                        Text(Strings.no,

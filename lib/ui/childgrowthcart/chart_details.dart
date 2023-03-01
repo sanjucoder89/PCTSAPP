@@ -11,7 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../constant/ApiUrl.dart';
 import '../../constant/MyAppColor.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-
+import 'package:flutter_tts/flutter_tts.dart';
 import '../pcts/pctsids/model/GetChildWeightDetailData.dart';
 
 String getFormattedDate(String date) {
@@ -53,9 +53,12 @@ class ChartDetails extends StatefulWidget {
 
 class _ChartDetails extends State<ChartDetails> {
 
+  var _mahilaName="";
   var _child_weight_details_url = AppConstants.app_base_url+"WeightDetail";
   SharedPreferences? preferences;
   List child_weight_response = [];
+  double lastValueweight=0.0;//get from last weight from api resonse listing
+  int lastAgeValue=36;//fixed last age value
   /*
   * API FOR MAHILA VIVRAN
   * */
@@ -67,7 +70,7 @@ class _ChartDetails extends State<ChartDetails> {
       maskType: EasyLoadingMaskType.black,
     );
     preferences = await SharedPreferences.getInstance();
-    print('inside api methond.....');
+    print('infantId ${widget.infantId}');
     var response = await post(Uri.parse(_child_weight_details_url), body: {
       "InfantID": widget.infantId
     });
@@ -80,12 +83,22 @@ class _ChartDetails extends State<ChartDetails> {
         for (int i = 0; i < child_weight_response.length; i++){
           functionalList.add(
             CustomFunctionalList(
-                xvalue:double.parse(child_weight_response[i]['age'].toString()),
-                yvalue:double.parse(child_weight_response[i]['weight'].toString())
+              xvalue:double.parse(child_weight_response[i]['age'].toString()),
+              yvalue:double.parse(child_weight_response[i]['weight'].toString()),
+              sex:child_weight_response[i]['sex'].toString() == "1" ?
+              "(लड़का)":child_weight_response[i]['sex'].toString() == "2" ?
+              "(लड़की)" : child_weight_response[i]['sex'].toString() == "3" ?
+              "(Transgender)" : "",
+              sexVal:child_weight_response[i]['sex'].toString(),
+              childName:child_weight_response[i]['ChildName'].toString() == "null" ? "" : child_weight_response[i]['ChildName'].toString(),
+              birthDate:child_weight_response[i]['Birth_date'].toString()
             ),
           );
         }
         print('func.len ${functionalList.length}');
+        _mahilaName=widget.Mahilaname;
+        showPopupMsgFunctionality(functionalList);
+
       } else {
         Fluttertoast.showToast(
             msg:resBody['Message'],
@@ -99,7 +112,6 @@ class _ChartDetails extends State<ChartDetails> {
     return "Success";
   }
 
-
   @override
   void initState() {
     super.initState();
@@ -111,6 +123,7 @@ class _ChartDetails extends State<ChartDetails> {
   void dispose() {
     super.dispose();
     EasyLoading.dismiss();
+    ftts.stop();
   }
 
   @override
@@ -422,14 +435,1196 @@ class _ChartDetails extends State<ChartDetails> {
   }
 
 
+
+  void showPopupMsgFunctionality(List<CustomFunctionalList> functionalList) {
+    lastValueweight = functionalList[(functionalList.length - 1)].yvalue!;
+    print('lastWeightValue $lastValueweight');
+    print('lastAgeValue $lastAgeValue');
+    print('sex ${functionalList[0].sexVal.toString()}');
+
+    if(functionalList[0].sexVal.toString() == "1"){
+      if(lastAgeValue == 0){
+        if (lastValueweight <= 2.1) {
+          infant0to6("1");
+        } else if (lastValueweight > 2.1 && lastValueweight <= 2.5) {
+          infant0to6("2");
+        } else if (lastValueweight > 2.5 && lastValueweight <= 3.5) {
+          infant0to6("3");
+        }
+        else {
+          infant0to6("4");
+        }
+      }else if(lastAgeValue == 1){
+        if (lastValueweight <= 3) {
+          infant0to6("1");
+
+        } else if (lastValueweight > 3 && lastValueweight <= 3.5) {
+          infant0to6("2");
+        } else if (lastValueweight > 3.5 && lastValueweight <= 4.5) {
+          infant0to6("3");
+        }
+        else {
+          infant0to6("4");
+        }
+      }else if(lastAgeValue == 2){
+        if (lastValueweight <= 3.9) {
+          infant0to6("1");
+
+        } else if (lastValueweight > 3.9 && lastValueweight <= 4.4) {
+          infant0to6("2");
+        } else if (lastValueweight > 4.4 && lastValueweight <= 5.6) {
+          infant0to6("3");
+        }
+        else {
+          infant0to6("4");
+        }
+      }else if(lastAgeValue == 3){
+        if (lastValueweight <= 4.5) {
+          infant0to6("1");
+
+        } else if (lastValueweight > 4.5 && lastValueweight <= 5.5) {
+          infant0to6("2");
+        } else if (lastValueweight > 5.5 && lastValueweight <= 7) {
+          infant0to6("3");
+        }
+        else {
+          infant0to6("4");
+        }
+      }else if(lastAgeValue == 4){
+        if (lastValueweight <= 5.3) {
+          infant0to6("1");
+        } else if (lastValueweight > 5.3 && lastValueweight <= 6) {
+          infant0to6("2");
+
+        } else if (lastValueweight > 6 && lastValueweight <= 7.5) {
+          infant0to6("3");
+        }
+        else {
+          infant0to6("4");
+        }
+      }else if(lastAgeValue == 5){
+        if (lastValueweight <= 5.3) {
+          infant0to6("1");
+
+        } else if (lastValueweight > 5.3 && lastValueweight <= 6) {
+          infant0to6("2");
+        } else if (lastValueweight > 6 && lastValueweight <= 7.5) {
+          infant0to6("3");
+        }
+        else {
+          infant0to6("4");
+        }
+      }else if(lastAgeValue == 6){
+        if (lastValueweight <= 5.4) {
+          infant0to6("1");
+
+        } else if (lastValueweight > 5.4 && lastValueweight <= 6.5) {
+          infant0to6("2");
+        } else if (lastValueweight > 6.5 && lastValueweight <= 8) {
+          infant0to6("3");
+        }
+        else {
+          infant0to6("4");
+        }
+      }else if(lastAgeValue == 7){
+        if (lastValueweight <= 6) {
+          infant7to12("1");
+        } else if (lastValueweight > 6 && lastValueweight <= 6.5) {
+          infant7to12("2");
+        } else if (lastValueweight > 6.5 && lastValueweight <= 8.4) {
+          infant7to12("3");
+        }
+        else {
+          infant7to12("4");
+        }
+      }else if(lastAgeValue == 8){
+        if (lastValueweight <= 6.2) {
+          infant7to12("1");
+
+        } else if (lastValueweight > 6.2 && lastValueweight <= 7) {
+          infant7to12("2");
+        } else if (lastValueweight > 7 && lastValueweight <= 8.5) {
+          infant7to12("3");
+        }
+        else {
+          infant7to12("4");
+        }
+      }else if(lastAgeValue == 9){
+        if (lastValueweight <= 6.5) {
+          infant7to12("1");
+
+        } else if (lastValueweight > 6.5 && lastValueweight <= 7.2) {
+          infant7to12("2");
+        } else if (lastValueweight > 7.2 && lastValueweight <= 8.9) {
+          infant7to12("3");
+        }
+        else {
+          infant7to12("4");
+        }
+      }else if(lastAgeValue == 10){
+        if (lastValueweight <= 6.5) {
+          infant7to12("1");
+
+        } else if (lastValueweight > 6.5 && lastValueweight <= 7.4) {
+          infant7to12("2");
+        } else if (lastValueweight > 7.4 && lastValueweight <= 9.1) {
+          infant7to12("3");
+        }
+        else {
+          infant7to12("4");
+        }
+      }else if(lastAgeValue == 11){
+        if (lastValueweight <= 6.5) {
+          infant7to12("1");
+
+        } else if (lastValueweight > 6.5 && lastValueweight <= 7.4) {
+          infant7to12("2");
+        } else if (lastValueweight > 7.4 && lastValueweight <= 9.1) {
+          infant7to12("3");
+        }
+        else {
+          infant7to12("4");
+        }
+      }else if(lastAgeValue == 12){
+        if (lastValueweight <= 7) {
+          infant7to12("1");
+
+        } else if (lastValueweight > 7 && lastValueweight <= 7.6) {
+          infant7to12("2");
+        } else if (lastValueweight > 7.4 && lastValueweight <= 9.5) {
+          infant7to12("3");
+        }
+        else {
+          infant7to12("4");
+        }
+      }else if(lastAgeValue == 13){
+        if (lastValueweight <= 7.1) {
+          infant13to24("1");
+
+        } else if (lastValueweight > 7.1 && lastValueweight <= 7.6) {
+          infant13to24("2");
+        } else if (lastValueweight > 7.6 && lastValueweight <= 9.5) {
+          infant13to24("3");
+        }
+        else {
+          infant13to24("4");
+        }
+      }else if(lastAgeValue == 14){
+        if (lastValueweight <= 7.2) {
+          infant13to24("1");
+
+        } else if (lastValueweight > 7.2 && lastValueweight <= 8.2) {
+          infant13to24("2");
+        } else if (lastValueweight > 8.2 && lastValueweight <= 10) {
+          infant13to24("3");
+        }
+        else {
+          infant13to24("4");
+        }
+      }else if(lastAgeValue == 15){
+        if (lastValueweight <= 7.5) {
+          infant13to24("1");
+
+        } else if (lastValueweight > 7.5 && lastValueweight <= 8.2) {
+          infant13to24("2");
+        } else if (lastValueweight > 8.2 && lastValueweight <= 10.3) {
+          infant13to24("3");
+        }
+        else {
+          infant13to24("4");
+        }
+      }else if(lastAgeValue == 16){
+        if (lastValueweight <= 7.5) {
+          infant13to24("1");
+
+        } else if (lastValueweight > 7.5 && lastValueweight <= 8.5) {
+          infant13to24("2");
+        } else if (lastValueweight > 8.5 && lastValueweight <= 10.5) {
+          infant13to24("3");
+        }
+        else {
+          infant13to24("4");
+        }
+      }else if(lastAgeValue == 17){
+        if (lastValueweight <= 7.6) {
+          infant13to24("1");
+
+        } else if (lastValueweight > 7.6 && lastValueweight <= 8.6) {
+          infant13to24("2");
+        } else if (lastValueweight > 8.6 && lastValueweight <= 10.6) {
+          infant13to24("3");
+        }
+        else {
+          infant13to24("4");
+        }
+      }else if(lastAgeValue == 18){
+        if (lastValueweight <= 7.8) {
+          infant13to24("1");
+
+        } else if (lastValueweight > 7.8 && lastValueweight <=8.7) {
+          infant13to24("2");
+        } else if (lastValueweight > 8.7 && lastValueweight <= 10.8) {
+          infant13to24("3");
+        }
+        else {
+          infant13to24("4");
+        }
+      }else if(lastAgeValue == 19){
+        if (lastValueweight <= 8) {
+          infant13to24("1");
+
+        } else if (lastValueweight > 8 && lastValueweight <=9) {
+          infant13to24("2");
+        } else if (lastValueweight >9 && lastValueweight <= 11) {
+          infant13to24("3");
+        }
+        else {
+          infant13to24("4");
+        }
+      }else if(lastAgeValue == 20){
+        if (lastValueweight <= 8.1) {
+          infant13to24("1");
+
+        } else if (lastValueweight > 8.1 && lastValueweight <=9.1) {
+          infant13to24("2");
+        } else if (lastValueweight >9.1 && lastValueweight <= 11.2) {
+          infant13to24("3");
+        }
+        else {
+          infant13to24("4");
+        }
+      }else if(lastAgeValue == 21){
+        if (lastValueweight <= 8.3) {
+          infant13to24("1");
+
+        } else if (lastValueweight > 8.3 && lastValueweight <=9.3) {
+          infant13to24("2");
+        } else if (lastValueweight >9.3 && lastValueweight <= 11.5) {
+          infant13to24("3");
+        }
+        else {
+          infant13to24("4");
+        }
+      }else if(lastAgeValue == 22){
+        if (lastValueweight <= 8.3) {
+          infant13to24("1");
+
+        } else if (lastValueweight > 8.3 && lastValueweight <=9.4) {
+          infant13to24("2");
+        } else if (lastValueweight >9.4 && lastValueweight <= 11.8) {
+          infant13to24("3");
+        }
+        else {
+          infant13to24("4");
+        }
+      }else if(lastAgeValue == 23){
+        if (lastValueweight <= 8.4) {
+          infant13to24("1");
+
+        } else if (lastValueweight > 8.4 && lastValueweight <=9.5) {
+          infant13to24("2");
+        } else if (lastValueweight >9.5 && lastValueweight <= 12) {
+          infant13to24("3");
+        }
+        else {
+          infant13to24("4");
+        }
+      }else if(lastAgeValue == 24){
+        if (lastValueweight <= 8.6) {
+          infant13to24("1");
+
+        } else if (lastValueweight > 8.6 && lastValueweight <=9.7) {
+          infant13to24("2");
+        } else if (lastValueweight >9.7 && lastValueweight <= 12.1) {
+          infant13to24("3");
+        }
+        else {
+          infant13to24("4");
+        }
+      }else if(lastAgeValue == 25){
+        if (lastValueweight <= 8.7) {
+          infant25to36("1");
+
+        } else if (lastValueweight > 8.7 && lastValueweight <=9.9) {
+          infant25to36("2");
+        } else if (lastValueweight >9.9 && lastValueweight <= 12.3) {
+          infant25to36("3");
+        }
+        else {
+          infant25to36("4");
+        }
+      }else if(lastAgeValue == 26){
+        if (lastValueweight <= 8.9) {
+          infant25to36("1");
+
+        } else if (lastValueweight > 8.9 && lastValueweight <=10) {
+          infant25to36("2");
+        } else if (lastValueweight >10 && lastValueweight <= 12.5) {
+          infant25to36("3");
+        }
+        else {
+          infant25to36("4");
+        }
+      }else if(lastAgeValue == 27){
+        if (lastValueweight <= 9) {
+          infant25to36("1");
+
+        } else if (lastValueweight > 9 && lastValueweight <=10) {
+          infant25to36("2");
+        } else if (lastValueweight >10 && lastValueweight <= 12.7) {
+          infant25to36("3");
+        }
+        else {
+          infant25to36("4");
+        }
+      }else if(lastAgeValue == 28){
+        if (lastValueweight <= 9.1) {
+          infant25to36("1");
+
+        } else if (lastValueweight > 9.1 && lastValueweight <=10.3) {
+          infant25to36("2");
+        } else if (lastValueweight >10.3 && lastValueweight <= 12.9) {
+          infant25to36("3");
+        }
+        else {
+          infant25to36("4");
+        }
+      }else if(lastAgeValue == 29){
+        if (lastValueweight <= 9.3) {
+          infant25to36("1");
+
+        } else if (lastValueweight > 9.3 && lastValueweight <=10.4) {
+          infant25to36("2");
+        } else if (lastValueweight >10.4 && lastValueweight <= 13.1) {
+          infant25to36("3");
+        }
+        else {
+          infant25to36("4");
+        }
+      }else if(lastAgeValue == 30){
+        if (lastValueweight <= 9.4) {
+          infant25to36("1");
+
+        } else if (lastValueweight > 9.4 && lastValueweight <=10.5) {
+          infant25to36("2");
+        } else if (lastValueweight >10.5 && lastValueweight <= 13.3) {
+          infant25to36("3");
+        }
+        else {
+          infant25to36("4");
+        }
+      }else if(lastAgeValue == 31){
+        if (lastValueweight <= 9.5) {
+          infant25to36("1");
+
+        } else if (lastValueweight > 9.5 && lastValueweight <=10.6) {
+          infant25to36("2");
+        } else if (lastValueweight >10.6 && lastValueweight <= 13.5) {
+          infant25to36("3");
+        }
+        else {
+          infant25to36("4");
+        }
+      }else if(lastAgeValue == 32){
+        if (lastValueweight <= 9.6) {
+          infant25to36("1");
+
+        } else if (lastValueweight > 9.6 && lastValueweight <=10.8) {
+          infant25to36("2");
+        } else if (lastValueweight >10.8 && lastValueweight <= 13.6) {
+          infant25to36("3");
+        }
+        else {
+          infant25to36("4");
+        }
+      }else if(lastAgeValue == 33){
+        if (lastValueweight <= 9.7) {
+          infant25to36("1");
+
+        } else if (lastValueweight > 9.7 && lastValueweight <=10.9) {
+          infant25to36("2");
+        } else if (lastValueweight >10.9 && lastValueweight <= 13.8) {
+          infant25to36("3");
+        }
+        else {
+          infant25to36("4");
+        }
+      }else if(lastAgeValue == 34){
+        if (lastValueweight <= 9.8) {
+          infant25to36("1");
+
+        } else if (lastValueweight > 9.8 && lastValueweight <=11) {
+          infant25to36("2");
+        } else if (lastValueweight >11 && lastValueweight <= 14) {
+          infant25to36("3");
+        }
+        else {
+          infant25to36("4");
+        }
+      }else if(lastAgeValue == 35){
+        if (lastValueweight <= 9.9) {
+          infant25to36("1");
+
+        } else if (lastValueweight > 9.9 && lastValueweight <=11.2) {
+          infant25to36("2");
+        } else if (lastValueweight >11.2 && lastValueweight <= 14.1) {
+          infant25to36("3");
+        }
+        else {
+          infant25to36("4");
+        }
+      }else if(lastAgeValue == 36){
+        if (lastValueweight <= 10) {
+          infant25to36("1");
+        } else if (lastValueweight > 10 && lastValueweight <=11.3) {
+          infant25to36("2");
+        } else if (lastValueweight >11.3 && lastValueweight <= 14.2) {
+          infant25to36("3");
+        }
+        else {
+          infant25to36("4");
+        }
+      }
+    }else{
+      if(lastAgeValue == 0){
+        if (lastValueweight <= 2) {
+          infant0to6("1");
+        } else if (lastValueweight > 2 && lastValueweight <= 2.5) {
+          infant0to6("2");
+        } else if (lastValueweight > 2.5 && lastValueweight <= 3.3) {
+          infant0to6("3");
+        }
+        else {
+          infant0to6("4");
+        }
+      }else if(lastAgeValue == 1){
+        if (lastValueweight <= 2.6) {
+          infant0to6("1");
+
+        } else if (lastValueweight >2.6 && lastValueweight <= 3.1) {
+          infant0to6("2");
+        } else if (lastValueweight > 3.1 && lastValueweight <= 4.1) {
+          infant0to6("3");
+        }
+        else {
+          infant0to6("4");
+        }
+      }else if(lastAgeValue == 2){
+        if (lastValueweight <= 3.5) {
+          infant0to6("1");
+
+        } else if (lastValueweight > 3.5 && lastValueweight <= 3.9) {
+          infant0to6("2");
+        } else if (lastValueweight > 3.9 && lastValueweight <= 5) {
+          infant0to6("3");
+        }
+        else {
+          infant0to6("4");
+        }
+      }else if(lastAgeValue == 3){
+        if (lastValueweight <= 4) {
+          infant0to6("1");
+
+        } else if (lastValueweight > 4 && lastValueweight <= 4.5) {
+          infant0to6("2");
+        } else if (lastValueweight > 4.5 && lastValueweight<=5.7) {
+          infant0to6("3");
+        }
+        else {
+          infant0to6("4");
+        }
+      }else if(lastAgeValue == 4){
+        if (lastValueweight <= 4.4) {
+          infant0to6("1");
+
+        } else if (lastValueweight >4.4 && lastValueweight <= 5) {
+          infant0to6("2");
+        } else if (lastValueweight > 5 && lastValueweight <= 6.4) {
+          infant0to6("3");
+
+        }
+        else {
+          infant0to6("4");
+        }
+      }else if(lastAgeValue == 5){
+        if (lastValueweight <= 4.8) {
+          infant0to6("1");
+
+        } else if (lastValueweight >4.8 && lastValueweight <= 5.4) {
+          infant0to6("2");
+        } else if (lastValueweight > 5.4 && lastValueweight <= 6.9) {
+          infant0to6("3");
+        }
+        else {
+          infant0to6("4");
+        }
+      }else if(lastAgeValue == 6){
+        if (lastValueweight <= 5) {
+          infant0to6("1");
+
+        } else if (lastValueweight > 5 && lastValueweight <= 5.7) {
+          infant0to6("2");
+        } else if (lastValueweight > 5.7 && lastValueweight <= 7.2) {
+          infant0to6("3");
+        }
+        else {
+          infant0to6("4");
+        }
+      }else if(lastAgeValue == 7){
+        if (lastValueweight <= 5.4) {
+          infant7to12("1");
+
+        } else if (lastValueweight > 5.4 && lastValueweight <= 6) {
+          infant7to12("2");
+        } else if (lastValueweight > 6 && lastValueweight <= 7.6) {
+          infant7to12("3");
+        }
+        else {
+          infant7to12("4");
+        }
+      }else if(lastAgeValue == 8){
+        if (lastValueweight <= 5.6) {
+          infant7to12("1");
+
+        } else if (lastValueweight > 5.6 && lastValueweight <= 6.3) {
+          infant7to12("2");
+        } else if (lastValueweight > 6.3 && lastValueweight <= 7.9) {
+          infant7to12("3");
+        }
+        else {
+          infant7to12("4");
+        }
+      }else if(lastAgeValue == 9){
+        if (lastValueweight <= 5.8) {
+          infant7to12("1");
+
+        } else if (lastValueweight > 5.8 && lastValueweight <= 6.5) {
+          infant7to12("2");
+        } else if (lastValueweight >6.5 && lastValueweight <= 8.2) {
+          infant7to12("3");
+        }
+        else {
+          infant7to12("4");
+        }
+      }else if(lastAgeValue == 10){
+        if (lastValueweight <= 6) {
+          infant7to12("1");
+
+        } else if (lastValueweight > 6 && lastValueweight <= 6.7) {
+          infant7to12("2");
+        } else if (lastValueweight > 6.7 && lastValueweight <= 8.5) {
+          infant7to12("3");
+        }
+        else {
+          infant7to12("4");
+        }
+      }else if(lastAgeValue == 11){
+        if (lastValueweight <= 6.2) {
+          infant7to12("1");
+
+        } else if (lastValueweight > 6.2 && lastValueweight <= 6.9) {
+          infant7to12("2");
+        } else if (lastValueweight > 6.9 && lastValueweight <= 8.7) {
+          infant7to12("3");
+        }
+        else {
+          infant7to12("4");
+        }
+      }else if(lastAgeValue == 12){
+        if (lastValueweight <= 6.4) {
+          infant7to12("1");
+
+        } else if (lastValueweight > 6.4 && lastValueweight <= 7) {
+          infant7to12("2");
+        } else if (lastValueweight > 7 && lastValueweight <= 9) {
+          infant7to12("3");
+        }
+        else {
+          infant7to12("4");
+        }
+      }else if(lastAgeValue == 13){
+        if (lastValueweight <= 6.5) {
+          infant13to24("1");
+
+        } else if (lastValueweight > 6.5 && lastValueweight <= 7.2) {
+          infant13to24("2");
+        } else if (lastValueweight > 7.2 && lastValueweight <= 9.1) {
+          infant13to24("3");
+        }
+        else {
+          infant13to24("4");
+        }
+      }else if(lastAgeValue == 14){
+        if (lastValueweight <= 6.6) {
+          infant13to24("1");
+
+        } else if (lastValueweight > 6.6 && lastValueweight <= 7.4) {
+          infant13to24("2");
+        } else if (lastValueweight >7.4 && lastValueweight <= 9.4) {
+          infant13to24("3");
+        }
+        else {
+          infant13to24("4");
+        }
+      }else if(lastAgeValue == 15){
+        if (lastValueweight <= 6.8) {
+          infant13to24("1");
+
+        } else if (lastValueweight > 6.8 && lastValueweight <= 7.6) {
+          infant13to24("2");
+        } else if (lastValueweight >7.6 && lastValueweight <= 9.6) {
+          infant13to24("3");
+        }
+        else {
+          infant13to24("4");
+        }
+      }else if(lastAgeValue == 16){
+        if (lastValueweight <= 6.9) {
+          infant13to24("1");
+
+        } else if (lastValueweight > 6.9 && lastValueweight <= 7.7) {
+          infant13to24("2");
+        } else if (lastValueweight > 7.7 && lastValueweight <= 9.8) {
+          infant13to24("3");
+        }
+        else {
+          infant13to24("4");
+        }
+      }else if(lastAgeValue == 17){
+        if (lastValueweight <= 7.1) {
+          infant13to24("1");
+
+        } else if (lastValueweight > 7.1 && lastValueweight <= 7.9) {
+          infant13to24("2");
+        } else if (lastValueweight > 7.9 && lastValueweight <= 10) {
+          infant13to24("3");
+        }
+        else {
+          infant13to24("4");
+        }
+      }else if(lastAgeValue == 18){
+        if (lastValueweight <= 7.3) {
+          infant13to24("1");
+
+        } else if (lastValueweight > 7.3 && lastValueweight <=8.1) {
+          infant13to24("2");
+        } else if (lastValueweight > 8.1 && lastValueweight <= 10.1) {
+          infant13to24("3");
+        }
+        else {
+          infant13to24("4");
+        }
+      }else if(lastAgeValue == 19){
+        if (lastValueweight <= 7.4) {
+          infant13to24("1");
+
+        } else if (lastValueweight > 7.4 && lastValueweight <=8.2) {
+          infant13to24("2");
+        } else if (lastValueweight >8.2 && lastValueweight <= 10.4) {
+          infant13to24("3");
+        }
+        else {
+          infant13to24("4");
+        }
+      }else if(lastAgeValue == 20){
+        if (lastValueweight <= 7.5) {
+          infant13to24("1");
+
+        } else if (lastValueweight > 7.5 && lastValueweight <=8.4) {
+          infant13to24("2");
+        } else if (lastValueweight >8.4 && lastValueweight <= 10.6) {
+          infant13to24("3");
+        }
+        else {
+          infant13to24("4");
+        }
+      }else if(lastAgeValue == 21){
+        if (lastValueweight <= 7.7) {
+          infant13to24("1");
+
+        } else if (lastValueweight > 7.7 && lastValueweight <=8.6) {
+          infant13to24("2");
+        } else if (lastValueweight >8.6 && lastValueweight <= 10.9) {
+          infant13to24("3");
+        }
+        else {
+          infant13to24("4");
+        }
+      }else if(lastAgeValue == 22){
+        if (lastValueweight <= 7.8) {
+          infant13to24("1");
+
+        } else if (lastValueweight > 7.8 && lastValueweight <=8.8) {
+          infant13to24("2");
+        } else if (lastValueweight >8.8 && lastValueweight <= 11.1) {
+          infant13to24("3");
+        }
+        else {
+          infant13to24("4");
+        }
+      }else if(lastAgeValue == 23){
+        if (lastValueweight <= 8) {
+          infant13to24("1");
+
+        } else if (lastValueweight > 8 && lastValueweight <=8.9) {
+          infant13to24("2");
+        } else if (lastValueweight >8.9 && lastValueweight <= 11.3) {
+          infant13to24("3");
+        }
+        else {
+          infant13to24("4");
+        }
+      }else if(lastAgeValue == 24){
+        if (lastValueweight <= 8.1) {
+          infant13to24("1");
+
+        } else if (lastValueweight > 8.1 && lastValueweight <=9) {
+          infant13to24("2");
+        } else if (lastValueweight >9 && lastValueweight <= 11.5) {
+          infant13to24("3");
+        }
+        else {
+          infant13to24("4");
+        }
+      }else if(lastAgeValue == 25){
+        if (lastValueweight <= 8.2) {
+          infant25to36("1");
+
+        } else if (lastValueweight > 8.2 && lastValueweight <=9.2) {
+          infant25to36("2");
+        } else if (lastValueweight >9.2 && lastValueweight <= 11.7) {
+          infant25to36("3");
+        }
+        else {
+          infant25to36("4");
+        }
+      }else if(lastAgeValue == 26){
+        if (lastValueweight <= 8.4) {
+          infant25to36("1");
+
+        } else if (lastValueweight > 8.4 && lastValueweight <=9.4) {
+          infant25to36("2");
+        } else if (lastValueweight >9.4 && lastValueweight <=11.9) {
+          infant25to36("3");
+        }
+        else {
+          infant25to36("4");
+        }
+      }else if(lastAgeValue == 27){
+        if (lastValueweight <= 8.5) {
+          infant25to36("1");
+
+        } else if (lastValueweight > 8.5 && lastValueweight <=9.5) {
+          infant25to36("2");
+        } else if (lastValueweight >9.5 && lastValueweight <= 12.1) {
+          infant25to36("3");
+        }
+        else {
+          infant25to36("4");
+        }
+      }else if(lastAgeValue == 28){
+        if (lastValueweight <= 8.6) {
+          infant25to36("1");
+
+        } else if (lastValueweight > 8.6 && lastValueweight <=9.6) {
+          infant25to36("2");
+        } else if (lastValueweight >9.6 && lastValueweight <= 12.4) {
+          infant25to36("3");
+        }
+        else {
+          infant25to36("4");
+        }
+      }else if(lastAgeValue == 29){
+        if (lastValueweight <= 8.8) {
+          infant25to36("1");
+
+        } else if (lastValueweight > 8.8 && lastValueweight <=9.8) {
+          infant25to36("2");
+        } else if (lastValueweight >9.8 && lastValueweight <= 12.5) {
+          infant25to36("3");
+        }
+        else {
+          infant25to36("4");
+        }
+      }else if(lastAgeValue == 30){
+        if (lastValueweight <= 8.9) {
+          infant25to36("1");
+
+        } else if (lastValueweight > 8.9 && lastValueweight <=10) {
+          infant25to36("2");
+        } else if (lastValueweight >10 && lastValueweight <= 12.7) {
+          infant25to36("3");
+        }
+        else {
+          infant25to36("4");
+        }
+      }else if(lastAgeValue == 31){
+        if (lastValueweight <= 9) {
+          infant25to36("1");
+
+        } else if (lastValueweight > 9 && lastValueweight <=10.1) {
+          infant25to36("2");
+        } else if (lastValueweight >10.1 && lastValueweight <= 13) {
+          infant25to36("3");
+        }
+        else {
+          infant25to36("4");
+        }
+      }else if(lastAgeValue == 32){
+        if (lastValueweight <= 9.1) {
+          infant25to36("1");
+
+        } else if (lastValueweight > 9.1 && lastValueweight <=10.3) {
+          infant25to36("2");
+        } else if (lastValueweight >10.3 && lastValueweight <= 13.1) {
+          infant25to36("3");
+        }
+        else {
+          infant25to36("4");
+        }
+      }else if(lastAgeValue == 33){
+        if (lastValueweight <= 9.3) {
+          infant25to36("1");
+
+        } else if (lastValueweight > 9.3 && lastValueweight <=10.4) {
+          infant25to36("2");
+        } else if (lastValueweight >10.4 && lastValueweight <= 13.4) {
+          infant25to36("3");
+        }
+        else {
+          infant25to36("4");
+        }
+      }else if(lastAgeValue == 34){
+        if (lastValueweight <= 9.4) {
+          infant25to36("1");
+
+        } else if (lastValueweight > 9.4 && lastValueweight <=10.6) {
+          infant25to36("2");
+        } else if (lastValueweight >10.6 && lastValueweight <= 13.5) {
+          infant25to36("3");
+        }
+        else {
+          infant25to36("4");
+        }
+      }else if(lastAgeValue == 35){
+        if (lastValueweight <= 9.5) {
+          infant25to36("1");
+
+        } else if (lastValueweight > 9.5 && lastValueweight <=10.7) {
+          infant25to36("2");
+        } else if (lastValueweight >10.7 && lastValueweight <= 13.7) {
+          infant25to36("3");
+        }
+        else {
+          infant25to36("4");
+        }
+      }else if(lastAgeValue == 36){
+        if (lastValueweight <= 9.6) {
+          infant25to36("1");
+
+        } else if (lastValueweight > 9.6 && lastValueweight <=10.8) {
+          infant25to36("2");
+        } else if (lastValueweight >10.8 && lastValueweight <= 13.9) {
+          infant25to36("3");
+        }
+        else {
+          infant25to36("4");
+        }
+      }
+    }
+  }
+
+  void infant25to36(String flag) {
+    if (flag == "1") {
+      String msg = _mahilaName + " जी,आपके शिशु के स्वास्थ्य में कोई सुधार नहीं हुआ है। शिशु का वजन उम्र के अनुसार नहीं बढ़ रहा है, शिशु अति कुपोषित\n" +
+          "है। शिशु को घरेलू संभाल के साथ चिकित्सकीय उपचार की आवश्यकता है।\n" +
+          "शिशु की उम्र 2 वर्ष से अधिक है –\n" +
+          "\uF0B7 घर में जो बना हो वह खिलाएं\n" +
+          "\uF0B7 ज्याद मिर्च मसाला न हो\n" +
+          "\uF0B7 दिन में 5 बार कुछ खिलाएं\n" +
+          "\uF0B7 शिशु को आंगनवाड़ी पर ले जाएँ एवं 100 दिन तक सप्ताह में 2 बार, 1 मिली आइएफए सीरप पिलाये।\n" +
+          "\uF0B7 साल में 2 बार कृमिनाशक दवा एल्बेण्डाजोल 2 साल से बड़े बच्चे को एक गोली देनी है।\n" +
+          "\uF0B7 शिशु की एमयूएसी टेप से जांच करें, 115 एमएम से कम होने पर शिशु को आंगनवाड़ी केन्द्र पर रेफर करें\n" +
+          "एवं पैरों में सूजन की जांच करें। शिशु के पैरों में सूजन की जांच करें, लक्षण नजर आने पर तुरन्त शिशु को MTC में रेफर करें।";
+      _showSuccessPopup(msg,ColorConstants.AppColorPrimary);
+      textSpeech(msg);
+    } else if (flag == "2") {
+      String msg = _mahilaName + " जी,आपके शिशु के स्वास्थ्य में पूर्व की तुलना में बहुत सुधार हुआ है लेकिन अभी भी शिशु पूरी तरह से ठीक नहीं है। शिशु\n" +
+          "अभी भी कुपोषण की श्रेणी में है। शिशु का विशेष ध्यान रखना जारी रखें।\n" +
+          "शिशु की उम्र 2 वर्ष से अधिक है –\n" +
+          "\uF0B7 घर में जो बना हो वह खिलाएं\n" +
+          "\uF0B7 ज्याद मिर्च मसाला न हो\n" +
+          "\uF0B7 दिन में 5 बार कुछ खिलाएं\n" +
+          "\uF0B7 शिशु को आंगनवाड़ी पर ले जाएँ एवं 100 दिन तक सप्ताह में 2 बार, 1 मिली आइएफए सीरप पिलाये।\n" +
+          "\uF0B7 साल में 2 बार कृमिनाशक दवा एल्बेण्डाजोल 2 साल से बड़े बच्चे को एक गोली देनी है।\n" +
+          "\uF0B7 शिशु की एमयूएसी टेप से जांच करें, 115 एमएम से कम होने पर शिशु को आंगनवाड़ी केन्द्र पर रेफर करें\n" +
+          "एवं पैरों में सूजन की जांच करें। शिशु के पैरों में सूजन की जांच करें, लक्षण नजर आने पर तुरन्त शिशु को MTC में रेफर करें।";
+      _showSuccessPopup(msg,ColorConstants.AppColorPrimary);
+      textSpeech(msg);
+    } else if (flag == "3") {
+      String msg = _mahilaName+ " जी,आपके शिशु का वजन उम्र के अनुसार सही है। शिशु के स्वास्थ्य में पूर्व की तुलना में बहुत सुधार हुआ है। शिशु का\n" +
+          "विशेष ध्यान रखना जारी रखें।\n" +
+          " शिशु की उम्र 2 वर्ष से अधिक है –\n" +
+          "\uF0B7 घर में जो बना हो वह खिलाएं\n" +
+          "\uF0B7 ज्याद मिर्च मसाला न हो\n" +
+          "\uF0B7 दिन में 5 बार कुछ खिलाएं\n" +
+          "\uF0B7 शिशु को आंगनवाड़ी पर ले जाएँ एवं 100 दिन तक सप्ताह में 2 बार, 1 मिली आइएफए सीरप पिलाये।\n" +
+          "\uF0B7 साल में 2 बार कृमिनाशक दवा एल्बेण्डाजोल 2 साल से बड़े बच्चे को एक गोली देनी है।";
+      _showSuccessPopup(msg,ColorConstants.AppColorPrimary);
+      textSpeech(msg);
+    } else if (flag == "4") {
+      String msg = _mahilaName +
+          " जी,आपके शिशु का वजन उम्र के अनुसार सही है। शिशु के स्वास्थ्य में पूर्व की तुलना में बहुत सुधार हुआ है। शिशु का\n" +
+          "विशेष ध्यान रखना जारी रखें।\n" +
+          "शिशु की उम्र एक वर्ष से 2 वर्ष के बीच है –\n" +
+          "\uF0B7 जितनी बार भी बच्चा चाहे स्तनपान कराएँ\n" +
+          "\uF0B7 हर बार निम्न में से 1½ कटोरी भोज्य पदार्थ खिलाएं\n" +
+          "\uF0B7 रोटी / चावल / बिस्किट आदि मीठे दूध में मिला कर\n" +
+          "\uF0B7 रोटी / चावल / खिचड़ी दाल में मिला कर साथ ओइल डालते हुए खिलायें\n" +
+          "\uF0B7 सेवैयाँ / हलुआ / खीर अथवा दूध से बना भोजन\n" +
+          "\uF0B7 उबले / तले हुए आलू व सब्जियां (कम मिर्च मसाले के साथ) केला / बिस्किट / फल\n" +
+          "\uF0B7 दिन में 5 बार उक्त वस्तुओं में से कुछ अवश्य खिलाएं\n" +
+          "\uF0B7 शिशु को आंगनवाड़ी पर ले जाएँ एवं 100 दिन तक सप्ताह में 2 बार, 1 मिली आइएफए सीरप पिलाये।\n" +
+          "\uF0B7 साल में 2 बार कृमिनाशक दवा एल्बेण्डाजोल 1 से 2 साल के बच्चे को आधी गोली देनी है।";
+      _showSuccessPopup(msg,ColorConstants.AppColorPrimary);
+      textSpeech(msg);
+    }
+  }
+
+  void infant13to24(String flag) {
+    if (flag == "1") {
+      String msg = _mahilaName + " जी,आपके शिशु के स्वास्थ्य में कोई सुधार नहीं हुआ है। शिशु का वजन उम्र के अनुसार नहीं बढ़ रहा है, शिशु अति कुपोषित\n" +
+          "है। शिशु को घरेलू संभाल के साथ चिकित्सकीय उपचार की आवश्यकता है।\n" +
+          "शिशु की उम्र एक वर्ष से 2 वर्ष के बीच है –\n" +
+          "\uF0B7 जितनी बार भी बच्चा चाहे स्तनपान कराएँ\n" +
+          "\uF0B7 हर बार निम्न में से 1½ कटोरी भोज्य पदार्थ खिलाएं\n" +
+          "\uF0B7 रोटी / चावल / बिस्किट आदि मीठे दूध में मिला कर\n" +
+          "\uF0B7 रोटी / चावल / खिचड़ी दाल में मिला कर साथ ओइल डालते हुए खिलायें\n" +
+          "\uF0B7 सेवैयाँ / हलुआ / खीर अथवा दूध से बना भोजन\n" +
+          "\uF0B7 उबले / तले हुए आलू व सब्जियां (कम मिर्च मसाले के साथ) केला / बिस्किट / फल\n" +
+          "\uF0B7 दिन में 5 बार उक्त वस्तुओं में से कुछ अवश्य खिलाएं\n" +
+          "\uF0B7 शिशु को आंगनवाड़ी पर ले जाएँ एवं 100 दिन तक सप्ताह में 2 बार, 1 मिली आइएफए सीरप पिलाये।\n" +
+          "\uF0B7 साल में 2 बार कृमिनाशक दवा एल्बेण्डाजोल 1 से 2 साल के बच्चे को आधी गोली देनी है।\n" +
+          "\uF0B7 शिशु की एमयूएसी टेप से जांच करें, 115 एमएम से कम होने पर शिशु को आंगनवाड़ी केन्द्र पर रेफर करें\n" +
+          "एवं पैरों में सूजन की जांच करें। शिशु के पैरों में सूजन की जांच करें, लक्षण नजर आने पर तुरन्त शिशु को MTC में रेफर करें।";
+      _showSuccessPopup(msg,ColorConstants.AppColorPrimary);
+
+    } else if (flag == "2") {
+      String msg = _mahilaName + " जी,आपके शिशु का वजन उम्र के अनुसार ठीक तरह से नहीं बढ़ रहा है। शिशु कुपोषण की श्रेणी में चल रहा है। शिशु का\n" +
+          "विशेष ध्यान रखने की आवश्यकता है।\n" +
+          "शिशु की उम्र एक वर्ष से 2 वर्ष के बीच है –\n" +
+          "\uF0B7 जितनी बार भी बच्चा चाहे स्तनपान कराएँ\n" +
+          "\uF0B7 हर बार निम्न में से 1½ कटोरी भोज्य पदार्थ खिलाएं\n" +
+          "\uF0B7 रोटी / चावल / बिस्किट आदि मीठे दूध में मिला कर\n" +
+          "\uF0B7 रोटी / चावल / खिचड़ी दाल में मिला कर साथ ओइल डालते हुए खिलायें\n" +
+          "\uF0B7 सेवैयाँ / हलुआ / खीर अथवा दूध से बना भोजन\n" +
+          "\uF0B7 उबले / तले हुए आलू व सब्जियां (कम मिर्च मसाले के साथ) केला / बिस्किट / फल\n" +
+          "\uF0B7 दिन में 5 बार उक्त वस्तुओं में से कुछ अवश्य खिलाएं\n" +
+          "\uF0B7 शिशु को आंगनवाड़ी पर ले जाएँ एवं 100 दिन तक सप्ताह में 2 बार, 1 मिली आइएफए सीरप पिलाये।\n" +
+          "\uF0B7 साल में 2 बार कृमिनाशक दवा एल्बेण्डाजोल 1 से 2 साल के बच्चे को आधी गोली देनी है।\n" +
+          "\uF0B7 शिशु की एमयूएसी टेप से जांच करें, 115 एमएम से कम होने पर शिशु को आंगनवाड़ी केन्द्र पर रेफर\n" +
+          "करें एवं पैरों में सूजन की जांच करें। शिशु के पैरों में सूजन की जांच करें, लक्षण नजर आने पर तुरन्त शिशु को MTC में रेफर करें।";
+      _showSuccessPopup(msg,ColorConstants.AppColorPrimary);
+    } else if (flag == "3") {
+      String msg = _mahilaName + " जी,आपके शिशु का वजन उम्र के अनुसार सही है।\n" +
+          "शिशु की उम्र एक वर्ष से 2 वर्ष के बीच है –\n" +
+          "\uF0B7 जितनी बार भी बच्चा चाहे स्तनपान कराएँ\n" +
+          "\uF0B7 हर बार निम्न में से 1½ कटोरी भोज्य पदार्थ खिलाएं\n" +
+          "\uF0B7 रोटी / चावल / बिस्किट आदि मीठे दूध में मिला कर\n" +
+          "\uF0B7 रोटी / चावल / खिचड़ी दाल में मिला कर साथ ओइल डालते हुए खिलायें\n" +
+          "\uF0B7 सेवैयाँ / हलुआ / खीर अथवा दूध से बना भोजन\n" +
+          "\uF0B7 उबले / तले हुए आलू व सब्जियां (कम मिर्च मसाले के साथ) केला / बिस्किट / फल\n" +
+          "\uF0B7 दिन में 5 बार उक्त वस्तुओं में से कुछ अवश्य खिलाएं\n" +
+          "\uF0B7 शिशु को आंगनवाड़ी पर ले जाएँ एवं 100 दिन तक सप्ताह में 2 बार, 1 मिली आइएफए सीरप पिलाये।\n" +
+          "\uF0B7 साल में 2 बार कृमिनाशक दवा एल्बेण्डाजोल 1 से 2 साल के बच्चे को आधी गोली देनी है।";
+      _showSuccessPopup(msg,ColorConstants.AppColorPrimary);
+
+    } else if (flag == "4") {
+      String msg = _mahilaName + " जी,आपके शिशु का वजन उम्र के अनुसार सही है। शिशु के स्वास्थ्य में पूर्व की तुलना में बहुत सुधार हुआ है। शिशु का\n" +
+          "विशेष ध्यान रखना जारी रखें।\n" +
+          "\uF0FC शिशु की उम्र एक वर्ष से 2 वर्ष के बीच है –\n" +
+          "\uF0B7 जितनी बार भी बच्चा चाहे स्तनपान कराएँ\n" +
+          "\uF0B7 हर बार निम्न में से 1½ कटोरी भोज्य पदार्थ खिलाएं\n" +
+          "\uF0B7 रोटी / चावल / बिस्किट आदि मीठे दूध में मिला कर\n" +
+          "\uF0B7 रोटी / चावल / खिचड़ी दाल में मिला कर साथ ओइल डालते हुए खिलायें\n" +
+          "\uF0B7 सेवैयाँ / हलुआ / खीर अथवा दूध से बना भोजन\n" +
+          "\uF0B7 उबले / तले हुए आलू व सब्जियां (कम मिर्च मसाले के साथ) केला / बिस्किट / फल\n" +
+          "\uF0B7 दिन में 5 बार उक्त वस्तुओं में से कुछ अवश्य खिलाएं\n" +
+          "\uF0B7 शिशु को आंगनवाड़ी पर ले जाएँ एवं 100 दिन तक सप्ताह में 2 बार, 1 मिली आइएफए सीरप पिलाये।\n" +
+          "\uF0B7 साल में 2 बार कृमिनाशक दवा एल्बेण्डाजोल 1 से 2 साल के बच्चे को आधी गोली देनी है।";
+      _showSuccessPopup(msg,ColorConstants.AppColorPrimary);
+    }
+  }
+
+  void infant7to12(String flag) {
+    if (flag == "1") {
+      String msg = _mahilaName + " जी,आपके शिशु के स्वास्थ्य में कोई सुधार नहीं हुआ है। शिशु का वजन उम्र के अनुसार नहीं बढ़ रहा है,शिशु अति कुपोषित है। शिशु को घरेलू संभाल के साथ चिकित्सकीय उपचार की आवश्यकता है।\n" +
+          "शिशु की उम्र 6 माह से एक वर्ष के बीच है –\n" +
+          "\uF0B7 थोड़ी थोड़ी मात्रा मे मुलायम, मसले हुए अनाज, दाल, सब्जियाँ और फल खिलाना जारी रखें।\n" +
+          "\uF0B7 धीरे धीरे उसकी आहार की मात्रा, बारम्बारता, विविधता एवम गाड़ापन बढ़ाये।\n" +
+          "\uF0B7 बच्चे को रोज 4 से 5 बार आहार दे एवम स्तनपान जारी रखें।\n" +
+          "\uF0B7 शिशु को आंगनवाड़ी पर ले जाएँ एवं 100 दिन तक सप्ताह में 2 बार, 1 मिली आइएफए सीरप पिलाये।\n" +
+          "\uF0B7 शिशु की एमयूएसी टेप से जांच करें, 115 एमएम से कम होने पर शिशु को आंगनवाड़ी केन्द्र पर रेफर करें एवं पैरों में सूजन की जांच करें। शिशु के पैरों में सूजन की जांच करें,\n" +
+          "लक्षण नजर आने पर तुरन्त शिशु को MTC में रेफर करें।";
+      _showSuccessPopup(msg,ColorConstants.AppColorPrimary);
+    } else if (flag == "2") {
+      String msg = _mahilaName + " जी,आपके शिशु का वजन उम्र के अनुसार ठीक तरह से नहीं बढ़ रहा है। शिशु कुपोषण की श्रेणी में जा रहा है।\n" +
+          "शिशु की उम्र 6 माह से एक वर्ष के बीच है –\n" +
+          "\uF0B7 थोड़ी थोड़ी मात्रा मे मुलायम, मसले हुए अनाज, दाल, सब्जियाँ और फल खिलाना जारी रखें।\n" +
+          "\uF0B7 धीरे धीरे उसकी आहार की मात्रा, बारम्बारता, विविधता एवम गाड़ापन बढ़ाये।\n" +
+          "\uF0B7 बच्चे को रोज 4 से 5 बार आहार दे एवम स्तनपान जारी रखें।\n" +
+          "\uF0B7 शिशु को आंगनवाड़ी पर ले जाएँ एवं 100 दिन तक सप्ताह में 2 बार, 1 मिली आइएफए सीरप पिलाये।";
+      _showSuccessPopup(msg,ColorConstants.AppColorPrimary);
+    } else if (flag == "3") {
+      String msg = _mahilaName + " जी,आपके शिशु का वजन उम्र के अनुसार सही रूप से बढ़ना प्रारम्भ हो गया है। शिशु का विशेष ध्यान रखें।\n" +
+          "शिशु की उम्र 6 माह से एक वर्ष के बीच है –\n" +
+          "\uF0B7 थोड़ी थोड़ी मात्रा मे मुलायम, मसले हुए अनाज, दाल, सब्जियाँ और फल खिलाना जारी रखें।\n" +
+          "\uF0B7 धीरे धीरे उसकी आहार की मात्रा, बारम्बारता, विविधता एवम गाड़ापन बढ़ाये।\n" +
+          "\uF0B7 बच्चे को रोज 4 से 5 बार आहार दे एवम स्तनपान जारी रखें।\n" +
+          "\uF0B7 शिशु को आंगनवाड़ी पर ले जाएँ एवं 100 दिन तक सप्ताह में 2 बार, 1 मिली आइएफए सीरप पिलाये।";
+      _showSuccessPopup(msg,ColorConstants.AppColorPrimary);
+
+    } else if (flag == "4") {
+      String msg = _mahilaName + " जी,आपके शिशु का वजन उम्र के अनुसार सही है। शिशु के स्वास्थ्य में पूर्व की तुलना में बहुत सुधार हुआ है। शिशु का विशेष ध्यान रखना जारी रखें।\n" +
+          "शिशु की उम्र 6 माह से एक वर्ष के बीच है –\n" +
+          "\uF0B7 थोड़ी थोड़ी मात्रा मे मुलायम, मसले हुए अनाज, दाल, सब्जियाँ और फल खिलाना जारी रखें।\n" +
+          "\uF0B7 धीरे धीरे उसकी आहार की मात्रा, बारम्बारता, विविधता एवम गाड़ापन बढ़ाये।\n" +
+          "\uF0B7 बच्चे को रोज 4 से 5 बार आहार दे एवम स्तनपान जारी रखें।\n" +
+          "\uF0B7 शिशु को आंगनवाड़ी पर ले जाएँ एवं 100 दिन तक सप्ताह में 2 बार, 1 मिली आइएफए सीरप पिलाये।";
+      _showSuccessPopup(msg,ColorConstants.AppColorPrimary);
+    }
+  }
+
+  void infant0to6(String flag) {
+    if (flag == "1") {
+      String msg = _mahilaName + " जी,आपके शिशु के स्वास्थ्य में कोई सुधार नहीं हुआ है। शिशु का वजन उम्र के अनुसार नहीं बढ़ रहा है, शिशु अति कुपोषित है। शिशु को घरेलू संभाल के साथ चिकित्सकीय उपचार की आवश्यकता है।\n" +
+          "\uF0FC 6 माह से छोटे शिशु को स्तनपान कराना जारी रखें, दूसरा कुछ (पानी भी) नहीं दें, शिशु को प्रत्येक 2 घंटे में स्तनपान कराएँ।";
+      _showSuccessPopup(msg,ColorConstants.AppColorPrimary);
+
+    } else if (flag == "2") {
+      String msg = _mahilaName + " जी,आपके शिशु का वजन उम्र के अनुसार ठीक तरह से नहीं बढ़ रहा है। शिशु कुपोषण की श्रेणी में जा रहा है।  6 माह से छोटे शिशु को स्तनपान कराना जारी रखें, दूसरा कुछ (पानी भी) नहीं दें, 24 घंटे में कम से कम 8 से 10 बार स्तनपान कराएँ।";
+      _showSuccessPopup(msg,ColorConstants.AppColorPrimary);
+    } else if (flag == "3") {
+      String msg = _mahilaName + " जी, आपके शिशु का वजन उम्र के अनुसार सही रूप से बढ़ना प्रारम्भ हो गया है। शिशु का विशेष ध्यान रखें।\n" +
+          "6 माह से छोटे शिशु को स्तनपान कराना जारी रखें, दूसरा कुछ (पानी भी) नहीं दें,\n" +
+          "24 घंटे में कम से कम 8 से 10 बार स्तनपान कराएँ।";
+      _showSuccessPopup(msg,ColorConstants.AppColorPrimary);
+    } else if (flag == "4") {
+      String msg = _mahilaName + " जी,आपके शिशु का वजन उम्र के अनुसार सही है।\n" +
+          "\uF0FC 6 माह से छोटे शिशु को स्तनपान कराना जारी रखें, दूसरा कुछ (पानी भी) नहीं दें, 24 घंटे में कम से कम 8 से 10 बार स्तनपान कराएँ।";
+      _showSuccessPopup(msg,ColorConstants.AppColorPrimary);
+    }
+
+  }
+
+  FlutterTts ftts = FlutterTts();
+  Future<void> textSpeech(String msg) async {
+    //your custom configuration
+    //await ftts.setLanguage("en-US");
+    await ftts.setLanguage("hi");
+    await ftts.setSpeechRate(0.5); //speed of speech
+    await ftts.setVolume(2.0); //volume of speech
+    await ftts.setPitch(1); //pitc of sound
+
+    //play text to speech
+    var result = await ftts.speak(msg);
+    if(result == 1){
+      //speaking
+
+    }else{
+      //not speaking
+    }
+  }
+  Future<void> _showSuccessPopup(String msg,Color _color) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          contentPadding: EdgeInsets.zero,
+          // title: Text('Message',textAlign:TextAlign.center,style: TextStyle(color: Colors.red),),
+          content: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Container(
+                  width: double.infinity,
+                  color: ColorConstants.white,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      msg,
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          color: _color,
+                          fontSize: 13),
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.all(5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                        },
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          elevation: 6,
+                          child: Container(
+                              width: 80,
+                              height: 30,
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                BorderRadius.all(Radius.circular(10)),
+                                color: ColorConstants.AppColorPrimary,
+                              ),
+                              child: Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(0.0),
+                                    child: Text('OK',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.normal,
+                                            color: Colors.white,
+                                            fontSize: 14)),
+                                  ))),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 }
+
+
+
 class CustomFunctionalList {
   double? xvalue;
   double? yvalue;
+  String? sex;
+  String? sexVal;
+  String? childName;
+  String? birthDate;
 
   CustomFunctionalList({
     this.xvalue,
-    this.yvalue
+    this.yvalue,
+    this.sex,
+    this.sexVal,
+    this.childName,
+    this.birthDate
   });
 }
 

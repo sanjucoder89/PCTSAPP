@@ -43,8 +43,14 @@ String getFormattedDate(String date) {
 }
 
 class HBYCExpandDetails extends StatefulWidget {
-  const HBYCExpandDetails({Key? key, required this.infantId}) : super(key: key);
+  const HBYCExpandDetails({Key? key,
+    required this.infantId,
+    required this.childId,
+    required this.Sex
+  }) : super(key: key);
   final String infantId;
+  final String childId;
+  final String Sex;
   @override
   State<StatefulWidget> createState() => _HBYCExpandDetails();
 
@@ -708,7 +714,7 @@ class _HBYCExpandDetails extends State<HBYCExpandDetails> {
                             child: Padding(
                               padding: const EdgeInsets.all(5.0),
                               child: Text(
-                                Strings.pcts_id_title,
+                                Strings.child_pcts_id_title,
                                 style: TextStyle(
                                     fontSize: 13,
                                     color:Colors.black,
@@ -718,7 +724,31 @@ class _HBYCExpandDetails extends State<HBYCExpandDetails> {
                           )),
                       Expanded(child: Padding(
                         padding: const EdgeInsets.all(5.0),
-                        child: Text('${response_listing.length == 0 ? "" : response_listing[0]['pctsid'].toString()}',
+                        child: Text('${response_listing.length == 0 ? "" : widget.childId}',
+                          style: TextStyle(fontSize: 13,color:Colors.black,fontWeight: FontWeight.normal),),
+                      ))
+                    ],
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                          child: Container(
+                            //  color: Colors.red,
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Text(
+                                Strings.shishu_ki_ling,
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    color:Colors.black,
+                                    fontWeight: FontWeight.normal),
+                              ),
+                            ),
+                          )),
+                      Expanded(child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Text('${response_listing.length == 0 ? "" : widget.Sex}',
                           style: TextStyle(fontSize: 13,color:Colors.black,fontWeight: FontWeight.normal),),
                       ))
                     ],
@@ -747,7 +777,7 @@ class _HBYCExpandDetails extends State<HBYCExpandDetails> {
                       ))
                     ],
                   ),
-                  Row(
+                  /*Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(
@@ -818,7 +848,7 @@ class _HBYCExpandDetails extends State<HBYCExpandDetails> {
                           style: TextStyle(fontSize: 13,color:Colors.black,fontWeight: FontWeight.normal),),
                       ))
                     ],
-                  ),
+                  ),*/
                   _showHideExpandableListView == true ?
                   _myListView() : Container(),
                   Visibility(

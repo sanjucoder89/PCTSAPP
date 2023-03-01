@@ -152,7 +152,8 @@ class _AfterPrasavExpandDetails extends State<AfterPrasavExpandDetails> {
                     ANMVerify:response_listing[i]['ANMVerify'].toString(),
                     Freeze:response_listing[i]['ANMVerify'].toString(),
                     Ashaautoid:response_listing[i]['Ashaautoid'].toString(),
-                    Media:response_listing[i]['Media'].toString()
+                    Media:response_listing[i]['Media'].toString(),
+                    MotherDeathDate: response_listing[i]['DeathDate'].toString()
                 ),
               );
               last_pos=custom_anc_list.length-1;
@@ -863,7 +864,8 @@ class _AfterPrasavExpandDetails extends State<AfterPrasavExpandDetails> {
                                         Age: response_listing[last_pos]['Age'].toString(),
                                         DischargeDT: response_listing[last_pos]['DischargeDT'].toString(),
                                         DelplaceCode: response_listing[last_pos]['DelplaceCode'].toString(),
-                                        DeliveryAbortionDate: response_listing[last_pos]['DeliveryAbortionDate'].toString()
+                                        DeliveryAbortionDate: response_listing[last_pos]['DeliveryAbortionDate'].toString(),
+                                        MotherDeathDate: response_listing[last_pos]['DeathDate'].toString() == "null" ? "" :  response_listing[last_pos]['DeathDate'].toString()
                                     )
                                 ),
                               ).then((value){setState(() {
@@ -1493,7 +1495,8 @@ class _AfterPrasavExpandDetails extends State<AfterPrasavExpandDetails> {
                                                     ReferDistrictCode:response_listing[list_index]['ReferDistrictCode'].toString() == "null" ? "" :response_listing[list_index]['ReferDistrictCode'].toString(),
                                                     ReferUniName:response_listing[list_index]['ReferUniName'].toString() == "null" ? "" :response_listing[list_index]['ReferUniName'].toString(),
                                                     ReferUnitType:response_listing[list_index]['ReferUnitType'].toString() == "null" ? "" :response_listing[list_index]['ReferUnitType'].toString(),
-                                                    Media:response_listing[list_index]['Media'].toString()
+                                                    Media:response_listing[list_index]['Media'].toString(),
+                                                    MotherDeathDate: response_listing[list_index]['DeathDate'].toString() == "null" ? "" :  response_listing[list_index]['DeathDate'].toString()
                                                 )
                                             ),
                                           ).then((value){setState(() {
@@ -2197,6 +2200,7 @@ class CustomManageANCList {
   String? Freeze;
   String? Ashaautoid;
   String? Media;
+  String? MotherDeathDate;
 
   CustomManageANCList({
     this.ancregid,
@@ -2222,6 +2226,7 @@ class CustomManageANCList {
     this.ANMVerify,
     this.Freeze,
     this.Ashaautoid,
-    this.Media
+    this.Media,
+    this.MotherDeathDate
   });
 }

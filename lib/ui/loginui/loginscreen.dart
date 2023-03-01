@@ -358,7 +358,8 @@ class _LoginScreen extends State<LoginScreen> {
             builder: (BuildContext context) => ChangePasswordscreen(
                 Mobileno: _MobileNo,
                 Deviceid:Imei.toString(),
-                Token:TokenId
+                Token:TokenId,
+              Userid:username.toString()
               //   Val_Flag: valFlag,
             ),
           ),
@@ -433,7 +434,8 @@ class _LoginScreen extends State<LoginScreen> {
             builder: (BuildContext context) => ChangePasswordscreen(
                 Mobileno: Mobileno,
                 Deviceid:deviceid,
-                Token:TokenId
+                Token:TokenId,
+                Userid: '',
               //   Val_Flag: valFlag,
             ),
           ),

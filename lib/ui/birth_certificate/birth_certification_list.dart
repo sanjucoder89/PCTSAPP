@@ -152,12 +152,16 @@ class _BirthCertificateListScreen extends State<BirthCertificateListScreen> {
     return "Success";
   }
 
+  var _resentMobileReq="";
+  var _resentInfantIdReq="";
   Future<String> getOTPAPI(_mobileno,_infantID) async {
     await EasyLoading.show(
       status: 'loading...',
       maskType: EasyLoadingMaskType.black,
     );
     preferences = await SharedPreferences.getInstance();
+    _resentMobileReq=_mobileno;
+    _resentInfantIdReq=_infantID;
     var response = await post(Uri.parse(_get_otp_url), body: {
       "MobileNo":_mobileno,
       "SmsFlag":"82",
@@ -174,6 +178,7 @@ class _BirthCertificateListScreen extends State<BirthCertificateListScreen> {
             gravity: ToastGravity.BOTTOM,
             backgroundColor: Colors.green,
             textColor: Colors.white);
+        enterOTPController.text="";
         showSMSPopupDialog(_mobileno,_infantID);
       } else {
         Fluttertoast.showToast(
@@ -1424,14 +1429,14 @@ class _BirthCertificateListScreen extends State<BirthCertificateListScreen> {
                           ),
                           elevation: 6,
                           child:Container(
-                              width: 50,
+                              //width: 50,
                               height: 35,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.all(Radius.circular(10)),
                                 color:ColorConstants.AppColorPrimary,
                               ),
                               child: Center(child: Padding(
-                                padding: const EdgeInsets.all(0.0),
+                                padding: const EdgeInsets.all(5.0),
                                 child: Text(Strings.aagai_badai,style: TextStyle(fontWeight: FontWeight.normal,color: Colors.white,fontSize: 14)),
                               ))
 
@@ -1443,7 +1448,8 @@ class _BirthCertificateListScreen extends State<BirthCertificateListScreen> {
                       ),
                       GestureDetector(
                         onTap: (){
-                          Navigator.pop(context);
+                          //Navigator.pop(context);
+                          getOTPAPI(_resentMobileReq,_resentInfantIdReq);
                         },
                         child: Card(
                           shape: RoundedRectangleBorder(

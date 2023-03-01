@@ -54,7 +54,8 @@ class AddPNCScreen extends StatefulWidget {
         required this.Age,
         required this.DischargeDT,
         required this.DelplaceCode,
-        required this.DeliveryAbortionDate
+        required this.DeliveryAbortionDate,
+        required this.MotherDeathDate
       })
       : super(key: key);
 
@@ -81,6 +82,7 @@ class AddPNCScreen extends StatefulWidget {
   final String DischargeDT;
   final String DelplaceCode;
   final String DeliveryAbortionDate;
+  final String MotherDeathDate;
 
   @override
   State<AddPNCScreen> createState() => _AddPNCScreenState();
@@ -1700,21 +1702,39 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
                                     setState(() {
                                       motherComplId = newVal!;
                                       print('motherComplId:$motherComplId');
+                                      print('widget.MotherDeathDate:${widget.MotherDeathDate}');
                                       if(motherComplId == "3"){//if mother dead ,submit button & refer view will be hide
-                                        _ShowHideReferPlacesView=false;
-                                        _ShowHideErrorView=true;
-                                        _ShowHideADDNewVivranView=false;
+                                        if(widget.MotherDeathDate.isEmpty){
+                                          _ShowHideReferPlacesView=false;
+                                          _ShowHideErrorView=true;
+                                          _ShowHideADDNewVivranView=false;
+                                        }else{//if mother is dead and has been entry
+                                          _ShowHideReferPlacesView=true;
+                                          _ShowHideErrorView=false;
+                                          _ShowHideADDNewVivranView=true;
+                                        }
+
                                       }else{
                                           if(rdChildIsLive1 == "0" || rdChildIsLive2 == "0" || rdChildIsLive3 == "0" || rdChildIsLive4 == "0" || rdChildIsLive4 == "0"){
                                             _ShowHideReferPlacesView=false;
                                             _ShowHideErrorView=true;
                                             _ShowHideADDNewVivranView=false;
                                           }else{
-                                            _ShowHideReferPlacesView=true;
-                                            _ShowHideErrorView=false;
-                                            _ShowHideADDNewVivranView=true;
+                                            if(motherComplId == "5"){
+                                              _ShowHideReferPlacesView=false;
+                                              _ShowHideErrorView=false;
+                                              _ShowHideADDNewVivranView=true;
+                                            }else{
+                                              _ShowHideReferPlacesView=true;
+                                              _ShowHideErrorView=false;
+                                              _ShowHideADDNewVivranView=true;
+                                            }
+
                                           }
                                       }
+                                      _pncDDdateController.text ="";
+                                      _pncMMdateController.text = "";
+                                      _pncYYYYdateController.text = "";
                                       /*if((motherComplId == "5" || motherComplId == "0") && (rdChildIsLive1 != "0" || rdChildIsLive2 != "0" || rdChildIsLive3 != "0" || rdChildIsLive4 != "0" || rdChildIsLive5 != "0")){
                                         _ShowHideReferPlacesView=false;
                                         _ShowHideErrorView=false;
@@ -5068,91 +5088,288 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
          //   print("DT2 is after DT1");
             _showErrorPopup(Strings.aaj_ki_tareek_sai_phale,ColorConstants.AppColorPrimary);
           }else{
-            var deliveryAbortionDate = DateTime.parse(getConvertRegDateFormat(widget.DeliveryAbortionDate));
-            print("deliveryAbortionDate ${deliveryAbortionDate}");
-            if (_selectedDate.compareTo(deliveryAbortionDate) > 0) {
-               print('after pnc date');
 
+            //first check if mother death is exist or not
+            if(widget.MotherDeathDate.isEmpty){
 
-               var parseCalenderSelectedAncDate = DateTime.parse(formattedDate4.toString());
-               var intentAncDate = DateTime.parse(getConvertRegDateFormat(widget.DeliveryAbortionDate));
-               print('AncDate calendr ${parseCalenderSelectedAncDate}');
-               print('AncDate intentt ${intentAncDate}');
-               final diff_lmp_ancdate = parseCalenderSelectedAncDate.difference(intentAncDate).inDays+1;
-               print('AncDate diff ${diff_lmp_ancdate}');
-               if(diff_lmp_ancdate == 0 || diff_lmp_ancdate == 1){
-                 if(widget.DelplaceCode == "-1" || widget.DelplaceCode == "-2" ){
-                   _PncFlag_post="1";
+              var deliveryAbortionDate = DateTime.parse(getConvertRegDateFormat(widget.DeliveryAbortionDate));
+              print("deliveryAbortionDate ${deliveryAbortionDate}");
+              if (_selectedDate.compareTo(deliveryAbortionDate) > 0) {
+                print('after pnc date');
+                var parseCalenderSelectedAncDate = DateTime.parse(formattedDate4.toString());
+                var intentAncDate = DateTime.parse(getConvertRegDateFormat(widget.DeliveryAbortionDate));
+                print('AncDate calendr ${parseCalenderSelectedAncDate}');
+                print('AncDate intentt ${intentAncDate}');
+                final diff_lmp_ancdate = parseCalenderSelectedAncDate.difference(intentAncDate).inDays+1;
+                print('AncDate diff ${diff_lmp_ancdate}');
+                if(diff_lmp_ancdate == 0 || diff_lmp_ancdate == 1){
+                  if(widget.DelplaceCode == "-1" || widget.DelplaceCode == "-2" ){
+                    _PncFlag_post="1";
 
-                   _pncDDdateController.text = getDate(formattedDate4);
-                   _pncMMdateController.text = getMonth(formattedDate4);
-                   _pncYYYYdateController.text = getYear(formattedDate4);
-                   _PncDatePost=_pncYYYYdateController.text.toString()+ "/"+_pncMMdateController.text.toString()+"/"+_pncDDdateController.text.toString();
-                   print('_PncDatePost $_PncDatePost');
+                    _pncDDdateController.text = getDate(formattedDate4);
+                    _pncMMdateController.text = getMonth(formattedDate4);
+                    _pncYYYYdateController.text = getYear(formattedDate4);
+                    _PncDatePost=_pncYYYYdateController.text.toString()+ "/"+_pncMMdateController.text.toString()+"/"+_pncDDdateController.text.toString();
+                    print('_PncDatePost $_PncDatePost');
 
-                 }else{
-                   _showErrorPopup(Strings.difference_btw_png_deli,ColorConstants.AppColorPrimary);
-                 }
-               }else if(diff_lmp_ancdate >= 2 && diff_lmp_ancdate <= 4){
-                 _PncFlag_post="2";
+                  }else{
+                    _showErrorPopup(Strings.difference_btw_png_deli,ColorConstants.AppColorPrimary);
+                  }
+                }else if(diff_lmp_ancdate >= 2 && diff_lmp_ancdate <= 4){
+                  _PncFlag_post="2";
 
-                 _pncDDdateController.text = getDate(formattedDate4);
-                 _pncMMdateController.text = getMonth(formattedDate4);
-                 _pncYYYYdateController.text = getYear(formattedDate4);
-                 _PncDatePost=_pncYYYYdateController.text.toString()+ "/"+_pncMMdateController.text.toString()+"/"+_pncDDdateController.text.toString();
-                 print('_PncDatePost $_PncDatePost');
+                  _pncDDdateController.text = getDate(formattedDate4);
+                  _pncMMdateController.text = getMonth(formattedDate4);
+                  _pncYYYYdateController.text = getYear(formattedDate4);
+                  _PncDatePost=_pncYYYYdateController.text.toString()+ "/"+_pncMMdateController.text.toString()+"/"+_pncDDdateController.text.toString();
+                  print('_PncDatePost $_PncDatePost');
 
-               }else if(diff_lmp_ancdate >= 6 && diff_lmp_ancdate <= 8){
-                 _PncFlag_post="3";
+                }else if(diff_lmp_ancdate >= 6 && diff_lmp_ancdate <= 8){
+                  _PncFlag_post="3";
 
-                 _pncDDdateController.text = getDate(formattedDate4);
-                 _pncMMdateController.text = getMonth(formattedDate4);
-                 _pncYYYYdateController.text = getYear(formattedDate4);
-                 _PncDatePost=_pncYYYYdateController.text.toString()+ "/"+_pncMMdateController.text.toString()+"/"+_pncDDdateController.text.toString();
-                 print('_PncDatePost $_PncDatePost');
+                  _pncDDdateController.text = getDate(formattedDate4);
+                  _pncMMdateController.text = getMonth(formattedDate4);
+                  _pncYYYYdateController.text = getYear(formattedDate4);
+                  _PncDatePost=_pncYYYYdateController.text.toString()+ "/"+_pncMMdateController.text.toString()+"/"+_pncDDdateController.text.toString();
+                  print('_PncDatePost $_PncDatePost');
 
-               }else if(diff_lmp_ancdate >= 13 && diff_lmp_ancdate <= 15){
-                 _PncFlag_post="4";
+                }else if(diff_lmp_ancdate >= 13 && diff_lmp_ancdate <= 15){
+                  _PncFlag_post="4";
 
-                 _pncDDdateController.text = getDate(formattedDate4);
-                 _pncMMdateController.text = getMonth(formattedDate4);
-                 _pncYYYYdateController.text = getYear(formattedDate4);
-                 _PncDatePost=_pncYYYYdateController.text.toString()+ "/"+_pncMMdateController.text.toString()+"/"+_pncDDdateController.text.toString();
-                 print('_PncDatePost $_PncDatePost');
+                  _pncDDdateController.text = getDate(formattedDate4);
+                  _pncMMdateController.text = getMonth(formattedDate4);
+                  _pncYYYYdateController.text = getYear(formattedDate4);
+                  _PncDatePost=_pncYYYYdateController.text.toString()+ "/"+_pncMMdateController.text.toString()+"/"+_pncDDdateController.text.toString();
+                  print('_PncDatePost $_PncDatePost');
 
-               }else if(diff_lmp_ancdate >= 19 && diff_lmp_ancdate <= 23){
-                 _PncFlag_post="5";
+                }else if(diff_lmp_ancdate >= 19 && diff_lmp_ancdate <= 23){
+                  _PncFlag_post="5";
 
-                 _pncDDdateController.text = getDate(formattedDate4);
-                 _pncMMdateController.text = getMonth(formattedDate4);
-                 _pncYYYYdateController.text = getYear(formattedDate4);
-                 _PncDatePost=_pncYYYYdateController.text.toString()+ "/"+_pncMMdateController.text.toString()+"/"+_pncDDdateController.text.toString();
-                 print('_PncDatePost $_PncDatePost');
-               }else if(diff_lmp_ancdate >= 26 && diff_lmp_ancdate <= 30){
-                 _PncFlag_post="6";
+                  _pncDDdateController.text = getDate(formattedDate4);
+                  _pncMMdateController.text = getMonth(formattedDate4);
+                  _pncYYYYdateController.text = getYear(formattedDate4);
+                  _PncDatePost=_pncYYYYdateController.text.toString()+ "/"+_pncMMdateController.text.toString()+"/"+_pncDDdateController.text.toString();
+                  print('_PncDatePost $_PncDatePost');
+                }else if(diff_lmp_ancdate >= 26 && diff_lmp_ancdate <= 30){
+                  _PncFlag_post="6";
 
-                 _pncDDdateController.text = getDate(formattedDate4);
-                 _pncMMdateController.text = getMonth(formattedDate4);
-                 _pncYYYYdateController.text = getYear(formattedDate4);
-                 _PncDatePost=_pncYYYYdateController.text.toString()+ "/"+_pncMMdateController.text.toString()+"/"+_pncDDdateController.text.toString();
-                 print('_PncDatePost $_PncDatePost');
-               }else if(diff_lmp_ancdate >= 40 && diff_lmp_ancdate <= 44){
-                 _PncFlag_post="7";
+                  _pncDDdateController.text = getDate(formattedDate4);
+                  _pncMMdateController.text = getMonth(formattedDate4);
+                  _pncYYYYdateController.text = getYear(formattedDate4);
+                  _PncDatePost=_pncYYYYdateController.text.toString()+ "/"+_pncMMdateController.text.toString()+"/"+_pncDDdateController.text.toString();
+                  print('_PncDatePost $_PncDatePost');
+                }else if(diff_lmp_ancdate >= 40 && diff_lmp_ancdate <= 44){
+                  _PncFlag_post="7";
 
-                 _pncDDdateController.text = getDate(formattedDate4);
-                 _pncMMdateController.text = getMonth(formattedDate4);
-                 _pncYYYYdateController.text = getYear(formattedDate4);
-                 _PncDatePost=_pncYYYYdateController.text.toString()+ "/"+_pncMMdateController.text.toString()+"/"+_pncDDdateController.text.toString();
-                 print('_PncDatePost $_PncDatePost');
-               }else {
-                 _showErrorPopup(Strings.please_correct_pnc_date,ColorConstants.AppColorPrimary);
-               }
+                  _pncDDdateController.text = getDate(formattedDate4);
+                  _pncMMdateController.text = getMonth(formattedDate4);
+                  _pncYYYYdateController.text = getYear(formattedDate4);
+                  _PncDatePost=_pncYYYYdateController.text.toString()+ "/"+_pncMMdateController.text.toString()+"/"+_pncDDdateController.text.toString();
+                  print('_PncDatePost $_PncDatePost');
+                }else {
+                  _showErrorPopup(Strings.please_correct_pnc_date,ColorConstants.AppColorPrimary);
+                }
+              }else{
+                print('before pnc date');
+                _showErrorPopup(Strings.check_png_date,ColorConstants.AppColorPrimary);
+                _pncDDdateController.text ="";
+                _pncMMdateController.text = "";
+                _pncYYYYdateController.text = "";
+              }
             }else{
-              print('before pnc date');
-              _showErrorPopup(Strings.check_png_date,ColorConstants.AppColorPrimary);
-              _pncDDdateController.text ="";
-              _pncMMdateController.text = "";
-              _pncYYYYdateController.text = "";
+
+              if(motherComplId == "3"){
+                var motherDeathDate = DateTime.parse(getConvertRegDateFormat(widget.MotherDeathDate));
+                print("motherDeathDate ${motherDeathDate}");
+
+                var _selecteHBNCDate= DateTime.parse(getConvertRegDateFormat(_pncYYYYdateController.text.toString()+"-"+_pncMMdateController.text.toString()+"-"+_pncDDdateController.text.toString()));;
+                if (_selecteHBNCDate.compareTo(motherDeathDate) != 0) {
+                  _showErrorPopup('माता की मृत्यु की तिथि '+getFormattedDate(widget.MotherDeathDate)+' होनी चाहिए',ColorConstants.AppColorPrimary);
+                  _pncDDdateController.text ="";
+                  _pncMMdateController.text = "";
+                  _pncYYYYdateController.text = "";
+                }else{
+                  var deliveryAbortionDate = DateTime.parse(getConvertRegDateFormat(widget.DeliveryAbortionDate));
+                  print("deliveryAbortionDate ${deliveryAbortionDate}");
+                  if (_selectedDate.compareTo(deliveryAbortionDate) > 0) {
+                    print('after pnc date');
+
+
+                    var parseCalenderSelectedAncDate = DateTime.parse(formattedDate4.toString());
+                    var intentAncDate = DateTime.parse(getConvertRegDateFormat(widget.DeliveryAbortionDate));
+                    print('AncDate calendr ${parseCalenderSelectedAncDate}');
+                    print('AncDate intentt ${intentAncDate}');
+                    final diff_lmp_ancdate = parseCalenderSelectedAncDate.difference(intentAncDate).inDays+1;
+                    print('AncDate diff ${diff_lmp_ancdate}');
+                    if(diff_lmp_ancdate == 0 || diff_lmp_ancdate == 1){
+                      if(widget.DelplaceCode == "-1" || widget.DelplaceCode == "-2" ){
+                        _PncFlag_post="1";
+
+                        _pncDDdateController.text = getDate(formattedDate4);
+                        _pncMMdateController.text = getMonth(formattedDate4);
+                        _pncYYYYdateController.text = getYear(formattedDate4);
+                        _PncDatePost=_pncYYYYdateController.text.toString()+ "/"+_pncMMdateController.text.toString()+"/"+_pncDDdateController.text.toString();
+                        print('_PncDatePost $_PncDatePost');
+
+                      }else{
+                        _showErrorPopup(Strings.difference_btw_png_deli,ColorConstants.AppColorPrimary);
+                      }
+                    }else if(diff_lmp_ancdate >= 2 && diff_lmp_ancdate <= 4){
+                      _PncFlag_post="2";
+
+                      _pncDDdateController.text = getDate(formattedDate4);
+                      _pncMMdateController.text = getMonth(formattedDate4);
+                      _pncYYYYdateController.text = getYear(formattedDate4);
+                      _PncDatePost=_pncYYYYdateController.text.toString()+ "/"+_pncMMdateController.text.toString()+"/"+_pncDDdateController.text.toString();
+                      print('_PncDatePost $_PncDatePost');
+
+                    }else if(diff_lmp_ancdate >= 6 && diff_lmp_ancdate <= 8){
+                      _PncFlag_post="3";
+
+                      _pncDDdateController.text = getDate(formattedDate4);
+                      _pncMMdateController.text = getMonth(formattedDate4);
+                      _pncYYYYdateController.text = getYear(formattedDate4);
+                      _PncDatePost=_pncYYYYdateController.text.toString()+ "/"+_pncMMdateController.text.toString()+"/"+_pncDDdateController.text.toString();
+                      print('_PncDatePost $_PncDatePost');
+
+                    }else if(diff_lmp_ancdate >= 13 && diff_lmp_ancdate <= 15){
+                      _PncFlag_post="4";
+
+                      _pncDDdateController.text = getDate(formattedDate4);
+                      _pncMMdateController.text = getMonth(formattedDate4);
+                      _pncYYYYdateController.text = getYear(formattedDate4);
+                      _PncDatePost=_pncYYYYdateController.text.toString()+ "/"+_pncMMdateController.text.toString()+"/"+_pncDDdateController.text.toString();
+                      print('_PncDatePost $_PncDatePost');
+
+                    }else if(diff_lmp_ancdate >= 19 && diff_lmp_ancdate <= 23){
+                      _PncFlag_post="5";
+
+                      _pncDDdateController.text = getDate(formattedDate4);
+                      _pncMMdateController.text = getMonth(formattedDate4);
+                      _pncYYYYdateController.text = getYear(formattedDate4);
+                      _PncDatePost=_pncYYYYdateController.text.toString()+ "/"+_pncMMdateController.text.toString()+"/"+_pncDDdateController.text.toString();
+                      print('_PncDatePost $_PncDatePost');
+                    }else if(diff_lmp_ancdate >= 26 && diff_lmp_ancdate <= 30){
+                      _PncFlag_post="6";
+
+                      _pncDDdateController.text = getDate(formattedDate4);
+                      _pncMMdateController.text = getMonth(formattedDate4);
+                      _pncYYYYdateController.text = getYear(formattedDate4);
+                      _PncDatePost=_pncYYYYdateController.text.toString()+ "/"+_pncMMdateController.text.toString()+"/"+_pncDDdateController.text.toString();
+                      print('_PncDatePost $_PncDatePost');
+                    }else if(diff_lmp_ancdate >= 40 && diff_lmp_ancdate <= 44){
+                      _PncFlag_post="7";
+
+                      _pncDDdateController.text = getDate(formattedDate4);
+                      _pncMMdateController.text = getMonth(formattedDate4);
+                      _pncYYYYdateController.text = getYear(formattedDate4);
+                      _PncDatePost=_pncYYYYdateController.text.toString()+ "/"+_pncMMdateController.text.toString()+"/"+_pncDDdateController.text.toString();
+                      print('_PncDatePost $_PncDatePost');
+                    }else {
+                      _showErrorPopup(Strings.please_correct_pnc_date,ColorConstants.AppColorPrimary);
+                      _pncDDdateController.text ="";
+                      _pncMMdateController.text = "";
+                      _pncYYYYdateController.text = "";
+                    }
+                  }else{
+                    print('before pnc date');
+                    _showErrorPopup(Strings.check_png_date,ColorConstants.AppColorPrimary);
+                    _pncDDdateController.text ="";
+                    _pncMMdateController.text = "";
+                    _pncYYYYdateController.text = "";
+                  }
+                }
+              }else{
+                var deliveryAbortionDate = DateTime.parse(getConvertRegDateFormat(widget.DeliveryAbortionDate));
+                print("deliveryAbortionDate ${deliveryAbortionDate}");
+                if (_selectedDate.compareTo(deliveryAbortionDate) > 0) {
+                  print('after pnc date');
+
+
+                  var parseCalenderSelectedAncDate = DateTime.parse(formattedDate4.toString());
+                  var intentAncDate = DateTime.parse(getConvertRegDateFormat(widget.DeliveryAbortionDate));
+                  print('AncDate calendr ${parseCalenderSelectedAncDate}');
+                  print('AncDate intentt ${intentAncDate}');
+                  final diff_lmp_ancdate = parseCalenderSelectedAncDate.difference(intentAncDate).inDays+1;
+                  print('AncDate diff ${diff_lmp_ancdate}');
+                  if(diff_lmp_ancdate == 0 || diff_lmp_ancdate == 1){
+                    if(widget.DelplaceCode == "-1" || widget.DelplaceCode == "-2" ){
+                      _PncFlag_post="1";
+
+                      _pncDDdateController.text = getDate(formattedDate4);
+                      _pncMMdateController.text = getMonth(formattedDate4);
+                      _pncYYYYdateController.text = getYear(formattedDate4);
+                      _PncDatePost=_pncYYYYdateController.text.toString()+ "/"+_pncMMdateController.text.toString()+"/"+_pncDDdateController.text.toString();
+                      print('_PncDatePost $_PncDatePost');
+
+                    }else{
+                      _showErrorPopup(Strings.difference_btw_png_deli,ColorConstants.AppColorPrimary);
+                    }
+                  }else if(diff_lmp_ancdate >= 2 && diff_lmp_ancdate <= 4){
+                    _PncFlag_post="2";
+
+                    _pncDDdateController.text = getDate(formattedDate4);
+                    _pncMMdateController.text = getMonth(formattedDate4);
+                    _pncYYYYdateController.text = getYear(formattedDate4);
+                    _PncDatePost=_pncYYYYdateController.text.toString()+ "/"+_pncMMdateController.text.toString()+"/"+_pncDDdateController.text.toString();
+                    print('_PncDatePost $_PncDatePost');
+
+                  }else if(diff_lmp_ancdate >= 6 && diff_lmp_ancdate <= 8){
+                    _PncFlag_post="3";
+
+                    _pncDDdateController.text = getDate(formattedDate4);
+                    _pncMMdateController.text = getMonth(formattedDate4);
+                    _pncYYYYdateController.text = getYear(formattedDate4);
+                    _PncDatePost=_pncYYYYdateController.text.toString()+ "/"+_pncMMdateController.text.toString()+"/"+_pncDDdateController.text.toString();
+                    print('_PncDatePost $_PncDatePost');
+
+                  }else if(diff_lmp_ancdate >= 13 && diff_lmp_ancdate <= 15){
+                    _PncFlag_post="4";
+
+                    _pncDDdateController.text = getDate(formattedDate4);
+                    _pncMMdateController.text = getMonth(formattedDate4);
+                    _pncYYYYdateController.text = getYear(formattedDate4);
+                    _PncDatePost=_pncYYYYdateController.text.toString()+ "/"+_pncMMdateController.text.toString()+"/"+_pncDDdateController.text.toString();
+                    print('_PncDatePost $_PncDatePost');
+
+                  }else if(diff_lmp_ancdate >= 19 && diff_lmp_ancdate <= 23){
+                    _PncFlag_post="5";
+
+                    _pncDDdateController.text = getDate(formattedDate4);
+                    _pncMMdateController.text = getMonth(formattedDate4);
+                    _pncYYYYdateController.text = getYear(formattedDate4);
+                    _PncDatePost=_pncYYYYdateController.text.toString()+ "/"+_pncMMdateController.text.toString()+"/"+_pncDDdateController.text.toString();
+                    print('_PncDatePost $_PncDatePost');
+                  }else if(diff_lmp_ancdate >= 26 && diff_lmp_ancdate <= 30){
+                    _PncFlag_post="6";
+
+                    _pncDDdateController.text = getDate(formattedDate4);
+                    _pncMMdateController.text = getMonth(formattedDate4);
+                    _pncYYYYdateController.text = getYear(formattedDate4);
+                    _PncDatePost=_pncYYYYdateController.text.toString()+ "/"+_pncMMdateController.text.toString()+"/"+_pncDDdateController.text.toString();
+                    print('_PncDatePost $_PncDatePost');
+                  }else if(diff_lmp_ancdate >= 40 && diff_lmp_ancdate <= 44){
+                    _PncFlag_post="7";
+
+                    _pncDDdateController.text = getDate(formattedDate4);
+                    _pncMMdateController.text = getMonth(formattedDate4);
+                    _pncYYYYdateController.text = getYear(formattedDate4);
+                    _PncDatePost=_pncYYYYdateController.text.toString()+ "/"+_pncMMdateController.text.toString()+"/"+_pncDDdateController.text.toString();
+                    print('_PncDatePost $_PncDatePost');
+                  }else {
+                    _showErrorPopup(Strings.please_correct_pnc_date,ColorConstants.AppColorPrimary);
+                    _pncDDdateController.text ="";
+                    _pncMMdateController.text = "";
+                    _pncYYYYdateController.text = "";
+                  }
+                }else{
+                  print('before pnc date');
+                  _showErrorPopup(Strings.check_png_date,ColorConstants.AppColorPrimary);
+                  _pncDDdateController.text ="";
+                  _pncMMdateController.text = "";
+                  _pncYYYYdateController.text = "";
+                }
+              }
             }
           }
         }
@@ -5848,9 +6065,18 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
         _ShowHideErrorView=true;
         _ShowHideADDNewVivranView=false;
       }else{
-        _ShowHideReferPlacesView=true;
+        if(motherComplId == "5"){
+          _ShowHideReferPlacesView=false;
+          _ShowHideErrorView=false;
+          _ShowHideADDNewVivranView=false;
+        }else{
+          _ShowHideReferPlacesView=true;
+          _ShowHideErrorView=false;
+          _ShowHideADDNewVivranView=true;
+        }
+       /* _ShowHideReferPlacesView=true;
         _ShowHideErrorView=false;
-        _ShowHideADDNewVivranView=true;
+        _ShowHideADDNewVivranView=true;*/
       }
     }
     /*if(_ShowHideShishuEntryView1 == true && rdChildIsLive1 == "1"  ||
@@ -5922,14 +6148,28 @@ class _AddPNCScreenState extends State<AddPNCScreen> {
     }else{
         setState(() {
           if(motherComplId == "3"){//check if mother is not selected as Dead
-            _ShowHideADDNewVivranView=false;
-            _ShowHideErrorView=true;
-            _ShowHideReferPlacesView=false;
-
+            if(widget.MotherDeathDate.isEmpty){
+              _ShowHideADDNewVivranView=false;
+              _ShowHideErrorView=true;
+              _ShowHideReferPlacesView=false;
+            }else{
+              _ShowHideADDNewVivranView=true;
+              _ShowHideErrorView=false;
+              _ShowHideReferPlacesView=true;
+            }
           }else{
-            _ShowHideReferPlacesView=true;
+            if(motherComplId == "5"){
+              _ShowHideReferPlacesView=false;
+              _ShowHideErrorView=false;
+              _ShowHideADDNewVivranView=true;
+            }else{
+              _ShowHideReferPlacesView=true;
+              _ShowHideErrorView=false;
+              _ShowHideADDNewVivranView=true;
+            }
+            /*_ShowHideReferPlacesView=true;
             _ShowHideErrorView=false;
-            _ShowHideADDNewVivranView=true;
+            _ShowHideADDNewVivranView=true;*/
           }
         });
     }

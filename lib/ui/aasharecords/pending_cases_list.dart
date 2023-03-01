@@ -446,7 +446,10 @@ class _PendingCasesListState extends State<PendingCasesList> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => HBYCExpandDetails(infantId:response_list[index]['InfantID'].toString()),
+                            builder: (context) => HBYCExpandDetails(infantId:response_list[index]['InfantID'].toString(),
+                              childId: response_list[index]['ChildID'].toString(),
+                                Sex: response_list[index]['Sex'].toString()
+                            ),
                           ),
                         );
                       }

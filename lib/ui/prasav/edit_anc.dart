@@ -294,6 +294,7 @@ class _EditANCScreen extends State<EditANCScreen> {
   var _selectedPlacesReferCode = "0";
   var _selectedDistrictUnitCode = "0";
   var _selectedBlockUnitCode = "0";
+  bool _isChanged=false;
   TextEditingController _covidDDdateController = TextEditingController();
   TextEditingController _covidMMdateController = TextEditingController();
   TextEditingController _covidYYYYdateController = TextEditingController();
@@ -1116,18 +1117,24 @@ class _EditANCScreen extends State<EditANCScreen> {
     if(_isTT1Selected == true){
       if (_TT1DDController.text.isNotEmpty) {
         _TT1DatePost=_TT1YYYYController.text.toString()+"/"+_TT1MMController.text.toString()+"/"+_TT1DDController.text.toString();
+      }else{
+        _TT1DatePost="";
       }
     }
 
     if(_isTT2Selected == true){
       if (_TT2DDController.text.isNotEmpty) {
         _TT2DatePost=_TT2YYYYController.text.toString()+"/"+_TT2MMController.text.toString()+"/"+_TT2DDController.text.toString();
+      }else{
+        _TT2DatePost="";
       }
     }
 
     if(_isTTBSelected == true){
       if (_TTBDDController.text.isNotEmpty) {
         _TTBDatePost=_TTBYYYYController.text.toString()+"/"+_TTBMMController.text.toString()+"/"+_TTBDDController.text.toString();
+      }else{
+        _TTBDatePost="";
       }
     }
 
@@ -1135,21 +1142,29 @@ class _EditANCScreen extends State<EditANCScreen> {
     if(_isIFA180View == true){
       if (_IFA180DDController.text.isNotEmpty) {
         _IFADatePost=_IFA180YYYYController.text.toString()+"/"+_IFA180MMController.text.toString()+"/"+_IFA180DDController.text.toString();
+      }else{
+        _IFADatePost="";
       }
     }
 
     if(_isIFA360View == true){
       if (_IFA360DDController.text.isNotEmpty) {
         _IFADatePost=_IFA360YYYYController.text.toString()+"/"+_IFA360MMController.text.toString()+"/"+_IFA360DDController.text.toString();
+      }else{
+        _IFADatePost="";
       }
     }
 
     if (_AlbadoseDDController.text.length == 2 && _AlbadoseMMController.text.length == 2 && _AlbadoseYYYYController.text.length == 4) {
       _Tab_Alb_DatePost=_AlbadoseYYYYController.text.toString()+"/"+_AlbadoseMMController.text.toString()+"/"+_AlbadoseDDController.text.toString();
+    }else{
+      _Tab_Alb_DatePost="";
     }
 
-    if (_CalciumVitaminD3DDController.text.length == 2 && _CalciumVitaminD3MMController.text.length == 2 && _CalciumVitaminD3DDController.text.length == 4) {
+    if (_CalciumVitaminD3DDController.text.length == 2 && _CalciumVitaminD3MMController.text.length == 2 && _CalciumVitaminD3YYYYController.text.length == 4) {
       _cal_DatePost=_CalciumVitaminD3YYYYController.text.toString()+"/"+_CalciumVitaminD3MMController.text.toString()+"/"+_CalciumVitaminD3DDController.text.toString();
+    }else{
+      _cal_DatePost="";
     }
 
     if(_isIronSukrojView == true){
@@ -1165,7 +1180,6 @@ class _EditANCScreen extends State<EditANCScreen> {
       if(_sukroj4DDController.text.isNotEmpty){
         _Iron_sukroj_Post4=_sukroj4YYYYController.text.toString()+"/"+_sukroj4MMController.text.toString()+"/"+_sukroj4DDController.text.toString();
       }
-
     }
     if(_covidDDdateController.text.isNotEmpty){
       _covidDate=_covidYYYYdateController.text.toString()+"/"+_covidMMdateController.text.toString()+"/"+_covidDDdateController.text.toString();
@@ -5623,7 +5637,15 @@ class _EditANCScreen extends State<EditANCScreen> {
                                         setState(() {
                                           _selectedPlacesReferCode = newVal!;
                                           print('refercode:$_selectedPlacesReferCode');
-                                          getDistrictListAPI("3");
+                                          if(_isChanged == true){
+                                            _isChanged=false;
+                                            _selectedBlockUnitCode = custom_block_list[0].unitcode.toString();
+                                            print('_selectedDistrictUnitCode ${_selectedBlockUnitCode}');
+                                            _selectedDistrictUnitCode = custom_district_list[0].unitcode.toString();
+                                            print('_selectedDistrictUnitCode ${_selectedDistrictUnitCode}');
+                                          }else{
+                                            getDistrictListAPI("3");
+                                          }
                                         });
                                       },
                                       value: _selectedPlacesReferCode, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
@@ -5804,11 +5826,11 @@ class _EditANCScreen extends State<EditANCScreen> {
                                         setState(() {
                                           _selectedBlockUnitCode = newVal!;
                                           print('blockcode:$_selectedBlockUnitCode');
+                                          _isChanged=true;
                                           _ReferUnitCode=_selectedBlockUnitCode;
                                         });
                                       },
-                                      value:
-                                      _selectedBlockUnitCode, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
+                                      value: _selectedBlockUnitCode, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
                                     ),
                                   ),
                                 )

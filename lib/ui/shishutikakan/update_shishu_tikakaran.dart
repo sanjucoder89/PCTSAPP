@@ -1207,7 +1207,7 @@ class _UpdateShishuTikakarnScreenState extends State<UpdateShishuTikakarnScreen>
           var birthDate = DateTime.parse(getConvertRegDateFormat(widget.birthdate));
           print('birthDate ${birthDate}');//2021-03-12 00:00:00.000
 
-          var _newtikaAPIDate= DateTime.parse(getConvertRegDateFormat(_tikaYYYYdateController.text.toString()+"-"+_tikaMMdateController.text.toString()+"-"+_tikaDDdateController.text.toString()));;
+          var _newtikaAPIDate= DateTime.parse(getConvertRegDateFormat(_tikaYYYYdateController.text.toString()+"-"+_tikaMMdateController.text.toString()+"-"+_tikaDDdateController.text.toString()));
           if (_newtikaAPIDate.compareTo(birthDate) > 0) {
 
 

@@ -7,10 +7,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:pcts/constant/LocaleString.dart';
 import 'package:pcts/ui/birth_certificate/pdf_viewer.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
 import '../../constant/ApiUrl.dart';
 import '../../constant/MyAppColor.dart';
+import '../loginui/model/OTPSentData.dart';
 import 'model/GetBirthCertificateFindListData.dart';
 import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';
 
@@ -46,6 +48,95 @@ class _FindBirthCertificateList extends State<FindBirthCertificateList> {
   var _child_growth_list_url = AppConstants.app_base_url + "PostPCTSID";
   late SharedPreferences preferences;
   List find_child_birthcerti_list = [];
+
+  var _get_otp_url = AppConstants.app_base_url + "PostSentSMS";
+  var _check_otp_url = AppConstants.app_base_url + "PostCheckOTP";
+
+  TextEditingController enterOTPController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  final _formKey2 = GlobalKey<FormState>();
+
+  Future<String> getOTPAPI(_mobileno,_infantID) async {
+    await EasyLoading.show(
+      status: 'loading...',
+      maskType: EasyLoadingMaskType.black,
+    );
+    preferences = await SharedPreferences.getInstance();
+    var response = await post(Uri.parse(_get_otp_url), body: {
+      "MobileNo":_mobileno,
+      "SmsFlag":"82",
+      "TokenNo":preferences.getString("Token"),
+      "UserID":preferences.getString("UserId")
+    });
+    var resBody = json.decode(response.body);
+    final apiResponse = OTPSentData.fromJson(resBody);
+    setState(() {
+      if (apiResponse.status == true) {
+        Fluttertoast.showToast(
+            msg:apiResponse.message.toString(),
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: Colors.green,
+            textColor: Colors.white);
+        enterOTPController.text="";
+        showSMSPopupDialog(_mobileno,_infantID);
+      } else {
+        Fluttertoast.showToast(
+            msg:apiResponse.message.toString(),
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: Colors.red,
+            textColor: Colors.white);
+      }
+      EasyLoading.dismiss();
+    });
+    return "Success";
+  }
+
+
+  Future<String> checkOTPAPI(_otp,_mobileno,_infantID) async {
+    await EasyLoading.show(
+      status: 'loading...',
+      maskType: EasyLoadingMaskType.black,
+    );
+    preferences = await SharedPreferences.getInstance();
+    var response = await post(Uri.parse(_check_otp_url), body: {
+      "MobileNo":_mobileno,
+      "SmsFlag":"82",
+      "OTP":_otp,
+      "TokenNo":preferences.getString("Token"),
+      "UserID":preferences.getString("UserId"),
+      "DeviceID":preferences.getString("deviceId")
+    });
+    var resBody = json.decode(response.body);
+    final apiResponse = OTPSentData.fromJson(resBody);
+    setState(() {
+      if (apiResponse.status == true) {
+        Fluttertoast.showToast(
+            msg:apiResponse.message.toString(),
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: Colors.green,
+            textColor: Colors.white);
+        Navigator.pop(context);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PDFViewer(infantId: _infantID),
+          ),
+        );
+      } else {
+        Fluttertoast.showToast(
+            msg:apiResponse.message.toString(),
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: Colors.red,
+            textColor: Colors.white);
+      }
+      EasyLoading.dismiss();
+    });
+    return "Success";
+  }
   /*
   * API FOR Child Find Birth List
   * */
@@ -219,7 +310,7 @@ class _FindBirthCertificateList extends State<FindBirthCertificateList> {
                               child: Padding(
                                 padding: const EdgeInsets.all(5.0),
                                 child: Text(
-                                  '${find_child_birthcerti_list[index]['name']}',
+                                  '${find_child_birthcerti_list[index]['name'].toString()}',
                                   style: TextStyle(
                                       fontSize: 13,
                                       color: Colors.black,
@@ -233,7 +324,7 @@ class _FindBirthCertificateList extends State<FindBirthCertificateList> {
                               child: Padding(
                                 padding: const EdgeInsets.all(5.0),
                                 child: Text(
-                                  '${find_child_birthcerti_list[index]['Husbname']}',
+                                  '${find_child_birthcerti_list[index]['Husbname'].toString()}',
                                   style: TextStyle(
                                       fontSize: 13,
                                       color: Colors.black,
@@ -247,7 +338,7 @@ class _FindBirthCertificateList extends State<FindBirthCertificateList> {
                               child: Padding(
                                 padding: const EdgeInsets.all(5.0),
                                 child: Text(
-                                  '${find_child_birthcerti_list[index]['Mobileno']}',
+                                  '${find_child_birthcerti_list[index]['Mobileno'].toString()}',
                                   style: TextStyle(
                                       fontSize: 13,
                                       color: Colors.black,
@@ -278,12 +369,8 @@ class _FindBirthCertificateList extends State<FindBirthCertificateList> {
                               if(find_child_birthcerti_list[index]['infantList'][childindex]['PehchanRegFlag'] == 0){
                                 showPopupDialog();
                               }else{
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => PDFViewer(infantId: find_child_birthcerti_list[index]['infantList'][childindex]['InfantID']),
-                                  ),
-                                );
+                                getOTPAPI(find_child_birthcerti_list[index]['Mobileno'],find_child_birthcerti_list[index]['infantList'][childindex]['InfantID'].toString());
+
                               }
                             },
                             child: Container(
@@ -509,6 +596,200 @@ class _FindBirthCertificateList extends State<FindBirthCertificateList> {
                               child: Center(child: Padding(
                                 padding: const EdgeInsets.all(0.0),
                                 child: Text("OK",style: TextStyle(fontWeight: FontWeight.normal,color: Colors.white,fontSize: 14)),
+                              ))
+
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  String otpvalue="";
+  String currentText = "";
+
+  Future<void> showSMSPopupDialog(String _mobileno,String _infantID) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          contentPadding: EdgeInsets.zero,
+          // title: Text('Message',textAlign:TextAlign.center,style: TextStyle(color: Colors.red),),
+          content: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Container(
+                  width: double.infinity,
+                  color: ColorConstants.white,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Text(Strings.recv_otp,textAlign:TextAlign.center,style: TextStyle(fontWeight: FontWeight.bold,color: ColorConstants.appNewBrowne,fontSize: 13),),
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      GestureDetector(
+                        onTap: (){
+                          Navigator.pop(context);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 10),
+                          child: Image.asset(
+                            'Images/ic_cross.png',
+                            height: 12.0,
+                            color: ColorConstants.redTextColor,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                //const Divider(color: ColorConstants.dark_yellow_color,height: 1,),
+                Container(
+                  margin: EdgeInsets.all(15),
+                  child: Container(
+                    child: Form(
+                      key: _formKey2,
+                      child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 8.0, horizontal: 20),
+                          child: PinCodeTextField(
+                            autoDisposeControllers: false,
+                            appContext: context,
+                            pastedTextStyle: TextStyle(
+                              color: Colors.green.shade600,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            length: 4,
+                            obscureText: true,
+                            obscuringCharacter: '*',
+                            blinkWhenObscuring: true,
+                            animationType: AnimationType.fade,
+                            validator: (v) {
+                              if (v!.length < 3) {
+                                return "${Strings.enter_otp_error}";
+                              } else {
+                                return null;
+                              }
+                            },
+                            pinTheme: PinTheme(
+                              inactiveFillColor: ColorConstants.map_green_color,
+                              errorBorderColor: ColorConstants.map_green_color,
+                              shape: PinCodeFieldShape.box,
+                              borderRadius: BorderRadius.circular(5),
+                              fieldHeight: 45,
+                              fieldWidth: 40,
+                              activeFillColor: Colors.white,
+                            ),
+                            cursorColor: Colors.black,
+                            animationDuration: Duration(milliseconds: 300),
+                            enableActiveFill: true,
+                            //errorAnimationController: errorController,
+                            controller: enterOTPController,
+                            keyboardType: TextInputType.number,
+                            boxShadows: [
+                              BoxShadow(
+                                offset: Offset(0, 1),
+                                color: Colors.black12,
+                                blurRadius: 10,
+                              )
+                            ],
+                            onCompleted: (v) {
+                              //print("Completed$v");
+                              otpvalue = v;
+                            },
+                            // onTap: () {
+                            //   print("Pressed");
+                            // },
+                            onChanged: (value) {
+                              print(value);
+                              setState(() {
+                                currentText = value;
+                                print(currentText);
+                              });
+                            },
+                            beforeTextPaste: (text) {
+                              //print("Allowing to paste $text");
+                              //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
+                              //but you can show anything you want here, like your pop up saying wrong paste format or etc
+                              return true;
+                            },
+                          )),
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.all(10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: (){
+                          if(otpvalue.length == 4){
+                            checkOTPAPI(otpvalue,_mobileno,_infantID);
+                          }else{
+                            Fluttertoast.showToast(
+                                msg:"OTP नंबर दर्ज करें ",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                backgroundColor: Colors.red,
+                                textColor: Colors.white);
+                          }
+                        },
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          elevation: 6,
+                          child:Container(
+                            //width: 50,
+                              height: 35,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(Radius.circular(10)),
+                                color:ColorConstants.AppColorPrimary,
+                              ),
+                              child: Center(child: Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Text(Strings.aagai_badai,style: TextStyle(fontWeight: FontWeight.normal,color: Colors.white,fontSize: 14)),
+                              ))
+
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      GestureDetector(
+                        onTap: (){
+                          Navigator.pop(context);
+                        },
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          elevation: 6,
+                          child: Container(
+                              width: 100,
+                              height: 35,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(Radius.circular(10)),
+                                color:ColorConstants.AppColorPrimary,
+                              ),
+                              child: Center(child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(Strings.resend_otp,style: TextStyle(fontWeight: FontWeight.normal,color: Colors.white,fontSize: 14)),
                               ))
 
                           ),

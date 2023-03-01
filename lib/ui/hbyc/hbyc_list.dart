@@ -724,7 +724,10 @@ class _HBYCListScreen extends State<HBYCListScreen> {
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
-                                                  builder: (context) => HBYCExpandDetails(infantId:response_listing[index]['infantList'][childindex]['InfantID'].toString()),
+                                                  builder: (context) => HBYCExpandDetails(infantId:response_listing[index]['infantList'][childindex]['InfantID'].toString(),
+                                                      childId: response_listing[index]['infantList'][childindex]['ChildID'].toString(),
+                                                      Sex: response_listing[index]['infantList'][childindex]['Sex'].toString(),
+                                                  ),
                                                 ),
                                               );
                                             },
@@ -1185,7 +1188,10 @@ class _HBYCListScreen extends State<HBYCListScreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => HBYCExpandDetails(infantId:response_listing[index]['infantList'][childindex]['InfantID'].toString()),
+                                  builder: (context) => HBYCExpandDetails(infantId:response_listing[index]['infantList'][childindex]['InfantID'].toString(),
+                                      childId: response_listing[index]['infantList'][childindex]['ChildID'].toString(),
+                                    Sex: response_listing[index]['infantList'][childindex]['Sex'].toString()
+                                  ),
                                 ),
                               );
                             },

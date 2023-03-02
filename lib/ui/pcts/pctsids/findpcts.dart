@@ -12,6 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'findpcts_details.dart';
 import 'model/DistrictListData.dart';
 import 'model/FindPCTSIDListData.dart';
+import 'model/GetUnitNameByUnitIdData.dart';
 import 'model/UnitNameListData.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
@@ -32,6 +33,7 @@ class _FindPCTSIDScreen extends State<FindPCTSIDScreen> {
   var _district_list_url = AppConstants.app_base_url+"postDistdata";
   var _unitname_list_url = AppConstants.app_base_url+"PostUnitName";
   var _findPCTSIDD_list_url = AppConstants.app_base_url+"PostOtherUnitDetails";
+  var _postunitnamebyunitcode_url = AppConstants.app_base_url+"PostUnitNamebyunitcode";
 
   late SharedPreferences preferences;
   List response_list = [];
@@ -95,6 +97,40 @@ class _FindPCTSIDScreen extends State<FindPCTSIDScreen> {
       EasyLoading.dismiss();
     });
      //print('response:${apiResponse.message}');
+    return "Success";
+  }
+
+  Future<String> getUnitNamebyUnitCodeAPI() async {
+    await EasyLoading.show(
+      status: 'loading...',
+      maskType: EasyLoadingMaskType.black,
+    );
+    preferences = await SharedPreferences.getInstance();
+    var response = await post(Uri.parse(_postunitnamebyunitcode_url), body: {
+      //unitcode:01010900702
+      // TokenNo:f526a608-8f10-47bc-b599-ccbcd09a79eb
+      // UserID:0101065030203
+      "unitcode": _enterUnitCode.text.toString().trim(),
+      "TokenNo": preferences.getString('Token'),
+      "UserID": preferences.getString('UserId')
+    });
+    var resBody = json.decode(response.body);
+    final apiResponse = GetUnitNameByUnitIdData.fromJson(resBody);
+    setState(() {
+      if (apiResponse.status == true) {
+        fieldTextEditingController.text=apiResponse.resposeData!.unitName.toString().trim();
+
+      } else {
+        Fluttertoast.showToast(
+            msg:apiResponse.message.toString(),
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: Colors.red,
+            textColor: Colors.white);
+      }
+      EasyLoading.dismiss();
+    });
+     print('response:${apiResponse.message}');
     return "Success";
   }
   /*
@@ -353,6 +389,13 @@ class _FindPCTSIDScreen extends State<FindPCTSIDScreen> {
                               fillColor:Colors.white,
                               contentPadding: EdgeInsets.zero,
                               hintText: '',
+                              /*suffixIcon: IconButton(
+                                padding: EdgeInsets.only(bottom: 3.0),
+                                onPressed: (){
+                                  getUnitNamebyUnitCodeAPI();
+                                },
+                                icon: Icon(Icons.clear,color: Colors.black,),
+                              )*/
                             ),
                             onChanged: (value) {
                               print('value $value');

@@ -638,7 +638,7 @@ class _FindBirthCertificateList extends State<FindBirthCertificateList> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(top: 10),
-                        child: Text(Strings.recv_otp,textAlign:TextAlign.center,style: TextStyle(fontWeight: FontWeight.bold,color: ColorConstants.appNewBrowne,fontSize: 13),),
+                        child: Text(Strings.recv_otp2,textAlign:TextAlign.center,style: TextStyle(fontWeight: FontWeight.bold,color: ColorConstants.appNewBrowne,fontSize: 13),),
                       ),
                       SizedBox(
                         width: 15,

@@ -14,7 +14,7 @@ import 'package:flutter/foundation.dart';
 import 'package:native_pdf_view/native_pdf_view.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
-
+import 'dart:io' as io;
 
 class PDFViewer extends StatefulWidget {
   const PDFViewer({Key? key, required this.infantId}) : super(key: key);
@@ -39,12 +39,7 @@ class _PDFViewer extends State<PDFViewer> {
       maskType: EasyLoadingMaskType.black,
     );
     preferences = await SharedPreferences.getInstance();
-    //print('previous infantid ${widget.infantId}');
     var response = await post(Uri.parse(_birth_certificate_url), body: {
-      /*"infantid": "8731872",
-      "TokenNo": preferences.getString('Token'),
-      "UserID": preferences.getString('UserId')*/
-      //test pdf generate working
       "infantid":widget.infantId,
       "TokenNo": preferences.getString('Token'),
       "UserID": preferences.getString('UserId')
@@ -54,7 +49,8 @@ class _PDFViewer extends State<PDFViewer> {
     setState(() {
       if (apiResponse.status == true) {
         pdf_url=AppConstants.birth_certification_url+apiResponse.resposeData!.url.toString();
-        //print('certi-url ${pdf_url}');
+        print('certi-url ${pdf_url}');
+        _downloadFile(pdf_url,apiResponse.resposeData!.url.toString());
       } else {
         //reLoginDialog();
         Fluttertoast.showToast(
@@ -75,7 +71,6 @@ class _PDFViewer extends State<PDFViewer> {
   void initState() {
     super.initState();
     generateBirthCertificateAPI();
-   // _createFileFromString(_base64);
   }
 
 
@@ -84,7 +79,7 @@ class _PDFViewer extends State<PDFViewer> {
     super.dispose();
     EasyLoading.dismiss();
   }
-
+  bool isLoadingDone=false;
 
   @override
   Widget build(BuildContext context) {
@@ -123,18 +118,58 @@ class _PDFViewer extends State<PDFViewer> {
           backgroundColor: ColorConstants.AppColorPrimary,// status bar color
           brightness: Brightness.light, // status bar brightness
         ),
-        body: Container(//http://10.130.16.143/PCTSApp/BirthCertificates/13941592.pdf
-            child: PDF().cachedFromUrl(
+        body: isLoadingDone == false ?  const Center(
+          child: CircularProgressIndicator(),
+        ) : Container(
+          child: Center(
+            child: ElevatedButton(
+                onPressed: () {
+                  _createFileFromString(_strPath);
+                },
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: ColorConstants.AppColorPrimary,
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    textStyle: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold)),
+                child: Text('Open PDF',style: TextStyle(color: ColorConstants.white),)),
+          ),
+            /*child: PDF().cachedFromUrl(
               pdf_url == "" ? "" : pdf_url,
               maxAgeCacheObject:Duration(days: 30), //duration of cache
               placeholder: (progress) => Center(child: Text('$progress %')),
               errorWidget: (error) => Center(child: Text(error.toString())),
-            )
+            )*/
         )
     );
   }
+  var _strPath="";
+  static var httpClient = new HttpClient();
+  Future<File> _downloadFile(String url, String filename) async {
+    var request = await httpClient.getUrl(Uri.parse(url));
+    var response = await request.close();
+    var bytes = await consolidateHttpClientResponseBytes(response);
+
+    //replace your code to save file from bellow
+    final output = await getTemporaryDirectory();
+    final path = "${output.path}/temp.pdf";
+    final file = await io.File(path).writeAsBytes(bytes);
+
+   // String dir = (await getApplicationDocumentsDirectory()).path;
+    //File file = new File('$dir/$filename');
+    await file.writeAsBytes(bytes);
+    print('file_path ${file.toString()}');
 
 
+
+    final bytess = File(file.path).readAsBytesSync();
+    String file64= base64Encode(bytess);
+    print('file64 ${file64.toString()}');
+    isLoadingDone=true;
+    _strPath=file64.toString();
+    _createFileFromString(file64.toString());
+    return file;
+  }
 
   bool? isLoaded = false;
   Uint8List? theImage;
@@ -154,7 +189,6 @@ class _PDFViewer extends State<PDFViewer> {
 
   var result="";
   Future<String> _createFileFromString(attachedFile) async {
-    print('click pdf ');
     //final encodedStr = _base64Sample;
     final encodedStr = attachedFile;
     Uint8List bytes = base64.decode(encodedStr);

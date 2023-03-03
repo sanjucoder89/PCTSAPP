@@ -109,6 +109,7 @@ class Strings {
   static const String new_tikakaran = "नया टीकाकरण ";
   static const String pcts_id_saish_darj_krai = "कृपया यूनिट कोड़ के आगे माँ की पीसीटीएस आईडी के शेष अंक दर्ज करें";
   static const String recv_otp = "पर प्राप्त OTP नंबर दर्ज करें |";
+  static const String recv_otp2 = "OTP नंबर दर्ज करें |";
   static const String aagai_badai = "आगे बढ़े";
   static const String radd_krai = "रद्द करें ";
   static const String resend_otp = "OTP वापस भेजे ";

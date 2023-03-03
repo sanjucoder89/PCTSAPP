@@ -2,6 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
+import 'package:flutter_countdown_timer/current_remaining_time.dart';
+import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
@@ -20,6 +23,7 @@ import '../../constant/MyAppColor.dart';
 import '../dashboard/dashboard.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
+import 'model/SendSmsModel.dart';
 void main() {
   runApp(OtpLoginPage(
     Mobileno: 'Mobileno',
@@ -46,28 +50,71 @@ class _OtpLoginPage extends State<OtpLoginPage> {
   TextEditingController _mobilenumber = TextEditingController();
   TextEditingController textEditingController = TextEditingController();
   var urlcheckotp = AppConstants.app_base_url + "PostCheckOTP";
+  var PostSentSMSANM_url = AppConstants.app_base_url + "PostSentSMS";
   StreamController<ErrorAnimationType>? errorController;
   bool hasError = false;
   String currentText = "";
   final formKey = GlobalKey<FormState>();
   String message = '';
 
-  // List<ResposeData>? checkotp = [];
 
-  //var Mobileno="79******33";
+  Future<String> postSendOtp() async {
+
+    var response = await post(Uri.parse(PostSentSMSANM_url), body: {
+      "SmsFlag":"4",
+      "MobileNo": widget.Mobileno,
+      "TokenNo": "widget.Token",
+    });
+
+    var resBody = json.decode(response.body);
+    final apiResponse = SendSmsModel.fromJson(resBody);
+    bool? Status = apiResponse.status;
+    var message = apiResponse.message.toString();
+    print("Message=> ${message}");
+    if (Status == true) {
+      Fluttertoast.showToast(
+          msg: message,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Colors.red,
+          textColor: Colors.white);
+    } else {
+      Fluttertoast.showToast(
+          msg: message,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Colors.red,
+          textColor: Colors.white);
+
+    }
+    return "Success";
+  }
+
+
+  /*CountdownTimerController? _countdownTimerController;
+  int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 45;*/
+
   @override
   void initState() {
     errorController = StreamController<ErrorAnimationType>();
     super.initState();
-
+    //_countdownTimerController = CountdownTimerController(endTime: endTime, onEnd: onEnd);
     /*FocusScopeNode currentFocus = FocusScope.of(context);
     if (!currentFocus.hasPrimaryFocus) {
       currentFocus.focusedChild!.unfocus();
     }*/
   }
-
+  /*bool _allowOnlyOnce=false;
+  void onEnd() {
+    print('onEnd');
+    if(_allowOnlyOnce == true){
+      Navigator.pop(context);
+    }
+    _allowOnlyOnce=true;
+  }*/
   @override
   void dispose() {
+   // _countdownTimerController!.disposeTimer();
     errorController!.close();
     super.dispose();
     EasyLoading.dismiss();
@@ -340,7 +387,56 @@ class _OtpLoginPage extends State<OtpLoginPage> {
                       ),
 
                     ),
-                  )
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  /*Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("Didn't receive the code?",style: TextStyle(
+                            fontWeight: FontWeight.normal,
+                            fontSize: 13,
+                            color: Colors.black),
+                          textAlign: TextAlign.center,),
+                        SizedBox(width: 5,),
+                        CountdownTimer(
+                          widgetBuilder: (_, CurrentRemainingTime? time) {
+                            if (time == null) {
+                              return GestureDetector(
+                                onTap: (){
+
+                                },
+                                child: Text('Resend',style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                    color: Colors.red),
+                                  textAlign: TextAlign.center,),
+                              );
+                            }
+                            return Text(
+                               // 'days: [ ${time.days} ], hours: [ ${time.hours} ], min: [ ${time.min} ], sec: [ ${time.sec} ]');
+                                '00:${time.sec}',style: TextStyle(
+                                fontWeight: FontWeight.normal,
+                                fontSize: 13,
+                                color: Colors.red),
+                              textAlign: TextAlign.center,);
+                          },
+                          controller: _countdownTimerController,
+                          onEnd: onEnd,
+                          endTime: endTime,
+                          textStyle: TextStyle(color: Colors.red),
+                        )
+                        *//*Text("Resend",style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13,
+                            color: Colors.red),
+                          textAlign: TextAlign.center,),*//*
+
+                      ],
+                    ),
+                  )*/
                 ],),
             ),
           )),

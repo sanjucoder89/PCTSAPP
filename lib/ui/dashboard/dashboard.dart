@@ -919,173 +919,213 @@ class _DashboardScreen extends State<DashboardScreen> {
             Container(
                 color: ColorConstants.AppColorDark, child: _myListView()),
           ),
-          body: GestureDetector(
-            onTap: (){
-              stopTimer();
-            },
-            child: Container(
-              child: Column(
-                  children: <Widget>[
-                    Container(
-                      color: ColorConstants.appNewBrowne,
-                      height: 50,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Row(
-                            children: [
-                              SizedBox(
-                                width: 150,
-                                child: Row(
-                                  children: [
-                                    Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: GestureDetector(
-                                          child: Container(
-                                            margin: EdgeInsets.only(left: 10),
-                                            child: Text(
-                                              '$_anmAshaTitle',
-                                              style: TextStyle(
-                                                  color: ColorConstants.app_yellow_color,
-                                                  fontSize: 14),
-                                            ),
-                                          ),
-                                        )),
-                                    Container(
-                                      child: Flexible(
-                                       child: Text(_anmName == "null" ? "-" : " "+_anmName,
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            softWrap: false,
-                                            style: TextStyle(
-                                              color: ColorConstants.white,
-                                              fontSize: 14,
-                                              overflow: TextOverflow.ellipsis,
-                                            )),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Expanded(
+          body: SafeArea(
+            child: GestureDetector(
+              onTap: (){
+                stopTimer();
+              },
+              child: Container(
+                child: Column(
+                    children: <Widget>[
+                      Container(
+                        color: ColorConstants.appNewBrowne,
+                        height: 50,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Row(
+                              children: [
+                                SizedBox(
+                                  width: 150,
                                   child: Row(
                                     children: [
                                       Align(
-                                        alignment: Alignment.centerRight,
-                                        child: Container(
-                                          margin: EdgeInsets.only(right: 3),
-                                          child: Text(Strings.sanstha_title,
-                                              style: TextStyle(
-                                                  color: ColorConstants.app_yellow_color,
-                                                  fontSize: 14)),
-                                        ),
-                                      ),
-                                      Flexible(
-                                        child: Text(_topHeaderName == "null" ? "-" : _topHeaderName,
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            softWrap: false,
-                                            style: TextStyle(
-                                              color: ColorConstants.white,
-                                              fontSize: 14,
+                                          alignment: Alignment.centerLeft,
+                                          child: GestureDetector(
+                                            child: Container(
+                                              margin: EdgeInsets.only(left: 10),
+                                              child: Text(
+                                                '$_anmAshaTitle',
+                                                style: TextStyle(
+                                                    color: ColorConstants.app_yellow_color,
+                                                    fontSize: 14),
+                                              ),
+                                            ),
+                                          )),
+                                      Container(
+                                        child: Flexible(
+                                          child: Text(_anmName == "null" ? "-" : " "+_anmName,
+                                              maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
-                                            )),
+                                              softWrap: false,
+                                              style: TextStyle(
+                                                color: ColorConstants.white,
+                                                fontSize: 14,
+                                                overflow: TextOverflow.ellipsis,
+                                              )),
+                                        ),
                                       )
                                     ],
-                                  )),
-                            ],
-                          ),
-                          _isASHASESSION == true ? Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: Container(
-                                  margin: EdgeInsets.only(right: 3),
-                                  child: Text(Strings.anganbadi,
-                                      style: TextStyle(
-                                          color: ColorConstants.app_yellow_color,
-                                          fontSize: 14)),
+                                  ),
                                 ),
-                              ),
-                              Flexible(
-                                child: Container(
-                                  child: Text(': ${_anganbadiTitle}',
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      softWrap: false,
-                                      style: TextStyle(
-                                        color: ColorConstants.white,
-                                        fontSize: 14,
-                                        overflow: TextOverflow.ellipsis,
-                                      )),
+                                SizedBox(
+                                  width: 10,
                                 ),
-                              )
-                            ],
-                          ): Container()
-                        ],
-                      ),
-                    ),
-                    _isASHASESSION == true
-                        ?
-                    Container(
-                      color: ColorConstants.asha_white,
-                      height: 10.0,
-                    )
-                        :
-                    GestureDetector(
-                      onTap: (){
-                        if(preferences.getString("AppRoleID").toString() == '33'){
-                          _isANMSESSION=false;
-                          _isASHASESSION=true;
-                        }else{
-                          stopTimer();
-                          getAnmRankAPI();
-                          _isANMSESSION=true;
-                          _isASHASESSION=false;
-                        }
-                      },
-                      child: Container(
-                        color: ColorConstants.asha_white,
-                        child: Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Card(
-                            elevation: 5,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(Radius.circular(20)),
-                                color: ColorConstants.appNewlightyello,
-                              ),
-                              height: 50,
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                      child: Align(
-                                          alignment: Alignment.centerLeft,
+                                Expanded(
+                                    child: Row(
+                                      children: [
+                                        Align(
+                                          alignment: Alignment.centerRight,
                                           child: Container(
-                                            child: Align(
+                                            margin: EdgeInsets.only(right: 3),
+                                            child: Text(Strings.sanstha_title,
+                                                style: TextStyle(
+                                                    color: ColorConstants.app_yellow_color,
+                                                    fontSize: 14)),
+                                          ),
+                                        ),
+                                        Flexible(
+                                          child: Text(_topHeaderName == "null" ? "-" : _topHeaderName,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              softWrap: false,
+                                              style: TextStyle(
+                                                color: ColorConstants.white,
+                                                fontSize: 14,
+                                                overflow: TextOverflow.ellipsis,
+                                              )),
+                                        )
+                                      ],
+                                    )),
+                              ],
+                            ),
+                            _isASHASESSION == true ? Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Container(
+                                    margin: EdgeInsets.only(right: 3),
+                                    child: Text(Strings.anganbadi,
+                                        style: TextStyle(
+                                            color: ColorConstants.app_yellow_color,
+                                            fontSize: 14)),
+                                  ),
+                                ),
+                                Flexible(
+                                  child: Container(
+                                    child: Text(': ${_anganbadiTitle}',
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        softWrap: false,
+                                        style: TextStyle(
+                                          color: ColorConstants.white,
+                                          fontSize: 14,
+                                          overflow: TextOverflow.ellipsis,
+                                        )),
+                                  ),
+                                )
+                              ],
+                            ): Container()
+                          ],
+                        ),
+                      ),
+                      _isASHASESSION == true
+                          ?
+                      Container(
+                        color: ColorConstants.asha_white,
+                        height: 10.0,
+                      )
+                          :
+                      GestureDetector(
+                        onTap: (){
+                          if(preferences.getString("AppRoleID").toString() == '33'){
+                            _isANMSESSION=false;
+                            _isASHASESSION=true;
+                          }else{
+                            stopTimer();
+                            getAnmRankAPI();
+                            _isANMSESSION=true;
+                            _isASHASESSION=false;
+                          }
+                        },
+                        child: Container(
+                          color: ColorConstants.asha_white,
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Card(
+                              elevation: 5,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                                  color: ColorConstants.appNewlightyello,
+                                ),
+                                height: 50,
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                        child: Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Container(
+                                              child: Align(
+                                                alignment: Alignment.centerLeft,
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(5.0),
+                                                  child: Row(
+                                                    children: [
+                                                      Expanded(child: Text(//' $jilai_rank_value / $jilai_rank_value2'
+                                                        "${_districtName == "null" ? "" : _districtName} जिले में रैंक",
+                                                        style:
+                                                        TextStyle(color: ColorConstants.AppColorDark,fontWeight: FontWeight.normal,fontSize: 13),
+                                                      )),
+                                                      Expanded(child: Align(
+                                                        alignment: Alignment.centerLeft,
+                                                        child: Center(
+                                                          child: Text(
+                                                            "$jilai_rank_value / $jilai_rank_value2",
+                                                            textAlign: TextAlign.left,
+                                                            style:
+                                                            TextStyle(color: ColorConstants.black,fontWeight: FontWeight.normal,fontSize: 13),
+                                                          ),
+                                                        ),
+                                                      )),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ))),
+                                    Center(
+                                        child: Align(
+                                          alignment: Alignment.centerRight,
+                                          child: Container(
+                                            child: VerticalDivider(
+                                              width: 0,
+                                              color: Colors.black,
+                                              thickness: 1.5,
+                                            ),
+                                          ),
+                                        )),
+                                    Expanded(
+                                        child: Container(
+                                          child: Align(
                                               alignment: Alignment.centerLeft,
                                               child: Padding(
                                                 padding: const EdgeInsets.all(5.0),
                                                 child: Row(
                                                   children: [
-                                                    Expanded(child: Text(//' $jilai_rank_value / $jilai_rank_value2'
-                                                      "${_districtName == "null" ? "" : _districtName} जिले में रैंक",
-                                                      style:
-                                                      TextStyle(color: ColorConstants.AppColorDark,fontWeight: FontWeight.normal,fontSize: 13),
+                                                    Expanded(child: Text(
+                                                      "${_blockName == "null" ? "" : _blockName} ब्लॉक में रैंक",
+                                                      style: TextStyle(color: ColorConstants.AppColorDark,fontWeight: FontWeight.normal,fontSize: 13),
                                                     )),
                                                     Expanded(child: Align(
                                                       alignment: Alignment.centerLeft,
                                                       child: Center(
                                                         child: Text(
-                                                          "$jilai_rank_value / $jilai_rank_value2",
+                                                          '$block_value / $block_value2',
                                                           textAlign: TextAlign.left,
                                                           style:
                                                           TextStyle(color: ColorConstants.black,fontWeight: FontWeight.normal,fontSize: 13),
@@ -1094,143 +1134,170 @@ class _DashboardScreen extends State<DashboardScreen> {
                                                     )),
                                                   ],
                                                 ),
-                                              ),
-                                            ),
-                                          ))),
-                                  Center(
-                                      child: Align(
-                                        alignment: Alignment.centerRight,
-                                        child: Container(
-                                          child: VerticalDivider(
-                                            width: 0,
-                                            color: Colors.black,
-                                            thickness: 1.5,
-                                          ),
-                                        ),
-                                      )),
-                                  Expanded(
-                                      child: Container(
-                                        child: Align(
-                                            alignment: Alignment.centerLeft,
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(5.0),
-                                              child: Row(
-                                                children: [
-                                                  Expanded(child: Text(
-                                                    "${_blockName == "null" ? "" : _blockName} ब्लॉक में रैंक",
-                                                    style: TextStyle(color: ColorConstants.AppColorDark,fontWeight: FontWeight.normal,fontSize: 13),
-                                                  )),
-                                                  Expanded(child: Align(
-                                                    alignment: Alignment.centerLeft,
-                                                    child: Center(
-                                                      child: Text(
-                                                        '$block_value / $block_value2',
-                                                        textAlign: TextAlign.left,
-                                                        style:
-                                                        TextStyle(color: ColorConstants.black,fontWeight: FontWeight.normal,fontSize: 13),
-                                                      ),
-                                                    ),
-                                                  )),
-                                                ],
-                                              ),
-                                            )),
-                                      )),
-                                ],
+                                              )),
+                                        )),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
 
-                    Expanded(child: Container(
-                      color: ColorConstants.asha_white,
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: <Widget>[
-                            Container(
-                              height: 70.0,
-                              child: Row(
-                                children: [
-                                  Visibility(
-                                    visible: _isANMSESSION,
-                                    child: Expanded(
-                                        child: GestureDetector(
-                                            onTap: () {
-                                              stopTimer();
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (BuildContext context) =>
-                                                        AashaRecords(),
-                                                  ));
-                                            },
-                                            child: Card(
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.only(
-                                                    topLeft: Radius.circular(5),
-                                                    topRight: Radius.circular(5),
-                                                    bottomLeft: Radius.circular(5),
-                                                    bottomRight: Radius.circular(5)),
-                                              ),
-                                              color: ColorConstants.AppColorDark,
-                                              elevation: 5,
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                    BorderRadius.all(Radius.circular(5)),
-                                                    gradient: LinearGradient(
-                                                      colors: [
-                                                        ColorConstants.buttongraddark,
-                                                        ColorConstants.buttongradlight
-                                                      ],
-                                                      begin: Alignment.bottomLeft,
-                                                      end: Alignment.bottomRight,
-                                                    )),
-                                                margin: EdgeInsets.only(
-                                                    left: 1, right: 1, top: 1, bottom: 1),
-                                                height: 100.0,
-                                                width: double.infinity,
-                                                child: Row(
-                                                  children: [
-                                                    Padding(
-                                                      padding: const EdgeInsets.all(8.0),
-                                                      child: Image.asset(
-                                                        "Images/certificate.png",
-                                                        fit: BoxFit.fitHeight,
-                                                        height: 30,
-                                                        width: 30,
-                                                      ),
-                                                    ),
-                                                    Padding(
-                                                      padding: const EdgeInsets.all(5.0),
-                                                      child: Center(
-                                                          child: Text(
-                                                            'आशा रिकॉर्ड ',
-                                                            textAlign: TextAlign.center,
-                                                            style: TextStyle(
-                                                                color: Colors.white,
-                                                                fontWeight: FontWeight.bold,
-                                                                fontSize: 14),
-                                                          )),
-                                                    ),
-                                                  ],
+                      Expanded(child: Container(
+                        color: ColorConstants.asha_white,
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: <Widget>[
+                              Container(
+                                height: 70.0,
+                                child: Row(
+                                  children: [
+                                    Visibility(
+                                      visible: _isANMSESSION,
+                                      child: Expanded(
+                                          child: GestureDetector(
+                                              onTap: () {
+                                                stopTimer();
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (BuildContext context) =>
+                                                          AashaRecords(),
+                                                    ));
+                                              },
+                                              child: Card(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.only(
+                                                      topLeft: Radius.circular(5),
+                                                      topRight: Radius.circular(5),
+                                                      bottomLeft: Radius.circular(5),
+                                                      bottomRight: Radius.circular(5)),
                                                 ),
-                                              ),
-                                            ))),),
-                                  Visibility(
-                                    visible: _isASHASESSION,
-                                    child: Expanded(
-                                        child: GestureDetector(
+                                                color: ColorConstants.AppColorDark,
+                                                elevation: 5,
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                      BorderRadius.all(Radius.circular(5)),
+                                                      gradient: LinearGradient(
+                                                        colors: [
+                                                          ColorConstants.buttongraddark,
+                                                          ColorConstants.buttongradlight
+                                                        ],
+                                                        begin: Alignment.bottomLeft,
+                                                        end: Alignment.bottomRight,
+                                                      )),
+                                                  margin: EdgeInsets.only(
+                                                      left: 1, right: 1, top: 1, bottom: 1),
+                                                  height: 100.0,
+                                                  width: double.infinity,
+                                                  child: Row(
+                                                    children: [
+                                                      Padding(
+                                                        padding: const EdgeInsets.all(8.0),
+                                                        child: Image.asset(
+                                                          "Images/certificate.png",
+                                                          fit: BoxFit.fitHeight,
+                                                          height: 30,
+                                                          width: 30,
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                        padding: const EdgeInsets.all(5.0),
+                                                        child: Center(
+                                                            child: Text(
+                                                              'आशा रिकॉर्ड ',
+                                                              textAlign: TextAlign.center,
+                                                              style: TextStyle(
+                                                                  color: Colors.white,
+                                                                  fontWeight: FontWeight.bold,
+                                                                  fontSize: 14),
+                                                            )),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ))),),
+                                    Visibility(
+                                      visible: _isASHASESSION,
+                                      child: Expanded(
+                                          child: GestureDetector(
+                                              onTap: () {
+                                                stopTimer();
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (BuildContext context) =>
+                                                          AshaIncentive(),
+                                                    )).then((value){setState(() {
+                                                  // startTimer();
+                                                });});
+                                              },
+                                              child: Card(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.only(
+                                                      topLeft: Radius.circular(5),
+                                                      topRight: Radius.circular(5),
+                                                      bottomLeft: Radius.circular(5),
+                                                      bottomRight: Radius.circular(5)),
+                                                ),
+                                                color: ColorConstants.AppColorDark,
+                                                elevation: 5,
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                      BorderRadius.all(Radius.circular(5)),
+                                                      gradient: LinearGradient(
+                                                        colors: [
+                                                          ColorConstants.buttongraddark,
+                                                          ColorConstants.buttongradlight
+                                                        ],
+                                                        begin: Alignment.bottomLeft,
+                                                        end: Alignment.bottomRight,
+                                                      )),
+                                                  margin: EdgeInsets.only(
+                                                      left: 1, right: 1, top: 1, bottom: 1),
+                                                  height: 100.0,
+                                                  width: double.infinity,
+                                                  child: Row(
+                                                    children: [
+                                                      Padding(
+                                                        padding: const EdgeInsets.all(8.0),
+                                                        child: Image.asset(
+                                                          "Images/certificate.png",
+                                                          fit: BoxFit.fitHeight,
+                                                          height: 30,
+                                                          width: 30,
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                        padding: const EdgeInsets.all(5.0),
+                                                        child: Center(
+                                                            child: Text(
+                                                              'प्रोत्साहन राशि',
+                                                              textAlign: TextAlign.center,
+                                                              style: TextStyle(
+                                                                  color: Colors.white,
+                                                                  fontWeight: FontWeight.bold,
+                                                                  fontSize: 14),
+                                                            )),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ))),),
+                                    Expanded(
+                                        child:GestureDetector(
                                             onTap: () {
                                               stopTimer();
                                               Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
                                                     builder: (BuildContext context) =>
-                                                        AshaIncentive(),
+                                                        AnmWorkPlanListScreen(),
                                                   )).then((value){setState(() {
-                                                   // startTimer();
+                                                //startTimer();
                                               });});
                                             },
                                             child: Card(
@@ -1264,7 +1331,7 @@ class _DashboardScreen extends State<DashboardScreen> {
                                                     Padding(
                                                       padding: const EdgeInsets.all(8.0),
                                                       child: Image.asset(
-                                                        "Images/certificate.png",
+                                                        "Images/anm_wo_plan.png",
                                                         fit: BoxFit.fitHeight,
                                                         height: 30,
                                                         width: 30,
@@ -1274,7 +1341,7 @@ class _DashboardScreen extends State<DashboardScreen> {
                                                       padding: const EdgeInsets.all(5.0),
                                                       child: Center(
                                                           child: Text(
-                                                            'प्रोत्साहन राशि',
+                                                            'मासिक कार्य योजना',
                                                             textAlign: TextAlign.center,
                                                             style: TextStyle(
                                                                 color: Colors.white,
@@ -1285,18 +1352,85 @@ class _DashboardScreen extends State<DashboardScreen> {
                                                   ],
                                                 ),
                                               ),
-                                            ))),),
-                                  Expanded(
-                                      child:GestureDetector(
-                                          onTap: () {
+                                            ))),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                height: 70.0,
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                        child: GestureDetector(
+                                          onTap: () async {
+                                            preferences = await SharedPreferences.getInstance();
+                                            showPopupDialog(preferences.getString('UnitCode').toString());
+                                          },
+                                          child: Card(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(5),
+                                                  topRight: Radius.circular(5),
+                                                  bottomLeft: Radius.circular(5),
+                                                  bottomRight: Radius.circular(5)),
+                                            ),
+                                            color: ColorConstants.AppColorDark,
+                                            elevation: 5,
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                  BorderRadius.all(Radius.circular(5)),
+                                                  gradient: LinearGradient(
+                                                    colors: [
+                                                      ColorConstants.buttongraddark,
+                                                      ColorConstants.buttongradlight
+                                                    ],
+                                                    begin: Alignment.bottomLeft,
+                                                    end: Alignment.bottomRight,
+                                                  )),
+                                              margin: EdgeInsets.only(
+                                                  left: 1, right: 1, top: 1, bottom: 1),
+                                              height: 100.0,
+                                              width: double.infinity,
+                                              child: Row(
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets.all(8.0),
+                                                    child: Image.asset(
+                                                      "Images/mother_des.png",
+                                                      fit: BoxFit.fitHeight,
+                                                      height: 30,
+                                                      width: 30,
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding: const EdgeInsets.all(5.0),
+                                                    child: Center(
+                                                        child: Text(
+                                                          'महिला का विवरण',
+                                                          textAlign: TextAlign.center,
+                                                          style: TextStyle(
+                                                              color: Colors.white,
+                                                              fontWeight: FontWeight.bold,
+                                                              fontSize: 14),
+                                                        )),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        )),
+                                    Expanded(
+                                        child: GestureDetector(
+                                          onTap: (){
                                             stopTimer();
                                             Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
                                                   builder: (BuildContext context) =>
-                                                      AnmWorkPlanListScreen(),
+                                                      PurvPrasavScreenList(),
                                                 )).then((value){setState(() {
-                                              //startTimer();
+                                              //   startTimer();
                                             });});
                                           },
                                           child: Card(
@@ -1330,7 +1464,7 @@ class _DashboardScreen extends State<DashboardScreen> {
                                                   Padding(
                                                     padding: const EdgeInsets.all(8.0),
                                                     child: Image.asset(
-                                                      "Images/anm_wo_plan.png",
+                                                      "Images/anc_btn.png",
                                                       fit: BoxFit.fitHeight,
                                                       height: 30,
                                                       width: 30,
@@ -1340,7 +1474,7 @@ class _DashboardScreen extends State<DashboardScreen> {
                                                     padding: const EdgeInsets.all(5.0),
                                                     child: Center(
                                                         child: Text(
-                                                          'मासिक कार्य योजना',
+                                                          'प्रसव पूर्व जाँच',
                                                           textAlign: TextAlign.center,
                                                           style: TextStyle(
                                                               color: Colors.white,
@@ -1351,788 +1485,507 @@ class _DashboardScreen extends State<DashboardScreen> {
                                                 ],
                                               ),
                                             ),
-                                          ))),
-                                ],
+                                          ),
+                                        )),
+                                  ],
+                                ),
                               ),
-                            ),
-                            Container(
-                              height: 70.0,
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                      child: GestureDetector(
-                                        onTap: () async {
-                                          preferences = await SharedPreferences.getInstance();
-                                          showPopupDialog(preferences.getString('UnitCode').toString());
-                                        },
-                                        child: Card(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(5),
-                                                topRight: Radius.circular(5),
-                                                bottomLeft: Radius.circular(5),
-                                                bottomRight: Radius.circular(5)),
-                                          ),
-                                          color: ColorConstants.AppColorDark,
-                                          elevation: 5,
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                BorderRadius.all(Radius.circular(5)),
-                                                gradient: LinearGradient(
-                                                  colors: [
-                                                    ColorConstants.buttongraddark,
-                                                    ColorConstants.buttongradlight
-                                                  ],
-                                                  begin: Alignment.bottomLeft,
-                                                  end: Alignment.bottomRight,
-                                                )),
-                                            margin: EdgeInsets.only(
-                                                left: 1, right: 1, top: 1, bottom: 1),
-                                            height: 100.0,
-                                            width: double.infinity,
-                                            child: Row(
-                                              children: [
-                                                Padding(
-                                                  padding: const EdgeInsets.all(8.0),
-                                                  child: Image.asset(
-                                                    "Images/mother_des.png",
-                                                    fit: BoxFit.fitHeight,
-                                                    height: 30,
-                                                    width: 30,
+                              Container(
+                                height: 70.0,
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                        child: GestureDetector(
+                                          onTap: (){
+                                            stopTimer();
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (BuildContext context) =>
+                                                      AfterPrasavScreenList(),
+                                                )).then((value){setState(() {
+                                              // startTimer();
+                                            });});
+                                          },
+                                          child: Card(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(5),
+                                                  topRight: Radius.circular(5),
+                                                  bottomLeft: Radius.circular(5),
+                                                  bottomRight: Radius.circular(5)),
+                                            ),
+                                            color: ColorConstants.AppColorDark,
+                                            elevation: 5,
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                  BorderRadius.all(Radius.circular(5)),
+                                                  gradient: LinearGradient(
+                                                    colors: [
+                                                      ColorConstants.buttongraddark,
+                                                      ColorConstants.buttongradlight
+                                                    ],
+                                                    begin: Alignment.bottomLeft,
+                                                    end: Alignment.bottomRight,
+                                                  )),
+                                              margin: EdgeInsets.only(
+                                                  left: 1, right: 1, top: 1, bottom: 1),
+                                              height: 100.0,
+                                              width: double.infinity,
+                                              child: Row(
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets.all(8.0),
+                                                    child: Image.asset(
+                                                      "Images/pnc_btn.png",
+                                                      fit: BoxFit.fitHeight,
+                                                      height: 30,
+                                                      width: 30,
+                                                    ),
                                                   ),
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets.all(5.0),
-                                                  child: Center(
-                                                      child: Text(
-                                                        'महिला का विवरण',
-                                                        textAlign: TextAlign.center,
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontWeight: FontWeight.bold,
-                                                            fontSize: 14),
-                                                      )),
-                                                ),
-                                              ],
+                                                  Padding(
+                                                    padding: const EdgeInsets.all(5.0),
+                                                    child: Center(
+                                                        child: Text(
+                                                          'प्रसव पश्चात जाँच',
+                                                          textAlign: TextAlign.center,
+                                                          style: TextStyle(
+                                                              color: Colors.white,
+                                                              fontWeight: FontWeight.bold,
+                                                              fontSize: 14),
+                                                        )),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      )),
-                                  Expanded(
-                                      child: GestureDetector(
-                                        onTap: (){
-                                          stopTimer();
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (BuildContext context) =>
-                                                    PurvPrasavScreenList(),
-                                              )).then((value){setState(() {
-                                         //   startTimer();
-                                          });});
-                                        },
-                                        child: Card(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(5),
-                                                topRight: Radius.circular(5),
-                                                bottomLeft: Radius.circular(5),
-                                                bottomRight: Radius.circular(5)),
-                                          ),
-                                          color: ColorConstants.AppColorDark,
-                                          elevation: 5,
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                BorderRadius.all(Radius.circular(5)),
-                                                gradient: LinearGradient(
-                                                  colors: [
-                                                    ColorConstants.buttongraddark,
-                                                    ColorConstants.buttongradlight
-                                                  ],
-                                                  begin: Alignment.bottomLeft,
-                                                  end: Alignment.bottomRight,
-                                                )),
-                                            margin: EdgeInsets.only(
-                                                left: 1, right: 1, top: 1, bottom: 1),
-                                            height: 100.0,
-                                            width: double.infinity,
-                                            child: Row(
-                                              children: [
-                                                Padding(
-                                                  padding: const EdgeInsets.all(8.0),
-                                                  child: Image.asset(
-                                                    "Images/anc_btn.png",
-                                                    fit: BoxFit.fitHeight,
-                                                    height: 30,
-                                                    width: 30,
+                                        )),
+                                    Expanded(
+                                        child: GestureDetector(
+                                          onTap: (){
+                                            stopTimer();
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (BuildContext context) =>
+                                                      ShishuTikaKaranList(),//PopupMenu ,ShishuTikaKaranList
+                                                )).then((value){setState(() {
+                                              // startTimer();
+                                            });});
+                                          },
+                                          child: Card(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(5),
+                                                  topRight: Radius.circular(5),
+                                                  bottomLeft: Radius.circular(5),
+                                                  bottomRight: Radius.circular(5)),
+                                            ),
+                                            color: ColorConstants.AppColorDark,
+                                            elevation: 5,
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                  BorderRadius.all(Radius.circular(5)),
+                                                  gradient: LinearGradient(
+                                                    colors: [
+                                                      ColorConstants.buttongraddark,
+                                                      ColorConstants.buttongradlight
+                                                    ],
+                                                    begin: Alignment.bottomLeft,
+                                                    end: Alignment.bottomRight,
+                                                  )),
+                                              margin: EdgeInsets.only(
+                                                  left: 1, right: 1, top: 1, bottom: 1),
+                                              height: 100.0,
+                                              width: double.infinity,
+                                              child: Row(
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets.all(8.0),
+                                                    child: Image.asset(
+                                                      "Images/imm_btn_1.png",
+                                                      fit: BoxFit.fitHeight,
+                                                      height: 30,
+                                                      width: 30,
+                                                    ),
                                                   ),
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets.all(5.0),
-                                                  child: Center(
-                                                      child: Text(
-                                                        'प्रसव पूर्व जाँच',
-                                                        textAlign: TextAlign.center,
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontWeight: FontWeight.bold,
-                                                            fontSize: 14),
-                                                      )),
-                                                ),
-                                              ],
+                                                  Padding(
+                                                    padding: const EdgeInsets.all(5.0),
+                                                    child: Center(
+                                                        child: Text(
+                                                          Strings.shishu_tikakarn_title,
+                                                          textAlign: TextAlign.center,
+                                                          style: TextStyle(
+                                                              color: Colors.white,
+                                                              fontWeight: FontWeight.bold,
+                                                              fontSize: 14),
+                                                        )),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      )),
-                                ],
+                                        )),
+                                  ],
+                                ),
                               ),
-                            ),
-                            Container(
-                              height: 70.0,
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                      child: GestureDetector(
-                                        onTap: (){
-                                          stopTimer();
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (BuildContext context) =>
-                                                    AfterPrasavScreenList(),
-                                              )).then((value){setState(() {
-                                           // startTimer();
-                                          });});
-                                        },
-                                        child: Card(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(5),
-                                                topRight: Radius.circular(5),
-                                                bottomLeft: Radius.circular(5),
-                                                bottomRight: Radius.circular(5)),
-                                          ),
-                                          color: ColorConstants.AppColorDark,
-                                          elevation: 5,
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                BorderRadius.all(Radius.circular(5)),
-                                                gradient: LinearGradient(
-                                                  colors: [
-                                                    ColorConstants.buttongraddark,
-                                                    ColorConstants.buttongradlight
-                                                  ],
-                                                  begin: Alignment.bottomLeft,
-                                                  end: Alignment.bottomRight,
-                                                )),
-                                            margin: EdgeInsets.only(
-                                                left: 1, right: 1, top: 1, bottom: 1),
-                                            height: 100.0,
-                                            width: double.infinity,
-                                            child: Row(
-                                              children: [
-                                                Padding(
-                                                  padding: const EdgeInsets.all(8.0),
-                                                  child: Image.asset(
-                                                    "Images/pnc_btn.png",
-                                                    fit: BoxFit.fitHeight,
-                                                    height: 30,
-                                                    width: 30,
+                              /*Shihu Tikakarn View*/
+                              Container(
+                                height: 70.0,
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                        child: GestureDetector(
+                                          onTap: (){
+                                            stopTimer();
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (BuildContext context) =>
+                                                      MothersDeathList(),
+                                                )).then((value){setState(() {
+                                              // startTimer();
+                                            });});
+                                          },
+                                          child: Card(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(5),
+                                                  topRight: Radius.circular(5),
+                                                  bottomLeft: Radius.circular(5),
+                                                  bottomRight: Radius.circular(5)),
+                                            ),
+                                            color: ColorConstants.AppColorDark,
+                                            elevation: 5,
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                  BorderRadius.all(Radius.circular(5)),
+                                                  gradient: LinearGradient(
+                                                    colors: [
+                                                      ColorConstants.buttongraddark,
+                                                      ColorConstants.buttongradlight
+                                                    ],
+                                                    begin: Alignment.bottomLeft,
+                                                    end: Alignment.bottomRight,
+                                                  )),
+                                              margin: EdgeInsets.only(
+                                                  left: 1, right: 1, top: 1, bottom: 1),
+                                              height: 100.0,
+                                              width: double.infinity,
+                                              child: Row(
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets.all(8.0),
+                                                    child: Image.asset(
+                                                      "Images/anc_btn.png",
+                                                      fit: BoxFit.fitHeight,
+                                                      height: 30,
+                                                      width: 30,
+                                                    ),
                                                   ),
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets.all(5.0),
-                                                  child: Center(
-                                                      child: Text(
-                                                        'प्रसव पश्चात जाँच',
-                                                        textAlign: TextAlign.center,
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontWeight: FontWeight.bold,
-                                                            fontSize: 14),
-                                                      )),
-                                                ),
-                                              ],
+                                                  Padding(
+                                                    padding: const EdgeInsets.all(5.0),
+                                                    child: Center(
+                                                        child: Text(
+                                                          'मातृ मृत्यु',
+                                                          textAlign: TextAlign.center,
+                                                          style: TextStyle(
+                                                              color: Colors.white,
+                                                              fontWeight: FontWeight.bold,
+                                                              fontSize: 14),
+                                                        )),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      )),
-                                  Expanded(
-                                      child: GestureDetector(
-                                        onTap: (){
-                                          stopTimer();
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (BuildContext context) =>
-                                                    ShishuTikaKaranList(),//PopupMenu ,ShishuTikaKaranList
-                                              )).then((value){setState(() {
-                                           // startTimer();
-                                          });});
-                                        },
-                                        child: Card(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(5),
-                                                topRight: Radius.circular(5),
-                                                bottomLeft: Radius.circular(5),
-                                                bottomRight: Radius.circular(5)),
-                                          ),
-                                          color: ColorConstants.AppColorDark,
-                                          elevation: 5,
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                BorderRadius.all(Radius.circular(5)),
-                                                gradient: LinearGradient(
-                                                  colors: [
-                                                    ColorConstants.buttongraddark,
-                                                    ColorConstants.buttongradlight
-                                                  ],
-                                                  begin: Alignment.bottomLeft,
-                                                  end: Alignment.bottomRight,
-                                                )),
-                                            margin: EdgeInsets.only(
-                                                left: 1, right: 1, top: 1, bottom: 1),
-                                            height: 100.0,
-                                            width: double.infinity,
-                                            child: Row(
-                                              children: [
-                                                Padding(
-                                                  padding: const EdgeInsets.all(8.0),
-                                                  child: Image.asset(
-                                                    "Images/imm_btn_1.png",
-                                                    fit: BoxFit.fitHeight,
-                                                    height: 30,
-                                                    width: 30,
+                                        )),
+                                    Expanded(
+                                        child: GestureDetector(
+                                          onTap: (){
+                                            stopTimer();
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (BuildContext context) =>
+                                                      ShishuDeathList(),
+                                                )).then((value){setState(() {
+                                              //  startTimer();
+                                            });});
+                                          },
+                                          child: Card(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(5),
+                                                  topRight: Radius.circular(5),
+                                                  bottomLeft: Radius.circular(5),
+                                                  bottomRight: Radius.circular(5)),
+                                            ),
+                                            color: ColorConstants.AppColorDark,
+                                            elevation: 5,
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                  BorderRadius.all(Radius.circular(5)),
+                                                  gradient: LinearGradient(
+                                                    colors: [
+                                                      ColorConstants.buttongraddark,
+                                                      ColorConstants.buttongradlight
+                                                    ],
+                                                    begin: Alignment.bottomLeft,
+                                                    end: Alignment.bottomRight,
+                                                  )),
+                                              margin: EdgeInsets.only(
+                                                  left: 1, right: 1, top: 1, bottom: 1),
+                                              height: 100.0,
+                                              width: double.infinity,
+                                              child: Row(
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets.all(8.0),
+                                                    child: Image.asset(
+                                                      "Images/baby_death.png",
+                                                      fit: BoxFit.fitHeight,
+                                                      height: 30,
+                                                      width: 30,
+                                                    ),
                                                   ),
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets.all(5.0),
-                                                  child: Center(
-                                                      child: Text(
-                                                        Strings.shishu_tikakarn_title,
-                                                        textAlign: TextAlign.center,
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontWeight: FontWeight.bold,
-                                                            fontSize: 14),
-                                                      )),
-                                                ),
-                                              ],
+                                                  Padding(
+                                                    padding: const EdgeInsets.all(5.0),
+                                                    child: Center(
+                                                        child: Text(
+                                                          'शिशु मृत्यु ',
+                                                          textAlign: TextAlign.center,
+                                                          style: TextStyle(
+                                                              color: Colors.white,
+                                                              fontWeight: FontWeight.bold,
+                                                              fontSize: 14),
+                                                        )),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      )),
-                                ],
+                                        )),
+                                  ],
+                                ),
                               ),
-                            ),
-                            /*Shihu Tikakarn View*/
-                            Container(
-                              height: 70.0,
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                      child: GestureDetector(
-                                        onTap: (){
-                                          stopTimer();
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (BuildContext context) =>
-                                                    MothersDeathList(),
-                                              )).then((value){setState(() {
-                                           // startTimer();
-                                          });});
-                                        },
-                                        child: Card(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(5),
-                                                topRight: Radius.circular(5),
-                                                bottomLeft: Radius.circular(5),
-                                                bottomRight: Radius.circular(5)),
-                                          ),
-                                          color: ColorConstants.AppColorDark,
-                                          elevation: 5,
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                BorderRadius.all(Radius.circular(5)),
-                                                gradient: LinearGradient(
-                                                  colors: [
-                                                    ColorConstants.buttongraddark,
-                                                    ColorConstants.buttongradlight
-                                                  ],
-                                                  begin: Alignment.bottomLeft,
-                                                  end: Alignment.bottomRight,
-                                                )),
-                                            margin: EdgeInsets.only(
-                                                left: 1, right: 1, top: 1, bottom: 1),
-                                            height: 100.0,
-                                            width: double.infinity,
-                                            child: Row(
-                                              children: [
-                                                Padding(
-                                                  padding: const EdgeInsets.all(8.0),
-                                                  child: Image.asset(
-                                                    "Images/anc_btn.png",
-                                                    fit: BoxFit.fitHeight,
-                                                    height: 30,
-                                                    width: 30,
+                              Container(
+                                height: 70.0,
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                        child: GestureDetector(
+                                          onTap: (){
+                                            stopTimer();
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (BuildContext context) =>
+                                                      HBYCListScreen(),//PopupMenu ,ShishuTikaKaranList
+                                                )).then((value){setState(() {
+                                              //  startTimer();
+                                            });});
+                                          },
+                                          child: Card(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(5),
+                                                  topRight: Radius.circular(5),
+                                                  bottomLeft: Radius.circular(5),
+                                                  bottomRight: Radius.circular(5)),
+                                            ),
+                                            color: ColorConstants.AppColorDark,
+                                            elevation: 5,
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                  BorderRadius.all(Radius.circular(5)),
+                                                  gradient: LinearGradient(
+                                                    colors: [
+                                                      ColorConstants.buttongraddark,
+                                                      ColorConstants.buttongradlight
+                                                    ],
+                                                    begin: Alignment.bottomLeft,
+                                                    end: Alignment.bottomRight,
+                                                  )),
+                                              margin: EdgeInsets.only(
+                                                  left: 1, right: 1, top: 1, bottom: 1),
+                                              height: 100.0,
+                                              width: double.infinity,
+                                              child: Row(
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets.all(8.0),
+                                                    child: Image.asset(
+                                                      "Images/hbyc.png",
+                                                      fit: BoxFit.fitHeight,
+                                                      height: 30,
+                                                      width: 30,
+                                                    ),
                                                   ),
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets.all(5.0),
-                                                  child: Center(
-                                                      child: Text(
-                                                        'मातृ मृत्यु',
-                                                        textAlign: TextAlign.center,
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontWeight: FontWeight.bold,
-                                                            fontSize: 14),
-                                                      )),
-                                                ),
-                                              ],
+                                                  Padding(
+                                                    padding: const EdgeInsets.all(5.0),
+                                                    child: Center(
+                                                        child: Text(
+                                                          'एचबीवाईसी ',
+                                                          textAlign: TextAlign.center,
+                                                          style: TextStyle(
+                                                              color: Colors.white,
+                                                              fontWeight: FontWeight.bold,
+                                                              fontSize: 14),
+                                                        )),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      )),
-                                  Expanded(
-                                      child: GestureDetector(
-                                        onTap: (){
-                                          stopTimer();
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (BuildContext context) =>
-                                                    ShishuDeathList(),
-                                              )).then((value){setState(() {
-                                          //  startTimer();
-                                          });});
-                                        },
-                                        child: Card(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(5),
-                                                topRight: Radius.circular(5),
-                                                bottomLeft: Radius.circular(5),
-                                                bottomRight: Radius.circular(5)),
-                                          ),
-                                          color: ColorConstants.AppColorDark,
-                                          elevation: 5,
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                BorderRadius.all(Radius.circular(5)),
-                                                gradient: LinearGradient(
-                                                  colors: [
-                                                    ColorConstants.buttongraddark,
-                                                    ColorConstants.buttongradlight
-                                                  ],
-                                                  begin: Alignment.bottomLeft,
-                                                  end: Alignment.bottomRight,
-                                                )),
-                                            margin: EdgeInsets.only(
-                                                left: 1, right: 1, top: 1, bottom: 1),
-                                            height: 100.0,
-                                            width: double.infinity,
-                                            child: Row(
-                                              children: [
-                                                Padding(
-                                                  padding: const EdgeInsets.all(8.0),
-                                                  child: Image.asset(
-                                                    "Images/baby_death.png",
-                                                    fit: BoxFit.fitHeight,
-                                                    height: 30,
-                                                    width: 30,
+                                        )),
+                                    Expanded(
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            stopTimer();
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (BuildContext context) =>
+                                                      FindPCTSIDScreen(),
+                                                )).then((value){setState(() {
+                                              //   startTimer();
+                                            });});
+                                          },
+                                          child: Card(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(5),
+                                                  topRight: Radius.circular(5),
+                                                  bottomLeft: Radius.circular(5),
+                                                  bottomRight: Radius.circular(5)),
+                                            ),
+                                            color: ColorConstants.AppColorDark,
+                                            elevation: 5,
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                  BorderRadius.all(Radius.circular(5)),
+                                                  gradient: LinearGradient(
+                                                    colors: [
+                                                      ColorConstants.buttongraddark,
+                                                      ColorConstants.buttongradlight
+                                                    ],
+                                                    begin: Alignment.bottomLeft,
+                                                    end: Alignment.bottomRight,
+                                                  )),
+                                              margin: EdgeInsets.only(
+                                                  left: 1, right: 1, top: 1, bottom: 1),
+                                              height: 100.0,
+                                              width: double.infinity,
+                                              child: Row(
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets.all(8.0),
+                                                    child: Image.asset(
+                                                      "Images/search_1.png",
+                                                      fit: BoxFit.fitHeight,
+                                                      height: 30,
+                                                      width: 30,
+                                                    ),
                                                   ),
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets.all(5.0),
-                                                  child: Center(
-                                                      child: Text(
-                                                        'शिशु मृत्यु ',
-                                                        textAlign: TextAlign.center,
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontWeight: FontWeight.bold,
-                                                            fontSize: 14),
-                                                      )),
-                                                ),
-                                              ],
+                                                  Padding(
+                                                    padding: const EdgeInsets.all(5.0),
+                                                    child: Center(
+                                                        child: Text(
+                                                          'पीसीटीएस आईडी ढूँढे',
+                                                          textAlign: TextAlign.center,
+                                                          style: TextStyle(
+                                                              color: Colors.white,
+                                                              fontWeight: FontWeight.bold,
+                                                              fontSize: 14),
+                                                        )),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      )),
-                                ],
+                                        )),
+                                  ],
+                                ),
                               ),
-                            ),
-                            Container(
-                              height: 70.0,
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                      child: GestureDetector(
-                                        onTap: (){
-                                          stopTimer();
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (BuildContext context) =>
-                                                    HBYCListScreen(),//PopupMenu ,ShishuTikaKaranList
-                                              )).then((value){setState(() {
-                                          //  startTimer();
-                                          });});
-                                        },
-                                        child: Card(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(5),
-                                                topRight: Radius.circular(5),
-                                                bottomLeft: Radius.circular(5),
-                                                bottomRight: Radius.circular(5)),
-                                          ),
-                                          color: ColorConstants.AppColorDark,
-                                          elevation: 5,
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                BorderRadius.all(Radius.circular(5)),
-                                                gradient: LinearGradient(
-                                                  colors: [
-                                                    ColorConstants.buttongraddark,
-                                                    ColorConstants.buttongradlight
-                                                  ],
-                                                  begin: Alignment.bottomLeft,
-                                                  end: Alignment.bottomRight,
-                                                )),
-                                            margin: EdgeInsets.only(
-                                                left: 1, right: 1, top: 1, bottom: 1),
-                                            height: 100.0,
-                                            width: double.infinity,
-                                            child: Row(
-                                              children: [
-                                                Padding(
-                                                  padding: const EdgeInsets.all(8.0),
-                                                  child: Image.asset(
-                                                    "Images/hbyc.png",
-                                                    fit: BoxFit.fitHeight,
-                                                    height: 30,
-                                                    width: 30,
+                              Container(
+                                height: 70.0,
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            stopTimer();
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (BuildContext context) =>
+                                                      TabViewScreen(),//TabViewScreen ,VideoScreen
+                                                )).then((value){setState(() {
+                                              //   startTimer();
+                                            });});
+                                          },
+                                          child: Card(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(5),
+                                                  topRight: Radius.circular(5),
+                                                  bottomLeft: Radius.circular(5),
+                                                  bottomRight: Radius.circular(5)),
+                                            ),
+                                            color: ColorConstants.AppColorDark,
+                                            elevation: 5,
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                  BorderRadius.all(Radius.circular(5)),
+                                                  gradient: LinearGradient(
+                                                    colors: [
+                                                      ColorConstants.buttongraddark,
+                                                      ColorConstants.buttongradlight
+                                                    ],
+                                                    begin: Alignment.bottomLeft,
+                                                    end: Alignment.bottomRight,
+                                                  )),
+                                              margin: EdgeInsets.only(
+                                                  left: 1, right: 1, top: 1, bottom: 1),
+                                              height: 100.0,
+                                              width: double.infinity,
+                                              child: Row(
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets.all(8.0),
+                                                    child: Image.asset(
+                                                      "Images/youtube.png",
+                                                      fit: BoxFit.fitHeight,
+                                                      height: 30,
+                                                      width: 30,
+                                                    ),
                                                   ),
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets.all(5.0),
-                                                  child: Center(
-                                                      child: Text(
-                                                        'एचबीवाईसी ',
-                                                        textAlign: TextAlign.center,
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontWeight: FontWeight.bold,
-                                                            fontSize: 14),
-                                                      )),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      )),
-                                  Expanded(
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          stopTimer();
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (BuildContext context) =>
-                                                    FindPCTSIDScreen(),
-                                              )).then((value){setState(() {
-                                         //   startTimer();
-                                          });});
-                                        },
-                                        child: Card(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(5),
-                                                topRight: Radius.circular(5),
-                                                bottomLeft: Radius.circular(5),
-                                                bottomRight: Radius.circular(5)),
-                                          ),
-                                          color: ColorConstants.AppColorDark,
-                                          elevation: 5,
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                BorderRadius.all(Radius.circular(5)),
-                                                gradient: LinearGradient(
-                                                  colors: [
-                                                    ColorConstants.buttongraddark,
-                                                    ColorConstants.buttongradlight
-                                                  ],
-                                                  begin: Alignment.bottomLeft,
-                                                  end: Alignment.bottomRight,
-                                                )),
-                                            margin: EdgeInsets.only(
-                                                left: 1, right: 1, top: 1, bottom: 1),
-                                            height: 100.0,
-                                            width: double.infinity,
-                                            child: Row(
-                                              children: [
-                                                Padding(
-                                                  padding: const EdgeInsets.all(8.0),
-                                                  child: Image.asset(
-                                                    "Images/search_1.png",
-                                                    fit: BoxFit.fitHeight,
-                                                    height: 30,
-                                                    width: 30,
+                                                  Padding(
+                                                    padding: const EdgeInsets.all(5.0),
+                                                    child: Center(
+                                                        child: Text(
+                                                          'वीडियो',
+                                                          textAlign: TextAlign.center,
+                                                          style: TextStyle(
+                                                              color: Colors.white,
+                                                              fontWeight: FontWeight.bold,
+                                                              fontSize: 14),
+                                                        )),
                                                   ),
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets.all(5.0),
-                                                  child: Center(
-                                                      child: Text(
-                                                        'पीसीटीएस आईडी ढूँढे',
-                                                        textAlign: TextAlign.center,
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontWeight: FontWeight.bold,
-                                                            fontSize: 14),
-                                                      )),
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      )),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              height: 70.0,
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          stopTimer();
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (BuildContext context) =>
-                                                    TabViewScreen(),//TabViewScreen ,VideoScreen
-                                              )).then((value){setState(() {
-                                         //   startTimer();
-                                          });});
-                                        },
-                                        child: Card(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(5),
-                                                topRight: Radius.circular(5),
-                                                bottomLeft: Radius.circular(5),
-                                                bottomRight: Radius.circular(5)),
-                                          ),
-                                          color: ColorConstants.AppColorDark,
-                                          elevation: 5,
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                BorderRadius.all(Radius.circular(5)),
-                                                gradient: LinearGradient(
-                                                  colors: [
-                                                    ColorConstants.buttongraddark,
-                                                    ColorConstants.buttongradlight
-                                                  ],
-                                                  begin: Alignment.bottomLeft,
-                                                  end: Alignment.bottomRight,
-                                                )),
-                                            margin: EdgeInsets.only(
-                                                left: 1, right: 1, top: 1, bottom: 1),
-                                            height: 100.0,
-                                            width: double.infinity,
-                                            child: Row(
-                                              children: [
-                                                Padding(
-                                                  padding: const EdgeInsets.all(8.0),
-                                                  child: Image.asset(
-                                                    "Images/youtube.png",
-                                                    fit: BoxFit.fitHeight,
-                                                    height: 30,
-                                                    width: 30,
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets.all(5.0),
-                                                  child: Center(
-                                                      child: Text(
-                                                        'वीडियो',
-                                                        textAlign: TextAlign.center,
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontWeight: FontWeight.bold,
-                                                            fontSize: 14),
-                                                      )),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      )),
-                                  Expanded(
-                                      child: GestureDetector(
-                                        onTap: (){
-                                          stopTimer();
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (BuildContext context) =>
-                                                    ChildGrowthChartScreen(),//TabViewScreen ,VideoScreen
-                                              )).then((value){setState(() {
-                                           // startTimer();
-                                          });});
-                                        },
-                                        child: Card(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(5),
-                                                topRight: Radius.circular(5),
-                                                bottomLeft: Radius.circular(5),
-                                                bottomRight: Radius.circular(5)),
-                                          ),
-                                          color: ColorConstants.AppColorDark,
-                                          elevation: 5,
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                BorderRadius.all(Radius.circular(5)),
-                                                gradient: LinearGradient(
-                                                  colors: [
-                                                    ColorConstants.buttongraddark,
-                                                    ColorConstants.buttongradlight
-                                                  ],
-                                                  begin: Alignment.bottomLeft,
-                                                  end: Alignment.bottomRight,
-                                                )),
-                                            margin: EdgeInsets.only(
-                                                left: 1, right: 1, top: 1, bottom: 1),
-                                            height: 100.0,
-                                            width: double.infinity,
-                                            child: Row(
-                                              children: [
-                                                Padding(
-                                                  padding: const EdgeInsets.all(8.0),
-                                                  child: Image.asset(
-                                                    "Images/growthchartnew.png",
-                                                    fit: BoxFit.fitHeight,
-                                                    height: 30,
-                                                    width: 30,
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets.all(5.0),
-                                                  child: Center(
-                                                      child: Text(
-                                                        'बच्चे का ग्रोथ चार्ट',
-                                                        textAlign: TextAlign.center,
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontWeight: FontWeight.bold,
-                                                            fontSize: 14),
-                                                      )),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      )),
-                                ],
-                              ),
-                            ),
-                            Visibility(
-                                visible: false,
-                                child: Container(
-                                height: 70,
-                                width: 200,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    stopTimer();
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              HrpDueScreenList(),//TabViewScreen ,VideoScreen
-                                        )).then((value){setState(() {
-                                      //   startTimer();
-                                    });});
-                                  },
-                                  child: Card(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(5),
-                                          topRight: Radius.circular(5),
-                                          bottomLeft: Radius.circular(5),
-                                          bottomRight: Radius.circular(5)),
-                                    ),
-                                    color: ColorConstants.AppColorDark,
-                                    elevation: 5,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                          BorderRadius.all(Radius.circular(5)),
-                                          gradient: LinearGradient(
-                                            colors: [
-                                              ColorConstants.buttongraddark,
-                                              ColorConstants.buttongradlight
-                                            ],
-                                            begin: Alignment.bottomLeft,
-                                            end: Alignment.bottomRight,
-                                          )),
-                                      margin: EdgeInsets.only(
-                                          left: 1, right: 1, top: 1, bottom: 1),
-                                      height: 100.0,
-                                      width: double.infinity,
-                                      child: Row(
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Image.asset(
-                                              "Images/highrisk.png",
-                                              fit: BoxFit.fitHeight,
-                                              height: 30,
-                                              width: 30,
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(5.0),
-                                            child: Center(
-                                                child: Text(
-                                                  'हाईरिस्क',
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontWeight: FontWeight.bold,
-                                                      fontSize: 14),
-                                                )),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                )
-                            )),
-                            Container(
-                              height: 70.0,
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                      child: Visibility(
-                                        visible: false,
+                                        )),
+                                    Expanded(
                                         child: GestureDetector(
                                           onTap: (){
                                             stopTimer();
@@ -2142,7 +1995,7 @@ class _DashboardScreen extends State<DashboardScreen> {
                                                   builder: (BuildContext context) =>
                                                       ChildGrowthChartScreen(),//TabViewScreen ,VideoScreen
                                                 )).then((value){setState(() {
-                                             // startTimer();
+                                              // startTimer();
                                             });});
                                           },
                                           child: Card(
@@ -2198,155 +2051,247 @@ class _DashboardScreen extends State<DashboardScreen> {
                                               ),
                                             ),
                                           ),
-                                        ),
-                                      )),
-                                  Expanded(
-                                      child: Column(
-                                        children:<Widget>[
-                                          Visibility(
-                                              visible: false,
-                                              child: Card(
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.only(
-                                                      topLeft: Radius.circular(5),
-                                                      topRight: Radius.circular(5),
-                                                      bottomLeft: Radius.circular(5),
-                                                      bottomRight: Radius.circular(5)),
-                                                ),
-                                                color: ColorConstants.AppColorDark,
-                                                elevation: 5,
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                      BorderRadius.all(Radius.circular(5)),
-                                                      gradient: LinearGradient(
-                                                        colors: [
-                                                          ColorConstants.buttongraddark,
-                                                          ColorConstants.buttongradlight
-                                                        ],
-                                                        begin: Alignment.bottomLeft,
-                                                        end: Alignment.bottomRight,
-                                                      )),
-                                                  margin: EdgeInsets.only(
-                                                      left: 1, right: 1, top: 1, bottom: 1),
-                                                  height: 100.0,
-                                                  width: double.infinity,
-                                                  child: Row(
-                                                    children: [
-                                                      Padding(
-                                                        padding: const EdgeInsets.all(8.0),
-                                                        child: Image.asset(
-                                                          "Images/certificate.png",
-                                                          fit: BoxFit.fitHeight,
-                                                          height: 30,
-                                                          width: 30,
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding: const EdgeInsets.all(3.0),
-                                                        child: Center(
-                                                            child: Text(
-                                                              'Record Verification',
-                                                              textAlign: TextAlign.center,
-                                                              style: TextStyle(
-                                                                  color: Colors.white,
-                                                                  fontWeight: FontWeight.bold,
-                                                                  fontSize: 14),
-                                                            )),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ))
-                                        ],
-                                      )),
-                                ],
+                                        )),
+                                  ],
+                                ),
                               ),
-                            ),
-
-                          ],
-                        ),
-                      ),
-                    )),
-                    Container(
-                      child: Column(
-                        children: [
-                          Container(
-                            color: ColorConstants.asha_white,
-                            height: 50,
-                            child: Row(
-                              children: [
-                                Expanded(
-                                    child: GestureDetector(
-                                      onTap: (){
-                                        stopTimer();
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (BuildContext context) =>
-                                                  BirthCertificateListScreen(),//DropDownList  ,BirthCertificateListScreen
-                                            )).then((value){setState(() {
-                                          //startTimer();
-                                        });});
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(top: 2, right: 5),
-                                        child: Container(
+                              Visibility(
+                                  visible: false,
+                                  child: Container(
+                                      height: 70,
+                                      width: 200,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          stopTimer();
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (BuildContext context) =>
+                                                    HrpDueScreenList(),//TabViewScreen ,VideoScreen
+                                              )).then((value){setState(() {
+                                            //   startTimer();
+                                          });});
+                                        },
+                                        child: Card(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(5),
+                                                topRight: Radius.circular(5),
+                                                bottomLeft: Radius.circular(5),
+                                                bottomRight: Radius.circular(5)),
+                                          ),
+                                          color: ColorConstants.AppColorDark,
+                                          elevation: 5,
+                                          child: Container(
                                             decoration: BoxDecoration(
-                                              color: ColorConstants.AppColorDark,
-                                              border: Border.all(
-                                                color: Colors.blue,
-                                              ),
-                                              borderRadius: BorderRadius.only(
-                                                  topRight: Radius.circular(40.0),
-                                                  bottomRight: Radius.circular(0.0),
-                                                  topLeft: Radius.circular(0.0),
-                                                  bottomLeft: Radius.circular(0.0)),
-                                            ),
+                                                borderRadius:
+                                                BorderRadius.all(Radius.circular(5)),
+                                                gradient: LinearGradient(
+                                                  colors: [
+                                                    ColorConstants.buttongraddark,
+                                                    ColorConstants.buttongradlight
+                                                  ],
+                                                  begin: Alignment.bottomLeft,
+                                                  end: Alignment.bottomRight,
+                                                )),
+                                            margin: EdgeInsets.only(
+                                                left: 1, right: 1, top: 1, bottom: 1),
+                                            height: 100.0,
+                                            width: double.infinity,
                                             child: Row(
                                               children: [
                                                 Padding(
                                                   padding: const EdgeInsets.all(8.0),
                                                   child: Image.asset(
-                                                    "Images/certificate.png",
+                                                    "Images/highrisk.png",
                                                     fit: BoxFit.fitHeight,
-                                                    height: 40,
-                                                    width: 40,
+                                                    height: 30,
+                                                    width: 30,
                                                   ),
                                                 ),
                                                 Padding(
                                                   padding: const EdgeInsets.all(5.0),
                                                   child: Center(
                                                       child: Text(
-                                                        'जन्म प्रमाण पत्र',
+                                                        'हाईरिस्क',
                                                         textAlign: TextAlign.center,
                                                         style: TextStyle(
-                                                            color: ColorConstants.app_yellow_color,
+                                                            color: Colors.white,
                                                             fontWeight: FontWeight.bold,
                                                             fontSize: 14),
                                                       )),
                                                 ),
                                               ],
-                                            )),
-                                      ),
-                                    )),
-                                Expanded(
-                                    child: Visibility(
-                                      visible: false,
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                  )),
+                              Container(
+                                height: 70.0,
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                        child: Visibility(
+                                          visible: false,
+                                          child: GestureDetector(
+                                            onTap: (){
+                                              stopTimer();
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (BuildContext context) =>
+                                                        ChildGrowthChartScreen(),//TabViewScreen ,VideoScreen
+                                                  )).then((value){setState(() {
+                                                // startTimer();
+                                              });});
+                                            },
+                                            child: Card(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.only(
+                                                    topLeft: Radius.circular(5),
+                                                    topRight: Radius.circular(5),
+                                                    bottomLeft: Radius.circular(5),
+                                                    bottomRight: Radius.circular(5)),
+                                              ),
+                                              color: ColorConstants.AppColorDark,
+                                              elevation: 5,
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                    BorderRadius.all(Radius.circular(5)),
+                                                    gradient: LinearGradient(
+                                                      colors: [
+                                                        ColorConstants.buttongraddark,
+                                                        ColorConstants.buttongradlight
+                                                      ],
+                                                      begin: Alignment.bottomLeft,
+                                                      end: Alignment.bottomRight,
+                                                    )),
+                                                margin: EdgeInsets.only(
+                                                    left: 1, right: 1, top: 1, bottom: 1),
+                                                height: 100.0,
+                                                width: double.infinity,
+                                                child: Row(
+                                                  children: [
+                                                    Padding(
+                                                      padding: const EdgeInsets.all(8.0),
+                                                      child: Image.asset(
+                                                        "Images/growthchartnew.png",
+                                                        fit: BoxFit.fitHeight,
+                                                        height: 30,
+                                                        width: 30,
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding: const EdgeInsets.all(5.0),
+                                                      child: Center(
+                                                          child: Text(
+                                                            'बच्चे का ग्रोथ चार्ट',
+                                                            textAlign: TextAlign.center,
+                                                            style: TextStyle(
+                                                                color: Colors.white,
+                                                                fontWeight: FontWeight.bold,
+                                                                fontSize: 14),
+                                                          )),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        )),
+                                    Expanded(
+                                        child: Column(
+                                          children:<Widget>[
+                                            Visibility(
+                                                visible: false,
+                                                child: Card(
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.only(
+                                                        topLeft: Radius.circular(5),
+                                                        topRight: Radius.circular(5),
+                                                        bottomLeft: Radius.circular(5),
+                                                        bottomRight: Radius.circular(5)),
+                                                  ),
+                                                  color: ColorConstants.AppColorDark,
+                                                  elevation: 5,
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                        BorderRadius.all(Radius.circular(5)),
+                                                        gradient: LinearGradient(
+                                                          colors: [
+                                                            ColorConstants.buttongraddark,
+                                                            ColorConstants.buttongradlight
+                                                          ],
+                                                          begin: Alignment.bottomLeft,
+                                                          end: Alignment.bottomRight,
+                                                        )),
+                                                    margin: EdgeInsets.only(
+                                                        left: 1, right: 1, top: 1, bottom: 1),
+                                                    height: 100.0,
+                                                    width: double.infinity,
+                                                    child: Row(
+                                                      children: [
+                                                        Padding(
+                                                          padding: const EdgeInsets.all(8.0),
+                                                          child: Image.asset(
+                                                            "Images/certificate.png",
+                                                            fit: BoxFit.fitHeight,
+                                                            height: 30,
+                                                            width: 30,
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding: const EdgeInsets.all(3.0),
+                                                          child: Center(
+                                                              child: Text(
+                                                                'Record Verification',
+                                                                textAlign: TextAlign.center,
+                                                                style: TextStyle(
+                                                                    color: Colors.white,
+                                                                    fontWeight: FontWeight.bold,
+                                                                    fontSize: 14),
+                                                              )),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ))
+                                          ],
+                                        )),
+                                  ],
+                                ),
+                              ),
+
+                            ],
+                          ),
+                        ),
+                      )),
+                      Container(
+                        child: Column(
+                          children: [
+                            Container(
+                              color: ColorConstants.asha_white,
+                              height: 50,
+                              child: Row(
+                                children: [
+                                  Expanded(
                                       child: GestureDetector(
                                         onTap: (){
                                           stopTimer();
                                           Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (BuildContext context) => AnmDashboard()//AdminDashboard ,AnmDashboard
-                                            ),
-                                          ).then((value){setState(() {
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (BuildContext context) =>
+                                                    BirthCertificateListScreen(),//DropDownList  ,BirthCertificateListScreen
+                                              )).then((value){setState(() {
                                             //startTimer();
                                           });});
                                         },
                                         child: Padding(
-                                          padding: const EdgeInsets.only(top: 2, left: 5),
+                                          padding: const EdgeInsets.only(top: 2, right: 5),
                                           child: Container(
                                               decoration: BoxDecoration(
                                                 color: ColorConstants.AppColorDark,
@@ -2354,9 +2299,9 @@ class _DashboardScreen extends State<DashboardScreen> {
                                                   color: Colors.blue,
                                                 ),
                                                 borderRadius: BorderRadius.only(
-                                                    topRight: Radius.circular(0.0),
+                                                    topRight: Radius.circular(40.0),
                                                     bottomRight: Radius.circular(0.0),
-                                                    topLeft: Radius.circular(40.0),
+                                                    topLeft: Radius.circular(0.0),
                                                     bottomLeft: Radius.circular(0.0)),
                                               ),
                                               child: Row(
@@ -2364,7 +2309,7 @@ class _DashboardScreen extends State<DashboardScreen> {
                                                   Padding(
                                                     padding: const EdgeInsets.all(8.0),
                                                     child: Image.asset(
-                                                      "Images/anm_dashboard_icn.png",
+                                                      "Images/certificate.png",
                                                       fit: BoxFit.fitHeight,
                                                       height: 40,
                                                       width: 40,
@@ -2374,7 +2319,7 @@ class _DashboardScreen extends State<DashboardScreen> {
                                                     padding: const EdgeInsets.all(5.0),
                                                     child: Center(
                                                         child: Text(
-                                                          dashboardName,
+                                                          'जन्म प्रमाण पत्र',
                                                           textAlign: TextAlign.center,
                                                           style: TextStyle(
                                                               color: ColorConstants.app_yellow_color,
@@ -2385,20 +2330,77 @@ class _DashboardScreen extends State<DashboardScreen> {
                                                 ],
                                               )),
                                         ),
-                                      ),
-                                    ))
-                              ],
+                                      )),
+                                  Expanded(
+                                      child: Visibility(
+                                        visible: false,
+                                        child: GestureDetector(
+                                          onTap: (){
+                                            stopTimer();
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (BuildContext context) => AnmDashboard()//AdminDashboard ,AnmDashboard
+                                              ),
+                                            ).then((value){setState(() {
+                                              //startTimer();
+                                            });});
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(top: 2, left: 5),
+                                            child: Container(
+                                                decoration: BoxDecoration(
+                                                  color: ColorConstants.AppColorDark,
+                                                  border: Border.all(
+                                                    color: Colors.blue,
+                                                  ),
+                                                  borderRadius: BorderRadius.only(
+                                                      topRight: Radius.circular(0.0),
+                                                      bottomRight: Radius.circular(0.0),
+                                                      topLeft: Radius.circular(40.0),
+                                                      bottomLeft: Radius.circular(0.0)),
+                                                ),
+                                                child: Row(
+                                                  children: [
+                                                    Padding(
+                                                      padding: const EdgeInsets.all(8.0),
+                                                      child: Image.asset(
+                                                        "Images/anm_dashboard_icn.png",
+                                                        fit: BoxFit.fitHeight,
+                                                        height: 40,
+                                                        width: 40,
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding: const EdgeInsets.all(5.0),
+                                                      child: Center(
+                                                          child: Text(
+                                                            dashboardName,
+                                                            textAlign: TextAlign.center,
+                                                            style: TextStyle(
+                                                                color: ColorConstants.app_yellow_color,
+                                                                fontWeight: FontWeight.bold,
+                                                                fontSize: 14),
+                                                          )),
+                                                    ),
+                                                  ],
+                                                )),
+                                          ),
+                                        ),
+                                      ))
+                                ],
+                              ),
                             ),
-                          ),
-                          Image.asset(
-                            "Images/footerpcts.jpg",
-                            fit: BoxFit.fitWidth,
-                            alignment: Alignment.bottomLeft,
-                          ),
-                        ],
+                            Image.asset(
+                              "Images/footerpcts.jpg",
+                              fit: BoxFit.fitWidth,
+                              alignment: Alignment.bottomLeft,
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ]),
+                    ]),
+              ),
             ),
           ),
         ));
@@ -3237,396 +3239,399 @@ class _DashboardScreen extends State<DashboardScreen> {
       padding: MediaQuery.of(context).viewInsets,
       child: Wrap(
         children: [
-          Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.all(0),
-                  child: Container(
-                    color: ColorConstants.AppColorPrimary,
+          Container(
+            padding: EdgeInsets.only(bottom: 25),
+            child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.all(0),
+                    child: Container(
+                      color: ColorConstants.AppColorPrimary,
+                      height: 40,
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                              child: SizedBox(
+                            width: 50,
+                            child: Container(
+                              margin: EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20)),
+                                color: ColorConstants.buttongradlight,
+                              ),
+                              padding: EdgeInsets.all(5),
+                              width: 30,
+                              child: Container(
+                                  child: Center(
+                                child: Text(
+                                  '$parse_year-$fin_next_year',
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 13),
+                                ),
+                              )),
+                            ),
+                          )),
+                          Expanded(
+                              child: Container(
+                            child: Text(
+                              Strings.anm_ki_rank,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          )),
+                          Expanded(
+                              child: GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: Container(
+                                  padding: EdgeInsets.only(right: 10),
+                                  child: Image.asset(
+                                    "Images/ic_cross.png",
+                                    width: 20,
+                                    height: 20,
+                                  )),
+                            ),
+                          ))
+                        ],
+                      ),
+                    ),
+                  ),
+                  Container(
                     height: 40,
+                    color: ColorConstants.dark_bar_color,
                     child: Row(
                       children: <Widget>[
                         Expanded(
-                            child: SizedBox(
-                          width: 50,
-                          child: Container(
-                            margin: EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20)),
-                              color: ColorConstants.buttongradlight,
-                            ),
-                            padding: EdgeInsets.all(5),
-                            width: 30,
-                            child: Container(
-                                child: Center(
-                              child: Text(
-                                '$parse_year-$fin_next_year',
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 13),
-                              ),
-                            )),
-                          ),
+                            child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(Strings.jila_ki_rank,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15)),
                         )),
-                        Expanded(
-                            child: Container(
+                        Container(
+                          width: 100,
                           child: Text(
-                            Strings.anm_ki_rank,
-                            textAlign: TextAlign.center,
+                            ' $jilai_rank_value / $jilai_rank_value2',
                             style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold),
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15),
                           ),
-                        )),
-                        Expanded(
-                            child: GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: Container(
-                                padding: EdgeInsets.only(right: 10),
-                                child: Image.asset(
-                                  "Images/ic_cross.png",
-                                  width: 20,
-                                  height: 20,
-                                )),
-                          ),
-                        ))
+                        )
                       ],
                     ),
                   ),
-                ),
-                Container(
-                  height: 40,
-                  color: ColorConstants.dark_bar_color,
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                          child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(Strings.jila_ki_rank,
+                  Container(
+                    height: 40,
+                    color: ColorConstants.white,
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                            child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(Strings.anc_ki_rank,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 15)),
+                        )),
+                        Container(
+                          width: 100,
+                          child: Text(
+                            anc_value,
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.normal,
+                                fontSize: 15),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: 40,
+                    color: ColorConstants.white,
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                            child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(Strings.sansthagat_prasav_ki_rank,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 15)),
+                        )),
+                        Container(
+                          width: 100,
+                          child: Text(
+                            sansthagat_prasaav_value,
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.normal,
+                                fontSize: 15),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: 40,
+                    color: ColorConstants.white,
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                            child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(Strings.puntikaikaran_ki_rank,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 15)),
+                        )),
+                        Container(
+                          width: 100,
+                          child: Text(
+                            pun_tikakaran_value,
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.normal,
+                                fontSize: 15),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: 40,
+                    color: ColorConstants.white,
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                            child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(Strings.nasbandi_ki_rank,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 15)),
+                        )),
+                        Container(
+                          width: 100,
+                          child: Text(
+                            nasbandi_value,
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.normal,
+                                fontSize: 15),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: 40,
+                    color: ColorConstants.white,
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                            child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(Strings.ieud_ki_rank,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 15)),
+                        )),
+                        Container(
+                          width: 100,
+                          child: Text(
+                            iud_value,
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.normal,
+                                fontSize: 15),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: 40,
+                    color: ColorConstants.dark_bar_color,
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                            child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(Strings.block_ki_rank,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15)),
+                        )),
+                        Container(
+                          width: 100,
+                          child: Text(
+                            '$block_value/$block_value2',
                             style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 15)),
-                      )),
-                      Container(
-                        width: 100,
-                        child: Text(
-                          ' $jilai_rank_value / $jilai_rank_value2',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15),
-                        ),
-                      )
-                    ],
+                                fontSize: 15),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-                Container(
-                  height: 40,
-                  color: ColorConstants.white,
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                          child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(Strings.anc_ki_rank,
+                  Container(
+                    height: 40,
+                    color: ColorConstants.white,
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                            child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(Strings.anc_ki_rank,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 15)),
+                        )),
+                        Container(
+                          width: 100,
+                          child: Text(
+                            block_anc_value,
                             style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.normal,
-                                fontSize: 15)),
-                      )),
-                      Container(
-                        width: 100,
-                        child: Text(
-                          anc_value,
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.normal,
-                              fontSize: 15),
-                        ),
-                      )
-                    ],
+                                fontSize: 15),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-                Container(
-                  height: 40,
-                  color: ColorConstants.white,
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                          child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(Strings.sansthagat_prasav_ki_rank,
+                  Container(
+                    height: 40,
+                    color: ColorConstants.white,
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                            child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(Strings.sansthagat_prasav_ki_rank,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 15)),
+                        )),
+                        Container(
+                          width: 100,
+                          child: Text(
+                            block_sansthagat_prasaav_value,
                             style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.normal,
-                                fontSize: 15)),
-                      )),
-                      Container(
-                        width: 100,
-                        child: Text(
-                          sansthagat_prasaav_value,
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.normal,
-                              fontSize: 15),
-                        ),
-                      )
-                    ],
+                                fontSize: 15),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-                Container(
-                  height: 40,
-                  color: ColorConstants.white,
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                          child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(Strings.puntikaikaran_ki_rank,
+                  Container(
+                    height: 40,
+                    color: ColorConstants.white,
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                            child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(Strings.puntikaikaran_ki_rank,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 15)),
+                        )),
+                        Container(
+                          width: 100,
+                          child: Text(
+                            block_pun_tikakaran_value,
                             style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.normal,
-                                fontSize: 15)),
-                      )),
-                      Container(
-                        width: 100,
-                        child: Text(
-                          pun_tikakaran_value,
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.normal,
-                              fontSize: 15),
-                        ),
-                      )
-                    ],
+                                fontSize: 15),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-                Container(
-                  height: 40,
-                  color: ColorConstants.white,
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                          child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(Strings.nasbandi_ki_rank,
+                  Container(
+                    height: 40,
+                    color: ColorConstants.white,
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                            child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(Strings.nasbandi_ki_rank,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 15)),
+                        )),
+                        Container(
+                          width: 100,
+                          child: Text(
+                            block_nasbandi_value,
                             style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.normal,
-                                fontSize: 15)),
-                      )),
-                      Container(
-                        width: 100,
-                        child: Text(
-                          nasbandi_value,
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.normal,
-                              fontSize: 15),
-                        ),
-                      )
-                    ],
+                                fontSize: 15),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-                Container(
-                  height: 40,
-                  color: ColorConstants.white,
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                          child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(Strings.ieud_ki_rank,
+                  Container(
+                    height: 40,
+                    color: ColorConstants.white,
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                            child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(Strings.ieud_ki_rank,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 15)),
+                        )),
+                        Container(
+                          width: 100,
+                          child: Text(
+                            block_iud_value,
                             style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.normal,
-                                fontSize: 15)),
-                      )),
-                      Container(
-                        width: 100,
-                        child: Text(
-                          iud_value,
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.normal,
-                              fontSize: 15),
-                        ),
-                      )
-                    ],
+                                fontSize: 15),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-                Container(
-                  height: 40,
-                  color: ColorConstants.dark_bar_color,
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                          child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(Strings.block_ki_rank,
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15)),
-                      )),
-                      Container(
-                        width: 100,
-                        child: Text(
-                          '$block_value/$block_value2',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  height: 40,
-                  color: ColorConstants.white,
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                          child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(Strings.anc_ki_rank,
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.normal,
-                                fontSize: 15)),
-                      )),
-                      Container(
-                        width: 100,
-                        child: Text(
-                          block_anc_value,
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.normal,
-                              fontSize: 15),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  height: 40,
-                  color: ColorConstants.white,
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                          child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(Strings.sansthagat_prasav_ki_rank,
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.normal,
-                                fontSize: 15)),
-                      )),
-                      Container(
-                        width: 100,
-                        child: Text(
-                          block_sansthagat_prasaav_value,
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.normal,
-                              fontSize: 15),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  height: 40,
-                  color: ColorConstants.white,
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                          child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(Strings.puntikaikaran_ki_rank,
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.normal,
-                                fontSize: 15)),
-                      )),
-                      Container(
-                        width: 100,
-                        child: Text(
-                          block_pun_tikakaran_value,
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.normal,
-                              fontSize: 15),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  height: 40,
-                  color: ColorConstants.white,
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                          child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(Strings.nasbandi_ki_rank,
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.normal,
-                                fontSize: 15)),
-                      )),
-                      Container(
-                        width: 100,
-                        child: Text(
-                          block_nasbandi_value,
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.normal,
-                              fontSize: 15),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  height: 40,
-                  color: ColorConstants.white,
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                          child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(Strings.ieud_ki_rank,
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.normal,
-                                fontSize: 15)),
-                      )),
-                      Container(
-                        width: 100,
-                        child: Text(
-                          block_iud_value,
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.normal,
-                              fontSize: 15),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ])
+                ]),
+          )
         ],
       ),
     );

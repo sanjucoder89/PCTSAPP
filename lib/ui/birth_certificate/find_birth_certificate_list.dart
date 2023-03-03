@@ -145,15 +145,12 @@ class _FindBirthCertificateList extends State<FindBirthCertificateList> {
   * API FOR Child Find Birth List
   * */
   Future<String> getFindChildBirthCertiListAPI() async {
+    EasyLoading.show(
+      status: 'loading...',
+      maskType: EasyLoadingMaskType.black,
+    );
     preferences = await SharedPreferences.getInstance();
-    print('login-unit-id ${preferences.getString('UnitID')}');
-    print('login-unit-code ${preferences.getString('UnitCode')}');
-
     var response = await post(Uri.parse(_child_growth_list_url), body: {
-     //PCTSID:01010900404991090
-      // TagName:3
-      // TokenNo:fc9b1a5a-2593-4bbe-ab40-b70b7785a041
-      // UserID:0101010020201
       "PCTSID":widget.pctsid,
       "TagName":"3",
       "TokenNo": preferences.getString('Token'),
@@ -164,7 +161,6 @@ class _FindBirthCertificateList extends State<FindBirthCertificateList> {
     setState(() {
       if (apiResponse.status == true) {
         find_child_birthcerti_list = resBody['ResposeData'];
-        print('find_child_birthcerti_list.len ${find_child_birthcerti_list.length}');
       } else {
         find_child_birthcerti_list.clear();
         Fluttertoast.showToast(
@@ -176,7 +172,6 @@ class _FindBirthCertificateList extends State<FindBirthCertificateList> {
       }
     });
     EasyLoading.dismiss();
-    print('response:${apiResponse.message}');
     return "Success";
   }
   ScrollController? _controller;
@@ -218,7 +213,7 @@ class _FindBirthCertificateList extends State<FindBirthCertificateList> {
           ],
         ),
         backgroundColor: ColorConstants.AppColorPrimary,// status bar color
-        brightness: Brightness.light, // status bar brightness
+      //  brightness: Brightness.light, // status bar brightness
       ),
       body: Container(
         child: SingleChildScrollView(

@@ -544,7 +544,7 @@ class _AncExpandDetails extends State<AncExpandDetails> {
             )
           ],
           backgroundColor: ColorConstants.AppColorPrimary,// status bar color
-          brightness: Brightness.light, // status bar brightness
+       //   brightness: Brightness.light, // status bar brightness
         ),
         body: Stack(
           children:<Widget> [

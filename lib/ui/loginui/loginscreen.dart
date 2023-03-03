@@ -65,7 +65,7 @@ class _LoginScreen extends State<LoginScreen> {
     String pattern = r'^[5-9]{1}[0-9]{9}$';
     RegExp regExp = new RegExp(pattern);
     return Scaffold(
-      body: Column(
+      body: SafeArea(child: Column(
         children:<Widget> [
           Expanded(child: Container(
             //height: MediaQuery.of(context).size.height,
@@ -80,125 +80,119 @@ class _LoginScreen extends State<LoginScreen> {
 
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                    Container(
+                Container(
 
-                      margin: EdgeInsets.only(left: 20,right: 20,top: 180),
-                      color: Colors.transparent,
-                      //height: 200,
-                      child: Column(
-                        children: [
-                          SingleChildScrollView(
-                            scrollDirection: Axis.vertical,
-                            reverse: true,
-                            child: TextField(
-                              maxLength: 20,
-                              onChanged: (text){
-                                if(text.length==10 && regExp.hasMatch(text)){
-                                  getCheckPostAsha(widget.DeviceID, widget.TokenNo, _username.text.toString());
-                                  print("text some here: $text");
-                                }
-                              },
-                              textInputAction: TextInputAction.next,
-                              keyboardType: TextInputType.text,
-                              maxLines: 1,
-                              controller: _username,
-                              decoration: InputDecoration(
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.cyan),
-                                ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.cyan),
-                                ),
-                                border: InputBorder.none,
-                                labelText: 'यूजर आई डी दर्ज करे',
-                                hintText: '',
-                                counterText: ''
-
+                  margin: EdgeInsets.only(left: 20,right: 20,top: 180),
+                  color: Colors.transparent,
+                  //height: 200,
+                  child: Column(
+                    children: [
+                      SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        reverse: true,
+                        child: TextField(
+                          maxLength: 20,
+                          onChanged: (text){
+                            if(text.length==10 && regExp.hasMatch(text)){
+                              getCheckPostAsha(widget.DeviceID, widget.TokenNo, _username.text.toString());
+                              print("text some here: $text");
+                            }
+                          },
+                          textInputAction: TextInputAction.next,
+                          keyboardType: TextInputType.text,
+                          maxLines: 1,
+                          controller: _username,
+                          decoration: InputDecoration(
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.cyan),
                               ),
-                            ),
-                          ),
-                          SizedBox(height: 10,),
-                          SingleChildScrollView(
-                            scrollDirection: Axis.vertical,
-                            reverse: true,
-                            child: TextField(
-                              textInputAction: TextInputAction.done,
-                              keyboardType: TextInputType.text,
-                              obscureText: true,
-                              maxLines: 1,
-                              controller: _password,
-                              decoration: InputDecoration(
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.cyan),
-                                ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.cyan),
-                                ),
-                                border: InputBorder.none,
-                                labelText: 'पासवर्ड दर्ज करें',
-                                hintText: ''
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.cyan),
+                              ),
+                              border: InputBorder.none,
+                              labelText: 'यूजर आई डी दर्ज करे',
+                              hintText: '',
+                              counterText: ''
 
-                              ),),
                           ),
-                          Center(
-                              child: GestureDetector(
-                                onTap: () async {
-                                  if (_username.text.toString().isEmpty) {
-                                    DialogUtils.showCustomDialog(context,
-                                        message: "यूजर आई डी दर्ज करें ");
-                                  } else if (_password.text.toString().isEmpty) {
-                                    DialogUtils.showCustomDialog(context,
-                                        message: "पासवर्ड दर्ज करें");
-                                  } else {
-                                    var result = await Connectivity().checkConnectivity();
-                                    if(result == ConnectivityResult.mobile) {
-                                      chekConnectivity();
-                                    }else if(result == ConnectivityResult.wifi) {
-                                      chekConnectivity();
-                                    }else if(result == ConnectivityResult.none){
-                                      print("No internet connection");
-                                      showInternetDialoge();
-                                    }
-                                  }
-                                },
-                                child: Container(
-                                  margin: const EdgeInsets.only(top: 20),
-                                  width: 100,
-                                  child: const Center(
-                                    child: Text(
-                                      'लॉगइन करें',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  ),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    color: Colors.blueAccent,
-                                    boxShadow: const [
-                                      BoxShadow(color: Colors.greenAccent, spreadRadius: 2),
-                                    ],
-                                  ),
-                                  height: 30,
-                                ),
-                              )),
-                        ],
+                        ),
                       ),
-                    )
+                      SizedBox(height: 10,),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        reverse: true,
+                        child: TextField(
+                          textInputAction: TextInputAction.done,
+                          keyboardType: TextInputType.text,
+                          obscureText: true,
+                          maxLines: 1,
+                          controller: _password,
+                          decoration: InputDecoration(
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.cyan),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.cyan),
+                              ),
+                              border: InputBorder.none,
+                              labelText: 'पासवर्ड दर्ज करें',
+                              hintText: ''
+
+                          ),),
+                      ),
+                      Center(
+                          child: GestureDetector(
+                            onTap: () async {
+                              if (_username.text.toString().isEmpty) {
+                                DialogUtils.showCustomDialog(context,
+                                    message: "यूजर आई डी दर्ज करें ");
+                              } else if (_password.text.toString().isEmpty) {
+                                DialogUtils.showCustomDialog(context,
+                                    message: "पासवर्ड दर्ज करें");
+                              } else {
+                                var result = await Connectivity().checkConnectivity();
+                                if(result == ConnectivityResult.mobile) {
+                                  chekConnectivity();
+                                }else if(result == ConnectivityResult.wifi) {
+                                  chekConnectivity();
+                                }else if(result == ConnectivityResult.none){
+                                  print("No internet connection");
+                                  showInternetDialoge();
+                                }
+                              }
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.only(top: 20),
+                              width: 100,
+                              child: const Center(
+                                child: Text(
+                                  'लॉगइन करें',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: Colors.blueAccent,
+                                boxShadow: const [
+                                  BoxShadow(color: Colors.greenAccent, spreadRadius: 2),
+                                ],
+                              ),
+                              height: 30,
+                            ),
+                          )),
+                    ],
+                  ),
+                )
               ],
             ),
           )),
         ],
-      ),
+      )),
     );
   }
   void chekConnectivity() async{
     var result = await Connectivity().checkConnectivity();
     if(result == ConnectivityResult.mobile) {
-      print("Internet connection is from Mobile data");
-     // print("username  ${_username.text.toString()}");
-      //print("password  ${_password.text.toString()}");
-      //print("devi  ${widget.DeviceID}");
-     // print("devi  ${widget.TokenNo}");
-      // LoaderCheck();
       getUserAuth(
           _username.text.toString(),
           _password.text.toString(),
@@ -206,12 +200,6 @@ class _LoginScreen extends State<LoginScreen> {
           widget.TokenNo,
           widget.DeviceID);
     }else if(result == ConnectivityResult.wifi) {
-     // print("internet connection is from wifi");
-     // print("username  ${_username.text.toString()}");
-     // print("password  ${_password.text.toString()}");
-     // print("devi  ${widget.DeviceID}");
-    //  print("devi  ${widget.TokenNo}");
-      // LoaderCheck();
       getUserAuth(
           _username.text.toString(),
           _password.text.toString(),
@@ -219,7 +207,6 @@ class _LoginScreen extends State<LoginScreen> {
           widget.TokenNo,
           widget.DeviceID);
     }else if(result == ConnectivityResult.none){
-      print("No internet connection");
       showInternetDialoge();
     }
   }
@@ -254,8 +241,6 @@ class _LoginScreen extends State<LoginScreen> {
     var pass512data = sha512.convert(bytes2);
     print("password512 $pass512data");
     /* var pass512data = sha512.convert(passslat);
-
-
     print("password512 $passslat");*/
 
     preferences = await SharedPreferences.getInstance();

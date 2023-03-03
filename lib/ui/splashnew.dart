@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:device_information/device_information.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart';
@@ -9,10 +8,7 @@ import 'package:marquee_widget/marquee_widget.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pcts/Model/PostSaltData.dart';
 import 'package:pcts/constant/IosVersion.dart';
-import 'package:pcts/constant/LocaleString.dart';
 import 'package:pcts/ui/loginui/loginscreen.dart';
-import 'package:pcts/ui/pcts/pctsids/findpcts.dart';
-
 import 'package:platform_device_id/platform_device_id.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
@@ -22,10 +18,6 @@ import '../constant/ImageDialog.dart';
 import '../constant/MyAppColor.dart';
 import '../utils/ShowCustomDialoge.dart';
 import '../utils/ShowPlayStoreDialoge.dart';
-import 'TextToSpeech.dart';
-import 'admindashboard/admin_dashboard.dart';
-import 'anmworkplan/anmworkplan_list.dart';
-import 'dashboard/dashboard.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:location/location.dart';
 class SplashNew extends StatefulWidget {

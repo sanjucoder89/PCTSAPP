@@ -572,7 +572,7 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
             )
           ],
           backgroundColor: ColorConstants.AppColorPrimary,// status bar color
-          brightness: Brightness.light, // status bar brightness
+      //    brightness: Brightness.light, // status bar brightness
         ),
         body: Stack(
           children: <Widget>[

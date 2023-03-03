@@ -52,7 +52,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
       ],
       backgroundColor: ColorConstants.AppColorPrimary,
-      brightness: Brightness.light, // status bar brightness
+     // brightness: Brightness.light, // status bar brightness
     );
 
 

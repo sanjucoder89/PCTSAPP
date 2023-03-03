@@ -161,7 +161,7 @@ class _ChartDetails extends State<ChartDetails> {
 
         ],
         backgroundColor: ColorConstants.AppColorPrimary,// status bar color
-        brightness: Brightness.light, // status bar brightness
+      //  brightness: Brightness.light, // status bar brightness
       ),
       body:SingleChildScrollView(
         child: Column(

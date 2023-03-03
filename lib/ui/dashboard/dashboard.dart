@@ -694,6 +694,7 @@ class _DashboardScreen extends State<DashboardScreen> {
                   ElevatedButton(
                       onPressed: () {
                         willLeave = true;
+                        _timer.cancel();
                         logoutSession();
                       },
                       style: ElevatedButton.styleFrom(
@@ -2420,6 +2421,7 @@ class _DashboardScreen extends State<DashboardScreen> {
       actions: [
         ElevatedButton(
             onPressed: () {
+              _timer.cancel();
               logoutSession();
             },
             style: ElevatedButton.styleFrom(

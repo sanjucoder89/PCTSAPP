@@ -591,7 +591,7 @@ class _HBYCExpandDetails extends State<HBYCExpandDetails> {
             )
           ],
           backgroundColor: ColorConstants.AppColorPrimary,// status bar color
-          brightness: Brightness.light, // status bar brightness
+     //     brightness: Brightness.light, // status bar brightness
         ),
         body: Stack(
           children: <Widget>[

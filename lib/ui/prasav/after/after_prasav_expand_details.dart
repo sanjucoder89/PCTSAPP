@@ -554,7 +554,7 @@ class _AfterPrasavExpandDetails extends State<AfterPrasavExpandDetails> {
             )
           ],
           backgroundColor: ColorConstants.AppColorPrimary,// status bar color
-          brightness: Brightness.light, // status bar brightness
+       //   brightness: Brightness.light, // status bar brightness
         ),
         body: Stack(
           children:<Widget> [

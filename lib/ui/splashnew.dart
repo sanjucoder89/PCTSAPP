@@ -39,10 +39,10 @@ class _SplashState extends State<SplashNew> {
   var deviceId;
 
   var Imei;
-
   String packageName = '';
   var uuid = Uuid();
   var Token;
+
 
   @override
   void initState() {
@@ -53,6 +53,7 @@ class _SplashState extends State<SplashNew> {
     getVersionName();
     checkPlatform();
   }
+
   var _latitude="0.0";
   var _longitude="0.0";
   Future _getLocation() async {
@@ -236,12 +237,6 @@ class _SplashState extends State<SplashNew> {
                         if(result == ConnectivityResult.mobile) {
                           if(AppVersion == 0){
                             _openMyPage();
-                            /*Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (BuildContext context) => TextToSpeech(),
-                              ),
-                            );*/
                           }else{
                             reLoginDialog();
                           }
@@ -252,7 +247,6 @@ class _SplashState extends State<SplashNew> {
                             reLoginDialog();
                           }
                         }else if(result == ConnectivityResult.none){
-                          print("No internet connection");
                           showInternetDialoge();
                         }
                       }

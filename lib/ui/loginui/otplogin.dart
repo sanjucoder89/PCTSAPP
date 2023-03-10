@@ -50,71 +50,87 @@ class _OtpLoginPage extends State<OtpLoginPage> {
   TextEditingController _mobilenumber = TextEditingController();
   TextEditingController textEditingController = TextEditingController();
   var urlcheckotp = AppConstants.app_base_url + "PostCheckOTP";
-  var PostSentSMSANM_url = AppConstants.app_base_url + "PostSentSMS";
+  var resend_otp = AppConstants.app_base_url + "PostSentSMS";
   StreamController<ErrorAnimationType>? errorController;
   bool hasError = false;
   String currentText = "";
   final formKey = GlobalKey<FormState>();
   String message = '';
 
-
-  Future<String> postSendOtp() async {
-
-    var response = await post(Uri.parse(PostSentSMSANM_url), body: {
-      "SmsFlag":"4",
+  var _disableResendView=false;
+  Future<String> reSendOTPAPI() async {
+    EasyLoading.show(
+      status: 'loading...',
+      maskType: EasyLoadingMaskType.black,
+    );
+    preferences = await SharedPreferences.getInstance();
+    print('mobno ${widget.Mobileno}');
+    print('Token ${ preferences.getString("Token")}');
+    print('UserId ${ preferences.getString("UserId")}');
+    var response = await post(Uri.parse(resend_otp), body: {
+      // "MobileNo":_mobileno,
+      //       "SmsFlag":"82",
+      //       "TokenNo":preferences.getString("Token"),
+      //       "UserID":preferences.getString("UserId")
+      "SmsFlag":"82",
       "MobileNo": widget.Mobileno,
-      "TokenNo": "widget.Token",
+      "TokenNo": preferences.getString("Token"),
+      "UserID":preferences.getString("UserId")
     });
-
     var resBody = json.decode(response.body);
     final apiResponse = SendSmsModel.fromJson(resBody);
     bool? Status = apiResponse.status;
     var message = apiResponse.message.toString();
-    print("Message=> ${message}");
-    if (Status == true) {
-      Fluttertoast.showToast(
-          msg: message,
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.red,
-          textColor: Colors.white);
-    } else {
-      Fluttertoast.showToast(
-          msg: message,
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.red,
-          textColor: Colors.white);
+    setState(() {
+      if (Status == true) {
+        _disableResendView=true;
+        Fluttertoast.showToast(
+            msg: message,
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: Colors.green,
+            textColor: Colors.white);
+      } else {
+        _disableResendView=false;
+        Fluttertoast.showToast(
+            msg: message,
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: Colors.red,
+            textColor: Colors.white);
 
-    }
+      }
+    });
+    EasyLoading.dismiss();
     return "Success";
   }
 
 
-  /*CountdownTimerController? _countdownTimerController;
-  int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 45;*/
+  CountdownTimerController? _countdownTimerController;
+  int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 45;
 
   @override
   void initState() {
     errorController = StreamController<ErrorAnimationType>();
     super.initState();
-    //_countdownTimerController = CountdownTimerController(endTime: endTime, onEnd: onEnd);
+    _countdownTimerController = CountdownTimerController(endTime: endTime, onEnd: onEnd);
     /*FocusScopeNode currentFocus = FocusScope.of(context);
     if (!currentFocus.hasPrimaryFocus) {
       currentFocus.focusedChild!.unfocus();
     }*/
   }
-  /*bool _allowOnlyOnce=false;
+  bool _allowOnlyOnce=false;
   void onEnd() {
     print('onEnd');
     if(_allowOnlyOnce == true){
-      Navigator.pop(context);
+
+     // Navigator.pop(context);
     }
     _allowOnlyOnce=true;
-  }*/
+  }
   @override
   void dispose() {
-   // _countdownTimerController!.disposeTimer();
+    _countdownTimerController!.disposeTimer();
     errorController!.close();
     super.dispose();
     EasyLoading.dismiss();
@@ -140,8 +156,8 @@ class _OtpLoginPage extends State<OtpLoginPage> {
       "MobileNo": widget.Mobileno,
       "SmsFlag": '4',
       "OTP": otp,
-      "TokenNo": preferences.get('Token'),
-      "UserID": preferences.get('UserId'),
+      "TokenNo": preferences.getString('Token'),
+      "UserID": preferences.getString('UserId'),
     });
     var resBody = json.decode(response.body);
     final apiResponse = CheckOtpmodel.fromJson(resBody);
@@ -391,14 +407,14 @@ class _OtpLoginPage extends State<OtpLoginPage> {
                   SizedBox(
                     height: 15,
                   ),
-                  /*Container(
+                  Container(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Didn't receive the code?",style: TextStyle(
+                        Text(Strings.didnt_recv_code,style: TextStyle(
                             fontWeight: FontWeight.normal,
                             fontSize: 13,
-                            color: Colors.black),
+                            color: _disableResendView == false ? Colors.black : Colors.grey),
                           textAlign: TextAlign.center,),
                         SizedBox(width: 5,),
                         CountdownTimer(
@@ -406,12 +422,14 @@ class _OtpLoginPage extends State<OtpLoginPage> {
                             if (time == null) {
                               return GestureDetector(
                                 onTap: (){
-
+                                  if(_disableResendView == false){
+                                    reSendOTPAPI();
+                                  }
                                 },
                                 child: Text('Resend',style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 13,
-                                    color: Colors.red),
+                                    color: _disableResendView == false ? Colors.red : Colors.grey),
                                   textAlign: TextAlign.center,),
                               );
                             }
@@ -420,7 +438,7 @@ class _OtpLoginPage extends State<OtpLoginPage> {
                                 '00:${time.sec}',style: TextStyle(
                                 fontWeight: FontWeight.normal,
                                 fontSize: 13,
-                                color: Colors.red),
+                                color: _disableResendView == false ? Colors.red : Colors.grey),
                               textAlign: TextAlign.center,);
                           },
                           controller: _countdownTimerController,
@@ -428,15 +446,9 @@ class _OtpLoginPage extends State<OtpLoginPage> {
                           endTime: endTime,
                           textStyle: TextStyle(color: Colors.red),
                         )
-                        *//*Text("Resend",style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 13,
-                            color: Colors.red),
-                          textAlign: TextAlign.center,),*//*
-
                       ],
                     ),
-                  )*/
+                  )
                 ],),
             ),
           )),

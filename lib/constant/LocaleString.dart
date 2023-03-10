@@ -5,6 +5,7 @@ class Strings {
   static const String app_release_date_title = "Release Date";
   static const String app_release_date = "03/02/2022";
   static const String current_version_title = "Current Version";
+  static const String didnt_recv_code = "OTP प्राप्त करने कई लिए पुनै प्रयास करै ?";//Didn't receive the code?
   static const String jila_ki_rank = " जिले में रैंक";
   static const String anc_panjikaran = "एएनसी पंजीकरण :: ";
   static const String first_3_mahi_k_baad = "पहले तीन माह के बाद :: ";

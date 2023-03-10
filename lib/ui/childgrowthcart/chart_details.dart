@@ -125,7 +125,14 @@ class _ChartDetails extends State<ChartDetails> {
     EasyLoading.dismiss();
     ftts.stop();
   }
-
+  final List<ChartDataDemo> chartDataed = <ChartDataDemo>[
+    ChartDataDemo(0.0, 0),
+    ChartDataDemo(2.0, 2),
+    ChartDataDemo(3.0, 3),
+    ChartDataDemo(4.0, 4),
+    ChartDataDemo(5.0, 9),
+    ChartDataDemo(6.0, 17),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -259,7 +266,6 @@ class _ChartDetails extends State<ChartDetails> {
                         height: 400,
                         child: SfCartesianChart(
                             series: <CartesianSeries>[
-
                               AreaSeries<ChartData, double>(
                                 dataSource: [
                                   // Bind data source
@@ -402,24 +408,33 @@ class _ChartDetails extends State<ChartDetails> {
                                 color: ColorConstants.map_orange_color,
                               ),
                               StackedLineSeries<CustomFunctionalList, double>(
+                                  markerSettings: MarkerSettings(
+                                      height: 30,
+                                      width: 30,
+                                      // Scatter will render in diamond shape
+                                      shape: DataMarkerType.circle,
+                                      color: ColorConstants.redTextColor,
+                                  ),
                                   width: 2,
                                   color: Colors.black,
                                   dataSource: functionalList,
-                                  /*dataSource: [
-                                    // Bind data source
-                                    ResponseChartData(0, 2.5),
-                                    ResponseChartData(4, 2.5),
-                                    ResponseChartData(6, 2.5),
-                                    ResponseChartData(10, 2.5)
-                                  ],*/
-                                  /*dataLabelSettings: DataLabelSettings(
-                                      isVisible: true,
-                                      useSeriesColor: true
-                                  ),*/
                                   xValueMapper: (CustomFunctionalList data, _) => data.xvalue,
                                   yValueMapper: (CustomFunctionalList data, _) => data.yvalue
                               ),
+                              ScatterSeries<CustomFunctionalList, double>(
+                                  dataSource: functionalList,
+                                  xValueMapper: (CustomFunctionalList data, _) => data.xvalue,
+                                  yValueMapper: (CustomFunctionalList data, _) => data.yvalue,
+                                  markerSettings: MarkerSettings(
+                                      height: 6,
+                                      width: 6,
+                                      // Scatter will render in diamond shape
+                                      shape: DataMarkerType.circle,
+                                      //borderColor: Colors.white,
+                                      color: Colors.white
 
+                                  )
+                              )
                             ]
                         )
                     ),
@@ -1570,7 +1585,7 @@ class _ChartDetails extends State<ChartDetails> {
                       GestureDetector(
                         onTap: () {
                           Navigator.pop(context);
-                          Navigator.pop(context);
+                          //Navigator.pop(context);
                         },
                         child: Card(
                           shape: RoundedRectangleBorder(
@@ -1636,5 +1651,11 @@ class ResponseChartData {
 class ChartData {
   ChartData(this.x, this.y);
   final double? x;
+  final double? y;
+}
+
+class ChartDataDemo {
+  ChartDataDemo(this.x, this.y);
+  final double x;
   final double? y;
 }

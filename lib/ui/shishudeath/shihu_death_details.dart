@@ -256,7 +256,6 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
   var _checkPlatform="0";
   Future<String> getAashaListAPI(String _RegUnitid,String _villageautoid) async {
     preferences = await SharedPreferences.getInstance();
-
     _checkPlatform=preferences.getString("CheckPlatform").toString();
     var response = await post(Uri.parse(_aasha_list_url), body: {
       "LoginUnitid": preferences.getString('UnitID'),

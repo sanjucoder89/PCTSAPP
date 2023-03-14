@@ -22,6 +22,7 @@ import 'package:intl/intl.dart';
 import '../../../constant/ApiUrl.dart';
 import '../../../constant/LocaleString.dart';
 import '../../../constant/MyAppColor.dart';
+import '../../constant/IosVersion.dart';
 import '../prasav/model/ActionRecordsData.dart';
 import 'add_hrp.dart';
 import 'edit_hrp.dart';
@@ -98,6 +99,7 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
       maskType: EasyLoadingMaskType.black,
     );
     preferences = await SharedPreferences.getInstance();
+    _checkPlatform=preferences.getString("CheckPlatform").toString();
     _anmAshaTitle=preferences.getString("AppRoleID").toString() == '33' ? Strings.aasha_title : Strings.anm_title;
     _anmName=preferences.getString('ANMName').toString();
     _topHeaderName=preferences.getString('topName').toString();
@@ -284,14 +286,14 @@ class _HRPExpandDetails extends State<HRPExpandDetails> {
     });
     return "Success";
   }
-
+  var _checkPlatform="0";
   Future<String> deleteHBYCAPI(String _flagtype,String _ancregid,String _motherid) async {
     var response = await delete(Uri.parse(_delete_record_url), body: {
       "motherid": _motherid,
       "ANCRegid": _ancregid,
       "ANCFlag": _flagtype,
-      "AppVersion": "5.5.5.22",
-      "IOSAppVersion": "",
+      "AppVersion": _checkPlatform == "0" ? preferences.getString("Appversion") : "",
+      "IOSAppVersion": _checkPlatform == "1" ? IosVersion.ios_version : "",
       "TokenNo": preferences.getString('Token'),
       "UserID": preferences.getString('UserId')
     });

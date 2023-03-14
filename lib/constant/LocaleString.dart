@@ -97,6 +97,7 @@ class Strings {
   static const String choose_death_reason = "मृत्यु का कारण चुनें";
   static const String choose_mother_death_date = "कृप्या माता की रिपोर्ट की दिनांक डालें";
   static const String death_subreason = "मृत्यु का उप कारण";
+  static const String choose_death_subreason = "मृत्यु का उप कारण चुनें";
   static const String choose_death_place = "कृप्या मृत्यु का स्थान चुनें !";
   static const String village = "गाँव/वार्ड ";
   static const String death_place = "मृत्यु का स्थान";
@@ -483,13 +484,13 @@ class Strings {
   static const String kya_mahila_isolation_hai = "क्या महिला आइसोलेशन में है";
 
   static const String choose_mata_prasav_prob = "माता में प्रसव पश्चात जटिलता चुनें ";
-  static const String PncDate_sahi_kare_msg = "पीएनसी तिथि की प्रविष्टि सही करें";
+  static const String PncDate_sahi_kare_msg = "एचबीएनसी तिथि की प्रविष्टि सही करें";
   static const String not_eligible_anc_ = "सम्बंधित केस की अभी एएनसी डयू नहीं हैं";
   static const String aaj_ki_tareek_sai_phale = "आज की तारीख से पहले की तारीख चुने";
   static const String please_selectd_before_register = "Please select before date of Registerdate";
   static const String choose_correct_hbyc_date = "एचबीवाईसी की तिथि सही चुनें ";
-  static const String check_png_date = "Please check PNC Date";
-  static const String please_correct_pnc_date = "पीएनसी तिथि की प्रविष्टि सही करें";
+  static const String check_png_date = "Please check HBNC Date";
+  static const String please_correct_pnc_date = "एचबीएनसी तिथि की प्रविष्टि सही करें";
   static const String panjikaran_kai_baad_ka = "पंजीकरण के बाद की तारीख चुने";
   static const String difference_btw_png_deli = "The diffrence between PNC Date and Delivery cannot be equal to 1 day for Institutional Delivery !";
   static const String please_select_before_date = "Please select before date of ExpectedDate";
@@ -538,7 +539,7 @@ class Strings {
   static const String choose_refer_district = "रैफर जिला चुनें  ";
   static const String choose_refer_sanstha = "रैफर संस्था चुनें ";
   static const String sanstha_type = "संस्था का प्रकार";
-  static const String enter_correct_weight = "सही वजन (कि. ग्रा) एंटर करे";
+  static const String enter_correct_weight = "सही वजन (कि.ग्रा) एंटर करे";
 
 
   static const String weight_msg_green = "महिला का वजन LMP से आज तक #.##1 किग्रा ही बढा है, जबकि #.##2 किग्रा बढना था। यह सामान्‍य से थोडा कम है। दिन में कम से कम दो घण्‍टे एवं रात में आठ घण्‍टे का आराम अवश्‍य करें, दिन में कम से कम तीन बार भोजन करें एवं भोजन में हरे पत्‍तेदार सब्जियां ज्‍यादा देवें। समय-समय पर महिला की जांच चिकित्‍सक से करवाये, टी.टी. के टीके लगवाये।";

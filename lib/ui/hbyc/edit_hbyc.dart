@@ -683,15 +683,17 @@ class _EditHBYCFormState extends State<EditHBYCForm> {
       _showErrorPopup(Strings.choose_visit_date,ColorConstants.AppColorPrimary);
     }else if(_shishuWeightController.text.toString().isEmpty){
       _showErrorPopup(Strings.enter_correct_weight,ColorConstants.AppColorPrimary);
-    }else if(_shishuWeightController.text.toString() == "0" ||  double.parse(_shishuWeightController.text.toString()) < 0){
+    }else if(_shishuWeightController.text.toString() == "0" ||  double.parse(_shishuWeightController.text.toString()) < 0 || _shishuWeightController.text.toString() == "0.0" || _shishuWeightController.text.toString() == "0.00"){
       _showErrorPopup(Strings.enter_correct_weight,ColorConstants.AppColorPrimary);
     }else if(_shishuKadController.text.toString().isEmpty){
       _showErrorPopup(Strings.enter_height_incm,ColorConstants.AppColorPrimary);
     }else if(_shishuKadController.text.toString() == "0" ||  double.parse(_shishuKadController.text.toString()) < 0){
       _showErrorPopup(Strings.enter_height_incm,ColorConstants.AppColorPrimary);
+    }else if(_shishuKadController.text.toString().toString() == "0" ||_shishuKadController.text.toString().toString() == "0.0" ||_shishuKadController.text.toString().toString() == "0.00" ){
+      _showErrorPopup(Strings.enter_height_incm,ColorConstants.AppColorPrimary);
     }else if(double.parse(_shishuKadController.text.toString()) < 30){
       _showErrorPopup(Strings.enter_height_more_than_30_semi,ColorConstants.AppColorPrimary);
-    }else if(double.parse(_shishuKadController.text.toString()) > 90 ){
+    }else if(double.parse(_shishuKadController.text.toString()) > 99 ){
       _showErrorPopup(Strings.enter_height_less_than_90_semi,ColorConstants.AppColorPrimary);
     }else if(_orsPostData == "0"){
       _showErrorPopup(Strings.choose_ors_packet,ColorConstants.AppColorPrimary);

@@ -5214,7 +5214,7 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
       _showErrorPopup(Strings.kya_shishu_is_live,Colors.black);
     }else if(_shishuWeightController.text.toString().isEmpty && _shishuWgtEnDisable == true){
       _showErrorPopup(Strings.enter_shishu_weight,Colors.black);
-    }else if(_shishuWeightController.text.toString() == "0" && _shishuWgtEnDisable == true){
+    }else if((_shishuWeightController.text.toString() == "0" && _shishuWgtEnDisable == true) || (_shishuWeightController.text.toString() == "0.0" && _shishuWgtEnDisable == true) || (_shishuWeightController.text.toString() == "0.00" && _shishuWgtEnDisable == true)){
       _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
     }else if(_shishuWeightController.text.toString().isNotEmpty && (double.parse(_shishuWeightController.text.toString()) > 9 && _shishuWgtEnDisable == true)){
       _showErrorPopup(Strings.enter_correct_shishu_weight_child,Colors.black);
@@ -5222,7 +5222,7 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
       _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
     }else if(_shishuWeight2Controller.text.toString().isEmpty && _shishuWgt2EnDisable == true){
       _showErrorPopup(Strings.enter_shishu_weight,Colors.black);
-    }else if((_shishuWeight2Controller.text.toString() == "0" && _shishuWgt2EnDisable == true)){
+    }else if((_shishuWeight2Controller.text.toString() == "0" && _shishuWgt2EnDisable == true) || (_shishuWeight2Controller.text.toString() == "0.0" && _shishuWgt2EnDisable == true) || (_shishuWeight2Controller.text.toString() == "0.00" && _shishuWgt2EnDisable == true)){
       _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
     }else if(_shishuWeight2Controller.text.toString().isNotEmpty && (double.parse(_shishuWeight2Controller.text.toString()) > 9 && _shishuWgt2EnDisable == true)){
       _showErrorPopup(Strings.enter_correct_shishu_weight_child,Colors.black);
@@ -5230,7 +5230,7 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
       _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
     }else if(_shishuWeight3Controller.text.toString().isEmpty && _shishuWgt3EnDisable == true){
       _showErrorPopup(Strings.enter_shishu_weight,Colors.black);
-    }else if(_shishuWeight3Controller.text.toString() == "0" && _shishuWgt3EnDisable == true){
+    }else if((_shishuWeight3Controller.text.toString() == "0" && _shishuWgt3EnDisable == true) || (_shishuWeight3Controller.text.toString() == "0.0" && _shishuWgt3EnDisable == true) || (_shishuWeight3Controller.text.toString() == "0.00" && _shishuWgt3EnDisable == true)){
       _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
     }else if(_shishuWeight3Controller.text.toString().isNotEmpty && (double.parse(_shishuWeight3Controller.text.toString()) > 9 && _shishuWgt3EnDisable == true)){
       _showErrorPopup(Strings.enter_correct_shishu_weight_child,Colors.black);
@@ -5238,7 +5238,7 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
       _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
     }else if(_shishuWeight4Controller.text.toString().isEmpty && _shishuWgt4EnDisable == true){
       _showErrorPopup(Strings.enter_shishu_weight,Colors.black);
-    }else if(_shishuWeight4Controller.text.toString() == "0" && _shishuWgt4EnDisable == true){
+    }else if((_shishuWeight4Controller.text.toString() == "0" && _shishuWgt4EnDisable == true) || (_shishuWeight4Controller.text.toString() == "0.0" && _shishuWgt4EnDisable == true) || (_shishuWeight4Controller.text.toString() == "0.00" && _shishuWgt4EnDisable == true)){
       _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
     }else if(_shishuWeight4Controller.text.toString().isNotEmpty && (double.parse(_shishuWeight4Controller.text.toString()) > 9 && _shishuWgt4EnDisable == true)){
       _showErrorPopup(Strings.enter_correct_shishu_weight_child,Colors.black);
@@ -5246,7 +5246,7 @@ class _EditPNCScreenState extends State<EditPNCScreen> {
       _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
     }else if(_shishuWeight5Controller.text.toString().isEmpty && _shishuWgt5EnDisable == true){
       _showErrorPopup(Strings.enter_shishu_weight,Colors.black);
-    }else if(_shishuWeight5Controller.text.toString() == "0" && _shishuWgt5EnDisable == true){
+    }else if((_shishuWeight5Controller.text.toString() == "0" && _shishuWgt5EnDisable == true) || (_shishuWeight5Controller.text.toString() == "0.0" && _shishuWgt5EnDisable == true) || (_shishuWeight5Controller.text.toString() == "0.00" && _shishuWgt5EnDisable == true)){
       _showErrorPopup(Strings.enter_correct_shishu_weight,Colors.black);
     }else if(_shishuWeight5Controller.text.toString().isNotEmpty && (double.parse(_shishuWeight5Controller.text.toString()) > 9 && _shishuWgt5EnDisable == true)){
       _showErrorPopup(Strings.enter_correct_shishu_weight_child,Colors.black);

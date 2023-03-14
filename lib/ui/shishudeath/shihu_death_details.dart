@@ -3675,6 +3675,8 @@ class _ShishuDeathDetailsState extends State<ShishuDeathDetails> {
       _showErrorPopup(Strings.enter_owner_mo_num,ColorConstants.AppColorPrimary);
     }else if(_mukhiyaMobNoController.text.toString() == "0" || double.parse(_mukhiyaMobNoController.text.toString()) < 0){
       _showErrorPopup(Strings.enter_correct_mo_num,ColorConstants.AppColorPrimary);
+    }else if(_mukhiyaMobNoController.text.toString().length < 10){
+      _showErrorPopup(Strings.enter_correct_mo_num,ColorConstants.AppColorPrimary);
     }/*else if(!_mukhiyaMobNoController.text.toString().contains(new RegExp(pattern))){
       _showErrorPopup(Strings.enter_correct_mob_num,ColorConstants.AppColorPrimary);
     }*/else if(_deathDDdateController.text.isEmpty){

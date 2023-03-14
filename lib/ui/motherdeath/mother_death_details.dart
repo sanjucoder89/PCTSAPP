@@ -2867,6 +2867,8 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
       _showErrorPopup(Strings.owner_mo_num,ColorConstants.AppColorPrimary);
     }else if(_mukhiyaMobNoController.text.isEmpty){
       _showErrorPopup(Strings.owner_mo_num,ColorConstants.AppColorPrimary);
+    }else if(_mukhiyaMobNoController.text.toString().length < 10){
+      _showErrorPopup(Strings.enter_correct_mo_num,ColorConstants.AppColorPrimary);
     }else if(_tikaDDdateController.text.isEmpty){
       _showErrorPopup("कृप्या माता की मृत्यु की दिनांक डालें",ColorConstants.AppColorPrimary);
     }else if(_tikaMMdateController.text.isEmpty){
@@ -2876,7 +2878,7 @@ class _MotherDeathDetailsScreen extends State<MotherDeathDetailsScreen> {
     }else if(dreasonId == "0" || dreasonId.isEmpty){
       _showErrorPopup(Strings.choose_death_reason,ColorConstants.AppColorPrimary);
     }else if(dsubreasonId == "0" || dsubreasonId.isEmpty){
-      _showErrorPopup(Strings.choose_death_reason,ColorConstants.AppColorPrimary);
+      _showErrorPopup(Strings.choose_death_subreason,ColorConstants.AppColorPrimary);
     }else if(_reportDDdateController.text.isEmpty){
       _showErrorPopup(Strings.choose_mother_death_date,ColorConstants.AppColorPrimary);
     }else if(_reportMMdateController.text.isEmpty){
